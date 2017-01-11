@@ -36,6 +36,8 @@ $(document).ready(function() {
     nodejs_host = "{{nodejs_host}}";
     nodejs_port = {{nodejs_port}};
 
+    $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
+
     connectToSocket();
 
     if (batch_chems != null) {
