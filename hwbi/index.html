@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -96,13 +96,13 @@
         }
 </style>
 </head>
-
+{% load static %}
 <body>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src = "/static/js/d3.v3.min.js"></script>
-<script src="/static/js/d3.tip.v0.6.3.js"></script>
-<script type="text/javascript" src="/static/js/jquery.blockUI.js"></script>
+<script src = "/static_qed/hwbi/js/d3.v3.min.js"></script>
+<script src="/static_qed/hwbi/js/d3.tip.v0.6.3.js"></script>
+<script src="/static_qed/js/jquery.blockUI.js"></script>
 
 
 {# For bootsrap, everything goes inside of these <div> tag #}
@@ -127,11 +127,11 @@
           </form>
         </div>
 
-        <script src="/static/js/statecounty.js"></script>
+        <script src="/static_qed/hwbi/js/statecounty.js"></script>
 
         <!--d3 work flow chart diagram services-to-HWBI-->
         <div id="flowchart" class="col-lg-9 col-md-9 col-sm-9 col-xs-12"  style = "float:left; width: 65%;"></div>
-        <script src="/static/js/flowchart.js"></script>
+        <script src="/static_qed/hwbi/js/flowchart.js"></script>
 
 
       <!--Text description of services-->
@@ -149,7 +149,7 @@
 
         <!--Sliders to adjust circle services-->
         <div id="cirSlide" style = "margin-left: 25px;"></div>
-        <script src="/static/js/slider.js"></script>
+        <script src="/static_qed/hwbi/js/slider.js"></script>
 
         <!--button to submit updated services to pie chart-->
         <button id="updateServices" onclick="useServiceValues()" type="submit" class="btn btn-primary btn-xs" role="button">Modify Service Values</button>
@@ -176,7 +176,7 @@
       <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 40%;"></div>
       <script>
         $(function(){
-          $("#riv").load("/static/riv.html");
+            $("#riv").load("/hwbi/riv.html");
         });
       </script>
 
@@ -192,8 +192,8 @@
         </div>
       </div>
 
-      <script src="/static/js/pie.js" ></script>
-      <script src="/static/js/pie2.js" ></script>
+      <script src="/static_qed/hwbi/js/pie.js" ></script>
+      <script src="/static_qed/hwbi/js/pie2.js" ></script>
 
       <script>
       $(document).ready(function(){
