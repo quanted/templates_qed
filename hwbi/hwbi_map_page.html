@@ -273,7 +273,7 @@ svg.append("rect")
     .attr("height", height);
 
 svg.append("svg:image")
-    .attr("xlink:href", "/static/images/progress_anim.gif")
+    .attr("xlink:href", "/static_qed/hwbi/images/progress_anim.gif")
     .attr("id", "progress-image")
     .attr("width", 43)
     .attr("height", 11)
@@ -331,8 +331,8 @@ legend.selectAll(".ticklabel")
 
 
 queue()
-    .defer(d3.json, "/static/json/us.json")
-    .defer(d3.csv, "/static/data/hwbi_decade.csv", typeAndSet)
+    .defer(d3.json, "/static_qed/hwbi/json/us.json")
+    .defer(d3.csv, "/static_qed/hwbi/data/hwbi_decade.csv", typeAndSet)
     .await(ready);
 
 var clickedOnce = false;
