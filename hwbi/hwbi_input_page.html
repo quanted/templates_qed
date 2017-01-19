@@ -130,81 +130,77 @@
         </p>
       </div>
 
-      <!--jquery ajax call to import html code for riv boxes-->
-      <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 50%;"></div>
-      <script>
-      //  $(function(){
-      //    $("#riv").load("/hwbi/riv.html");
-      //  });
-      </script>
-<!-- Moved from riv.html-->
-<style>
-input[type=number] {
-    width: 30px;
-}
+      <!-- riv boxes-->
+      <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 50%;">
 
-/* size button font */
-#updateWeights {
-    font-size: 12px;
-}
-</style>
+        <!-- Moved from riv.html-->
+        <style>
+        input[type=number] {
+            width: 30px;
+        }
 
- <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Connection to Nature= <span></span>
-    </label>
-    <input type="number" id="connectionToNatureDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+        /* size button font */
+        #updateWeights {
+            font-size: 12px;
+        }
+        </style>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Cultural Fulfillment= <span></span>
-    </label>
-    <input type="number" id="culturalFulfillmentDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+         <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Connection to Nature= <span></span>
+            </label>
+            <input type="number" id="connectionToNatureDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Education= <span></span>
-    </label>
-    <input type="number" id="educationDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Cultural Fulfillment= <span></span>
+            </label>
+            <input type="number" id="culturalFulfillmentDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Health= <span></span>
-    </label>
-    <input type="number" id="healthDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Education= <span></span>
+            </label>
+            <input type="number" id="educationDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Leisure Time= <span></span>
-    </label>
-    <input type="number" id="leisureTimeDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Health= <span></span>
+            </label>
+            <input type="number" id="healthDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Living Standards= <span></span>
-    </label>
-    <input type="number" id="livingStandardsDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Leisure Time= <span></span>
+            </label>
+            <input type="number" id="leisureTimeDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Safety & Security= <span></span>
-    </label>
-    <input type="number" id="safetyAndSecurityDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Living Standards= <span></span>
+            </label>
+            <input type="number" id="livingStandardsDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
-  <p>
-    <label style="display: inline-block; width: 200px; text-align: right">
-           Social Cohesion= <span></span>
-    </label>
-    <input type="number" id="socialCohesionDomainWeight" min="1" max="5" step="1" value="3">
-  </p>
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Safety & Security= <span></span>
+            </label>
+            <input type="number" id="safetyAndSecurityDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
 
+          <p>
+            <label style="display: inline-block; width: 200px; text-align: right">
+                   Social Cohesion= <span></span>
+            </label>
+            <input type="number" id="socialCohesionDomainWeight" min="1" max="5" step="1" value="3">
+          </p>
+        </div>
 
 <br>
 <!--button to submit RIV box weights to pie chart-->
