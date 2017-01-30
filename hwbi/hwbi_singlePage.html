@@ -184,7 +184,7 @@
 	    top: 10px;
 	    left: 0;
 	}
-/*dashboard css*/
+{#/*dashboard css*/#}
     .tab-content{
         display: none;
         background: #ffffff;
@@ -253,7 +253,7 @@
 <script src="/static_qed/hwbi/js/d3.tip.v0.6.3.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="/static_qed/js/jquery.blockUI.js"></script>
-<script src="/static_qed/js/scripts_input.js"></script>
+{#<script src="/static_qed/js/scripts_input.js"></script>#}
 
 <script src="http://d3js.org/queue.v1.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -399,6 +399,8 @@
 		<!-- /.container -->
 	</nav>
 
+
+    {#NOTE SOMETHING IN THIS COMMENTED OUT SECTION IS AFFECTING THE COUNTY MAP POP-UP FROM DISPLAYING AT ALL. IN ADDITION, THE ETRENDS CSS IS MAKING POPUP WORDS GREY. #}
 	<!-- HWBI Header -->
     <div id="fullpage">
 		<section class="secFP">
@@ -426,7 +428,7 @@
 				<div class="row paddingfromtop">
 					<div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 						<p class="p2 subtext wow fadeIn" data-wow-duration="2s" data-wow-delay=".15s">Welcome!</p>
-						<p class="wow fadeIn hover_img" data-wow-duration="2s" data-wow-delay=".65s">The mission of the U.S. Environmental Protection Agency (EPA) is to protect human health and the environment. This set of tools presents the spatial trends in the nation's human well-being, and summarizes the detailed information found in the 2012 <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=242106" target="_blank" title="Click to view HWBI report">Report<span><img data-src="./img/airtrends_site.jpg" alt="HWBI report image" /></span></a>.</p>
+						<p class="wow fadeIn hover_img" data-wow-duration="2s" data-wow-delay=".65s">The mission of the U.S. Environmental Protection Agency (EPA) is to protect human health and the environment. This set of tools presents the spatial trends in the nation's human well-being, and summarizes the detailed information found in the 2012<a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=242106" target="_blank" title="Click to view HWBI report">Report<span><img data-src="/static_qed/hwbi/images/epa_seal_medium_trim_80x80.png" alt="HWBI report image" /></span></a>.</p>
 						<p class="em1_2 wow fadeIn hover_img" data-wow-duration="2s" data-wow-delay=".65s">Please scroll down to view the annual report, use the top menu to jump to a topic. If encountering any issues viewing content, update or try opening the website in another browser.</p>
 						<img class="wow fadeIn" data-wow-duration="2s" data-wow-delay=".65s" data-src="/static_qed/hwbi/images/epa_seal_medium_trim_80x80.png" alt="United States Environmental Protection Agency">
 					</div>
@@ -444,6 +446,9 @@
 				</div>
 			</div>
 		</section>
+    {#NOTE END OF BAD D3 MAP LABEL SECTION #}
+
+
 
 		<!-- County Map Section -->
 		<section class="secFP" id="map">
@@ -885,7 +890,6 @@
 
 
 
-
 		<!-- Dashboard -->
 		<section class="secFP" id="dashboard">
 			<div class="container-fluid">
@@ -1080,11 +1084,6 @@
 
 
 
-
-
-
-
-
 		<!-- algorithms Section -->
 		<section class="secFP" id="algorithms">
 			<div class="container-fluid">
@@ -1127,13 +1126,12 @@
 			</div>
 		</section>
 
+
 		<!-- Social Media Section -->
 		<section class="secFP" id="epaSocial">
 			<div class="container-fluid social-section">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 wow fadeIn" data-wow-duration="2s" data-wow-delay=".2s">
-						<p class="subtext p2">Social Media</p>
-						<p>Use the share button at the top to share this report with others, and follow the latest EPA activities to protect human health and the environment using the links below. </p>
 						<ul class="list-inline banner-social-buttons">
 							<li><a href="https://twitter.com/EPA" class="btn hvr-sweep-to-right btn-lg" target="_blank" title="EPA on Twitter"><i class="icon icon-twitter fa-fw" aria-hidden="true"></i> <span class="network-name">Twitter</span></a></li>
 							<li><a href="https://www.facebook.com/EPA" class="btn hvr-sweep-to-right btn-lg" target="_blank" title="EPA on Facebook"><i class="icon icon-facebook fa-fw" aria-hidden="true"></i> <span class="network-name">Facebook</span></a></li>
@@ -1157,9 +1155,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
-	<!--D3 libraries -->
-	<script src="/static_qed/hwbi/js/d3-libs.min.js"></script>
-	<!--D3 charts, plugins and custom code -->
+
+	<!--custom code -->
 	<script type="text/javascript" src="/static_qed/hwbi/js/etrends.min.js"> </script>
 	<!-- Wow -->
      <script type="text/javascript">
