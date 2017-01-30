@@ -456,7 +456,7 @@
 					</div>
 					<div class="col-md-8 col-lg-6 wow fadeInRight" data-wow-duration="2s" data-wow-delay=".4s">
 						<div class="embed-responsive embed-responsive-4by3">
-							<object id="svgSeasonalPm25map" class="embed-responsive-item">
+							<object>
 
 								<div id="map-wrapper">
 								        <div id="tooltip" class="tooltip" style="opacity: 0; left: 752px; top: 70px;">
@@ -920,9 +920,9 @@
 				        <script src="/static_qed/hwbi/js/statecounty.js"></script>
 
 
-						<div id="naaqs-concentrationGraph-container">
+						<div>
 							<!--white line divider -->
-							<div style="" id="naaqs-chart-title-concentration" class="naaqs-chart-title"><span></span></div>
+							<div><span></span></div>
 
 							<!--toggle baseline and modified pies -->
 							<div id="pie" class="tab-content current" style = "float:right; width: 50%;"></div>
@@ -1049,39 +1049,26 @@
 					</div>
 
 
-
-
 					<div class="col-md-6 col-lg-5 wow fadeIn" data-wow-duration="2s" data-wow-delay=".2s">
-						<div id="naaqsSlider" style="margin:0em 1em;">
+                        <!--Text description of HWBI pie-->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float:left; width: 100%; text-align:left">
+                            <p>
+                            The relative importance of domains may vary for each person. Use the boxes to rank
+                            the importance of domains based on <i>your</i> preferences. A value of 5
+                            is considered most important and a value of 1 has lowest importance.
+                        <br>
+                        <br>
+                            Adjust the services sliders to examine how changing services affects domain values and the overall HWBI.
+                            </p>
 
+                            <!--Sliders to adjust circle services-->
+                            <div id="cirSlide" style = "margin-left: 5px;"></div>
+                            <script src="/static_qed/hwbi/js/slider.js"></script>
 
-						</div>
-						<div class="naaqs-map-container">
-							<span class="sr-only">Based on previous NAAQS dropdown selection: USA map of corresponding monitor locations with information for each monitor such as Air Quality System (AQS) site ID, State, CBSA, annual concentration data and year.</span>
-							<div id="naaqs-map-title">
-								<div id="naaqs-map-home" class="naaqs-map-home" style="cursor: pointer;" onclick="naaqsMapChart.naaqsMap.resetZoom();" title="Click to reset map"></div>
-								<span id="mapPollutant" ></span>
-							</div>
+                            <!--button to submit updated services to pie chart-->
+                            <button id="updateServices" onclick="useServiceValues()" type="submit" class="btn btn-primary btn-xs" role="button">Modify Service Values</button>
 
-							<div id="naaqsMap" style="position:relative">
-								<div id="naaqs-tooltip-map" class="naaqs-tooltip" style="display:none">
-									<div class="content"></div>
-									<textarea style="display:none" class="template">
-									<table>
-										<tr ><td class="naaqs-tooltip-label">AQS Site ID:</td><td><<d.AQS_Site_ID>></td></tr>
-										<tr class="<<f.isHidden:Local_Site_Name>>"><td class="naaqs-tooltip-label">Site Name:</td><td><<d.Local_Site_Name>></td></tr>
-										<tr class="<<f.isHidden:City>>"><td class="naaqs-tooltip-label">City:</td><td><<d.City>></td></tr>
-										<tr class="<<f.isHidden:State>>"><td class="naaqs-tooltip-label">State:</td><td><<d.State>></td></tr>
-										<tr class="<<f.isHidden:CBSA>>"><td class="naaqs-tooltip-label">CBSA:</td><td><<d.CBSA>></td></tr>
-										<tr ><td class="naaqs-tooltip-label">Year:</td><td><<year>></td></tr>
-										<tr ><td class="naaqs-tooltip-label"><<pollutant>>:</td><td><<f.isMissing:activeAttribute:pollutantDigits>> <span class="<<f.isHidden:activeAttribute>>"><<units>></span></td></tr>
-										<tr><td colspan=2 style="text-align: center;"><a style="cursor: pointer;" onclick="console.log('test');naaqsMapChart.naaqsMap.closeToolTip();">Close <i class="icon icon-times" aria-hidden="true" title="Click to close"></i></a></td></tr>
-									</table>
-									</textarea>
-								</div>
-							</div>
-							<div id="naaqs-map-mapLegend" class="naaqs-map-mapLegend"></div>
-						</div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -1103,27 +1090,10 @@
 			<div class="container-fluid">
 				<div class="row paddingfromtop">
 					<div class="col-md-4 col-lg-4 col-lg-offset-1 wow fadeIn" data-wow-duration="2s" data-wow-delay=".2s">
-						<h3>Air quality improves as America grows</h3>
-						<p class="em1_2">Nationally, concentrations of the criteria air pollutants have dropped significantly since 1990:</p>
-						<ul class="em1">
-							<li>Carbon Monoxide (CO) 8-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 77%</li>
-							<li>Lead (Pb) 3-Month Average, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 99%</li>
-							<li>Nitrogen Dioxide (NO<sub>2</sub>) Annual, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 54%</li>
-							<li>Nitrogen Dioxide (NO<sub>2</sub>) 1-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 47%</li>
-							<li>Ozone (O<sub>3</sub>) 8-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 22%</li>
-							<li>Particulate Matter 10 microns (PM<sub>10</sub>) 24-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 39%</li>
-							<li>Particulate Matter 2.5 microns (PM<sub>2.5</sub>) Annual, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 37%</li>
-							<li>Particulate Matter 2.5 microns (PM<sub>2.5</sub>) 24-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 37%</li>
-							<li>Sulfur Dioxide (SO<sub>2</sub>) 1-Hour, <i class="icon icon-arrow-down" aria-hidden="true" title="Down"></i> 81%</li>
-						</ul>
-						<p class="em1_2">During this same period the U.S. economy continued to grow, Americans drove more miles and population and energy use increased.</p>
-						<p class="em_95"><span class="label label-custom">Tip</span> Click pollutant names in the chart legend to hide or include trend lines, and hover over any line to display percentages above or below the most recent standard. Click the Emissions button below to open a popup window.</p>
-						<div class="text-center"><button type="button" class="btn wow rubberBand hvr-sweep-to-right" data-wow-delay="2.75s" data-toggle="modal" data-target="#modal-1" title="Click to view emission trends">Emissions</button></div><br>
+
 					</div>
 					<div class="col-md-8 col-lg-6 wow fadeInRight" data-wow-duration="2s" data-wow-delay=".4s">
-						<div id="concentrationChartHS"></div>
-						<span class="sr-only">Line chart depicting overall decline in national air quality concentration averages for the criteria air pollutants from 1990 to 2015. </span>
-						<br>
+
 					</div>
 				</div>
 			</div>

@@ -87,12 +87,13 @@
     <!--Text description of services-->
     <div>
       <p>
-    Eight "domains of well-being" were calculated for each county in the conterminous U.S., represented as eight sections on the pie chart.
+      Twenty-two
+          <span style="color: #b86361;font-weight:bold;">economic</span>,
+          <span style="color: #61b88e;font-weight:bold;">ecosystem</span>, and
+          <span style="color: #618bb8;font-weight:bold;">social</span>
+          service scores were calculated for each county in the conterminous United States.
 
-
-          The relative importance of domains may vary for each person. Use the boxes to rank
-          the importance of domains based on <i>your</i> preferences. A value of 5
-          is considered most important and a value of 1 has lowest importance.
+      These service scores were then used to calculate eight "domains of well-being", represented as eight sections on the pie chart.
 
       The total Human Well-Being Index (HWBI) score is shown in the center of the pie chart.
       </p>
@@ -101,7 +102,7 @@
 
 
       <!-- riv boxes-->
-      <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 50%;">
+      <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 40%;">
 
         <!-- Moved from riv.html-->
         <style>
@@ -174,15 +175,13 @@
 <button id="updateWeights" onclick="useRIVWeights()" type="submit" class="btn btn-primary btn-xs" role="button">Modify RIV Weights</button>
         </div>
 
-<br>
-
 
 <div class="radio-toolbar">
 <label><input id="radios-id" type="radio" name="toggler" value="" checked />Modified Values</label>
 <label><input id="radios-id-2" type="radio" name="toggler" value="2" />Baseline County Values</label>
 
-        <div id="pie" class="tab-content current" style = "float:right; width: 50%;"></div>
-        <div id="pie2" class="tab-content" style = "float:right; width: 50%;"></div>
+        <div id="pie" class="tab-content current" style = "float:right; width: 60%;"></div>
+        <div id="pie2" class="tab-content" style = "float:right; width: 60%;"></div>
 </div>
 
     <script>
@@ -215,40 +214,20 @@
 
     <!--Text description of HWBI pie-->
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float:left; width: 100%; text-align:left">
-    <p>
-          Twenty-two
-          <span style="color: #b86361;font-weight:bold;">economic</span>,
-          <span style="color: #61b88e;font-weight:bold;">ecosystem</span>, and
-          <span style="color: #618bb8;font-weight:bold;">social</span>
-          service scores were calculated for each county
-          in the conterminous United States.
-
-
-      Choose your county then adjust the services sliders to examine how changing services affects domain values and the overall HWBI.
-    </p>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <p>
+        The relative importance of domains may vary for each person. Use the boxes to rank
+        the importance of domains based on <i>your</i> preferences. A value of 5
+        is considered most important and a value of 1 has lowest importance.
+<br>
+<br>
+        Adjust the services sliders to examine how changing services affects domain values and the overall HWBI.
+        </p>
 
         <!--Sliders to adjust circle services-->
-        <div id="cirSlide" style = "margin-left: 25px;"></div>
+        <div id="cirSlide" style = "margin-left: 5px;"></div>
         <script src="/static_qed/hwbi/js/slider.js"></script>
 
         <!--button to submit updated services to pie chart-->
         <button id="updateServices" onclick="useServiceValues()" type="submit" class="btn btn-primary btn-xs" role="button">Modify Service Values</button>
 
-
+    </div>
