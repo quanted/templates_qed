@@ -520,8 +520,7 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
 
 
 function organizeData(calc, prop, data) {
-    // organizes data, namely if it's
-    // more than a single value
+    // formats data for pchem table
 
     if (typeof data === "number") {
         if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con") {
@@ -550,7 +549,15 @@ function organizeData(calc, prop, data) {
             else {
                 for (var i = 0; i < itemVals.length; i++) {
                     var label = item + String(i + 1).sub() +  ': ';
-                    parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';
+                    try {
+                        parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
+                    }
+                    catch (e) {
+                        if (e instanceof TypeError) {
+                            parsedData += '<div class="pka-wrapper">' + label + itemVals[i] + '</div>';  // probably a message instead of Number   
+                        } 
+                    }
+                    
                 }
             }
         }
