@@ -239,6 +239,7 @@ var currFIPS,
 
 var projection = d3.geo.albersUsa()
     .scale(2250)
+{#    .scale(1280)#}
     .translate([width / 2, height / 2]);
 
 var path = d3.geo.path()
@@ -290,13 +291,13 @@ var tooltip = d3.select("#tooltip")
 // Legend
 var legend = svg.append("g")
     .attr("class", "legend");
-legend.append("rect")
-    .attr("x", width)
-    .attr("y", height - 325)
-    .attr("width", 1000)
-    .attr("height", 1000)
-    .attr("fill", "#ffffff")
-    .attr("opacity", 0.9);
+{#legend.append("rect")#}
+{#    .attr("x", width)#}
+{#    .attr("y", height - 325)#}
+{#    .attr("width", 100)#}
+{#    .attr("height", 100)#}
+{#    .attr("fill", "#ffffff")#}
+{#    .attr("opacity", 0.9);#}
 legend.append("text")
     .attr("class", "legendheader")
     .attr("x", width - 190)
@@ -368,18 +369,21 @@ function ready(error, us, commute) {
                     .style("opacity", 1);
 
                // Position tooltip
-               if (d3.event.pageX > (width - 220)) {
-                   tooltip.style("left", (d3.event.pageX - 230) + "px");
-               } else {
-                   tooltip.style("left", (d3.event.pageX + 20) + "px")
-                       .style("top", (d3.event.pageY - 80) + "px");
-               }
+                tooltip.style("left", (d3.event.pageX - 430) + "px");
+                tooltip.style("top", (d3.event.pageY - 200) + "px");
 
-               if (d3.event.pageY > (height - 170)) {
-                    tooltip.style("top", (d3.event.pageY - 160) + "px");
-               } else {
-                    tooltip.style("top", (d3.event.pageY + 50) + "px");
-               }
+{#               if (d3.event.pageX > (width - 2000)) {#}
+{#                   tooltip.style("left", (d3.event.pageX - 230) + "px");#}
+{#               } else {#}
+{#                   tooltip.style("left", (d3.event.pageX + 20) + "px")#}
+{#                       .style("top", (d3.event.pageY - 80) + "px");#}
+{#               }#}
+{##}
+{#               if (d3.event.pageY > (height - 2000)) {#}
+{#                    tooltip.style("top", (d3.event.pageY - 160) + "px");#}
+{#               } else {#}
+{#                    tooltip.style("top", (d3.event.pageY + 50) + "px");#}
+{#               }#}
 
                // Populate tooltip
                var county = hwbiByFIPS.get(d.id);

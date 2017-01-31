@@ -171,13 +171,14 @@
             </label>
             <input type="number" id="socialCohesionDomainWeight" min="1" max="5" step="1" value="3">
           </p>
-          <!--button to submit RIV box weights to pie chart-->
-<button id="updateWeights" onclick="useRIVWeights()" type="submit" class="btn btn-primary btn-xs" role="button">Modify RIV Weights</button>
-        </div>
+
+        <!--button to submit RIV box weights to pie chart-->
+        <button id="updateWeights" onclick="useRIVWeights()" type="submit" class="btn btn-primary btn-xs" role="button">Modify RIV Weights</button>
+      </div>
 
 
 <div class="radio-toolbar">
-<label><input id="radios-id" type="radio" name="toggler" value="" checked />Modified Values</label>
+<label><input style =  display:none; visibility:hidden" id="radios-id" type="radio" name="toggler" value="" checked />Modified Values</label>
 <label><input id="radios-id-2" type="radio" name="toggler" value="2" />Baseline County Values</label>
 
         <div id="pie" class="tab-content current" style = "float:right; width: 60%;"></div>
@@ -224,7 +225,7 @@
         </p>
 
         <!--Sliders to adjust circle services-->
-        <div id="cirSlide" style = "margin-left: 5px;"></div>
+        <div id="cirSlide" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float:left; width: 100%; text-align:left; margin-left: 5px"></div>
         <script src="/static_qed/hwbi/js/slider.js"></script>
 
         <!--button to submit updated services to pie chart-->
