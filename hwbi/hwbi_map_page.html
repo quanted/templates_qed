@@ -440,11 +440,13 @@ function ready(error, us, commute) {
       });
       svg.select("#progress-image").remove();
 } // @end ready()
+
 function typeAndSet(d) {
     d["hwbi"] = +d["hwbi"];
     d["moe"] = +d["moe"];
     hwbiByFIPS.set(d.FIPS, d);
 }
+
 function updateClasses() {
     var currCounty = hwbiByFIPS.get(currFIPS);
     currCountyMin = currCounty.hwbi - currCounty.moe;
@@ -456,6 +458,7 @@ function updateClasses() {
             return classByHwbi(d.id);
         });
 }
+
 function classByHwbi(FIPS) {
     if (currFIPS == FIPS) {
         return "#000000";
@@ -495,6 +498,7 @@ function zoomIn() {
     zoom.scale(zoom.scale()*2);
     move();
 }
+
 function move() {
   var t = d3.event.translate,
       s = d3.event.scale;
@@ -503,6 +507,7 @@ function move() {
   zoom.translate(t);
   g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + ")scale(" + s + ")");
 }
+
 function clicked(d) {
   var x, y, k;
   if (d && centered !== d) {
