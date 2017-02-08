@@ -138,12 +138,12 @@ $(document).ready(function () {
 
 	$('#pdfExport').click(function () {
 		parseOutput('pdf');
-		$('form#pdf_post').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
 	});
 
 	$('#htmlExport').click(function () {
 		parseOutput('html');
-		$('form#pdf_post').attr({'action': 'html', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'html', 'method': 'POST'}).submit();
 	});
 
 	$('#csvExport').click(function () {
@@ -156,7 +156,7 @@ $(document).ready(function () {
 				.find('input')
 				.val(jsonData);
 
-		$('form#pdf_post').attr({'action': 'csv', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'csv', 'method': 'POST'}).submit();
 
 	});
 
