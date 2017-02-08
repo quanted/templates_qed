@@ -138,12 +138,12 @@ $(document).ready(function () {
 
 	$('#pdfExport').click(function () {
 		parseOutput('pdf');
-		$('form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
 	});
 
 	$('#htmlExport').click(function () {
 		parseOutput('html');
-		$('form').attr({'action': 'html', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'html', 'method': 'POST'}).submit();
 	});
 
 	$('#csvExport').click(function () {
@@ -156,7 +156,7 @@ $(document).ready(function () {
 				.find('input')
 				.val(jsonData);
 
-		$('form').attr({'action': 'csv', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': 'csv', 'method': 'POST'}).submit();
 
 	});
 
@@ -211,8 +211,6 @@ function buildMetabolitesArray() {
 
 
 function appendToRequestTable(jq_html, n_plot, imgData_json, jsonData) {
-	
-	var test = $('table.getpdf');
 
 	$('table.getpdf').html("");
 	
@@ -235,6 +233,7 @@ function appendToRequestTable(jq_html, n_plot, imgData_json, jsonData) {
 		.appendTo('.getpdf')
 		.find('input')
 		.val(jsonData);
+
 }
 
 

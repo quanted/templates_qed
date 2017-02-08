@@ -25,7 +25,17 @@ function plotMicroDist() {
     }
   }
 
+
+  // getting parent div dimensions:
+  var parent_div_height = $('#microspecies-distribution').height();
+  var parent_div_width = $('#microspecies-distribution').width();
+
+
   var plot = $.jqplot ('microspecies-distribution', plotData, {
+
+    height: parent_div_height,
+    width: parent_div_width,
+
     title: {
       text: 'Microspecies Distribution (%)',
       fontSize: '10pt'
@@ -78,6 +88,9 @@ function plotMicroDist() {
 </script>
 
 <script type="text/javascript">
-plotMicroDist();
+$(document).ready(function () {
+  plotMicroDist();
+});
+// plotMicroDist();
 </script>
 

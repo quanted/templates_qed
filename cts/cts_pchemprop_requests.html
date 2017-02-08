@@ -135,12 +135,12 @@ function connectToSocket() {
         
         data = JSON.parse(data);
 
-        if ('status' in data) {
-            // either display in requested table cells, or popup message:
-            alert(data.status);  // display status to user
-            // $('#pchemprop_table td').not('td.colorKey, th').html('');  // clear p-chem table
-            return;
-        }
+        // if ('status' in data) {
+        //     // either display in requested table cells, or popup message:
+        //     alert(data.status);  // display status to user
+        //     // $('#pchemprop_table td').not('td.colorKey, th').html('');  // clear p-chem table
+        //     return;
+        // }
 
         // expecting node object for gentrans workflow:
         // this conditional may ALWAYS be true! should be !=
@@ -572,6 +572,8 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
     for (var i = 0; i < nodes_list.length; i++) {
         num_nodes += nodes_list[i];
     }
+
+    // if (workflow == 'chemspec') { return num_nodes; }  // 1req/chem in chemspec workflow
 
     var num_props = 0;
     for (calc in checkedCalcsAndProps) {
