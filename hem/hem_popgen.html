@@ -3,6 +3,32 @@
 {% block title %}Population Generation{% endblock %}
 
 {% block content %}
-<h2>Population Generation</h2>
-    <p>IS_DEVELOPMENT = {{ settings.IS_DEVELOPMENT }}</p>
+    <div class="row">
+        <div class="col-md-9">
+            <h2>1. Choose consumer products</h2>
+            <input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="Consumer<br>Products" data-off="Chemicals"
+                       data-onstyle="success" data-offstyle="info">
+            <h2>2. Choose a population</h2>
+            <h2>3. Choose a geographic area</h2>
+        </div>  <!-- col-md-8 div -->
+        <div class="col-md-3 text-center">
+            <button type="button" class="btn btn-primary btn-lg active">Choose these products</button>
+            <br>
+            <br>
+            <p class="text-muted"><small>Choose products or chemicals to continue with the model. You will have a chance to
+            review and edit variables before starting the run.</small></p>
+            <hr>
+            <h3>Input Summary</h3>
+            <p class="text-left">Products:  </p>
+            <p class="text-left">Population: </p>
+            <p class="text-left">Geography: </p>
+            <hr>
+            <h3>Estimated Run Time</h3>
+            <p>0 minutes</p>
+            <p><small>How do we calculate this?</small></p>
+
+
+        </div>  <!-- col-md-4 div -->
+    </div>  <!-- row div -->
+
 {% endblock %}
