@@ -125,17 +125,26 @@
 
 	
 		<tr>
-		<th class="chemprop"><input id="id_kow_wph" name="kow_wph" type="checkbox" />&nbsp;&nbsp;<span>Octanol/Water Partition Coefficient (log)</span>
+		<th class="chemprop"><input id="id_kow_wph" name="kow_wph" type="checkbox" />&nbsp;&nbsp;<span>Octanol/Water Partition Coefficient (log)</span></th>
 	
-
-	
-		<!-- <span>at pH:</span> <input class="numberInput" data-parsley-max="14" data-parsley-required="true" data-parsley-required-message="This field is required." data-parsley-type="number" data-parsley-type-digits-message="Enter a number." data-parsley-type-number-message="Enter a number." id="id_kow_ph" max="14" min="0" name="kow_ph" step="0.1" type="number" value="7.4" /><br><div style="float:right;"></div></th> -->
 		<td id="id_kow_ChemAxon" class="ChemCalcs_available chemaxon kow_wph"></td>
 		<td id="id_kow_EPI" class="ChemCalcs_unavailable epi kow_wph"></td>
 		<td id="id_kow_TEST" class="ChemCalcs_unavailable test kow_wph"></td>
 		<td id="id_kow_SPARC" class="ChemCalcs_available sparc kow_wph"></td>
 		<td id="id_kow_Measured" class="ChemCalcs_unavailable measured kow_wph"></td>
+		</tr>
+
+
+		<tr>
+		<th class="chemprop"><input id="id_water_sol_ph" name="water_sol_ph" type="checkbox" />&nbsp;&nbsp;<span>Water Solubility (mg/L)</span></th>
 	
+		<td id="id_kow_ChemAxon" class="ChemCalcs_available chemaxon water_sol_ph"></td>
+		<td id="id_kow_EPI" class="ChemCalcs_unavailable epi water_sol_ph"></td>
+		<td id="id_kow_TEST" class="ChemCalcs_unavailable test water_sol_ph"></td>
+		<td id="id_kow_SPARC" class="ChemCalcs_unavailable sparc water_sol_ph"></td>
+		<td id="id_kow_Measured" class="ChemCalcs_unavailable measured water_sol_ph"></td>
+		</tr>
+
 
 	<tr>
 		<th></th>

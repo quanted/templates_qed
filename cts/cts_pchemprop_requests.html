@@ -523,7 +523,7 @@ function organizeData(calc, prop, data) {
     // formats data for pchem table
 
     if (typeof data === "number") {
-        if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con") {
+        if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
             if (calc == "test" && prop == "vapor_press") { 
                 data = Math.pow(10, data);
             }
