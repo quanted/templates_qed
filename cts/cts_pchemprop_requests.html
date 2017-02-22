@@ -344,7 +344,9 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
 
     }
 
-    pchem_data['mass'] = mass;
+    if (workflow == 'pchemprop' && run_type == 'single') {
+        pchem_data['mass'] = mass;
+    }
 
     // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];
