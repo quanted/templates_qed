@@ -347,6 +347,10 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
     if (workflow == 'pchemprop' && run_type == 'single') {
         pchem_data['mass'] = mass;
     }
+    var is_one_chemical = !('nodes' in pchem_data);
+    if (workflow == 'gentrans' && is_one_chemical) {
+        pchem_data['mass'] = pchem_data['node']['data']['mass'];
+    }
 
     // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];
