@@ -47,10 +47,8 @@
 <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
 <!-- local js -->
-<script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
-<script src="/static_qed/pisces/scripts/waterslayer.js"></script>
-<script src="/static_qed/pisces/scripts/leafletmap.js"></script>
-<script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
+{#<script src="/static_qed/cyan/scripts/huc250k_4326_sp.js"></script>#}
+<script src="/static_qed/cyan/scripts/leafletmap.js"></script>
 
 
 </head>
@@ -65,69 +63,119 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.css">
 	<script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.js"></script>
 
-                <!--- content div -->
-                <div class="col-md-10">
-                  <div class="box multi news">
-                    <div class="pane-content" id="mapDiv">
-                      <p><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish species associated with the area.</p>
-                        <!-- leaflet map div -->
-                        <div id="map"></div>
-                        <!-- basemap wrapper -->
-						<div id="basemaps-wrapper" class="leaflet-bar">
-						  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-						    <option value="Topographic">Topographic</option>
-						    <option value="Streets">Streets</option>
-						    <option value="NationalGeographic">National Geographic</option>
-						    <option value="Imagery">Imagery</option>
-						    <option value="ShadedRelief">Shaded Relief</option>
-						  </select>
-						</div>
-                        <br>
-                        <!-- datatables div -->
-                        <div>
-                        <table id="fish_data_table" width="90%"></table>
-                        </div>
-                    </div>
-                  </div>
-                 </div>
+        <!--- content div -->
+        <div class="col-md-10">
+          <div class="box multi news">
+            <div class="pane-content" id="mapDiv">
+              <p><strong>Click the map</strong> to get recent cyanobacteria concentration estimates for each pixel location</p>
+                <!-- leaflet map div -->
+                <div id="map"></div>
+                <!-- basemap wrapper -->
+                <div id="basemaps-wrapper" class="leaflet-bar">
+                  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                    <option value="Imagery">Imagery</option>
+                    <option value="Topographic">Topographic</option>
+                    <option value="Streets">Streets</option>
+                    <option value="NationalGeographic">National Geographic</option>
+                    <option value="ShadedRelief">Shaded Relief</option>
+                  </select>
+                </div>
+                <br>
+                <!-- datatables div -->
+                <div>
+                <table id="cyan_data" width="90%"></table>
+                </div>
+            </div>
+          </div>
+         </div>
 
-                <script>
-                // initialize the map
-                var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([33.95, -83.38], 8);
+        <script>
+            // initialize the map
+            var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
 
-                // load a tile layer
-                L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                    subdomains: ['a', 'b', 'c']
-                }).addTo(map);
-
-                var huc8Layer = L.geoJson(huc8s, {
-                    style: hucStyle,
-                    onEachFeature: onEachFeature,
-                }).addTo(map);
+            L.esri.basemapLayer('Imagery')
+            .addTo(map);
 
 
-                //map search function
-                var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
+            var cyanValue = 1014336;
 
-                var searchControl = L.esri.Geocoding.geosearch({
-                    providers: [
-                      arcgisOnline,
-                      L.esri.Geocoding.featureLayerProvider({
-                          url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
-                          searchFields: ['Name', 'Organization'],
-                          label: 'GIS Day Events',
-                          bufferRadius: 5000,
-                          formatSuggestion: function(feature){
-                              return feature.properties.Name + ' - ' + feature.properties.Organization;
-                          }
-                      })
-                    ]
-                }).addTo(map);
+            //pop-up
+            var popup = L.popup();
+
+            function onMapClick(e) {
+
+                var url = "https://cyan.epa.gov/cyan/cyano/location/data/" + (e.latlng.lat.toFixed(5).toString()) + "/" + (e.latlng.lng.toFixed(5).toString()) + "/2017-12-08";
+                console.log(url);
+
+{#                    $.ajax({#}
+{#                        type:"GET",#}
+{#                        url: url,#}
+{#                        dataType: "json",#}
+{#                        success: function(data, status, jqXHR) {#}
+{#                            initDT(fish_by_huc_columns, data);#}
+{#                            return data;#}
+{#                        },#}
+{#                        error: function(jqXHR, status) {#}
+{#                            return null;#}
+{#                        }#}
+{#                    })#}
+{##}
+{#                cyanValue = data.;#}
+
+                popup
+                    .setLatLng(e.latlng)
+                    .setContent(cyanValue.toLocaleString() + " cyanobacteria cells/ml (lat/long " + e.latlng.lat.toFixed(3).toString() + ", "+ e.latlng.lng.toFixed(3).toString() + ")")
+                    .openOn(map);
+            }
+
+            map.on('click', onMapClick);
 
 
+            //map search function
+            var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 
-                </script>
+            var searchControl = L.esri.Geocoding.geosearch({
+                providers: [
+                  arcgisOnline,
+                  L.esri.Geocoding.featureLayerProvider({
+                      url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
+                      searchFields: ['Name', 'Organization'],
+                      label: 'GIS Day Events',
+                      bufferRadius: 5000,
+                      formatSuggestion: function(feature){
+                          return feature.properties.Name + ' - ' + feature.properties.Organization;
+                      }
+                  })
+                ]
+            }).addTo(map);
+
+            //basemap selection toolbar cont.
+            var layerESRI = L.esri.basemapLayer('Imagery');
+            var layerLabels;
+
+            //basemap selection toolbar cont.
+            function setBasemap(basemap) {
+                if (layerESRI) {
+                    map.removeLayer(layerESRI);
+                }
+                layerESRI = L.esri.basemapLayer(basemap);
+                map.addLayer(layerESRI);
+                if (layerLabels) {
+                    map.removeLayer(layerLabels);
+                }
+                if (basemap === 'ShadedRelief' || basemap === 'Imagery' || basemap === 'Terrain') {
+                    layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+                    map.addLayer(layerLabels);
+                }
+            }
+
+            //basemap selection toolbar cont.
+            function changeBasemap(basemaps) {
+                var basemap = basemaps.value;
+                setBasemap(basemap);
+            }
+
+        </script>
 
     </div>
   </div>
