@@ -47,8 +47,7 @@
 <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
 <!-- local js -->
-{#<script src="/static_qed/cyan/scripts/huc250k_4326_sp.js"></script>#}
-<script src="/static_qed/cyan/scripts/leafletmap.js"></script>
+<script src="/static_qed/cyan/scripts/myjson.js"></script>
 
 
 </head>
@@ -97,30 +96,55 @@
             .addTo(map);
 
 
-            var cyanValue = 1014336;
-
-            //pop-up
+            // on map click, pop up lat long data and ajax call for cyan value
             var popup = L.popup();
+
+
+            //confirm example json data loaded.
+            console.log(myjson);
+            var cyanValue = myjson.cellConcentration;
+            console.log(cyanValue);
+
 
             function onMapClick(e) {
 
-                var url = "https://cyan.epa.gov/cyan/cyano/location/data/" + (e.latlng.lat.toFixed(5).toString()) + "/" + (e.latlng.lng.toFixed(5).toString()) + "/2017-12-08";
-                console.log(url);
 
-{#                    $.ajax({#}
-{#                        type:"GET",#}
-{#                        url: url,#}
-{#                        dataType: "json",#}
-{#                        success: function(data, status, jqXHR) {#}
-{#                            initDT(fish_by_huc_columns, data);#}
-{#                            return data;#}
-{#                        },#}
-{#                        error: function(jqXHR, status) {#}
-{#                            return null;#}
-{#                        }#}
-{#                    })#}
-{##}
-{#                cyanValue = data.;#}
+                var mylatlong = {"latitude": (e.latlng.lat.toFixed(5).toString()),
+                     "longitude": (e.latlng.lng.toFixed(5).toString()),
+                     "date": "/2017-12-08"
+                    }
+
+                    $.ajax({
+                        type:"POST",
+                        url: "rest/location/data",
+                        dataType: "json",
+                        data: mylatlong,
+                        success: function(json, status, jqXHR) {
+                            alert(json);
+                            myjson = json;
+                        },
+                        error: function(jqXHR, status) {
+                            return null;
+                        }
+                    })
+
+{#                $.postJSON("rest/location/data",#}
+{#                    {"latitude": (e.latlng.lat.toFixed(5).toString()),#}
+{#                     "longitude": (e.latlng.lng.toFixed(5).toString()),#}
+{#                     "date": "/2017-12-08"#}
+{#                    }#}
+{#                {#}
+{#                   myjson = json;#}
+{#                });#}
+
+
+{#                $.getJSON("https://cyan.epa.gov/cyan/cyano/location/data/" + (e.latlng.lat.toFixed(5).toString()) + "/" + (e.latlng.lng.toFixed(5).toString()) + "/2017-12-08", function(json){#}
+{#                   myjson = json;#}
+{#                });#}
+                console.log(myjson);
+
+                cyanValue = myjson.cellConcentration;
+                console.log(cyanValue);
 
                 popup
                     .setLatLng(e.latlng)
@@ -129,6 +153,9 @@
             }
 
             map.on('click', onMapClick);
+
+
+
 
 
             //map search function
