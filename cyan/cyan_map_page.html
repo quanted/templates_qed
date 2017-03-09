@@ -8,33 +8,14 @@
         padding: 10px;
         width: 100%;
 	}
-    .legend {
-        text-align: left;
-        line-height: 18px;
-        color: #555;
-    }
-    .legend i {
-        width: 18px;
-        height: 18px;
-        float: left;
-        margin-right: 8px;
-        opacity: 0.7;
-    }
-    {#datatables font size#}
-    th {
-        font-size: 12px;
-    }
-    td {
-        font-size: 11px;
-    }
         {#remove all EPA css transitions for leaflet map#}
-    * {
-         -o-transition-property: none !important;
-         -moz-transition-property: none !important;
-         -ms-transition-property: none !important;
-         -webkit-transition-property: none !important;
-         transition-property: none !important;
-    }
+{#    * {#}
+{#         -o-transition-property: none !important;#}
+{#         -moz-transition-property: none !important;#}
+{#         -ms-transition-property: none !important;#}
+{#         -webkit-transition-property: none !important;#}
+{#         transition-property: none !important;#}
+{#    }#}
 </style>
 
 <head>
@@ -89,73 +70,56 @@
          </div>
 
         <script>
-            // initialize the map
+            //initialize the map
             var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
 
             L.esri.basemapLayer('Imagery')
             .addTo(map);
 
 
-            // on map click, pop up lat long data and ajax call for cyan value
+            //generate map "pop-up" box
             var popup = L.popup();
 
-
-            //confirm example json data loaded.
+            //confirm example json data loaded
             console.log(myjson);
             var cyanValue = myjson.cellConcentration;
             console.log(cyanValue);
 
-
+            //on map click, REST API call
             function onMapClick(e) {
-
 
                 var mylatlong = {"latitude": (e.latlng.lat.toFixed(5).toString()),
                      "longitude": (e.latlng.lng.toFixed(5).toString()),
-                     "date": "/2017-12-08"
+                     "date": "2017-12-08"
                     }
 
+                    //ajax POST request lat long data to django
                     $.ajax({
                         type:"POST",
                         url: "rest/location/data",
                         dataType: "json",
                         data: mylatlong,
                         success: function(json, status, jqXHR) {
-                            alert(json);
                             myjson = json;
+
+                            //verify myjson variable updated after click
+                            console.log(myjson);
+                            cyanValue = myjson.meanCellConcentration;
+                            console.log(cyanValue);
+
+                            popup
+                                .setLatLng(e.latlng)
+                                .setContent(cyanValue.toLocaleString() + " cyanobacteria cells/ml (lat/long " + e.latlng.lat.toFixed(3).toString() + ", "+ e.latlng.lng.toFixed(3).toString() + ")")
+                                .openOn(map);
+
                         },
                         error: function(jqXHR, status) {
                             return null;
                         }
                     })
-
-{#                $.postJSON("rest/location/data",#}
-{#                    {"latitude": (e.latlng.lat.toFixed(5).toString()),#}
-{#                     "longitude": (e.latlng.lng.toFixed(5).toString()),#}
-{#                     "date": "/2017-12-08"#}
-{#                    }#}
-{#                {#}
-{#                   myjson = json;#}
-{#                });#}
-
-
-{#                $.getJSON("https://cyan.epa.gov/cyan/cyano/location/data/" + (e.latlng.lat.toFixed(5).toString()) + "/" + (e.latlng.lng.toFixed(5).toString()) + "/2017-12-08", function(json){#}
-{#                   myjson = json;#}
-{#                });#}
-                console.log(myjson);
-
-                cyanValue = myjson.cellConcentration;
-                console.log(cyanValue);
-
-                popup
-                    .setLatLng(e.latlng)
-                    .setContent(cyanValue.toLocaleString() + " cyanobacteria cells/ml (lat/long " + e.latlng.lat.toFixed(3).toString() + ", "+ e.latlng.lng.toFixed(3).toString() + ")")
-                    .openOn(map);
             }
 
             map.on('click', onMapClick);
-
-
-
 
 
             //map search function
