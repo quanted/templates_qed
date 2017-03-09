@@ -1,0 +1,21 @@
+<!--start 03ubertext_links_left_drupal-->
+<div class="region-sidebar-first region-sidebar">
+  <div id="block-og-menu-og-single-menu-block" class="block block-og-menu">
+    <h2 class="element-invisible">HMS</h2>
+    <ul class="menu">
+      {% for key, value in LINK_DICT.items %}
+        <h3 class="headerbar">{{ key|safe }}</h3>
+        {% for valueKey, valueValue in value.items %}<li class="menu-item{% if forloop.last %} menu-item-last{% endif %}"><a href="/hms/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
+          {% if MODEL == "hydrology" %}<ul class="menu">
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/baseflow" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "baseflow" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/evapotranspiration" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "evapotranspiration" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/precipitation" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "precipitation" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/soil_moisture" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "soil_moisture" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/surface_runoff" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "surface_runoff" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+            <li class="menu-item"><a href="/hms/{{ MODEL }}/temperature" title="{{ valueKey|safe }}" class="menu-link{% if PAGE == "temperature" %} active-trail active{% endif %}">{{ valueKey|safe }}</a></li>
+          </ul>{% endif %}
+        </li>{% endfor %}
+      {% endfor %}</ul>
+  </div>
+</div>
+<!--end 03ubertext_links_left_drupal-->
