@@ -5,8 +5,72 @@
 {% block content %}
     <div class="row">
         <div class="col-md-4">
+            {{ form.non_field_errors }}
             <form class="form-horizontal" method="post">{% csrf_token %}
-                {{ form.as_p }}
+                <div class="form-group">
+                    <label for="selectProductCats">Product Categories</label>
+                    <select multiple class="form-control" id="selectProductCats" name="category_types">
+                        {% for type in category_types %}<option value="{{ type.id }}">{{ type }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="InputPopulation">Population Size</label>
+                    <input type="text" class="form-control" id="InputPopulation" placeholder="2000000">
+                </div>
+                <div class="form-group">
+                    <label for="radioAge">Ages</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosAge" id="optionsAges1" value="age1" checked>
+                            0 - 5 years
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosAge" id="optionsAges2" value="age2">
+                            5-12 years
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosAge" id="optionsAges3" value="age3">
+                            13-16 years
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosAge" id="optionsAges4" value="age4">
+                            16-18 years
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosAge" id="optionsAges5" value="age5">
+                            18+ years
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="selectGender">Gender</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosGender" id="optionsGenderF" value="genderF">
+                            Female
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosGender" id="optionsGenderM" value="genderM">
+                            Male
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadiosGender" id="optionsGenderB" value="genderB" checked>
+                            Both
+                        </label>
+                    </div>
+                </div>
                 <button type="submit" class="save btn btn-default">Save</button>
 
             </form>
