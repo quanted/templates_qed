@@ -10,7 +10,9 @@
                 <div class="form-group">
                     <label for="selectProductCats">Product Categories</label>
                     <select multiple class="form-control" id="selectProductCats" name="category_types">
-                        {% for type in category_types %}<option value="{{ type.id }}">{{ type }}</option>{% endfor %}
+                        {% for x,y in all_categories %}
+                            <option value="{{ x }}">{{ y}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
