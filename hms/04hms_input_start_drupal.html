@@ -6,6 +6,11 @@
     <h1 class="page-title">{{ TITLE }}</h1>
     <div class="panel-pane pane-node-content" >
       <div class="pane-content">
+          {% if ERROR != "" %}
+              <div>
+                  <p>{{ ERROR }}</p>
+              </div>
+          {% endif %}
 {#        <div class="node node-page clearfix view-mode-full">#}
           <div class="model_inputs">
           <form method="post" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
