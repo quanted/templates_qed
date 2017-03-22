@@ -70,31 +70,42 @@
          </div>
 
         <script>
-           // initialize the map
-             var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
+            //initialize the map
+            var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
 
-             L.esri.basemapLayer('Imagery')
-             .addTo(map);
+            L.esri.basemapLayer('Imagery')
+            .addTo(map);
+
+
+            //generate map "pop-up" box
+            var popup = L.popup();
 
             //confirm example json data loaded
             console.log(myjson);
             var cyanValue = myjson.cellConcentration;
             var lakeName = myjson.name;
-            console.log(cyanValue, lakeName);
+            console.log(cyanValue);
 
-             //pop-up
-             var popup = L.popup();
+            //on map click, REST API call
+            function onMapClick(e) {
 
-             function onMapClick(e) {
+                var mylatlong = {"latitude": (e.latlng.lat.toString()),
+                     "longitude": (e.latlng.lng.toFixed(5).toString()),
+                     "date": "2017-12-08"
+                    }
+                var cyan_api = "https://cyan.epa.gov/cyan/cyano/location/data/";
+                var lat = e.latlng.lat.toString();
+                var lon = e.latlng.lng.toFixed(5).toString();
+                var dat = "2017-12-08";
+                var mylatlong2 = cyan_api.concat(lat,'/',lon,'/',dat);
 
-                 var url = "https://cyan.epa.gov/cyan/cyano/location/data/" + (e.latlng.lat.toFixed(5).toString()) + "/" + (e.latlng.lng.toFixed(5).toString()) + "/2017-12-08";
-                 console.log(url);
-
-                     $.ajax({
-                         type:"GET",
-                         url: url,
-                         dataType: "json",
-                         success: function(json, status, jqXHR) {
+                    //ajax POST request lat long data to django
+                    $.ajax({
+                        type:"GET",
+                        url: mylatlong2,
+                        dataType: "jsonp",
+                        //data: mylatlong2,
+                        success: function(json, status, jqXHR) {
                             myjson = json;
 
                             //verify myjson variable updated after click
@@ -108,15 +119,14 @@
                                 .setContent(cyanValue.toLocaleString() + " cyano cells/ml (" + lakeName.toLocaleString() + " lat/long " + e.latlng.lat.toFixed(3).toString() + ", "+ e.latlng.lng.toFixed(3).toString() + ")")
                                 .openOn(map);
 
-                         },
-                         error: function(jqXHR, status) {
+                        },
+                        error: function(jqXHR, status) {
                             return null;
-                         }
-                     })
-             }
+                        }
+                    })
+            }
 
-
-             map.on('click', onMapClick);
+            map.on('click', onMapClick);
 
 
             //map search function

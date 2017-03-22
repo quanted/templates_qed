@@ -1,30 +1,18 @@
-{% extends "hem_basic.html" %}
+{% extends "hem_base.html" %}
 
 {% block title %}Population Generation{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-4">
-            <form class="form-horizontal">
+            {{ form.non_field_errors }}
+            <form class="form-horizontal" method="post">{% csrf_token %}
                 <div class="form-group">
                     <label for="selectProductCats">Product Categories</label>
-                    <select multiple class="form-control" id="selectProductCats">
-                        <option>accessories</option>
-                        <option>arts and crafts</option>
-                        <option>auto products</option>
-                        <option>building materials</option>
-                        <option>child products</option>
-                        <option>clothing</option>
-                        <option>food contact</option>
-                        <option>home articles</option>
-                        <option>home maintenance</option>
-                        <option>home office</option>
-                        <option>inside the home</option>
-                        <option>landscape/yard</option>
-                        <option>paper products</option>
-                        <option>personal care</option>
-                        <option>pesticides</option>
-                        <option>pet care</option>
+                    <select multiple class="form-control" id="selectProductCats" name="category_types">
+                        {% for x,y in all_categories %}
+                            <option value="{{ x }}">{{ y}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
@@ -85,6 +73,8 @@
                         </label>
                     </div>
                 </div>
+                <button type="submit" class="save btn btn-default">Save</button>
+
             </form>
 
         </div>  <!-- col-md-4 div -->
@@ -92,7 +82,7 @@
 
         </div>
         <div class="col-md-3 text-center">
-            <button type="button" class="btn btn-primary btn-lg active">Run model</button>
+            <a href="results" class="btn btn-primary btn-lg active">Run model</a>
             <br>
             <br>
             <hr>

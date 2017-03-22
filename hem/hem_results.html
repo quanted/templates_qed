@@ -1,0 +1,26 @@
+{% extends "hem_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Population Generation{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+           <h2>Input Summary</h2>
+            <p><em>Ran {%now 'F d, Y'%}</em></p>
+            <h3>Consumer Products</h3>
+            <p>accessories >> handbags</p>
+            <h3>Population</h3>
+            <p>Total population of 200,000 with an age range of 26 - 70 year old females and males.</p>
+            <h3>Geography</h3>
+            <p>All regions selected</p>
+        </div>  <!-- col-md-8 div -->
+        <div class="col-md-4">
+
+        </div> <!-- col-md-4 div -->
+        <div class="col-md-4">
+        <h2>File(s)</h2>
+            <a href= {% static 'files/example.csv' %}>Download CSV File</a>
+        </div>  <!-- col-md-4 div -->
+    </div>  <!-- row div -->
+{% endblock %}
