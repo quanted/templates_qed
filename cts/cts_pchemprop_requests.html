@@ -513,7 +513,7 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
         }
     }
 
-    if (response.hasOwnProperty('method')) {
+    if (response.hasOwnProperty('method') && response['method'] !== null) {
         var method = response['method'];
         var has_spinner = $(table_cell).children('img#spinner').length;
         if (has_spinner > 0) { $(table_cell).html(""); }
