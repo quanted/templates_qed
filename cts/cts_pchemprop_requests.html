@@ -38,11 +38,10 @@ $(document).ready(function() {
 
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
 
-    // connectToSocket();
+    connectToSocket();
 
     if (batch_chems != null) {
 
-        // calls_tracker = batch_chems.length;
         calls_tracker = calculateTotalCalls([batch_chems.length], checkedCalcsAndProps);
         total_calls = calls_tracker;
         sessionStorage.setItem('calls_tracker', calls_tracker);
@@ -53,35 +52,37 @@ $(document).ready(function() {
 
         $('#pdfExport, #htmlExport').hide();
 
-        connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
-        // startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
+        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
+        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
 
     }
     else if (structure === null || structure.length == 0) {
         return;
     }
     else {
-        connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
-        // startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
+        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
+        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
     // Get Data button (pchem workflow) for gathering pchem props:
     $('#btn-pchem-data').on('click', function() {
         if (socket) {
-            // socket.disconnect();
-            socket.close();
+            socket.disconnect();
+            // socket.close();  // generic WS
         }
         checkedCalcsAndProps = buildCheckedCalcsAndProps(); // from scripts_pchemprop.js
         kowPH = $('#id_kow_ph').val();
-        connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
-        // startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
+        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
+        connectToSocket();
+        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     });
 
     // TODO: Cancel button, which removes pending tasks from celery queues:
     $('#btn-pchem-cancel').on('click', function () {
         console.log("pchem cancel button selected");
         console.log("socket object: " + socket);
-        socket.send(JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
+        // socket.send(JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
+        socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
         blockInterface(false);
     });
 
@@ -113,25 +114,45 @@ function buildCheckedCalcsAndProps () {
 
 function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
 
-    socket = new WebSocket("ws://" + window.location.host + "/channels/");
+    // Generic WebSocket handling
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // socket = new WebSocket("ws://" + window.location.host + "/channels/");
+    // // Call onopen directly if socket is already open
+    // if (socket.readyState == WebSocket.OPEN) socket.onopen();
+    // socket.onopen = function() {
+    //     console.log("new socket opened..");
+    //     startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
+    // }
+    // socket.onclose = function() { console.log("socket closed.."); }
+    // // incoming data pushed to client from redis:
+    // socket.onmessage = function(message_event) {
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    // Call onopen directly if socket is already open
-    if (socket.readyState == WebSocket.OPEN) socket.onopen();
-
-    socket.onopen = function() {
-        console.log("new socket opened..");
-        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
-    }
-
-    socket.onclose = function() {
-        console.log("socket closed..");
-    }
-
-    // incoming data pushed to client from redis:
-    // socket.on('message', function(data) {
-    socket.onmessage = function(message_event) {
+    // socket.io websocket handling
+    if (typeof io !== 'undefined') {
         
-        data = JSON.parse(message_event.data);
+        // connect to socket.io!
+        if (nodejs_host == 'nginx') {
+            socket = io.connect();  // docker way
+        }
+        else {
+            if (nodejs_port && nodejs_port != 80) {
+                socket = io.connect('http://' + nodejs_host + ':' + nodejs_port, {'force new connection': true});
+            }
+            else {
+                socket = io.connect(nodejs_host, {'force new connection': true});
+            }
+        }
+    }
+    else {
+        socket = null;
+        return;
+    }
+
+    socket.on('message', function(data) {
+        
+        // data = JSON.parse(message_event.data);  // generic WS
+        data = JSON.parse(data);
 
         // expecting node object for gentrans workflow:
         // this conditional may ALWAYS be true! should be !=
@@ -212,8 +233,8 @@ function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNo
                             });
                             cache = null; // Enable garbage collection
 
-                            // socket.send('get_data', pchem_data_json);
-                            socket.send(pchem_data_json);
+                            socket.send('get_data', pchem_data_json);
+                            // socket.send(pchem_data_json);  // generic WS
 
                         }
 
@@ -306,7 +327,7 @@ function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNo
 
         parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
 
-    }
+    })
 }
 
 
@@ -333,7 +354,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
 
     var pchem_data = buildRequestObject(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
 
-    makePchemRequests(pchem_data);
+    // makePchemRequests(pchem_data);
+    socket.emit('get_data', stringifyLargeJsonObject(pchem_data))
 
     addSpinnersToPchemTable(addDataToTable);
 
@@ -404,26 +426,27 @@ function buildRequestObject(structure, checkedCalcsAndProps, kowPH, node, curren
 }
 
 
-function makePchemRequests(pchem_data) {
-    for (var calc in checkedCalcsAndProps) {
-        pchem_data['calc'] = calc
-        for (var i = 0; i < checkedCalcsAndProps[calc].length; i++) {
-            var prop = checkedCalcsAndProps[calc][i]; // p-chem property..
-            pchem_data['prop'] = prop;
-            if (pchem_data['calc'] == 'chemaxon' && (pchem_data['prop'] == 'kow_wph' || pchem_data['prop'] == 'kow_no_ph')) {
-                for (method in chemaxon_kow_methods) {
-                    pchem_data['method'] = chemaxon_kow_methods[method];
-                    var request_json_string = stringifyLargeJsonObject(pchem_data);
-                    socket.send(request_json_string);
-                }
-            }
-            else {
-                var request_json_string = stringifyLargeJsonObject(pchem_data);
-                socket.send(request_json_string);
-            }
-        }
-    }
-}
+// Make request per calc-prop-method (for django channels)
+// function makePchemRequests(pchem_data) {
+//     for (var calc in checkedCalcsAndProps) {
+//         pchem_data['calc'] = calc
+//         for (var i = 0; i < checkedCalcsAndProps[calc].length; i++) {
+//             var prop = checkedCalcsAndProps[calc][i]; // p-chem property..
+//             pchem_data['prop'] = prop;
+//             if (pchem_data['calc'] == 'chemaxon' && (pchem_data['prop'] == 'kow_wph' || pchem_data['prop'] == 'kow_no_ph')) {
+//                 for (method in chemaxon_kow_methods) {
+//                     pchem_data['method'] = chemaxon_kow_methods[method];
+//                     var request_json_string = stringifyLargeJsonObject(pchem_data);
+//                     socket.send(request_json_string);
+//                 }
+//             }
+//             else {
+//                 var request_json_string = stringifyLargeJsonObject(pchem_data);
+//                 socket.send(request_json_string);
+//             }
+//         }
+//     }
+// }
 
 
 function addSpinnersToPchemTable(addDataToTable) {
