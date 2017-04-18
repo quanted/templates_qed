@@ -13,8 +13,12 @@
           {% endif %}
 {#        <div class="node node-page clearfix view-mode-full">#}
           <div class="model_inputs">
-          <form method="post" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
-            <table class="nostripe input_table">
+          {% if SUBMODEL == NULL %}
+              <form method="post" action="/hms/{{ MODEL }}/output" name="input_table">
+          {% else %}
+            <form id="inputOptions" method="post" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
+          {% endif %}
+              <table class="nostripe input_table">
               <thead>
                 <tr><th scope="col">Input</th><th scope="col">Value</th></tr>
               </thead>

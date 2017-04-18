@@ -22,6 +22,26 @@
             </table>
           <br>
             <table id="resultsTable" class="display" cellspacing="0" width="100%" role="grid">
+            {% if MODEL == 'precip_compare' %}
+                <thead>
+                    <tr>
+                        <th>{{ COLUMN1 }}</th>
+                        <th>{{ COLUMN2 }}</th>
+                        <th>{{ COLUMN3 }}</th>
+                        <th>{{ COLUMN4 }}</th>
+                        <th>{{ COLUMN5 }}</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>{{ COLUMN1 }}</th>
+                        <th>{{ COLUMN2 }}</th>
+                        <th>{{ COLUMN3 }}</th>
+                        <th>{{ COLUMN4 }}</th>
+                        <th>{{ COLUMN5 }}</th>
+                    </tr>
+                </tfoot>
+            {% else %}
                 <thead>
                     <tr>
                         <th>{{ COLUMN1 }}</th>
@@ -34,6 +54,7 @@
                         <th>{{ COLUMN2 }}</th>
                     </tr>
                 </tfoot>
+            {% endif %}
                 <tbody>
                 {% if DATA.items %}
                     {% for key, values in DATA.items %}
@@ -49,4 +70,5 @@
                 {% endif %}
                 </tbody>
             </table>
+          <button onclick="saveToJSON('{{ SUBMODEL }}' + '_data', '{{ ALLDATA }}')" style="text-align: center;padding: 0.5882em 1.1765em">Export JSON</button>
 
