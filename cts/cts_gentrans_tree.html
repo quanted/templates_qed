@@ -558,11 +558,11 @@ function getMolecularInfo(node) {
                     return;
                 }
                 //node.data = data['data'];  // add mol info to node data
-		for (var k in data['data']) {
-			if (k in node.data) {
-				node.data[k] = data['data'][k];
-			}
-		}		
+        		for (var k in data['data']) {
+        			if (k in node.data) {
+        				node.data[k] = data['data'][k];
+        			}
+        		}		
 
                 buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
 
