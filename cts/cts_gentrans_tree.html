@@ -535,7 +535,7 @@ function getMolecularInfo(node) {
     // Check node for molecular info, download if node
     // doesn't have any:
     if (node.data.hasOwnProperty("molecularInfo")) {
-        buildMolInfoTable(molInfoTable, node, node.data.molecularInfo);
+        buildMolInfoTable(molInfoTable, node, node.data);
         // $("#" + node.id).children('img').toggleClass("selectedMetabolite");  // highlight node
         $(product_node).toggleClass('selectedMetabolite');
         var molInfoHeader = $(molInfo).siblings('h3')[0];
@@ -557,8 +557,14 @@ function getMolecularInfo(node) {
                     console.log(textStatus);
                     return;
                 }
-                node.data.molecularInfo = data['data'];  // add mol info to node data
-                buildMolInfoTable(molInfoTable, node, data['data']);  // build mol info table
+                //node.data = data['data'];  // add mol info to node data
+        		for (var k in data['data']) {
+        			if (k in node.data) {
+        				node.data[k] = data['data'][k];
+        			}
+        		}		
+
+                buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
 
                 $(product_node).addClass("selectedMetabolite");
                 // $("#" + node.id).children('img').addClass("selectedMetabolite");  // highlight node

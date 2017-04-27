@@ -3,7 +3,7 @@
 var kowPH; // pH for logD
 var smiles, name, mass, formula, time;
 
-var chemaxon_kow_methods = ['KLOP', 'PHYS', 'VG'];
+var jchem_methods = ['KLOP', 'PHYS', 'VG'];
 var checkedCalcsAndProps, structure; // format --> {'calc': ['checked_prop', ..], ..}
 var spinner_html = '<img src="/static_qed/cts/images/loader.gif" id="spinner" />';
 var calls_tracker = 0;  // keeps track of pchem data calls for metabolites
@@ -42,6 +42,7 @@ $(document).ready(function() {
 
     if (batch_chems != null) {
 
+        // calls_tracker = batch_chems.length;
         calls_tracker = calculateTotalCalls([batch_chems.length], checkedCalcsAndProps);
         total_calls = calls_tracker;
         sessionStorage.setItem('calls_tracker', calls_tracker);
@@ -52,7 +53,6 @@ $(document).ready(function() {
 
         $('#pdfExport, #htmlExport').hide();
 
-        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
 
     }
@@ -60,7 +60,6 @@ $(document).ready(function() {
         return;
     }
     else {
-        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
@@ -68,11 +67,9 @@ $(document).ready(function() {
     $('#btn-pchem-data').on('click', function() {
         if (socket) {
             socket.disconnect();
-            // socket.close();  // generic WS
         }
         checkedCalcsAndProps = buildCheckedCalcsAndProps(); // from scripts_pchemprop.js
         kowPH = $('#id_kow_ph').val();
-        // connectToSocket(structure, checkedCalcsAndProps, kowPH, null, null, null);
         connectToSocket();
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     });
@@ -80,8 +77,6 @@ $(document).ready(function() {
     // TODO: Cancel button, which removes pending tasks from celery queues:
     $('#btn-pchem-cancel').on('click', function () {
         console.log("pchem cancel button selected");
-        console.log("socket object: " + socket);
-        // socket.send(JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
         socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
         blockInterface(false);
     });
@@ -112,23 +107,8 @@ function buildCheckedCalcsAndProps () {
 }
 
 
-function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
+function connectToSocket() {
 
-    // Generic WebSocket handling
-    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // socket = new WebSocket("ws://" + window.location.host + "/channels/");
-    // // Call onopen directly if socket is already open
-    // if (socket.readyState == WebSocket.OPEN) socket.onopen();
-    // socket.onopen = function() {
-    //     console.log("new socket opened..");
-    //     startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
-    // }
-    // socket.onclose = function() { console.log("socket closed.."); }
-    // // incoming data pushed to client from redis:
-    // socket.onmessage = function(message_event) {
-    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    // socket.io websocket handling
     if (typeof io !== 'undefined') {
         
         // connect to socket.io!
@@ -143,15 +123,16 @@ function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNo
                 socket = io.connect(nodejs_host, {'force new connection': true});
             }
         }
+
     }
     else {
         socket = null;
         return;
     }
 
+    // incoming data pushed to client from redis:
     socket.on('message', function(data) {
         
-        // data = JSON.parse(message_event.data);  // generic WS
         data = JSON.parse(data);
 
         // expecting node object for gentrans workflow:
@@ -233,8 +214,7 @@ function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNo
                             });
                             cache = null; // Enable garbage collection
 
-                            socket.send('get_data', pchem_data_json);
-                            // socket.send(pchem_data_json);  // generic WS
+                            socket.emit('get_data', pchem_data_json);
 
                         }
 
@@ -327,7 +307,7 @@ function connectToSocket(structure, checkedCalcsAndProps, kowPH, node, currentNo
 
         parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
 
-    })
+    });
 }
 
 
@@ -352,24 +332,15 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
     node_tracker = node;
     addDataToTable_tracker = addDataToTable;
 
-    var pchem_data = buildRequestObject(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
+    var pchem_data = {};
 
-    // makePchemRequests(pchem_data);
-    socket.emit('get_data', stringifyLargeJsonObject(pchem_data))
-
-    addSpinnersToPchemTable(addDataToTable);
-
-}
-
-
-function buildRequestObject(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
-    
     var pchem_data = {
         'chemical': structure,
         'ph': kowPH,
         'node': node,
         'pchem_request': checkedCalcsAndProps
     };
+
 
     // adding new nodes stuff:
     if (nodes != null) {
@@ -422,47 +393,9 @@ function buildRequestObject(structure, checkedCalcsAndProps, kowPH, node, curren
         pchem_data['mass'] = pchem_data['node']['data']['mass'];
     }
 
-    return pchem_data;
-}
-
-
-// Make request per calc-prop-method (for django channels)
-// function makePchemRequests(pchem_data) {
-//     for (var calc in checkedCalcsAndProps) {
-//         pchem_data['calc'] = calc
-//         for (var i = 0; i < checkedCalcsAndProps[calc].length; i++) {
-//             var prop = checkedCalcsAndProps[calc][i]; // p-chem property..
-//             pchem_data['prop'] = prop;
-//             if (pchem_data['calc'] == 'chemaxon' && (pchem_data['prop'] == 'kow_wph' || pchem_data['prop'] == 'kow_no_ph')) {
-//                 for (method in chemaxon_kow_methods) {
-//                     pchem_data['method'] = chemaxon_kow_methods[method];
-//                     var request_json_string = stringifyLargeJsonObject(pchem_data);
-//                     socket.send(request_json_string);
-//                 }
-//             }
-//             else {
-//                 var request_json_string = stringifyLargeJsonObject(pchem_data);
-//                 socket.send(request_json_string);
-//             }
-//         }
-//     }
-// }
-
-
-function addSpinnersToPchemTable(addDataToTable) {
-    for (var calc in checkedCalcsAndProps) {
-        for (var i = 0; i < checkedCalcsAndProps[calc].length; i++) {
-            var prop = checkedCalcsAndProps[calc][i]; // p-chem property..
-            var tblCell = $('.' + calc + '.' + prop); // table cell for spinner..
-            if (addDataToTable) { $(tblCell).html(spinner_html); }
-        }
-    }
-}
-
-
-function stringifyLargeJsonObject(json_obj) {
+    // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];
-    var json_string = JSON.stringify(json_obj, function(key, value) {
+    var pchem_data_json = JSON.stringify(pchem_data, function(key, value) {
         if (typeof value === 'object' && value !== null) {
             if (cache.indexOf(value) !== -1) {
                 // Circular reference found, discard key
@@ -474,7 +407,21 @@ function stringifyLargeJsonObject(json_obj) {
         return value;
     });
     cache = null; // Enable garbage collection
-    return json_string;
+
+
+    // Send data to cts_nodejs server:
+    socket.emit('get_data', pchem_data_json);
+
+
+    // adds spinners to table cells
+    for (var calc in checkedCalcsAndProps) {
+        for (var i = 0; i < checkedCalcsAndProps[calc].length; i++) {
+            var prop = checkedCalcsAndProps[calc][i]; // p-chem property..
+            var tblCell = $('.' + calc + '.' + prop); // table cell for spinner..
+            if (addDataToTable) { $(tblCell).html(spinner_html); }
+        }
+    }
+
 }
 
 
@@ -566,7 +513,7 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
         }
     }
 
-    if (response.hasOwnProperty('method') && response['method'] !== null) {
+    if (response.hasOwnProperty('method') && response['method'] != null) {
         var method = response['method'];
         var has_spinner = $(table_cell).children('img#spinner').length;
         if (has_spinner > 0) { $(table_cell).html(""); }
