@@ -55,10 +55,45 @@
               dom: 'frtp'
           });
       });
-      function saveToJSON(fileName, data) {
+
+      function saveToJSON(submodel) {
+          var fileName = submodel + "_data";
+          var jsonData = "";
+          $('#resultsTable').DataTable().rows().every(function(){
+              jsonData += this.data().toString().replace(/([^,]*)\,{1}([^*]*)\,{0}/g, '"$1": [$2],');
+          });
+          jsonData = jsonData.substring(0, jsonData.length-1);
+          var metaData = "";
+          $('#metaTable').DataTable().rows().every(function(){
+              metaData += this.data().toString().replace(/([^,]*)\,{1}([^*]*)\,{0}/g, '"$1": "$2",');
+          });
+          metaData = metaData.substring(0, metaData.length-1);
+          var outputData = '{"dataset": "' + submodel + '", "metadata": {' + metaData + '}, "data": {' + jsonData + "}}";
           var pom = document.createElement('a');
-          pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+          pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + encodeURIComponent(outputData));
           pom.setAttribute('download', fileName + '.json');
+          if (document.createEvent) {
+              var event = document.createEvent('MouseEvents');
+              event.initEvent('click', true, true);
+              pom.dispatchEvent(event);
+          }
+          else {
+              pom.click();
+          }
+      }
+
+      function saveToCSV(submodel) {
+          var fileName = submodel + "_data";
+          var table = $('#resultsTable').DataTable();
+          var data = table.rows().data().toArray();
+          var colNum = table.columns().nodes().length;
+          var reg = "([^,]*,){1}([^,]*)\,{" + (colNum-1).toString() + "}";
+          var re = new RegExp(reg, "g");
+          var tableData = data.toString().replace(re, "$1 $2\n");
+          var metaData = $('#metaTable').DataTable().rows().data().toArray();
+          var pom = document.createElement('a');
+          pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(submodel + " metadata\n" + metaData + "\n" + submodel + " data\ndate, data\n" + tableData));
+          pom.setAttribute('download', fileName + '.csv');
           if (document.createEvent) {
               var event = document.createEvent('MouseEvents');
               event.initEvent('click', true, true);
