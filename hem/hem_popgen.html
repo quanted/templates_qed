@@ -4,27 +4,16 @@
 
 {% block title %}Population Generation{% endblock %}
 
-{% block stylesheet %}
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-{% endblock %}
+
 
 {% block javascript %}
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="{% static 'js/popgen.js' %} "></script>
 {% endblock %}
 
 {% block content %}
     <div class="row" >
         <div class="col-sm-10 col-md-9">
-            <!-- Product or chemicals selection -->
-            <div class="container">
-                <label class="checkbox-inline">
-                    <input type="checkbox" data-height="45" id="toggleProducts" data-on="Chemicals >>" data-off="Products >>" data-onstyle="primary" data-offstyle="info" checked data-toggle="toggle">
-                </label>
-                <!--<button type="button" class="btn btn-warning">Chemicals >></button> -->
-            </div>
-        <hr>
             <!-- Model selection inputs -->
         <form class="form-horizontal" method="POST">{% csrf_token %}
             <div class="row">
@@ -42,9 +31,6 @@
                         <select class="form-control" name="sub_category" required="required" onchange="categorysync(value)" id="sub_category">
                         </select>
                     </div>
-                    <!-- popgen population inputs -->
-                    {{ form|crispy }}
-
                 </div>
                 <div class="col-md-1 col-sm-2">
                 <!-- 2nd column place holder -->
@@ -124,27 +110,6 @@
 
         </form>
     </div>
-     <!--   </div> <!-- card division holder -->
-     <!--  </div> -->
-    <div class="col-md-3">
-        <div class="card-block">
-            <a href="results" class="btn btn-primary btn-lg active">Run model</a>
-            <br>
-            <br>
-            <hr>
-            <h3>Input Summary</h3>
-            <p class="text-left" id="textProduct">Products: </p>
-            <p class="text-left" id="textPopupation">Population: </p>
-            <p class="text-left" id="textGender">Gender: Both </p>
-            <p class="text-left" id="textAge">Age Selection Between: 0 - 5 years </p>
-            <hr>
-            <h3>Estimated Run Time</h3>
-            <p>0 minutes</p>
-            <p>
-                <small>How do we calculate this?</small>
-            </p>
-        </div>
-      </div>  <!-- col-md-5 div -->
     </div>  <!-- row div -->
 
 {% endblock %}
