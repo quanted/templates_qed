@@ -337,17 +337,29 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
     var pchem_data = {
         'chemical': structure,
         'ph': kowPH,
-        'node': node,
+        // 'node': node,
         'pchem_request': checkedCalcsAndProps
     };
-    // if (node != null) {
-    //     pchem_data['node'] = node['data'];
-    // }
+    if (node != null) {
+        var _node_data = {};
+        for (n in node.data) {
+            if (n != 'html') {
+                _node_data[n] = node['data'][n];
+            }
+        }
+        pchem_data['node'] = _node_data;
+    }
 
 
     // adding new nodes stuff:
     if (nodes != null) {
-        pchem_data['nodes'] = nodes;  // add nodes key (list of nodes)
+        pchem_data['nodes'] = Array();
+        for (n in nodes) {
+            var _node = Object.assign({}, nodes[n]);
+            delete _node.html  // html key:val because it's huge
+            pchem_data['nodes'].push(_node);
+        }
+        // pchem_data['nodes'] = nodes;  // add nodes key (list of nodes)
     }
 
     if (run_type != null) {
@@ -393,7 +405,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
     }
     var is_one_chemical = !('nodes' in pchem_data);
     if (workflow == 'gentrans' && is_one_chemical) {
-        pchem_data['mass'] = pchem_data['node']['data']['mass'];
+        // pchem_data['mass'] = pchem_data['node']['data']['mass'];
+        pchem_data['mass'] = pchem_data['node']['mass'];
     }
 
     // var pchem_data_json = JSON.stringify(pchem_data);

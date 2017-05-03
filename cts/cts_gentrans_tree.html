@@ -558,7 +558,8 @@ function getMolecularInfo(node) {
 
     // Check node for molecular info, download if node
     // doesn't have any:
-    if (node.data.hasOwnProperty("molecularInfo")) {
+    // if (node.data.hasOwnProperty("molecularInfo")) {
+    if (node.hasOwnProperty('data') && Object.keys(node['data']).length > 0) {
         buildMolInfoTable(molInfoTable, node, node.data);
         // $("#" + node.id).children('img').toggleClass("selectedMetabolite");  // highlight node
         $(product_node).toggleClass('selectedMetabolite');
