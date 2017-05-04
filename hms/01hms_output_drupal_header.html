@@ -49,10 +49,12 @@
     <script type="text/javascript" language="javascript" class="init">
       $(document).ready(function(){
           $('#resultsTable').DataTable({
-              dom: 'frtlp'
+              dom: 'frtlp',
+              "scrollX": true
           });
           $('#metaTable').DataTable({
-              dom: 'frtp'
+              dom: 'frtp',
+              "scrollX": true
           });
       });
 
@@ -84,15 +86,19 @@
 
       function saveToCSV(submodel) {
           var fileName = submodel + "_data";
+          var tableData = "";
           var table = $('#resultsTable').DataTable();
-          var data = table.rows().data().toArray();
-          var colNum = table.columns().nodes().length;
-          var reg = "([^,]*,){1}([^,]*)\,{" + (colNum-1).toString() + "}";
-          var re = new RegExp(reg, "g");
-          var tableData = data.toString().replace(re, "$1 $2\n");
+          table.rows().every(function(){
+              tableData += this.data().toString();
+              tableData += "\n";
+          });
           var metaData = $('#metaTable').DataTable().rows().data().toArray();
+          var columns = [];
+          table.columns().every(function(index){
+             columns.push('"' + $(table.columns(index).header()).html() + '"');
+          });
           var pom = document.createElement('a');
-          pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(submodel + " metadata\n" + metaData + "\n" + submodel + " data\ndate, data\n" + tableData));
+          pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(submodel + " metadata\n" + metaData + "\n" + submodel + " data\n" + columns.toString() + "\n" + tableData));
           pom.setAttribute('download', fileName + '.csv');
           if (document.createEvent) {
               var event = document.createEvent('MouseEvents');
