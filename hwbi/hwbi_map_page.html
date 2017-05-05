@@ -324,18 +324,16 @@ function ready(error, us, commute) {
                var county = hwbiByFIPS.get(d.id);
                tooltip.select(".state").text(county.state);
                tooltip.select(".name").text(county.name);
-         tooltip.select(".hwbi").html('<text>Well-Being:  </text>' + '<span class="moe right">&plusmn;' + formatHwbi(county.moe) + "</span>" + '<span class="hwbi right">' + formatHwbi(county.hwbi) + '</span>');
-         tooltip.select(".cn").html('<text>Connection to Nature:  </text>' + '<span class="cn_moe right">&plusmn;' + formatHwbi(county.cn_moe) + "</span>" + '<span class="cn right">' + formatHwbi(county.cn) + '</span>');
-         tooltip.select(".cf").html('<text>Cultural Fulfillment:  </text>' + '<span class="cf_moe right">&plusmn;' + formatHwbi(county.cf_moe) + "</span>" + '<span class="cf right">' + formatHwbi(county.cf) + '</span>');
-         tooltip.select(".ed").html('<text>Education:  </text>' + '<span class="ed_moe right">&plusmn;' + formatHwbi(county.ed_moe) + "</span>" + '<span class="ed right">' + formatHwbi(county.ed) + '</span>');
-         tooltip.select(".he").html('<text>Health:  </text>' + '<span class="he_moe right">&plusmn;' + formatHwbi(county.he_moe) + "</span>" + '<span class="he right">' + formatHwbi(county.he) + '</span>');
-         tooltip.select(".lt").html('<text>Leisure Time:  </text>' + '<span class="lt_moe right">&plusmn;' + formatHwbi(county.lt_moe) + "</span>" + '<span class="lt right">' + formatHwbi(county.lt) + '</span>');
-         tooltip.select(".ls").html('<text>Living Standards:  </text>' + '<span class="ls_moe right">&plusmn;' + formatHwbi(county.ls_moe) + "</span>" + '<span class="ls right">' + formatHwbi(county.ls) + '</span>');
-         tooltip.select(".ss").html('<text>Safety &amp; Security:  </text>' + '<span class="ss_moe right">&plusmn;' + formatHwbi(county.ss_moe) + "</span>" + '<span class="ss right">' + formatHwbi(county.ss) + '</span>');
-         tooltip.select(".sc").html('<text>Social Cohesion:  </text>' + '<span class="sc_moe right">&plusmn;' + formatHwbi(county.sc_moe) + "</span>" + '<span class="sc right">' + formatHwbi(county.sc) + '</span>');
-// currFIPS = d.id;
-               // updateTooltip();
-               // timeout = setTimeout(updateClasses, 250);
+                 tooltip.select(".hwbi").html('<text>Well-Being:  </text>' + '<span class="moe right">&plusmn;' + formatHwbi(county.moe) + "</span>" + '<span class="hwbi right">' + formatHwbi(county.hwbi) + '</span>');
+                 tooltip.select(".cn").html('<text>Connection to Nature:  </text>' + '<span class="cn_moe right">&plusmn;' + formatHwbi(county.cn_moe) + "</span>" + '<span class="cn right">' + formatHwbi(county.cn) + '</span>');
+                 tooltip.select(".cf").html('<text>Cultural Fulfillment:  </text>' + '<span class="cf_moe right">&plusmn;' + formatHwbi(county.cf_moe) + "</span>" + '<span class="cf right">' + formatHwbi(county.cf) + '</span>');
+                 tooltip.select(".ed").html('<text>Education:  </text>' + '<span class="ed_moe right">&plusmn;' + formatHwbi(county.ed_moe) + "</span>" + '<span class="ed right">' + formatHwbi(county.ed) + '</span>');
+                 tooltip.select(".he").html('<text>Health:  </text>' + '<span class="he_moe right">&plusmn;' + formatHwbi(county.he_moe) + "</span>" + '<span class="he right">' + formatHwbi(county.he) + '</span>');
+                 tooltip.select(".lt").html('<text>Leisure Time:  </text>' + '<span class="lt_moe right">&plusmn;' + formatHwbi(county.lt_moe) + "</span>" + '<span class="lt right">' + formatHwbi(county.lt) + '</span>');
+                 tooltip.select(".ls").html('<text>Living Standards:  </text>' + '<span class="ls_moe right">&plusmn;' + formatHwbi(county.ls_moe) + "</span>" + '<span class="ls right">' + formatHwbi(county.ls) + '</span>');
+                 tooltip.select(".ss").html('<text>Safety &amp; Security:  </text>' + '<span class="ss_moe right">&plusmn;' + formatHwbi(county.ss_moe) + "</span>" + '<span class="ss right">' + formatHwbi(county.ss) + '</span>');
+                 tooltip.select(".sc").html('<text>Social Cohesion:  </text>' + '<span class="sc_moe right">&plusmn;' + formatHwbi(county.sc_moe) + "</span>" + '<span class="sc right">' + formatHwbi(county.sc) + '</span>');
+
           })
           .on("mouseout", function() {
               d3.select(this).classed("selected", false);
