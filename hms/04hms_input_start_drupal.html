@@ -16,7 +16,7 @@
           {% if SUBMODEL == NULL %}
               <form method="post" action="/hms/{{ MODEL }}/output/" name="input_table">
           {% else %}
-            <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
+              <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
           {% endif %}
               <table class="nostripe input_table">
               <thead>
