@@ -12,7 +12,7 @@
     <link rel="stylesheet" href=https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css />
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-    <script src="static/scripts/waterslayer.js"></script>
+    <script src="/static_qed/pisces/scripts/waterslayer.js"></script>
 
     <style>
         #map {
@@ -38,6 +38,74 @@
                 selectHUCs(this.value);
             });
         });
+
+
+
+        function onStreamMapClick(e){
+            getStreamData(e.latlng.lat, e.latlng.lng);
+        }
+
+        //TESTING FUNCTION FOR STREAM DATA AJAX CALL. CURRENTLY NOT WORKING
+        function getStreamData(lat, lng)
+        {
+            //var url = "/ecoregion";
+            var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+
+            var latLngData = { "latitude": lat.toString(), "longitude": lng.toString() };
+            latitude = lat.toString();
+            longitude = lng.toString();
+            $('#latVal').html(latitude);
+            $('#lngVal').html(longitude);
+
+            var postData = new FormData();
+            postData.append("pGeometry","POINT(" + longitude + " " + latitude + ")");
+            postData.append("pGeometryMod", "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84");
+            postData.append("pPointIndexingMethod", "DISTANCE");
+            postData.append("pPointIndexingMaxDis t", 25);
+            postData.append("pOutputPathFlag", "TRUE");
+            postData.append("pReturnFlowlineGeomFlag", "TRUE");
+            postData.append("optOutCS", "SRSNAME=urn:ogc:def:crs:OGC::CRS84");
+            postData.append("optOutPrettyPrint", 0);
+
+            ptIndexParams = {
+                 "pGeometry"               : "POINT(" + longitude + " " + latitude + ")"
+                ,"pGeometryMod"            : "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84"
+                ,"pPointIndexingMethod"    : "DISTANCE"
+                ,"pPointIndexingMaxDis t"  : "25"
+                ,"pOutputPathFlag"         : "TRUE"
+                ,"pReturnFlowlineGeomFlag" : "TRUE"
+                ,"optOutCS"                : "SRSNAME=urn:ogc:def:crs:OGC::CRS84"
+                ,"optOutPrettyPrint"       : "0"
+                };
+
+
+
+            //var jsonData = JSON.stringify(ptIndexParams);
+            var objTest = jQuery.isPlainObject(ptIndexParams);
+            $('#ecoRegionName').html(ptIndexParams);
+            $.ajax({
+                type: "POST",
+                url: url,
+                processData: false,
+                contentType: false,
+                //contentType: "application/x-www-form-urlencoded",
+                //dataType: "json",
+                data: ptIndexParams,
+                success: function (data, status, jqXHR) {
+                    alert(data);
+                    $('#ecoRegionId').html(data['id']);
+                    $('#ecoRegionName').html(data['name']);
+                    return data;
+                },
+                error: function (jqXHR, status) {
+                    $('#ecoRegionId').html("ERROR");
+                    return null;
+                }
+
+            })
+        }
+
+
     </script>
 </head>
 <body>
@@ -86,7 +154,9 @@
         }).addTo(map);
 
         L.control.layers(streamNetwork).addTo(map);
+
+        map.on('click', onStreamMapClick);
     </script>
-    <script src="static/scripts/piscesfilter.js"></script>
+{#    <script src="/static_qed/pisces/scripts/piscesfilter.js"></script>#}
 </body>
 </html>
