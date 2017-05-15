@@ -1,36 +1,87 @@
-<html>
+<style>
+    #map {
+        width: 100%;
+        height: 450px;
+    }
+     #streamData {
+        padding: 10px;
+        width: 100%;
+	}
+    {#datatables font size#}
+    th {
+        font-size: 12px;
+    }
+    td {
+        font-size: 11px;
+    }
+        {#remove all EPA css transitions for leaflet map#}
+    * {
+         -o-transition-property: none !important;
+         -moz-transition-property: none !important;
+         -ms-transition-property: none !important;
+         -webkit-transition-property: none !important;
+         transition-property: none !important;
+    }
+</style>
+
 <head>
-    <title>A Leaflet map!</title>
+
+    <!-- jquery -->
+    <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+    <!-- datatables import -->
+    <link rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
+    <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
+
+    <!-- leaflet import -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href=https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css />
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
+    <!-- local js -->
     <script src="/static_qed/pisces/scripts/waterslayer.js"></script>
+    <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
 
-    <style>
-        #map {
-            height: 65%;
-        }
+</head>
 
-        .legend {
-            line-height: 18px;
-            color: #555;
-        }
-        .legend i {
-            width: 18px;
-            height: 18px;
-            float: left;
-            margin-right: 8px;
-            opacity: 0.7;
-        }
-    </style>
+<body>
+  <div class="panel-display panel-1col clearfix" >
+    <div class="panel-panel panel-col">
+
+        <!--- content div -->
+        <div class="col-md-10">
+          <div class="box multi news">
+            <div class="pane-content" id="mapDiv">
+              <p><strong>Zoom in and select a stream</strong> on the map to view a list of fish species associated with the stream segment.</p>
+                <!-- leaflet map div -->
+                <div id="map"></div>
+                <!-- strean data div -->
+                <div class="row" id="streamData">
+                    <div class="col-md-12">
+                        <table id="fish_data_table" class="display" cellspacing="0" width="40%">
+                            <tr>
+                                <td>Latitude:</td>
+                                <td id="latVal">0.00</td>
+                                <td>Longitude:</td>
+                                <td id="lngVal">0.00</td>
+                            </tr>
+                            <tr>
+                                <td>EcoRegion ID:</td>
+                                <td id="ecoRegionId">0</td>
+                                <td>EcoRegion Name:</td>
+                                <td id="ecoRegionName"></td>
+                            </tr>
+                            <td>
+                                <tr><button onclick="getEcoRegion()">Get EcoRegion</button></tr>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
     <script>
         $(document).ready(function () {
 
@@ -38,8 +89,6 @@
                 selectHUCs(this.value);
             });
         });
-
-
 
         function onStreamMapClick(e){
             getStreamData(e.latlng.lat, e.latlng.lng);
@@ -79,7 +128,6 @@
                 };
 
 
-
             //var jsonData = JSON.stringify(ptIndexParams);
             var objTest = jQuery.isPlainObject(ptIndexParams);
             $('#ecoRegionName').html(ptIndexParams);
@@ -101,62 +149,29 @@
                     $('#ecoRegionId').html("ERROR");
                     return null;
                 }
-
             })
         }
 
 
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h3>Two columns</h3>
-        <p>Get two columns <strong>starting at desktops and scaling to large desktops</strong>.</p>
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-10">
-                <div id="map"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table id="fish_data_table" class="display" cellspacing="0" width="40%">
-                    <tr>
-                        <td>Latitude:</td>
-                        <td id="latVal">0.00</td>
-                        <td>Longitude:</td>
-                        <td id="lngVal">0.00</td>
-                    </tr>
-                    <tr>
-                        <td>EcoRegion ID:</td>
-                        <td id="ecoRegionId">0</td>
-                        <td>EcoRegion Name:</td>
-                        <td id="ecoRegionName"></td>
-                    </tr>
-                    <td>
-                        <tr><button onclick="getEcoRegion()">Get EcoRegion</button></tr>
-                    </td>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-
         // initialize the map
-        var map = L.map('map').setView([33.95, -83.38], 8);
+        var map = L.map('map').setView([33.95, -83.38], 11);
 
-        // load a tile layer
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            subdomains: ['a', 'b', 'c']
-        }).addTo(map);
+        // load basemap
+            L.esri.basemapLayer('Topographic')
+            .addTo(map);
+
 
         L.control.layers(streamNetwork).addTo(map);
 
         map.on('click', onStreamMapClick);
+
     </script>
-{#    <script src="/static_qed/pisces/scripts/piscesfilter.js"></script>#}
+
+
+{#  <script src="/static_qed/pisces/scripts/piscesfilter.js"></script>#}
+
+    </div>
+  </div>
+
 </body>
 </html>
