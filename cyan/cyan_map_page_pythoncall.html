@@ -8,14 +8,14 @@
         padding: 10px;
         width: 100%;
 	}
-        {#remove all EPA css transitions for leaflet map#}
-{#    * {#}
-{#         -o-transition-property: none !important;#}
-{#         -moz-transition-property: none !important;#}
-{#         -ms-transition-property: none !important;#}
-{#         -webkit-transition-property: none !important;#}
-{#         transition-property: none !important;#}
-{#    }#}
+{#    remove all EPA css transitions for leaflet map#}
+    * {
+         -o-transition-property: none !important;
+         -moz-transition-property: none !important;
+         -ms-transition-property: none !important;
+         -webkit-transition-property: none !important;
+         transition-property: none !important;
+    }
 </style>
 
 <head>
@@ -70,6 +70,25 @@
          </div>
 
         <script>
+
+            //get current date
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd
+            }
+
+            if(mm<10) {
+                mm='0'+mm
+            }
+
+            date = yyyy+'-'+mm+'-'+dd;
+            console.log(date);
+
+
             //initialize the map
             var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
 
@@ -80,6 +99,15 @@
             //generate map "pop-up" box
             var popup = L.popup();
 
+
+            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.2012094.0403.1551C.L3.EF3.v670.CIcyano2.png',
+{#           var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.'+yyyy+'097.'+mm+dd+'.1541C.L3.EF3.v670.CIcyano1.png',#}
+                imageBounds = [[26.387, -82.445], [30.614, -79.852]];
+
+
+
+
+
             //confirm example json data loaded
             console.log(myjson);
             var cyanValue = myjson.cellConcentration;
@@ -88,10 +116,11 @@
 
             //on map click, REST API call
             function onMapClick(e) {
+                L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
                 var mylatlong = {"latitude": (e.latlng.lat.toString()),
                      "longitude": (e.latlng.lng.toFixed(5).toString()),
-                     "date": "2017-12-08"
+                     "date": date
                     }
 
                     //ajax POST request lat long data to django

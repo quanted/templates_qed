@@ -1,0 +1,177 @@
+<style>
+    #map {
+        width: 100%;
+        height: 450px;
+    }
+     #streamData {
+        padding: 10px;
+        width: 100%;
+	}
+    {#datatables font size#}
+    th {
+        font-size: 12px;
+    }
+    td {
+        font-size: 11px;
+    }
+        {#remove all EPA css transitions for leaflet map#}
+    * {
+         -o-transition-property: none !important;
+         -moz-transition-property: none !important;
+         -ms-transition-property: none !important;
+         -webkit-transition-property: none !important;
+         transition-property: none !important;
+    }
+</style>
+
+<head>
+
+    <!-- jquery -->
+    <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+    <!-- datatables import -->
+    <link rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
+    <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
+
+    <!-- leaflet import -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"></script>
+
+    <!-- local js -->
+    <script src="/static_qed/pisces/scripts/waterslayer.js"></script>
+    <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
+
+</head>
+
+<body>
+  <div class="panel-display panel-1col clearfix" >
+    <div class="panel-panel panel-col">
+
+        <!--- content div -->
+        <div class="col-md-10">
+          <div class="box multi news">
+            <div class="pane-content" id="mapDiv">
+              <p><strong>Zoom in and select a stream</strong> on the map to view a list of fish species associated with the stream segment.</p>
+                <!-- leaflet map div -->
+                <div id="map"></div>
+                <!-- strean data div -->
+                <div class="row" id="streamData">
+                    <div class="col-md-12">
+                        <table id="fish_data_table" class="display" cellspacing="0" width="40%">
+                            <tr>
+                                <td>Latitude:</td>
+                                <td id="latVal">0.00</td>
+                                <td>Longitude:</td>
+                                <td id="lngVal">0.00</td>
+                            </tr>
+                            <tr>
+                                <td>EcoRegion ID:</td>
+                                <td id="ecoRegionId">0</td>
+                                <td>EcoRegion Name:</td>
+                                <td id="ecoRegionName"></td>
+                            </tr>
+                            <td>
+                                <tr><button onclick="getEcoRegion()">Get EcoRegion</button></tr>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#selectHUC").on('change', function () {
+                selectHUCs(this.value);
+            });
+        });
+
+        function onStreamMapClick(e){
+            getStreamData(e.latlng.lat, e.latlng.lng);
+        }
+
+        //TESTING FUNCTION FOR STREAM DATA AJAX CALL. CURRENTLY NOT WORKING
+        function getStreamData(lat, lng)
+        {
+            //var url = "/ecoregion";
+            var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+
+            var latLngData = { "latitude": lat.toString(), "longitude": lng.toString() };
+            latitude = lat.toString();
+            longitude = lng.toString();
+            $('#latVal').html(latitude);
+            $('#lngVal').html(longitude);
+
+            var postData = new FormData();
+            postData.append("pGeometry","POINT(" + longitude + " " + latitude + ")");
+            postData.append("pGeometryMod", "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84");
+            postData.append("pPointIndexingMethod", "DISTANCE");
+            postData.append("pPointIndexingMaxDis t", 25);
+            postData.append("pOutputPathFlag", "TRUE");
+            postData.append("pReturnFlowlineGeomFlag", "TRUE");
+            postData.append("optOutCS", "SRSNAME=urn:ogc:def:crs:OGC::CRS84");
+            postData.append("optOutPrettyPrint", 0);
+
+            ptIndexParams = {
+                 "pGeometry"               : "POINT(" + longitude + " " + latitude + ")"
+                ,"pGeometryMod"            : "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84"
+                ,"pPointIndexingMethod"    : "DISTANCE"
+                ,"pPointIndexingMaxDis t"  : "25"
+                ,"pOutputPathFlag"         : "TRUE"
+                ,"pReturnFlowlineGeomFlag" : "TRUE"
+                ,"optOutCS"                : "SRSNAME=urn:ogc:def:crs:OGC::CRS84"
+                ,"optOutPrettyPrint"       : "0"
+                };
+
+
+            //var jsonData = JSON.stringify(ptIndexParams);
+            var objTest = jQuery.isPlainObject(ptIndexParams);
+            $('#ecoRegionName').html(ptIndexParams);
+            $.ajax({
+                type: "POST",
+                url: url,
+                processData: false,
+                contentType: false,
+                //contentType: "application/x-www-form-urlencoded",
+                //dataType: "json",
+                data: ptIndexParams,
+                success: function (data, status, jqXHR) {
+                    alert(data);
+                    $('#ecoRegionId').html(data['id']);
+                    $('#ecoRegionName').html(data['name']);
+                    return data;
+                },
+                error: function (jqXHR, status) {
+                    $('#ecoRegionId').html("ERROR");
+                    return null;
+                }
+            })
+        }
+
+
+        // initialize the map
+        var map = L.map('map').setView([33.95, -83.38], 11);
+
+        // load basemap
+            L.esri.basemapLayer('Topographic')
+            .addTo(map);
+
+
+        L.control.layers(streamNetwork).addTo(map);
+
+        map.on('click', onStreamMapClick);
+
+    </script>
+
+
+{#  <script src="/static_qed/pisces/scripts/piscesfilter.js"></script>#}
+
+    </div>
+  </div>
+
+</body>
+</html>

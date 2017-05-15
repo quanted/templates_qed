@@ -144,6 +144,12 @@ function connectToSocket() {
         // expecting node object for gentrans workflow:
         // this conditional may ALWAYS be true! should be !=
 
+        if (workflow == 'pchemprop' && run_type == 'single') {
+            parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
+            return;
+        }
+
+
         calls_tracker--;
         sessionStorage.setItem('calls_tracker', calls_tracker);
         console.log("calls tracker: " + calls_tracker);
