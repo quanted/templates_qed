@@ -1,0 +1,128 @@
+{% extends "hem_base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Population Generation{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option_chem" checked> Chemicals
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option_prod"> Products
+        </label>
+    </div>
+    <hr>
+    <div class="row chemicals" id="chem_form">
+        <h2>Choose Chemicals</h2>
+    </div>
+    <div class="row products" style="display: none">
+        <h2>ChooseProducts</h2>
+    </div>
+    <div class="row" >
+        <div class="col-sm-10 col-md-9">
+            <!-- Model selection inputs -->
+        <form class="form-horizontal" method="POST">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-5 col-sm-8">
+                    <div class="form-group">
+                        <label for="selectProductCats">Product Categories</label>
+                        <select multiple class="form-control" id="selectProductCats" required="required" onchange="productsync(value)" name="category_types">
+                            {% for x,y in all_categories %}
+                                <option id="categoriesCBox" onclick="CategoryId({{x}})" value="{{ x }}">{{ y}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group" style="visibility: hidden" id="div_categories">
+                        <label for="selectProductSubCats">Select Sub-categories</label>
+                        <select class="form-control" name="sub_category" required="required" onchange="categorysync(value)" id="sub_category">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-2">
+                <!-- 2nd column place holder -->
+
+                </div>
+                <div class="col-md-4 col-sm-6">
+                <!-- 3rd column place holder -->
+                    <div class="form-group">
+                        <label for="selectGender">Gender Selection</label><hr>
+                        <div class="radio" id="radioage" >
+                            <label>
+                                <input type="radio" onclick="gendersync(this)" name="optionsRadiosGender" id="optionsGenderF" value="F">
+                                Female
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="gendersync(this)" name="optionsRadiosGender" id="optionsGenderM" value="M">
+                                Male
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="gendersync(this)" name="optionsRadiosGender" id="optionsGenderB" value="B" checked>
+                                Both
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="radioAge">Ages Selection</label><hr>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges1" value="age1" checked>
+                                0 - 5 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges2" value="age2">
+                                6-12 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges3" value="age3">
+                                13-15 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges4" value="age4">
+                                16-18 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges5" value="age5">
+                                19-49 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges6" value="age6">
+                                49+ years
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper" align="center">
+                <hr>
+                <button type="submit" class="btn btn-success btn-lg">Submit data</button>
+                <button type="reset" class="btn btn-secondary btn-lg">Reset</button>
+            </div>
+
+        </form>
+    </div>
+    </div>  <!-- row div -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="{% static 'js/popgen.js' %} "></script>
+{% endblock %}
