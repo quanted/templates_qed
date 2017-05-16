@@ -41,9 +41,93 @@
     <!-- local js -->
     <script src="/static_qed/pisces/scripts/waterslayer.js"></script>
     <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
+    <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
 
+    <script>
+        $(document).ready(function () {
+
+            $("#selectHUC").on('change', function () {
+                selectHUCs(this.value);
+            });
+        });
+
+
+        function onStreamMapClick(e){
+            getStreamData(e.latlng.lat, e.latlng.lng);
+        }
+
+        function getStreamData(lat, lng)
+        {
+            var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+            latitude = lat.toString();
+            longitude = lng.toString();
+            $('#latVal').html(latitude);
+            $('#lngVal').html(longitude);
+
+            ptIndexParams = {
+                 'pGeometry':'POINT(' + longitude + ' ' + latitude + ')'
+                ,'pGeometryMod':'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+                ,'pPointIndexingMethod':'DISTANCE'
+                ,'pPointIndexingMaxDist':25
+                ,'pOutputPathFlag':'TRUE'
+                ,'pReturnFlowlineGeomFlag':'TRUE'
+                ,'optOutCS':'SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+                ,'optOutPrettyPrint':0
+                };
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                jsonp: true,
+                data: ptIndexParams,
+                success: function (data, status, jqXHR) {
+                    var streamData = JSON.parse(data);
+                    $('#ecoRegionId').html(streamData.output.ary_flowlines[0].gnis_id);
+                    $('#ecoRegionName').html(streamData.output.ary_flowlines[0].gnis_name);
+                    $('#comid').html(streamData.output.ary_flowlines[0].comid);
+                    $('#huc12').html(streamData.output.ary_flowlines[0].wbd_huc12);
+                    addStreamSeg(streamData);
+                    return data;
+                },
+                error: function (jqXHR, status) {
+                    $('#ecoRegionId').html("ERROR");
+                    return null;
+                }
+            })
+        }
+
+        function addStreamSeg(streamData){
+            var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function(c){
+                return c.reverse();
+            });
+            var huc8 = getStreamHuc(streamData.output.ary_flowlines[0].wbd_huc12);
+            var huc8geom = huc8.map(function(c){
+                return c.reverse();
+            });
+
+            if (map.hasLayer(selectedStream)){
+                map.removeLayer(selectedStream);
+                map.removeLayer(huc8geom);
+            }
+
+            selectedStream = L.polyline(latlon, {color: '#02bfe7', weight: 8, opacity: 0.9, lineJoin: 'round'}).addTo(map);
+            streamHuc = L.polygon(huc8, {color: 'white', weight: 2, opacity: 0.9, fillColor: '#9ecae1', fillOpacity: 0.3}).addTo(map);
+            map.fitBounds(selectedStream.getBounds());
+        }
+
+        function getStreamHuc(hucID){
+            var huc8 = null;
+            L.geoJSON(huc8s, {filter: function(feature, layer){
+                if(feature.properties.HUC_CODE === hucID.substring(0,8)){
+                    huc8 =  feature.geometry.coordinates[0];
+                }
+            }});
+            return huc8;
+        }
+
+
+    </script>
 </head>
-
 <body>
   <div class="panel-display panel-1col clearfix" >
     <div class="panel-panel panel-col">
@@ -64,114 +148,52 @@
                                 <td id="latVal">0.00</td>
                                 <td>Longitude:</td>
                                 <td id="lngVal">0.00</td>
+                                <td>Com ID</td>
+                                <td id="comid"></td>
                             </tr>
                             <tr>
                                 <td>EcoRegion ID:</td>
                                 <td id="ecoRegionId">0</td>
                                 <td>EcoRegion Name:</td>
                                 <td id="ecoRegionName"></td>
+                                <td>WBD HUC12</td>
+                                <td id="huc12"></td>
                             </tr>
-                            <td>
+
                                 <tr><button onclick="getEcoRegion()">Get EcoRegion</button></tr>
-                            </td>
+
                         </table>
                     </div>
                 </div>
             </div>
           </div>
         </div>
-
-
-    <script>
-        $(document).ready(function () {
-
-            $("#selectHUC").on('change', function () {
-                selectHUCs(this.value);
-            });
-        });
-
-        function onStreamMapClick(e){
-            getStreamData(e.latlng.lat, e.latlng.lng);
-        }
-
-        //TESTING FUNCTION FOR STREAM DATA AJAX CALL. CURRENTLY NOT WORKING
-        function getStreamData(lat, lng)
-        {
-            //var url = "/ecoregion";
-            var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
-
-            var latLngData = { "latitude": lat.toString(), "longitude": lng.toString() };
-            latitude = lat.toString();
-            longitude = lng.toString();
-            $('#latVal').html(latitude);
-            $('#lngVal').html(longitude);
-
-            var postData = new FormData();
-            postData.append("pGeometry","POINT(" + longitude + " " + latitude + ")");
-            postData.append("pGeometryMod", "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84");
-            postData.append("pPointIndexingMethod", "DISTANCE");
-            postData.append("pPointIndexingMaxDis t", 25);
-            postData.append("pOutputPathFlag", "TRUE");
-            postData.append("pReturnFlowlineGeomFlag", "TRUE");
-            postData.append("optOutCS", "SRSNAME=urn:ogc:def:crs:OGC::CRS84");
-            postData.append("optOutPrettyPrint", 0);
-
-            ptIndexParams = {
-                 "pGeometry"               : "POINT(" + longitude + " " + latitude + ")"
-                ,"pGeometryMod"            : "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84"
-                ,"pPointIndexingMethod"    : "DISTANCE"
-                ,"pPointIndexingMaxDis t"  : "25"
-                ,"pOutputPathFlag"         : "TRUE"
-                ,"pReturnFlowlineGeomFlag" : "TRUE"
-                ,"optOutCS"                : "SRSNAME=urn:ogc:def:crs:OGC::CRS84"
-                ,"optOutPrettyPrint"       : "0"
-                };
-
-
-            //var jsonData = JSON.stringify(ptIndexParams);
-            var objTest = jQuery.isPlainObject(ptIndexParams);
-            $('#ecoRegionName').html(ptIndexParams);
-            $.ajax({
-                type: "POST",
-                url: url,
-                processData: false,
-                contentType: false,
-                //contentType: "application/x-www-form-urlencoded",
-                //dataType: "json",
-                data: ptIndexParams,
-                success: function (data, status, jqXHR) {
-                    alert(data);
-                    $('#ecoRegionId').html(data['id']);
-                    $('#ecoRegionName').html(data['name']);
-                    return data;
-                },
-                error: function (jqXHR, status) {
-                    $('#ecoRegionId').html("ERROR");
-                    return null;
-                }
-            })
-        }
-
-
-        // initialize the map
-        var map = L.map('map').setView([33.95, -83.38], 11);
-
-        // load basemap
-            L.esri.basemapLayer('Topographic')
-            .addTo(map);
-
-
-        L.control.layers(streamNetwork).addTo(map);
-
-        map.on('click', onStreamMapClick);
-
-    </script>
-
-
-{#  <script src="/static_qed/pisces/scripts/piscesfilter.js"></script>#}
-
     </div>
   </div>
+<script> // initialize the map
+    var map = L.map('map').setView([33.95, -83.38], 8);
+    // sets variable for selected stream
+    var selectedStream;
+    // sets the Huc for the selected stream
+    var streamHuc;
 
+    // load a tile layer
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ['a', 'b', 'c']
+    }).addTo(map);
+
+    //L.control.layers(streamNetwork).addTo(map);
+    L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
+        layers: 4,
+        format: 'image/png',
+        minZoom: 0,
+        maxZoom: 18,
+        transparent: true
+    }).addTo(map);
+
+    map.on('click', onStreamMapClick);
+</script>
 </body>
+
 </html>
