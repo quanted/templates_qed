@@ -101,17 +101,23 @@
                 return c.reverse();
             });
             var huc8 = getStreamHuc(streamData.output.ary_flowlines[0].wbd_huc12);
-            var huc8geom = huc8.map(function(c){
-                return c.reverse();
-            });
+            var huc8geom;
+            if (huc8[0][0] < 0){
+                huc8geom = huc8.map(function(c){
+                    return c.reverse();
+                });
+            }
+            else{
+                huc8geom = huc8;
+            }
 
             if (map.hasLayer(selectedStream)){
                 map.removeLayer(selectedStream);
-                map.removeLayer(huc8geom);
+                map.removeLayer(streamHuc);
             }
 
             selectedStream = L.polyline(latlon, {color: '#02bfe7', weight: 8, opacity: 0.9, lineJoin: 'round'}).addTo(map);
-            streamHuc = L.polygon(huc8, {color: 'white', weight: 2, opacity: 0.9, fillColor: '#9ecae1', fillOpacity: 0.3}).addTo(map);
+            streamHuc = L.polygon(huc8geom, {color: 'white', weight: 2, opacity: 0.9, fillColor: '#9ecae1', fillOpacity: 0.3}).addTo(map);
             map.fitBounds(selectedStream.getBounds());
         }
 
@@ -171,7 +177,7 @@
     </div>
   </div>
 <script> // initialize the map
-    var map = L.map('map').setView([33.95, -83.38], 8);
+    var map = L.map('map').setView([33.95, -83.38], 11);
     // sets variable for selected stream
     var selectedStream;
     // sets the Huc for the selected stream
