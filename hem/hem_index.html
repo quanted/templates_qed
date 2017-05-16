@@ -7,18 +7,18 @@
 {% block content %}
     <div class="row">
         <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option_chem" onclick="displayh(this)" checked> Chemicals
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option_chem" checked> Chemicals
         </label>
         <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option_prod" onclick="displayh(this)"> Products
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option_prod"> Products
         </label>
     </div>
     <hr>
-    <div class="row" id="chem_form">
-        <h2>Chemicals</h2>
+    <div class="row chemicals" id="chem_form">
+        <h2>Choose Chemicals</h2>
     </div>
-    <div class="row" id="prod_form" style="display: 'none';">
-        <h2>Products</h2>
+    <div class="row products" style="display: none">
+        <h2>ChooseProducts</h2>
     </div>
     <div class="row" >
         <div class="col-sm-10 col-md-9">
