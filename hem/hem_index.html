@@ -1,7 +1,6 @@
 {% extends "hem_base.html" %}
 {% load staticfiles %}
 
-
 {% block title %}Population Generation{% endblock %}
 
 {% block content %}
@@ -11,22 +10,61 @@
             <!-- Model selection inputs -->
 
     <form method="POST" class="post-form">
-        <div class="row chemicals" id="chem_form">
+        <div class="row pc option_chem" id="chemicalH2">
             <h2>Choose Chemicals</h2>
         </div>
-        <div class="row products" style="display: none">
-            <h2>ChooseProducts</h2>
+        <div class="row pc option_prod" id="productH2">
+            <h2>Choose Products</h2>
         </div>
-        <div class="row">
+        <div class="radio">
             <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option_chem" checked> Chemicals
+                <input type="radio" name="inlineRadioOptions" id="option_chem" value="0" checked="checked"> Chemicals
             </label>
             <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option_prod"> Products
+                <input type="radio" name="inlineRadioOptions" id="option_prod" value="1"> Products
              </label>
         </div>
         <hr>
         {{ form.as_p }}
+         <div class="form-group">
+                        <label for="radioAge">Ages Selection</label><hr>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges1" value="age1" checked>
+                                0 - 5 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges2" value="age2">
+                                6-12 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges3" value="age3">
+                                13-15 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges4" value="age4">
+                                16-18 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges5" value="age5">
+                                19-49 years
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" onclick="agesync(this)" name="optionsRadiosAge" id="optionsAges6" value="age6">
+                                49+ years
+                            </label>
+                        </div>
+                    </div>
         <button type="submit" class="save btn btn-primary">Submit</button>{% csrf_token %}
     </form>
         </div>
@@ -35,6 +73,5 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="{% static 'js/popgen.js' %} "></script>
 {% endblock %}
