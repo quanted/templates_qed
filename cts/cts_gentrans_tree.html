@@ -89,7 +89,7 @@ $('#gen-select').change(function() {
 $('#btn-pchem-getdata').click(function () {
 
     checkedCalcsAndProps = buildCheckedCalcsAndProps();  // get current data
-
+    service = "pchem";
     kowPH = $('#id_kow_ph').val();
 
     if (socket) {
@@ -429,6 +429,16 @@ function init(json){
     // resizeCanvas(nodeList.slice(0, st.config.levelsToShow + 1), nodeHeight);
     //end
 
+    // // once st var is established, can loop st.nodes and get chem info..
+    // var st_nodes = st.graph.nodes;  // actual nodes from spacetree
+    // var nodes = [];
+    // for (node in st_nodes) {
+    //     // only get data up to selected generation limit:
+    //     // st_nodes[node].data['id'] = st_nodes[node].id;  // add node id to node data
+    //     // nodes.push(st_nodes[node].data);
+    //     molecular_info_request(st_nodes[node]);
+    // }
+
 }
 
 
@@ -535,6 +545,7 @@ function getMolecularInfo(node) {
     // }
 
     var molInfo = $('#mol-info-wrapper');
+    var _mol_info_keys = ['exactMass', 'formula', 'iupac', 'mass'];
 
     if ($(molInfo).has('p.intro-text').length > 0) {
         $(molInfo).children('p.intro-text').remove();
@@ -543,7 +554,7 @@ function getMolecularInfo(node) {
     // Clear existing pchemprop table for new data:
     clearPchemData(); // from scripts_pchemprop..
 
-    $('.node').children().removeClass("selectedMetabolite"); //unhighlight nodes
+    // $('.node').children().removeClass("selectedMetabolite"); //unhighlight nodes
 
     // only add node image if a different node has been clicked:
     if (!currentNode || node.id != currentNode.id) {
@@ -559,50 +570,18 @@ function getMolecularInfo(node) {
     // Check node for molecular info, download if node
     // doesn't have any:
     // if (node.data.hasOwnProperty("molecularInfo")) {
-    if (node.hasOwnProperty('data') && Object.keys(node['data']).length > 0) {
+    // if (node.hasOwnProperty('data') && Object.keys(node['data']).length > 0) {
+    if (node.hasOwnProperty('data') && node.data['iupac'] != null) {
         buildMolInfoTable(molInfoTable, node, node.data);
-        // $("#" + node.id).children('img').toggleClass("selectedMetabolite");  // highlight node
-        $(product_node).toggleClass('selectedMetabolite');
+        // // $("#" + node.id).children('img').toggleClass("selectedMetabolite");  // highlight node
+        // $(product_node).toggleClass('selectedMetabolite');
         var molInfoHeader = $(molInfo).siblings('h3')[0];
         if ($(molInfoHeader).hasClass('collapse-close')) {
                 $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
         }
     }
     else {
-        // add mol info to node.data.molecularInfo:
-        $.ajax({
-            url: '/cts/rest/molecule',
-            // url: '/rest/cts/molecule',
-            type: 'POST',
-            data: {'chemical': node.data.smiles},
-            dataType: 'json',
-            success: function(data) {
-                var data = jsonRepack(data);
-                if (data.status == false) {
-                    console.log(textStatus);
-                    return;
-                }
-                //node.data = data['data'];  // add mol info to node data
-        		for (var k in data['data']) {
-        			if (k in node.data) {
-        				node.data[k] = data['data'][k];
-        			}
-        		}		
-
-                buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
-
-                $(product_node).addClass("selectedMetabolite");
-                // $("#" + node.id).children('img').addClass("selectedMetabolite");  // highlight node
-
-                var molInfoHeader = $(molInfo).siblings('h3')[0];
-                if ($(molInfoHeader).hasClass('collapse-close')) {
-                    $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.log(textStatus);
-            }
-        });
+        molecular_info_request(node);
     }
 
     // Scroll to mol info molecule image upon right-clicked metabolite event:
@@ -621,6 +600,47 @@ function getMolecularInfo(node) {
         }
     }
 
+}
+
+
+function molecular_info_request(node) {
+    // add mol info to node.data.molecularInfo:
+    $.ajax({
+        url: '/cts/rest/molecule',
+        // url: '/rest/cts/molecule',
+        type: 'POST',
+        data: {'chemical': node.data.smiles},
+        dataType: 'json',
+        success: function(data) {
+            var data = jsonRepack(data);
+            if (data.status == false) {
+                console.log(textStatus);
+                return;
+            }
+            //node.data = data['data'];  // add mol info to node data
+            for (var k in data['data']) {
+                if (k in node.data) {
+                    node.data[k] = data['data'][k];
+                }
+            }
+
+            var product_node = $('img#' + node.id + '.metabolite[height=114]');
+            var molInfo = $('#mol-info-wrapper');
+            var molInfoTable = $(molInfo).children('table.mol-info-table');
+            buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
+
+            // $(product_node).addClass("selectedMetabolite");
+            // $("#" + node.id).children('img').addClass("selectedMetabolite");  // highlight node
+
+            var molInfoHeader = $(molInfo).siblings('h3')[0];
+            if ($(molInfoHeader).hasClass('collapse-close')) {
+                $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+    });
 }
 
 
@@ -663,7 +683,7 @@ function buildMolInfoTable(molTable, node, data) {
             newRow += key + '</td><td>';
             newRow += data[key] + '</td></tr>';
             $(molTable).find('tbody').append(newRow);
-            $("#" + node.id).children().toggleClass("selectedMetabolite"); //highlight node
+            // $("#" + node.id).children().toggleClass("selectedMetabolite"); //highlight node
         }
     }
 }
@@ -802,35 +822,20 @@ function handleTransformationProductsBatchRequest() {
 <script type="text/javascript">
 $(document).ready(function () {
 
-    var hidden_json = $('#hiddenJson').val();
+    // var hidden_json = $('#hiddenJson').val();
 
-    if (hidden_json != null) {
-        // expecting gentrans metabolites output to draw on jit canvas
+    // if (hidden_json != null) {
+    //     // expecting gentrans metabolites output to draw on jit canvas
+    //     var json = $.parseJSON($('#hiddenJson').val());
+    //     nodeHeight = 114
+    //     nodeWidth = 100
+    //     init(json);  // paint tree to canvas
+    // }
 
-        var json = $.parseJSON($('#hiddenJson').val());
-        var parent_image = $.parseHTML(json.name.trim());  // returns array of elements
 
 
-        // var trimmed_json = json;
-        // for (var i = 0; i < genMax; i++) {
-        //     for (key in json) {
-        //         trimmed_json[key] = json[key];
-        //     }
-        // }
+    // Could call cts_pchemprop_requests startPchemProp function here:
 
-        // set node height and width by getting it from parent node image (no scale popupBuilder one)
-        // nodeHeight = parent_image[0].height;
-        // nodeWidth = parent_image[0].width;
-        nodeHeight = 114
-        nodeWidth = 100
-
-        init(json);  // paint tree to canvas
-
-    }
-
-    // insert parent and following arrow into reaction pathways div:
-    // $(parent_image).css({'height': 60, 'width': 50});
-    // $('#reactionpathways').append(parent_image);
 
 
 });

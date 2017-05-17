@@ -1,7 +1,12 @@
 <!--start 04hms_input_start-->
 <script type="text/javascript" src="/static_qed/js/jquery.blockUI.js"></script>
 <script src="/static_qed/hms/js/scripts_input.js"></script>
-
+<style>
+    div.model_inputs{
+        font-size: smaller;
+        line-height: 15px;
+    }
+</style>
   <div class="main-column clearfix">
     <h1 class="page-title">{{ TITLE }}</h1>
     <div class="panel-pane pane-node-content" >
@@ -14,9 +19,9 @@
 {#        <div class="node node-page clearfix view-mode-full">#}
           <div class="model_inputs">
           {% if SUBMODEL == NULL %}
-              <form method="post" action="/hms/{{ MODEL }}/output" name="input_table">
+              <form method="post" action="/hms/{{ MODEL }}/output/" name="input_table">
           {% else %}
-            <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
+              <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
           {% endif %}
               <table class="nostripe input_table">
               <thead>
