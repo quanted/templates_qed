@@ -72,41 +72,36 @@
          </div>
 
         <script>
-           // initialize the map
-             var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
+            // initialize the map
+            var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
 
-             L.esri.basemapLayer('Imagery')
-             .addTo(map);
+            L.esri.basemapLayer('Imagery').addTo(map);
 
-             //pop-up
-             var popup = L.popup();
+            //pop-up
+            var popup = L.popup();
 
-                          //on map click, pop-up lat long info
-                          var popup = L.popup();
-                          function onMapClick(e) {
-                              popup
-                                  .setLatLng(e.latlng)
-                                  .setContent(e.latlng.toString())
-                                  .openOn(map);
-                          }
-                          map.on('click', onMapClick);
+            //on map click, pop-up lat long info
+            var popup = L.popup();
+            function onMapClick(e) {
+                popup.setLatLng(e.latlng)
+                    .setContent(e.latlng.toString())
+                    .openOn(map);
+            }
+            map.on('click', onMapClick);
 
-
-                    //style HUC 8 polygons
-                    var hucStyle = {
-                            fillColor: '#6baed6',
-                            weight: .5,
-                            opacity: 0.9,
-                            color: 'white',
-                            fillOpacity: 0.5
-                    };
-
-
-					//add huc8
-                    var huc8Layer = L.geoJson(huc8s, {
-                            style: hucStyle,
-{#                            onEachFeature: onEachFeature,#}
-                    }).addTo(map);
+            //style HUC 8 polygons
+            var hucStyle = {
+                fillColor: '#6baed6',
+                weight: .5,
+                opacity: 0.9,
+                color: 'white',
+                fillOpacity: 0.5
+            };
+		    //add huc8
+            var huc8Layer = L.geoJson(huc8s, {
+                style: hucStyle,
+{#                        onEachFeature: onEachFeature,#}
+            }).addTo(map);
 
 
 
