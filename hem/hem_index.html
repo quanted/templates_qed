@@ -29,79 +29,20 @@
                 <hr>
                 <div class="form-group pc option_chem">
                     <select class="form-control" name="selectChemical">
-                        <option value="1">100-00-5</option>
+                        <option value="1" selected>100-00-5</option>
                         <option value="2">100-01-6</option>
                         <option value="3">100-02-7</option>
                     </select>
                 </div>
                 <div class="form-group pc option_prod" style="display:none;">
                     <select class="form-control" name="selectProduct">
-                        <option value="1">Luggage</option>
+                        <option value="1" selected>Luggage</option>
                         <option value="2">Handbag</option>
                         <option value="3">Totes</option>
                     </select>
                 </div>
                 {{ form.as_p }}
-                <div class="form-group">
-                    <label for="selectGender">Gender Selection</label>
-                    <div class="radio" id="radioage">
-                        <label>
-                            <input type="radio" name="optionsRadiosGender" id="optionsGenderF" value="F">
-                            Female
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosGender" id="optionsGenderM" value="M">
-                            Male
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosGender" id="optionsGenderB" value="B" checked>
-                            Both
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="radioAge">Age Selection</label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges1" value="age1" checked>
-                            0 - 5 years
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges2" value="age2">
-                            6-12 years
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges3" value="age3">
-                            13-15 years
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges4" value="age4">
-                            16-18 years
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges5" value="age5">
-                            19-49 years
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadiosAge" id="optionsAges6" value="age6">
-                            49+ years
-                        </label>
-                    </div>
-                </div>
+
                 <button type="submit" class="save btn btn-primary">Submit</button>
                 {% csrf_token %}
             </form>
