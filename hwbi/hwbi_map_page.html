@@ -1,205 +1,180 @@
 <style>
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td, legend {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 fieldset, img {
-	border: 0;
+  border: 0;
 }
 caption, th {
-	text-align: left;
+  text-align: left;
 }
 .legend .legendheader {
-	font-family: Helvetica, sans-serif;
-	font-weight: bold;
-	font-size: 29px;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 29px;
 }
 .legend .ticklabel {
-	font-size: 29px;
-	font-family: Helvetica, sans-serif;
+  font-size: 29px;
+  font-family: Helvetica, sans-serif;
 }
 .left {
-	width: 20px;
-	float: left;
-	text-align: left;
+  width: 20px;
+  float: left;
+  text-align: left;
 }
 .right {
-	width: 25px;
-	float: right;
-	text-align: right;
+  width: 25px;
+  float: right;
+  text-align: right;
 }
 .exspace {
-	line-height: 2.0;
+  line-height: 2.0;
 }
 .domhead {
-	font-weight: bold;
-	font-size: 11px;
-	font-style: italic;
+  font-weight: bold;
+  font-size: 11px;
+  font-style: italic;
 }
 div.tooltip {
-	position: absolute;
-	text-align: left;
-	width: 180px;
-	padding: 10px;
-	font-size: 10px;
-	font-family: Helvetica, sans-serif;
-	background: #ffffff;
-	pointer-events: none;
-	opacity: 0;
-	border: 1px solid #ccc;
+  position: absolute;
+  text-align: left;
+  width: 180px;
+  padding: 10px;
+  font-size: 10px;
+  font-family: Helvetica, sans-serif;
+  background: #ffffff;
+  pointer-events: none;
+  opacity: 0;
+  border: 1px solid #ccc;
 }
 div.tooltip h3 {
-	font-size: 13px;
-	margin: 0 0 10px 0;
-	border-bottom: 2px solid #000;
-	padding-bottom: 6px;
-	line-height: 1.2em;
+  font-size: 13px;
+  margin: 0 0 10px 0;
+  border-bottom: 2px solid #000;
+  padding-bottom: 6px;
+  line-height: 1.2em;
 }
 div.tooltip .vals {
-	vertical-align: bottom;
+  vertical-align: bottom;
 }
 div.tooltip .state {
-	text-transform: uppercase;
-	margin-bottom: 4px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 div.tooltip .hwbi {
-	font-size: 11px;
-	font-weight: bold;
+  font-size: 11px;
+  font-weight: bold;
 }
 div.tooltip .moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .cn {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .cn_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .cf {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .cf_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .ed {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .ed_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .he {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .he_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .lt {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .lt_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .ls {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .ls_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .ss {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .ss_moe {
-	color: #aaa;
-	font-size: 11px;
+  color: #aaa;
+  font-size: 11px;
 }
 div.tooltip .sc {
-	font-size: 11px;
+  font-size: 11px;
 }
 div.tooltip .sc_moe {
-	color: #aaa;
-	font-size: 11px;
-}
-#countymap {
-	margin-top: 5px;
+  color: #aaa;
+  font-size: 11px;
 }
 .overlay {
-	fill: none;
-	pointer-events: all;
+  fill: none;
+  pointer-events: all;
 }
 .button {
-	fill: #000;
+  fill: #000;
 }
 .counties {
-	fill: none;
-	stroke: #fff;
-	stroke-width: 0.5px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
     stroke-linejoin: round;
 }
 .states {
-	fill: none;
-	stroke: #fff;
-	stroke-width: 1.5px;
-	stroke-linejoin: round;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
 }
 .counties path.selected {
-	stroke: #000;
-	stroke-width: 0.5px;
-	fill: #000;
+  stroke: #000;
+  stroke-width: 0.5px;
+  fill: #000;
 }
 .counties path.same {
-	fill: #cccccc;
+  fill: #cccccc;
 }
 .counties path.greater {
-	fill: red;
+  fill: red;
 }
 .counties path.lesser {
-	fill: green;
-}
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%; /* aspect ratio */
-    vertical-align: top;
-{#    overflow: hidden;#}
-}
-.svg-content-responsive {
-    display: inline-block;
-    position: absolute;
-    top: 10px;
-    left: 0;
+  fill: green;
 }
 </style>
 
 
 <div id="map-wrapper">
-
     <p><b>Select a county</b> to see how others compare.</p>
     <br>
-
-        <div id="tooltip" class="tooltip" style="opacity: 0; left: 752px; top: 70px;">
-
+        <div id="tooltip" class="tooltip">
             <div class="state">Maine</div>
-
             <h3 class="name">Penobscot County</h3>
-
             <div class="hwbi">22.0<span class="moe">0.6</span></div>
-
             <hr>
-
             <div> <text class="domhead exspace">Domain sub-indexes</text></div>
-
             <div class="cn">22.0<span class="cn_moe">0.6</span></div>
             <div class="cf">22.0<span class="cf_moe">0.6</span></div>
             <div class="ed">22.0<span class="ed_moe">0.6</span></div>
@@ -210,7 +185,6 @@ div.tooltip .sc_moe {
             <div class="sc">22.0<span class="sc_moe">0.6</span></div>
             <div class="_label exspace">(0 to 100 scale)</div>
         </div>
-
 </div>
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -218,11 +192,17 @@ div.tooltip .sc_moe {
 <script src="https://d3js.org/topojson.v1.min.js"></script>
 
 <script>
-var width = window.innerWidth,
-    height = window.innerHeight,
-    center = [width / 2, height / 2],
+
+var width = 1000,
+    height = 1000,
+    center = [width/2, height/2]
     defaultFill = "#e0e0e0";
+
 console.log(width);
+console.log(height);
+console.log(center);
+
+
 var formatHwbi = d3.format(".1f");
 var qcolors = ["#8c510a", "#D9A55F", "#e0e0e0", "#80cdc1", "#35978f"];
 var qlabels = ["Much More", "More", "About same", "Less", "Much Less"];
@@ -232,27 +212,30 @@ var currFIPS,
     hwbiByFIPS = d3.map();
 var projection = d3.geo.albersUsa()
     .scale(2250)
-{#    .scale(1280)#}
-    .translate([width / 2, height / 2]);
+    .translate([(width/2), (height / 2)]);
 var path = d3.geo.path()
     .projection(projection);
 var zoom = d3.behavior.zoom()
     .scaleExtent([1, 8])
     .on("zoom", move);
+
+
+//new html
 var svg = d3.select("body #map-wrapper")
+    //add a responsive svg to the map div
    .append("svg")
-       .attr("preserveAspectRatio", "xMinYMin meet")
-       .attr("viewBox", "0 0 1000 700") //aspect ratio. similar to scale
-   .append("svg")
-   .classed("svg-container", true) //container class to make it responsive
-   //responsive SVG needs these 2 attributes and no width and height attr
    .attr("preserveAspectRatio", "xMinYMin meet")
-   .attr("viewBox", "0 0 1950 350") //aspect ratio. similar to scale
+   .attr("viewBox", "0 0 1950 1250") //aspect ratio. similar to scale
    //class to make it responsive
+   .classed("svg-container", true) //container class to make it responsive
    .classed("svg-content-responsive", true)
-    .attr("id", "countymap")
+   //add "g" to svg container to zoomable area
   .append("g")
-    .call(zoom);
+    .attr("id", "zoomRegion")
+    .call(zoom)
+    .attr("transform", "translate(400)");
+
+
 svg.on("wheel.zoom", null);
 svg.on("mousewheel.zoom", null);
 svg.append("rect")
@@ -272,32 +255,25 @@ var tooltip = d3.select("#tooltip")
 // Legend
 var legend = svg.append("g")
     .attr("class", "legend");
-{#legend.append("rect")#}
-{#    .attr("x", width)#}
-{#    .attr("y", height - 325)#}
-{#    .attr("width", 100)#}
-{#    .attr("height", 100)#}
-{#    .attr("fill", "#ffffff")#}
-{#    .attr("opacity", 0.9);#}
 legend.append("text")
     .attr("class", "legendheader")
-    .attr("x", width - 190)
+    .attr("x", width + 100)
     .attr("y", height - 310)
     .text("Human");
 legend.append("text")
     .attr("class", "legendheader")
-    .attr("x", width - 190)
+    .attr("x", width + 100)
     .attr("y", height - 280)
     .text("Well-Being");
 legend.append("text")
     .attr("class", "legendheader")
-    .attr("x", width - 190)
+    .attr("x", width + 100)
     .attr("y", height - 250)
     .text("Index");
 legend.selectAll("rect.legend")
     .data([0, 1, 2, 3, 4])
   .enter().append("rect")
-    .attr("x", width - 190)
+    .attr("x", width + 100)
     .attr("y", function(d, i) { return height - i * 30 - 115; })
     .attr("width", 10)
     .attr("height", 30)
@@ -306,7 +282,7 @@ legend.selectAll(".ticklabel")
     .data([0, 1, 2, 3, 4])
   .enter().append("text")
     .attr("class", "ticklabel")
-    .attr("x", width - 175)
+    .attr("x", width + 120)
     .attr("y", function(d, i) { return height - i * 30 - 90; })
     .text(function(d, i) { return qlabels[i]; });
 queue()
@@ -341,36 +317,23 @@ function ready(error, us, commute) {
                tooltip.transition().duration(150)
                     .style("opacity", 1);
                // Position tooltip
-                tooltip.style("left", (d3.event.pageX - 430) + "px");
+                tooltip.style("left", (d3.event.pageX - window.innerWidth/4) + "px");
                 tooltip.style("top", (d3.event.pageY - 200) + "px");
-{#               if (d3.event.pageX > (width - 2000)) {#}
-{#                   tooltip.style("left", (d3.event.pageX - 230) + "px");#}
-{#               } else {#}
-{#                   tooltip.style("left", (d3.event.pageX + 20) + "px")#}
-{#                       .style("top", (d3.event.pageY - 80) + "px");#}
-{#               }#}
-{##}
-{#               if (d3.event.pageY > (height - 2000)) {#}
-{#                    tooltip.style("top", (d3.event.pageY - 160) + "px");#}
-{#               } else {#}
-{#                    tooltip.style("top", (d3.event.pageY + 50) + "px");#}
-{#               }#}
+
                // Populate tooltip
                var county = hwbiByFIPS.get(d.id);
                tooltip.select(".state").text(county.state);
                tooltip.select(".name").text(county.name);
-			   tooltip.select(".hwbi").html('<text>Well-Being:  </text>' + '<span class="moe right">&plusmn;' + formatHwbi(county.moe) + "</span>" + '<span class="hwbi right">' + formatHwbi(county.hwbi) + '</span>');
-			   tooltip.select(".cn").html('<text>Connection to Nature:  </text>' + '<span class="cn_moe right">&plusmn;' + formatHwbi(county.cn_moe) + "</span>" + '<span class="cn right">' + formatHwbi(county.cn) + '</span>');
-			   tooltip.select(".cf").html('<text>Cultural Fulfillment:  </text>' + '<span class="cf_moe right">&plusmn;' + formatHwbi(county.cf_moe) + "</span>" + '<span class="cf right">' + formatHwbi(county.cf) + '</span>');
-			   tooltip.select(".ed").html('<text>Education:  </text>' + '<span class="ed_moe right">&plusmn;' + formatHwbi(county.ed_moe) + "</span>" + '<span class="ed right">' + formatHwbi(county.ed) + '</span>');
-			   tooltip.select(".he").html('<text>Health:  </text>' + '<span class="he_moe right">&plusmn;' + formatHwbi(county.he_moe) + "</span>" + '<span class="he right">' + formatHwbi(county.he) + '</span>');
-			   tooltip.select(".lt").html('<text>Leisure Time:  </text>' + '<span class="lt_moe right">&plusmn;' + formatHwbi(county.lt_moe) + "</span>" + '<span class="lt right">' + formatHwbi(county.lt) + '</span>');
-			   tooltip.select(".ls").html('<text>Living Standards:  </text>' + '<span class="ls_moe right">&plusmn;' + formatHwbi(county.ls_moe) + "</span>" + '<span class="ls right">' + formatHwbi(county.ls) + '</span>');
-			   tooltip.select(".ss").html('<text>Safety &amp; Security:  </text>' + '<span class="ss_moe right">&plusmn;' + formatHwbi(county.ss_moe) + "</span>" + '<span class="ss right">' + formatHwbi(county.ss) + '</span>');
-			   tooltip.select(".sc").html('<text>Social Cohesion:  </text>' + '<span class="sc_moe right">&plusmn;' + formatHwbi(county.sc_moe) + "</span>" + '<span class="sc right">' + formatHwbi(county.sc) + '</span>');
-// currFIPS = d.id;
-               // updateTooltip();
-               // timeout = setTimeout(updateClasses, 250);
+                 tooltip.select(".hwbi").html('<text>Well-Being:  </text>' + '<span class="moe right">&plusmn;' + formatHwbi(county.moe) + "</span>" + '<span class="hwbi right">' + formatHwbi(county.hwbi) + '</span>');
+                 tooltip.select(".cn").html('<text>Connection to Nature:  </text>' + '<span class="cn_moe right">&plusmn;' + formatHwbi(county.cn_moe) + "</span>" + '<span class="cn right">' + formatHwbi(county.cn) + '</span>');
+                 tooltip.select(".cf").html('<text>Cultural Fulfillment:  </text>' + '<span class="cf_moe right">&plusmn;' + formatHwbi(county.cf_moe) + "</span>" + '<span class="cf right">' + formatHwbi(county.cf) + '</span>');
+                 tooltip.select(".ed").html('<text>Education:  </text>' + '<span class="ed_moe right">&plusmn;' + formatHwbi(county.ed_moe) + "</span>" + '<span class="ed right">' + formatHwbi(county.ed) + '</span>');
+                 tooltip.select(".he").html('<text>Health:  </text>' + '<span class="he_moe right">&plusmn;' + formatHwbi(county.he_moe) + "</span>" + '<span class="he right">' + formatHwbi(county.he) + '</span>');
+                 tooltip.select(".lt").html('<text>Leisure Time:  </text>' + '<span class="lt_moe right">&plusmn;' + formatHwbi(county.lt_moe) + "</span>" + '<span class="lt right">' + formatHwbi(county.lt) + '</span>');
+                 tooltip.select(".ls").html('<text>Living Standards:  </text>' + '<span class="ls_moe right">&plusmn;' + formatHwbi(county.ls_moe) + "</span>" + '<span class="ls right">' + formatHwbi(county.ls) + '</span>');
+                 tooltip.select(".ss").html('<text>Safety &amp; Security:  </text>' + '<span class="ss_moe right">&plusmn;' + formatHwbi(county.ss_moe) + "</span>" + '<span class="ss right">' + formatHwbi(county.ss) + '</span>');
+                 tooltip.select(".sc").html('<text>Social Cohesion:  </text>' + '<span class="sc_moe right">&plusmn;' + formatHwbi(county.sc_moe) + "</span>" + '<span class="sc right">' + formatHwbi(county.sc) + '</span>');
+
           })
           .on("mouseout", function() {
               d3.select(this).classed("selected", false);
@@ -382,7 +345,8 @@ function ready(error, us, commute) {
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
         .attr("class", "states")
         .attr("d", path);
-    // Zoom buttons
+
+    // Zoom black square
     svg.selectAll(".button")
         .data(['zoom_in', 'zoom_out'])
       .enter()
@@ -392,22 +356,24 @@ function ready(error, us, commute) {
           .attr({x: 50, width: 50, height: 50})
         .append("rect")
             .attr("y", function(d,i) { return 50 + 55*i })
-            .attr({x: 50, width: 50, height: 50})
+            .attr({x: -350, width: 50, height: 50})
+
     // Plus button
     svg.select("#zoom_in")
       .append("line")
-        .attr({x1: 60, y1: 75, x2: 90, y2: 75 })
+        .attr({x1: -310, y1: 75, x2: -340, y2: 75 })
         .attr("stroke", "#fff")
         .attr("stroke-width", "6px");
     svg.select("#zoom_in")
       .append("line")
-        .attr({x1: 75, y1: 60, x2: 75, y2: 90 })
+        .attr({x1: -325, y1: 60, x2: -325, y2: 90 })
         .attr("stroke", "#fff")
         .attr("stroke-width", "6px");
+
     // Minus button
     svg.select("#zoom_out")
       .append("line")
-        .attr({x1: 60, y1: 130, x2: 90, y2: 130 })
+        .attr({x1: -310, y1: 130, x2: -340, y2: 130 })
         .attr("stroke", "#fff")
         .attr("stroke-width", "6px");
     svg.selectAll(".button")

@@ -35,6 +35,14 @@
       border-radius: 2px;
       pointer-events: none;
     }
+    #riv {
+        font-size: 14px;
+        text-align: right;
+    }
+    .radio-toolbar {
+        font-size: 14px;
+        text-align: center;
+    }
     /* set county & state input fields */
     #statecounty {
         color: #74646e;
@@ -42,22 +50,22 @@
         padding: 2px 10px 2px 2px;
         font-size: 14px;
     }
-    /* size button font */
+    /* size button fonts */
+    #radios-id {
+        font-size: 12px;
+    }
+    #radios-id-2 {
+        font-size: 12px;
+    }
+    #updateWeights {
+        font-size: 12px;
+    }
     #updateServices {
         font-size: 12px;
     }
-    p {
-        font-size: 14px;
-        }
-    .radio-toolbar label {
-        color: #74646e;
-        display:inline-block;
-        padding:4px 11px;
-        font-family:Arial;
-        font-size:13px;
-    }
 </style>
-<script src = "/static_qed/hwbi/js/d3.v3.min.js"></script>
+
+<script src="/static_qed/hwbi/js/d3.v3.min.js"></script>
 <script src="/static_qed/hwbi/js/d3.tip.v0.6.3.js"></script>
 <script src="/static_qed/js/jquery.blockUI.js"></script>
 <script src="/static_qed/js/scripts_input.js"></script>
@@ -100,21 +108,92 @@
     </div>
 
 
-
       <!-- riv boxes-->
       <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 40%;">
 
-        <!-- Moved from riv.html-->
-        <style>
-        input[type=number] {
-            width: 30px;
-        }
+{#      <div id="riv" class="panel panel-default col-lg-6 col-md-6 col-sm-4 col-xs-5" style = "float:left; width: 25%;">#}
+{##}
+{#        <p>#}
+{#            <span class="input-group-addon">Connection to Nature:</span>#}
+{#            <select class="form-control" id="connectionToNatureDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Cultural Fulfillment:</span>#}
+{#            <select class="form-control" id="culturalFulfillmentDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Education:</span>#}
+{#            <select class="form-control" id="educationDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Health:</span>#}
+{#            <select class="form-control" id="healthDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Leisure Time:</span>#}
+{#            <select class="form-control" id="leisureTimeDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Living Standards:</span>#}
+{#            <select class="form-control" id="livingStandardsDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Safety & Security:</span>#}
+{#            <select class="form-control" id="safetyAndSecurityDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
+{#        <p>#}
+{#            <span class="input-group-addon">Social Cohesion:</span>#}
+{#            <select class="form-control" id="socialCohesionDomainWeight">#}
+{#                <option>1</option>#}
+{#                <option>2</option>#}
+{#                <option>3</option>#}
+{#                <option>4</option>#}
+{#                <option>5</option>#}
+{#            </select>#}
+{#        </p>#}
 
-        /* size button font */
-        #updateWeights {
-            font-size: 12px;
-        }
-        </style>
 
          <p>
             <label style="display: inline-block; width: 200px; text-align: right">
@@ -178,11 +257,14 @@
 
 
 <div class="radio-toolbar">
-<label><input style =  display:none; visibility:hidden" id="radios-id" type="radio" name="toggler" value="" checked />Modified Values</label>
-<label><input id="radios-id-2" type="radio" name="toggler" value="2" />Baseline County Values</label>
+    <button id="radios-id" name="toggler" value="" type="submit" class="btn btn-primary btn-xs" role="button"/>Modified County Values</button>
+    <button id="radios-id-2" name="toggler" value="2" type="submit" class="btn btn-primary btn-xs" role="button"/>Baseline County Values</button>
 
         <div id="pie" class="tab-content current" style = "float:right; width: 60%;"></div>
         <div id="pie2" class="tab-content" style = "float:right; width: 60%;"></div>
+
+{#        <div id="pie" class="tab-content current" style = "float:right; width: 70%;"></div>#}
+{#        <div id="pie2" class="tab-content" style = "float:right; width: 70%;"></div>#}
 </div>
 
     <script>
@@ -198,18 +280,18 @@
     <script src="/static_qed/hwbi/js/pie2.js" ></script>
 
     <script>
-    $(document).ready(function(){
-
-    $('ul.tabs li').click(function(){
-        var tab_id = $(this).attr('data-tab');
-
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content').removeClass('current');
-
-        $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
-    })
-    })
+{#    $(document).ready(function(){#}
+{##}
+{#    $('ul.tabs li').click(function(){#}
+{#        var tab_id = $(this).attr('data-tab');#}
+{##}
+{#        $('ul.tabs li').removeClass('current');#}
+{#        $('.tab-content').removeClass('current');#}
+{##}
+{#        $(this).addClass('current');#}
+{#        $("#"+tab_id).addClass('current');#}
+{#    })#}
+{#    })#}
     </script>
 
 
