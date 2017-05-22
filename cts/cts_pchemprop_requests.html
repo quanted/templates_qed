@@ -273,12 +273,49 @@ function connectToSocket() {
 
             }
             else {
-                batch_data.push(data);
+
+                // this is where checking for 'getChemInfo' service is important.
+                // if it's a product's chem info, it needs to be added to the proper
+                // batch_data chemical's product and not as an additional batch_data element
+
+                if (data.request_post.service == 'getChemInfo' || false) {
+                    // add chem info data to correct product
+                    for (var parent_index in batch_data) {
+                        var parents_data_array = batch_data[parent_index];  // array of objects
+                        for (var product_index in parents_data_array) {
+                            var product_data_object = parents_data_array[product_index];
+                            if (data.request_post.chemical == product_data_object.smiles) {
+                                // add chem info to this product object:
+                                // batch_data[parent_index][product_index]
+                                $.extend(batch_data[parent_index][product_index], data.data);
+                            }
+                        }
+                    }
+                }
+                else {
+                    batch_data.push(data);
+                }
             }
 
         }
         else {
             batch_data.push(data);
+
+            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+                // add data to node object of products tree:
+                for (var index in st.graph.nodes) {
+                    if (data['request_post']['genKey'] == st.graph.nodes[index]['data']['genKey']) {
+                        st.graph.nodes[index].name = data['data']['node_image'];
+                        st.graph.nodes[index].data.html = data['data']['popup_image']['html'];
+                        for (var k in data['data']) {
+                            if (k != 'node_image' && k != 'popup_image' && k != 'structureData') {
+                                st.graph.nodes[index].data[k] = data['data'][k]; 
+                            }
+                        }
+                    }
+                }
+                molecularInfoRequestStatus(true);
+            }
         }
 
 
@@ -297,6 +334,18 @@ function connectToSocket() {
                 nodeHeight = 114
                 nodeWidth = 100
                 init(data['data']);  // paint tree to canvas
+
+                // display total number of products:
+                var total_products_html = "<h3><span>Total Products:" + data['total_products'] + "</span></h3>";
+                $('#total-products').html(total_products_html);
+
+            }
+            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+                var new_json = st.toJSON();
+                st.loadJSON(new_json);
+                st.compute();
+                st.select(st.root);  // re-select the node to replot the tree
+                molecularInfoRequestStatus(false);  // all data retrieved, removed load status
             }
 
             // if batch, display link for CSV:
