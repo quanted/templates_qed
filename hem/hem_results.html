@@ -4,22 +4,13 @@
 {% block title %}HEM Results{% endblock %}
 
 {% block content %}
-    <p>Population file</p>
-    <p></p>
 
     <!-- </div> -->
 
     <div >
-    <h4 >Downloadable File(s)</h4>
-        <div class="">
-            <li class="" >
-                <a href= {% static 'files/population_37.csv' %}>Download CSV Population Generation File</a>
-            </li>
-            <li>
-                <a href= "/hem/resultspop/" >Download Population File</a>
-            </li>
-            <li>Run History ID = {{ run_history_id }}..</li>
-            <li>Filename: {{ file_name }}..</li>
+        <div class="row">
+            <p><a href="/hem/resultspop/" >Download Population File ({{ pfile_name }}.csv)</a></p>
+            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</p>
         </div>
     </div>  <!-- row div -->
 
