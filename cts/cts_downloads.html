@@ -128,8 +128,10 @@ $(document).ready(function () {
         }
 
 		jq_html = $('<div />').append($(elements).clone()).html();
-		var n_plot_1 = $('#microspecies-distribution').size();
-		var n_plot_2 = $('#isoelectric-point').size();
+		// var n_plot_1 = $('#microspecies-distribution').size();
+		// var n_plot_2 = $('#isoelectric-point').size();
+		var n_plot_1 = $('#microspecies-distribution').length;
+		var n_plot_2 = $('#isoelectric-point').length;
 		n_plot = n_plot_1 + n_plot_2;
 		imgData_json = JSON.stringify(imgData, null, '\t');
 
