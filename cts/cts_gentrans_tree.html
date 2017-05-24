@@ -389,10 +389,12 @@ function init(json){
 
                         $('#reactionpathways').append(image_with_gen);
 
+
                         if (i < node_gen_array.length - 1) {
 
                             var next_node_id = buildGenKey(i + 1, node_gen_array);
                             var next_node = searchForNodeByGenKey(next_node_id, st_nodes);
+
 
                             var routes = next_node.data.routes;
                             var arrow_obj = $.parseHTML(arrow_html);  //<div><img></div>
@@ -439,6 +441,7 @@ function init(json){
     }
     total_calls = calls_tracker;
     molecularInfoRequestStatus(true);  // indicate mol info request status
+
 
 }
 
@@ -586,7 +589,9 @@ function getMolecularInfo(node) {
         }
     }
     else {
+
         // molecular_info_request(node.data.smiles);
+
         molecular_info_request(node);
     }
 
@@ -607,6 +612,7 @@ function getMolecularInfo(node) {
     }
 
 }
+
 
 
 function molecular_info_request_websocket(node) {
@@ -632,11 +638,14 @@ function molecular_info_request_websocket(node) {
 function molecular_info_request(node) {
     // nodes - could be one string or array of strings
 
+
     $.ajax({
         url: '/cts/rest/molecule',
         // url: '/rest/cts/molecule',
         type: 'POST',
+
         data: {'chemical': node.data.smiles, 'is_node': true},
+
         dataType: 'json',
         success: function(data) {
             var data = jsonRepack(data);
@@ -644,6 +653,7 @@ function molecular_info_request(node) {
                 console.log(textStatus);
                 return;
             }
+
 
 
             calls_tracker--;
@@ -682,12 +692,15 @@ function molecular_info_request(node) {
             // st.select(st.root);
 
 
+
             var product_node = $('img#' + node.id + '.metabolite[height=114]');
             var molInfo = $('#mol-info-wrapper');
             var molInfoTable = $(molInfo).children('table.mol-info-table');
             buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
+
             // $(product_node).addClass("selectedMetabolite");
             // $("#" + node.id).children('img').addClass("selectedMetabolite");  // highlight node
+
             var molInfoHeader = $(molInfo).siblings('h3')[0];
             if ($(molInfoHeader).hasClass('collapse-close')) {
                 $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
@@ -903,7 +916,9 @@ $(document).ready(function () {
     //     init(json);  // paint tree to canvas
     // }
 
+
     // $('#mol-info-header').removeClass('collapse-open').addClass('collapse-close');
+
 
     // Could call cts_pchemprop_requests startPchemProp function here:
 
