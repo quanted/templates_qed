@@ -1,0 +1,56 @@
+{% extends "hem_base.html" %}
+{% load staticfiles %}
+
+{% block title %}HEM Inputs{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-5">
+            <!-- Model selection inputs -->
+
+            <form method="POST" class="post-form">
+                <div class="row pc option_chem" id="chemicalH2">
+                    <h2>Choose Chemicals</h2>
+                </div>
+                <div class="row pc option_prod" id="productH2" style="display:none;">
+                    <h2>Choose Products</h2>
+                </div>
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="option_chem" value="0" checked="checked">
+                        Chemicals
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="option_prod" value="1">
+                        Products
+                    </label>
+                </div>
+                <hr>
+                <div class="form-group pc option_chem">
+                    <select class="form-control" name="selectChemical">
+                        <option value="1" selected>100-00-5</option>
+                        <option value="2">100-01-6</option>
+                        <option value="3">100-02-7</option>
+                    </select>
+                </div>
+                <div class="form-group pc option_prod" style="display:none;">
+                    <select class="form-control" name="selectProduct">
+                        <option value="1" selected>All</option>
+                        <option value="2">body hygiene >> hand soap >> liquid hand soaps</option>
+                        <option value="3">dental care >> toothpaste >> toothpastes and dentrifices</option>
+                    </select>
+                </div>
+                {{ form.as_p }}
+
+                <button type="submit" class="save btn btn-primary">Submit</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>  <!-- row div -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/popgen.js' %} "></script>
+{% endblock %}

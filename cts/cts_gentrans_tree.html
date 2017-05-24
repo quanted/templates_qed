@@ -389,10 +389,12 @@ function init(json){
 
                         $('#reactionpathways').append(image_with_gen);
 
+
                         if (i < node_gen_array.length - 1) {
 
                             var next_node_id = buildGenKey(i + 1, node_gen_array);
                             var next_node = searchForNodeByGenKey(next_node_id, st_nodes);
+
 
                             var routes = next_node.data.routes;
                             var arrow_obj = $.parseHTML(arrow_html);  //<div><img></div>
@@ -429,15 +431,17 @@ function init(json){
     // resizeCanvas(nodeList.slice(0, st.config.levelsToShow + 1), nodeHeight);
     //end
 
-    // // once st var is established, can loop st.nodes and get chem info..
-    // var st_nodes = st.graph.nodes;  // actual nodes from spacetree
-    // var nodes = [];
-    // for (node in st_nodes) {
-    //     // only get data up to selected generation limit:
-    //     // st_nodes[node].data['id'] = st_nodes[node].id;  // add node id to node data
-    //     // nodes.push(st_nodes[node].data);
-    //     molecular_info_request(st_nodes[node]);
-    // }
+
+    // This is where st.graph.nodes would be accessible and a list of
+    // nodes could easily be made to make one large chem info request to jchem!
+    var st_nodes = st.graph.nodes;
+    for (var index in st_nodes) {
+        molecular_info_request_websocket(st_nodes[index]);
+        calls_tracker++;
+    }
+    total_calls = calls_tracker;
+    molecularInfoRequestStatus(true);  // indicate mol info request status
+
 
 }
 
@@ -484,15 +488,19 @@ function setLabelScaling() {
     var all_nodes = $(".node");
     var space_nodes = $('#infovis').find(all_nodes);  // only pick nodes inside spacetree
 
+    // need to scale spinners gif:
+    // var node_spinners = $('.node_spinners');
+
     $(space_nodes).css("-moz-transform", "scale(" + x +"," +  y + ")");
     $(space_nodes).css("-webkit-transform", "scale(" + x +"," + y + ")");
     $(space_nodes).css("-ms-transform", "scale(" + x +"," +  y + ")");
     $(space_nodes).css("-o-transform", "scale(" + x +"," +  y + ")");
 
-    // $(".node").css("-moz-transform", "scale(" + x +"," +  y + ")");
-    // $(".node").css("-webkit-transform", "scale(" + x +"," + y + ")");
-    // $(".node").css("-ms-transform", "scale(" + x +"," +  y + ")");
-    // $(".node").css("-o-transform", "scale(" + x +"," +  y + ")");
+    // $(node_spinners).css("-moz-transform", "scale(" + x +"," +  y + ")");
+    // $(node_spinners).css("-webkit-transform", "scale(" + x +"," + y + ")");
+    // $(node_spinners).css("-ms-transform", "scale(" + x +"," +  y + ")");
+    // $(node_spinners).css("-o-transform", "scale(" + x +"," +  y + ")");
+
 }
 
 
@@ -581,6 +589,9 @@ function getMolecularInfo(node) {
         }
     }
     else {
+
+        // molecular_info_request(node.data.smiles);
+
         molecular_info_request(node);
     }
 
@@ -603,13 +614,38 @@ function getMolecularInfo(node) {
 }
 
 
+
+function molecular_info_request_websocket(node) {
+    // trying to use ws protocol instead of ajax,
+    // perhaps this will prevent occasional timeouts.
+
+    mol_info_request = JSON.stringify({
+        'chemical': node.data.smiles,
+        'is_node': true,
+        'service': "getChemInfo",
+        'genKey': node['data']['genKey']
+    });
+
+    // Send data to cts_nodejs server:
+    socket.emit('get_data', mol_info_request);
+
+    // Note: socket.on receive at cts_pchemprop_requests.html
+    // Need to refactor this and cts_pchemprop_requests.html
+
+}
+
+
 function molecular_info_request(node) {
-    // add mol info to node.data.molecularInfo:
+    // nodes - could be one string or array of strings
+
+
     $.ajax({
         url: '/cts/rest/molecule',
         // url: '/rest/cts/molecule',
         type: 'POST',
-        data: {'chemical': node.data.smiles},
+
+        data: {'chemical': node.data.smiles, 'is_node': true},
+
         dataType: 'json',
         success: function(data) {
             var data = jsonRepack(data);
@@ -617,12 +653,45 @@ function molecular_info_request(node) {
                 console.log(textStatus);
                 return;
             }
-            //node.data = data['data'];  // add mol info to node data
+
+
+
+            calls_tracker--;
+            console.log("mol info request tracker: " + calls_tracker);
+
+
+            // could populate node with image and popup image here:
+            // todo: cts_rest.py needs to know to get these for gentrans single mode
+            // data['node_image'] and data['popup_image']['html']
+            node.name = data['data']['node_image'];
+            node.data.html = data['data']['popup_image']['html'];
+
             for (var k in data['data']) {
-                if (k in node.data) {
-                    node.data[k] = data['data'][k];
+                if (k != 'node_image' && k != 'popup_image' && k != 'structureData') {
+                    node.data[k] = data['data'][k]; 
                 }
             }
+
+            molecularInfoRequestStatus(true);
+
+            if (calls_tracker <= 0) {
+                // // try to get graph JSON before and after refreshing, etc.
+                var new_json = st.toJSON();
+                st.loadJSON(new_json);
+                st.compute();
+                st.select(st.root);  // re-select the node to replot the tree
+                molecularInfoRequestStatus(false);  // all data retrieved, removed load status
+            }
+
+
+
+            // Update tree for each mol info response:
+            // var new_json = st.toJSON();
+            // st.loadJSON(new_json);
+            // st.compute();
+            // st.select(st.root);
+
+
 
             var product_node = $('img#' + node.id + '.metabolite[height=114]');
             var molInfo = $('#mol-info-wrapper');
@@ -636,6 +705,7 @@ function molecular_info_request(node) {
             if ($(molInfoHeader).hasClass('collapse-close')) {
                 $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
             }
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
@@ -771,9 +841,7 @@ function blockInterface(block) {
                 "top": "" + wintop + "",
                 "left": "" + winleft + "",
                 "padding": "30px 20px",
-                // "width": "400px",
                 "width": "450px",
-                // "height": "150px",
                 "height": "300px",
                 "border": "0 none",
                 "border-radius": "4px",
@@ -788,6 +856,22 @@ function blockInterface(block) {
         });
     }
     else { $.unblockUI(); }
+}
+
+
+function molecularInfoRequestStatus(in_progress) {
+    // same of blockInterface, but doesn't block out
+    // interface and instead indicates that mol info is
+    // still being downloaded (load wheel on "View Molecular
+    // Information" header in gentrans output page)
+
+    if (in_progress) {
+        $('.mol-info-header').html("<span></span>" + spinner_html + " Retrieving molecular info data: " + calls_tracker.toString() + "/" + total_calls.toString() + " remaining...");
+    }
+    else {
+        $('.mol-info-header').html("<span></span>View Molecular Information");
+    }
+
 }
 
 
@@ -832,6 +916,8 @@ $(document).ready(function () {
     //     init(json);  // paint tree to canvas
     // }
 
+
+    // $('#mol-info-header').removeClass('collapse-open').addClass('collapse-close');
 
 
     // Could call cts_pchemprop_requests startPchemProp function here:

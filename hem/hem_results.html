@@ -1,149 +1,17 @@
 {% extends "hem_base.html" %}
 {% load staticfiles %}
 
-{% block title %}Outputs Dashboard{% endblock %}
-
-{% block stylesheet %}
-    <link href="{% static 'css/hem_charts.css' %}" rel="stylesheet">
-{% endblock %}
-
-{% block javascript %}
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="{% static 'js/popgen.js' %} "></script>
-{% endblock %}
+{% block title %}HEM Results{% endblock %}
 
 {% block content %}
-<!-- Load database table  -->
-<script>
-  $(document).ready(function() {
-     var endpoint = 'hem_jdata/';
-     $('#population_table').DataTable( {
-         ajax: {
-         url: endpoint,
-         dataSrc: 'history'
-     },
-     columns: [
-         { data: 'gender' },
-         { data: 'population_size' },
-         { data: 'min_age' },
-         { data: 'max_age' }]
-         });
-    } );
-</script>
 
-    <h3 class="text-center" >Human Exposure Outputs</h3>
-    <hr>
-    <div class="row">
-      <div class="col-6 col-md-3">
-          <div class="form-group" id="GenderCB">
-            <select class="form-control" name="Gender_types" id="selectGenger">
-                <option value="M">Male</option>
-                <option value="F">Female</option>
-                <option selected value="B">Both</option>
-            </select>
-          </div>
-      </div>
-        <div class="col-6 col-md-3"> </div>
-        <div class="col-6 col-md-3"></div>
-      <div class="col-6 col-md-3">
-          <div class="form-group" id="AgeCB">
-            <select class="form-control" name="Age_types" id="selectAgeCtg">
-                <option selected value="Age0">Select... </option>
-                <option value="Age1">Age: 0 - 5 years </option>
-                <option value="Age2">Age: 6 - 12 years</option>
-                <option value="Age3">Age: 13 - 16 years</option>
-                <option value="Age4">Age: 16 - 17 years</option>
-                <option value="Age5">Age: 18+ years</option>
-            </select>
-          </div>
-      </div>
-    </div>
-
-
-  <!--<div class="card">
-  <div class="card-block"> -->
-  <div class="row">
-    <div class="col-md-10">
-
-        <div class="container">
-            <ul class="nav nav-tabs" id="ResultsTab">
-                <li class="nav-item">
-                    <a class="nav-link active" id="A" data-toggle="tab" href="#1">Population History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="B" data-toggle="tab" href="#2">Human Dose</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="C" data-toggle="tab" href="#3">Graphic View</a>
-                </li>
-            </ul>
-        </div>
-            <!-- tabs content start here -->
-            <div class="tab-content" id="tabs">
-                <!-- tab 1 content -->
-                <div class="tab-pane active" id="1">
-                    <div class="container">
-                        <table id="population_table" class="display" cellspacing="0" width="100%">
-                             <thead>
-                                <tr>
-                                    <th>Gender</th>
-                                    <th>Population</th>
-                                    <th>Min. Age</th>
-                                    <th>Max. Age</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Gender</th>
-                                    <th>Population</th>
-                                    <th>Min. Age</th>
-                                    <th>Max. Age</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- tab 2 content -->
-                <div class="tab-pane" id="2">
-                    <div class="card-block">
-                        <h4 class="card-title">Population</h4>
-                        <p class="card-text">Total population of 200,000 with an age range of 26 - 70 year old females and males.</p>
-                        <h4>Input Summary</h4>
-                        <p><em>Ran {%now 'F d, Y'%}</em></p>
-                        <h4>Consumer Products</h4>
-                        <p>accessories >> handbags</p>
-                        <h4>Geography</h4>
-                        <p>All regions selected</p>
-                    </div>
-                </div>
-                <!-- tab 3 content -->
-                <div class="tab-pane" id="3">
-                   <div >
-                    <h3>Population Chart</h3>
-                        <svg class="chart" width="960" height="500"></svg>
-                   </div>
-                </div>
-            </div>
-        </div> <!-- col-md-10 div -->
-
-      <div class="col-md-2">
-
-
-      </div> <!-- col-md-2 div -->
-  </div>
     <!-- </div> -->
-    <hr>
+
     <div >
-    <h4 >Downloadable File(s)</h4>
-        <div class="">
-            <li class="" >
-                <a href= {% static 'files/example.csv' %}>Download CSV Population Generation File</a>
-                <p>
-            </li>
+        <div class="row">
+            <p><a href="/hem/resultspop/" >Download Population File ({{ pfile_name }}.csv)</a></p>
+            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</p>
         </div>
     </div>  <!-- row div -->
-
 
 {% endblock %}

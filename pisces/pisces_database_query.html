@@ -1,202 +1,245 @@
 <style>
-    #map {
-        width: 100%;
-        height: 450px;
-    }
     {#datatables font size#}
-    th {
-        font-size: 12px;
-    }
     td {
-        font-size: 11px;
+        font-size: 13px;
     }
 </style>
+
 
 <head>
 
     <!-- jquery -->
-    <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 
     <!-- datatables import -->
     <link rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
-    <!-- local js -->
-    <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
-    <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
-
 </head>
+
 
 <body>
 
-  <div class="panel-display panel-1col clearfix" >
+  <div class="panel-display panel-1col clearfix">
     <div class="panel-panel panel-col">
 
+            <!--- content div -->
+            <div class="col-md-6">
+                <div class="pane-content">
+
+                    <p>Explore the PiSCES database by searching for fish species of interest.  Select species properties,
+                        habitat characteristics, or other features to get a list of fish species that meet the criteria.</p>
+
+                    <!--- section line -->
+                    <hr />
+
+                    <!-- DROP-DOWN ACCORDIONS-->
+                    <ul class="accordion">
+
+                        <!-- fish properties-->
+                        <li>
+                            <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish Properties</a>
+                            <div class="accordion-pane" id="pane-1">
+                                <p>Select <strong>fish properties</strong>...</p>
+
+                                <!--- fish property tables -->
+                                <table style="width:95%">
+
+                                        <tr>
+                                            <td colspan="2" style="width:50%">
+                                                <strong>Fish properties include characteristics related to species morphology, behavior, life cycle, and ...</strong>
+                                            <br />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">
+                                                <span>If a field is left blank, all species will be included in the query...</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="4">
+                                                <table style="width:100%">
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <strong>Characteristics</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <span>
+                                                                <strong>*</strong>
+                                                                </span> I would like to view species with the following properties:</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:24%">Species Group (Check One)</td>
+                                                            <td style="width:24%">Stream Width (Check One)<a name="qFalsified" id="qFalsified"></a></td>
+                                                            <td style="width:24%">Waterbody Type (Check All That Apply)</td>
+                                                            <td style="width:24%">Habitat (Check One)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <input id="alleged_violation_intent-1" name="alleged_violation_intent" type="radio" value="Accidental" /><label for="alleged_violation_intent-1"> Ciclid</label><br /><input id="alleged_violation_intent-2" name="alleged_violation_intent" type="radio" value="Intentional" /><label for="alleged_violation_intent-2"> Perch</label><br /><input id="alleged_violation_intent-3" name="alleged_violation_intent" type="radio" value="Unknown" /><label for="alleged_violation_intent-3"> Darters</label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="alleged_violation_type-1" name="alleged_violation_type" type="radio" value="Release" /><label for="alleged_violation_type-1">  <3 meters</label><br /><input id="alleged_violation_type-2" name="alleged_violation_type" type="radio" value="Dump/Buried" /><label for="alleged_violation_type-2">  3-6 meters</label><br /><input id="alleged_violation_type-3" name="alleged_violation_type" type="radio" value="Spill" /><label for="alleged_violation_type-3">  6-9 meters</label><br /><input id="alleged_violation_type-4" name="alleged_violation_type" type="radio" value="Spray" /><label for="alleged_violation_type-4">  9-12 meters</label><br /><input id="alleged_violation_type-5" name="alleged_violation_type" type="radio" value="Fill" /><label for="alleged_violation_type-5">  12-15 meters</label><br /><input id="alleged_violation_type-6" name="alleged_violation_type" type="radio" value="Falsified" /><label for="alleged_violation_type-6">  <a href="#falsified" title="Falsified refers to the tampering, misrepresentation, or otherwise altering of documents, permits, certifications, or any other records required by environmental statutes and/or regulations."><15 meters/a></label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="media_type_land" name="media_type_land" type="checkbox" value="1" /><label for="media_type_land">  Caves</label><br /><input id="media_type_water" name="media_type_water" type="checkbox" value="1" /><label for="media_type_water">  Springs</label><br /><input id="media_type_air" name="media_type_air" type="checkbox" value="1" /><label for="media_type_air">  Headwaters </label><br /><input id="media_type_worker" name="media_type_worker" type="checkbox" value="1" /><label for="media_type_worker">  Creeks</label><br /><input id="media_type_document" name="media_type_document" type="checkbox" value="1" /><label for="media_type_document">  Small Rivers</label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="alleged_violation_entity-1" name="alleged_violation_entity" type="radio" value="Individual" /><label for="alleged_violation_entity-1">  Mud, Silt, Detritus</label><br /><input id="alleged_violation_entity-2" name="alleged_violation_entity" type="radio" value="Company" /><label for="alleged_violation_entity-2">  Sand</label><br /><input id="alleged_violation_entity-3" name="alleged_violation_entity" type="radio" value="Government/Military" /><label for="alleged_violation_entity-3"> Gravel</label><br /><input id="alleged_violation_entity-4" name="alleged_violation_entity" type="radio" value="Unknown" /><label for="alleged_violation_entity-4"> Vegetation</label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                </table>
+                            </div>
+                        </li>
+
+                        <!-- watershed characteristics-->
+                        <li>
+                            <a class="accordion-title" href="#pane-2" title="Click to expand description">Habitat Characteristics</a>
+                            <div class="accordion-pane" id="pane-2">
+                                <p>Select <strong>habitat characteristics</strong>...</p>
+                                <!--- tables -->
+                                <table style="width:95%">
+
+                                        <tr>
+                                            <td colspan="2" style="width:50%">
+                                                <strong>Habitat characteristics include features related to watershed size, stream flow, stream depth, water quality, and ...</strong>
+                                            <br />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">
+                                                <span>If a field is left blank, all species will be included in the query...</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="4">
+                                                <table style="width:100%">
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <strong>Characteristics</strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <span>
+                                                                <strong>*</strong>
+                                                                </span> I would like to view species with the following properties:</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:33%">Stream Width (Check One)</td>
+                                                            <td style="width:33%">Waterbody Type (Check All That Apply)</td>
+                                                            <td style="width:33%">Habitat (Check One)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <input id="1alleged_violation_type-1" name="alleged_violation_type" type="radio" value="Release" /><label for="alleged_violation_type-1">  <3 meters</label><br /><input id="alleged_violation_type-2" name="alleged_violation_type" type="radio" value="Dump/Buried" /><label for="alleged_violation_type-2">  3-6 meters</label><br /><input id="alleged_violation_type-3" name="alleged_violation_type" type="radio" value="Spill" /><label for="alleged_violation_type-3">  6-9 meters</label><br /><input id="alleged_violation_type-4" name="alleged_violation_type" type="radio" value="Spray" /><label for="alleged_violation_type-4">  9-12 meters</label><br /><input id="alleged_violation_type-5" name="alleged_violation_type" type="radio" value="Fill" /><label for="alleged_violation_type-5">  12-15 meters</label><br /><input id="alleged_violation_type-6" name="alleged_violation_type" type="radio" value="Falsified" /><label for="alleged_violation_type-6">  <a href="#falsified" title="Falsified refers to the tampering, misrepresentation, or otherwise altering of documents, permits, certifications, or any other records required by environmental statutes and/or regulations."><15 meters/a></label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="1media_type_land" name="media_type_land" type="checkbox" value="1" /><label for="media_type_land">  Caves</label><br /><input id="media_type_water" name="media_type_water" type="checkbox" value="1" /><label for="media_type_water">  Springs</label><br /><input id="media_type_air" name="media_type_air" type="checkbox" value="1" /><label for="media_type_air">  Headwaters </label><br /><input id="media_type_worker" name="media_type_worker" type="checkbox" value="1" /><label for="media_type_worker">  Creeks</label><br /><input id="media_type_document" name="media_type_document" type="checkbox" value="1" /><label for="media_type_document">  Small Rivers</label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="1alleged_violation_entity-1" name="alleged_violation_entity" type="radio" value="Individual" /><label for="alleged_violation_entity-1">  Mud, Silt, Detritus</label><br /><input id="alleged_violation_entity-2" name="alleged_violation_entity" type="radio" value="Company" /><label for="alleged_violation_entity-2">  Sand</label><br /><input id="alleged_violation_entity-3" name="alleged_violation_entity" type="radio" value="Government/Military" /><label for="alleged_violation_entity-3"> Gravel</label><br /><input id="alleged_violation_entity-4" name="alleged_violation_entity" type="radio" value="Unknown" /><label for="alleged_violation_entity-4"> Vegetation</label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                </table>
+                            </div>
+                        </li>
+
+                        <!-- other features-->
+                        <li>
+                            <a class="accordion-title" href="#pane-3" title="Click to expand description">Other Features</a>
+                            <div class="accordion-pane" id="pane-3">
+                                <p>Select <strong>other features</strong> to query the PiSCES database....</p>
+
+                                <!--- tables -->
+                                <table style="width:95%">
+
+                                        <tr>
+                                            <td colspan="4">
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Is the species endemic to the U.S.?</td>
+                                                            <td>
+                                                                <input id="still_occurring_y" name="still_occurring" type="radio" value="1" />
+                                                                <label for="still_occurring_y"> Yes </label>
+                                                                <input checked="checked" id="still_occurring_n" name="still_occurring" type="radio" value="0" />
+                                                                <label for="still_occurring_n"> No</label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a name="qNotify_State" id="qNotify_State"></a>Is the species list as a Federally endangered or threatened species?</a>?
+                                                            </td>
+                                                            <td>
+                                                                <input id="notify_state_y" name="notify_state" type="radio" value="1" /><label for="notify_state_y">  Yes</label> <input checked="checked" id="notify_state_n" name="notify_state" type="radio" value="0" /><label for="notify_state_n">  No</label>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="width:33%">    Date of data collection:</td>
+                                                            <td>
+                                                                <input name="alleged_violation_date" size="10" type="text" value="mm/dd/yyyy" /> If known
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>State of interest:    </td>
+                                                            <td>
+                                                                <select name="state" size="1">
+                                                                    <option selected="selected" value="">Please Select</option>
+                                                                    <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="American Samoa">American Samoa</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="District of Columbia">District of Columbia</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Guam">Guam</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option><option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option><option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option><option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option><option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Northern Mariana Islands">Northern Mariana Islands</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option><option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Puerto Rico">Puerto Rico</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option><option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Trust Territories">Trust Territories</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virgin Islands">Virgin Islands</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option><option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option></select></td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                </table>
+                            </div>
+                        </li>
+
+                    </ul><!-- END ACCORDIONS -->
 
 
-    <!--- content div -->
-        <div class="col-md-6">
-            <div class="content-box-large">
-                <div class="panel-heading">
-                    <div class="panel-title">Default Elements</div>
-                </div>
+                    <!--- line -->
+                    <hr />
 
-                <div class="panel-body">
-                    <form class="form-horizontal" action="">
-
-									<fieldset>
-										<legend>Unstyled Checkbox</legend>
-										<div class="form-group">
-											<label class="col-md-2 control-label">Checkbox default</label>
-											<div class="col-md-10">
-												<div class="checkbox">
-													<label>
-														<input type="checkbox">
-														Checkbox 1 </label>
-												</div>
-												<div class="checkbox">
-													<label>
-														<input type="checkbox">
-														Checkbox 2 </label>
-												</div>
-												<div class="checkbox">
-													<label>
-														<input type="checkbox">
-														Checkbox 3 </label>
-												</div>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-md-2 control-label">Inline</label>
-											<div class="col-md-10">
-												<label class="checkbox-inline">
-													<input type="checkbox">
-													Checkbox 2 </label>
-												<label class="checkbox-inline">
-													<input type="checkbox">
-													Checkbox 2 </label>
-												<label class="checkbox-inline">
-													<input type="checkbox">
-													Checkbox 3 </label>
-											</div>
-										</div>
-									</fieldset>
+                    <!--- submit query -->
+                    <p>Submit selections to query the PiSCES database.</p>
+                    <tr>
+                        <td colspan="4">
+                            <div class="center"><input name="submit" type="submit" value="Submit" /></div>
+                        </td>
+                    </tr>
 
 
-
-									<fieldset>
-										<legend>Unstyled Radiobox</legend>
-										<div class="form-group">
-											<label class="col-md-2 control-label">Radios default</label>
-											<div class="col-md-10">
-												<div class="radio">
-													<label>
-														<input type="radio">
-														Radiobox 1 </label>
-												</div>
-												<div class="radio">
-													<label>
-														<input type="radio">
-														Radiobox 2 </label>
-												</div>
-												<div class="radio">
-													<label>
-														<input type="radio">
-														Radiobox 3 </label>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-2 control-label">Inline</label>
-											<div class="col-md-10">
-												<label class="radio radio-inline">
-													<input type="radio">
-													Radiobox 1 </label>
-												<label class="radio radio-inline">
-													<input type="radio">
-													Radiobox 2 </label>
-												<label class="radio radio-inline">
-													<input type="radio">
-													Radiobox 3 </label>
-											</div>
-										</div>
-									</fieldset>
-
-									<fieldset>
-										<legend>Unstyled Select</legend>
-										<div class="form-group">
-											<label class="col-md-2 control-label" for="select-1">Select</label>
-											<div class="col-md-10">
-
-												<select class="form-control" id="select-1">
-													<option>Amsterdam</option>
-													<option>Atlanta</option>
-													<option>Baltimore</option>
-													<option>Boston</option>
-													<option>Buenos Aires</option>
-													<option>Calgary</option>
-													<option>Chicago</option>
-													<option>Denver</option>
-													<option>Dubai</option>
-													<option>Frankfurt</option>
-													<option>Hong Kong</option>
-													<option>Honolulu</option>
-													<option>Houston</option>
-													<option>Kuala Lumpur</option>
-													<option>London</option>
-													<option>Los Angeles</option>
-													<option>Melbourne</option>
-													<option>Mexico City</option>
-													<option>Miami</option>
-													<option>Minneapolis</option>
-												</select>
-
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-2 control-label" for="multiselect1">Multiple select</label>
-											<div class="col-md-10">
-												<select multiple="multiple" id="multiselect-1" class="form-control custom-scroll" title="Click to Select a City">
-													<option>Amsterdam</option>
-													<option selected="selected">Atlanta</option>
-													<option>Baltimore</option>
-													<option>Boston</option>
-													<option>Buenos Aires</option>
-													<option>Calgary</option>
-													<option selected="selected">Chicago</option>
-													<option>Denver</option>
-													<option>Dubai</option>
-													<option>Frankfurt</option>
-													<option>Hong Kong</option>
-													<option>Honolulu</option>
-													<option>Houston</option>
-													<option>Kuala Lumpur</option>
-													<option>London</option>
-													<option>Los Angeles</option>
-													<option>Melbourne</option>
-													<option>Mexico City</option>
-													<option>Miami</option>
-													<option>Minneapolis</option>
-												</select>
-											</div>
-										</div>
-									</fieldset>
-
-                        </form>
-                    </div>
                 </div>
             </div>
-        </div>
     </div>
+  </div>
 
-
-
-
-        <script>
-
-
-        </script>
 
 </body>
 </html>
