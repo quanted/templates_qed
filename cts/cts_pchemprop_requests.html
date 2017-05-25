@@ -19,6 +19,9 @@ var speciation_inputs;
 var nodejs_host, nodejs_port;
 var service;  // p-chem, speciation, transformation products
 
+var metabolizer_post;
+
+
 $(document).ready(function() {
     // Some global and local variable delcarations:
     checkedCalcsAndProps = {{checkedCalcsAndProps}};
@@ -37,6 +40,9 @@ $(document).ready(function() {
     nodejs_host = "{{nodejs_host}}";
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
+
+    metabolizer_post = '{{metabolizer_post}}';
+
 
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
 
@@ -150,9 +156,11 @@ function connectToSocket() {
         }
 
 
+
         calls_tracker--;
         sessionStorage.setItem('calls_tracker', calls_tracker);
         console.log("calls tracker: " + calls_tracker);
+
 
         if (window.location.href.indexOf('batch') > -1) {
 
@@ -271,6 +279,7 @@ function connectToSocket() {
 
                 }
 
+
             }
             else {
 
@@ -295,6 +304,7 @@ function connectToSocket() {
                 else {
                     batch_data.push(data);
                 }
+
             }
 
         }
@@ -316,6 +326,11 @@ function connectToSocket() {
                 }
                 molecularInfoRequestStatus(true);
             }
+        }
+
+        }
+        else {
+            batch_data.push(data);
         }
 
 
@@ -347,6 +362,7 @@ function connectToSocket() {
                 st.select(st.root);  // re-select the node to replot the tree
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
             }
+
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
@@ -454,6 +470,9 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         pchem_data['calc'] = 'metabolizer';
         pchem_data['workflow'] = 'gentrans';
         pchem_data['gen_limit'] = genMax;
+
+        pchem_data['metabolizer_post'] = JSON.parse(metabolizer_post);
+
     }
 
 
