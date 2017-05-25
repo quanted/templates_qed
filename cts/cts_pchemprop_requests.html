@@ -61,7 +61,7 @@ $(document).ready(function() {
         sessionStorage.setItem('total_calls', total_calls);
 
         // block UI with progress bar
-        // blockInterface(true);
+        blockInterface(true);
 
         $('#pdfExport, #htmlExport').hide();
 
@@ -327,12 +327,6 @@ function connectToSocket() {
                 molecularInfoRequestStatus(true);
             }
         }
-
-        }
-        else {
-            batch_data.push(data);
-        }
-
 
         if (calls_tracker <= 0) {
             console.log("All data retrieved!");
