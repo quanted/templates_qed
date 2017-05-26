@@ -744,6 +744,7 @@ function buildMolInfoTable(molTable, node, data) {
 
     //Clear existing table data..
     $(molTable).children().empty();
+    $(molTable).html("");
 
      //Add molecular info to table..
     $(molTable).prepend('<tr class="header"><th colspan="2">Molecular Information</th></tr>');
@@ -752,7 +753,8 @@ function buildMolInfoTable(molTable, node, data) {
             var newRow = '<tr><td>';
             newRow += key + '</td><td>';
             newRow += data[key] + '</td></tr>';
-            $(molTable).find('tbody').append(newRow);
+            // $(molTable).find('tbody').append(newRow);
+            $(molTable).append(newRow);
             // $("#" + node.id).children().toggleClass("selectedMetabolite"); //highlight node
         }
     }
