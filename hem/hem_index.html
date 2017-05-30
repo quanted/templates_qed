@@ -41,7 +41,18 @@
                         <option value="3">dental care >> toothpaste >> toothpastes and dentrifices</option>
                     </select>
                 </div>
-                {{ form.as_p }}
+                <div class="form-group">
+                    {{ form.population_size }}
+                </div>
+                <div class="form-group">
+                    {{ form.gender }}
+                </div>
+                <div class="form-group">
+                    {{ form.min_age }}
+                </div>
+                <div class="form-group">
+                    {{ form.max_age }}
+                </div>
 
                 <button type="submit" class="save btn btn-primary">Submit</button>
                 {% csrf_token %}
