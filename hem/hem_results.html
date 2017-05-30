@@ -10,8 +10,14 @@
     <div >
         <div class="row">
             <p><a href="/hem/resultspop/" >Download Population File ({{ pfile_name }}.csv)</a></p>
-            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</p>
+            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</a></p>
         </div>
     </div>  <!-- row div -->
-
+    <div id="my_chart" style="width:100%; height:400px;">
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="{% static 'js/results.js' %}"></script>
 {% endblock %}
