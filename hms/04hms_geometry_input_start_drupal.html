@@ -18,12 +18,11 @@
             };
 
             $.ajax({
-                url: 'http://localhost:50052/api/WSHMS/',
-{#                url: {{ BACKEND_URL }},#}
+                //url: 'http://localhost:50052/api/WSHMS/',
+                url: {{ BACKEND_URL }},
                 method: 'POST',
                 data: requestData,
                 crossDomain: true,
-                //dataType : 'jsonp',
                 timeout: 30000,
                 success: function(output){
                    $('#geometry_centroid').html(output["metadata"]["centroid"]);
