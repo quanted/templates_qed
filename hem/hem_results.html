@@ -37,15 +37,15 @@
                 fallbackToExportServer: false
             },
             title: {
-                text: 'Dose for a single chemical'
+                text: 'Dose for {{ chem.cas }}'
             },
             subtitle: {
-                text: 'chemical cas or name'
+                text: '{{ chem.name }}'
             },
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'dose'
+                    text: 'Annual systemic dose (mg/kg/day)'
                 },
                 startOnTick: true,
                 endOnTick: true,
@@ -54,10 +54,10 @@
             },
             yAxis: {
                 title: {
-                    text: '% of population'
+                    text: 'Cumulative % of population'
                 },
                 min: 0,
-                max: 110,
+                max: 100,
                 tickInterval: 10,
             },
             legend: {
@@ -89,13 +89,13 @@
                         }
                     },
                     tooltip: {
-                        headerFormat: '<b>{series.name}</b><br>',
-                        pointFormat: '{point.x} dose, {point.y} population'
+                        headerFormat: '{point.x}<br>',
+                        pointFormat: '{point.y} dose'
                     }
                 }
             },
             series: [{
-                name: 'people',
+                name: '{{ chem.cas }}',
                 color: 'rgba(119, 152, 191, .5)',
                 data: {{ plot_data.dose }}
             }]
