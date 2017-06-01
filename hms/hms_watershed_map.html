@@ -82,21 +82,16 @@
 
         <script>
             $(document).ready(function() {
+
                 // initialize the map
                 var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([39.69, -100.52], 3);
                 var currentHucLayer = huc_basemaps.HUC2;       // raster HUC
                 var selectedHuc = null;
                 L.esri.basemapLayer('Imagery').addTo(map);
 
-                //pop-up
-                var popup = L.popup();
-
                 //on map click, pop-up lat long info
                 var popup = L.popup();
-
                 function onMapClick(e) {
-{#                  popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(map);#}
-{#                    selectedHuc =#}
                     GetHuc(e.latlng.lat, e.latlng.lng);
                 }
 
@@ -114,12 +109,8 @@
                     fillOpacity: 0.5
                 };
 
-
-                //basemap selection toolbar cont.
-{#                var layerESRI = L.esri.basemapLayer('Imagery');#}
-                {#            map.addLayer(layerESRI);#}
+                var layerESRI = L.esri.basemapLayer('Imagery');
                 var layerLabels;
-
                 //basemap selection toolbar cont.
                 function setBasemap(basemap) {
                     if (layerESRI) {
@@ -148,12 +139,8 @@
                 function updateHucLayer() {
                     var bounds = map.getBounds();
                     var zoomLvl = map.getZoom();
+{#                    var bbox = bounds._southWest.lng + "," + bounds._southWest.lat + "," + bounds._northEast.lng + "," + bounds._northEast.lat;#}
                     map.removeLayer(currentHucLayer);
-                    var bBox = '[[' + bounds._northEast.lng + ',' + bounds._southWest.lat +
-                        '],[' + bounds._northEast.lng + ',' + bounds._northEast.lat +
-                        '],[' + bounds._southWest.lng + ',' + bounds._northEast.lat +
-                        '],[' + bounds._southWest.lng + ',' + bounds._southWest.lat +
-                        '],[' + bounds._northEast.lng + ',' + bounds._southWest.lat + ']]';
                     switch(true){
                         case (zoomLvl < 5):
                             currentHucLayer = huc_basemaps.HUC2;
@@ -229,15 +216,12 @@
                             if (selectedHuc !== null){
                                 map.removeLayer(selectedHuc);
                             }
-
                             // Convert HUC json data to valid geojson.
                             var huc_data = JSON.parse(result_huc.replace("rings", "coordinates"));
                             huc_data["type"] = "FeatureCollection";
                             huc_data["features"][0]["type"] = "Feature";
                             huc_data["features"][0]["properties"] = {};
                             huc_data["features"][0]["geometry"]["type"] = "Polygon";
-
-
                             selectedHuc = L.geoJSON(huc_data, {style: hucStyle}).addTo(map);
                             $('#hucNumber').html(huc_data["features"][0]["attributes"]["HUC_" + tempHuc]);
                             $('#hucName').html(huc_data["features"][0]["attributes"]["HU_" + tempHuc + "_NAME"]);
@@ -249,8 +233,6 @@
                         }
                     })
                 }
-
-
             });
         </script>
 

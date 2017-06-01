@@ -7,17 +7,105 @@
 
     <!-- </div> -->
 
-    <div >
+    <div>
         <div class="row">
-            <p><a href="/hem/resultspop/" >Download Population File ({{ pfile_name }}.csv)</a></p>
-            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</a></p>
+            <p><a href="/hem/resultspop/">Download Population File ({{ pfile_name }}.csv)</a></p>
+            <p><a href="/hem/resultsdose/">Download Dose File ({{ dfile_name }}.csv)</a></p>
+            <p><a href="{% static 'hem/files/dose_output_metadata.xlsx' %}">Dose Metadata</a> </p>
+            <p><a href="{% static 'hem/files/lciametrics_output_metadata.xlsx' %}">LCIA Metrics Metadata</a></p>
+            <p><a href="{% static 'hem/files/population_output_metadata.xlsx' %}">Population Metadata</a></p>
         </div>
     </div>  <!-- row div -->
-    <div id="my_chart" style="width:100%; height:400px;">
+    <div id="my_chart" style="width:100%; height:500px;">
     </div>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+    <script>
+        Highcharts.chart('my_chart', {
+            chart: {
+                type: 'spline',
+                zoomType: 'xy'
+            },
+            exporting: {
+                chartOptions: { // specific options for the exported image
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                fallbackToExportServer: false
+            },
+            title: {
+                text: 'Dose for {{ chem.cas }}'
+            },
+            subtitle: {
+                text: '{{ chem.name }}'
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Annual systemic dose (mg/kg/day)'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true,
+                type: 'logarithmic'
+            },
+            yAxis: {
+                title: {
+                    text: 'Cumulative % of population'
+                },
+                min: 0,
+                max: 100,
+                tickInterval: 10,
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 150,
+                y: 70,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                borderWidth: 1
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '{point.x}<br>',
+                        pointFormat: '{point.y} dose'
+                    }
+                }
+            },
+            series: [{
+                name: '{{ chem.cas }}',
+                color: 'rgba(119, 152, 191, .5)',
+                data: {{ plot_data.dose }}
+            }]
+        });
+    </script>
+
 {% endblock %}
 {% block javascript %}
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="{% static 'js/results.js' %}"></script>
 {% endblock %}
