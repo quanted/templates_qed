@@ -55,6 +55,13 @@
                 type: 'spline',
                 zoomType: 'xy'
             },
+            tooltip: {
+                        formatter: function(){
+                            return parseFloat(Math.round(this.x * 100) / 100).toFixed(2) +
+                                ' dose (mg/kg/annually)<br>' +
+                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' % population'
+                        }
+            },
             exporting: {
                 chartOptions: { // specific options for the exported image
                     plotOptions: {
@@ -76,7 +83,7 @@
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'Annual systemic dose (mg/kg/day)'
+                    text: 'Annual systemic dose (mg/kg/annually)'
                 },
                 startOnTick: true,
                 endOnTick: true,
@@ -119,10 +126,6 @@
                             }
                         }
                     },
-                    tooltip: {
-                        headerFormat: '{point.x}<br>',
-                        pointFormat: '{point.y} dose'
-                    }
                 }
             },
             series: [{
@@ -135,5 +138,4 @@
 
 {% endblock %}
 {% block javascript %}
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 {% endblock %}
