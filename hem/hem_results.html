@@ -26,6 +26,10 @@
                 <h3>Download data</h3>
                 <a href="/hem/resultsdose/">
                     <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Dose Data</a><br>
+                {% if rh.products == 1 %}
+                    <a href="/hem/resultslcia/">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span> LCIA Metrics Data</a><br>
+                {% endif %}
                 <a href="/hem/resultspop/">
                     <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Population Data</a><br/>
 
@@ -36,8 +40,10 @@
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span> HEM User Guide</a><br>
                 <a href="{% static 'hem/files/dose_output_metadata.xlsx' %}">
                     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Dose Metadata</a><br>
-                <a href="{% static 'hem/files/lciametrics_output_metadata.xlsx' %}">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> LCIA Metrics Metadata</a><br>
+                {% if rh.products == 1 %}
+                    <a href="{% static 'hem/files/lciametrics_output_metadata.xlsx' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> LCIA Metrics Metadata</a><br>
+                {% endif %}
                 <a href="{% static 'hem/files/population_output_metadata.xlsx' %}">
                     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Population Metadata</a><br>
             </div>
