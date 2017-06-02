@@ -13,7 +13,7 @@
                 {% if rh.products == 0 %}
                     <h2>{{ chem.name }} <small>{{ chem.cas }}</small></h2>
                 {% else %}
-                    <h2>Run for some product</h2>
+                    <h2>{{ category.title }}</h2>
                 {% endif %}
 
                 population size: {{ rh.population_size }}<br>
