@@ -11,7 +11,9 @@
         <div class="row">
             <div class="col-md-6">
                 {% if rh.products == 0 %}
-                    <h2>{{ chem.name }} <small>{{ chem.cas }}</small></h2>
+                    <h2>{{ chem.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chem.dtxsid}}"
+                                                  target="_blank" title="Explore on the Chemistry Dashboard">
+                        {{ chem.cas }}</a></small></h2>
                 {% else %}
                     <h2>{{ category.title }}</h2>
                 {% endif %}
