@@ -7,11 +7,145 @@
 
     <!-- </div> -->
 
-    <div >
+    <div>
         <div class="row">
-            <p><a href="/hem/resultspop/" >Download Population File ({{ pfile_name }}.csv)</a></p>
-            <p><a href="/hem/resultsdose/" >Download Dose File ({{ dfile_name }}.csv)</p>
+            <div class="col-md-6">
+                {% if rh.products == 0 %}
+                    <h2>{{ chem.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chem.dtxsid}}"
+                                                  target="_blank" title="Explore on the Chemistry Dashboard">
+                        {{ chem.cas }}</a></small></h2>
+                {% else %}
+                    <h2>{{ category.title }}</h2>
+                {% endif %}
+
+                population size: {{ rh.population_size }}<br>
+                gender: {{ rh.get_gender_display }}<br>
+                age range of {{ rh.min_age }} to {{ rh.max_age }}
+
+
+            </div>
+            <div class="col-md-3">
+                <h3>Download data</h3>
+                <a href="/hem/resultsdose/">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Dose Data</a><br>
+                {% if rh.products == 1 %}
+                    <a href="/hem/resultslcia/">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span> LCIA Metrics Data</a><br>
+                {% endif %}
+                <a href="/hem/resultspop/">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Population Data</a><br/>
+
+            </div>
+            <div class="col-md-3">
+                <h3>Documentation</h3>
+                <a href="{% static 'hem/files/UserGuide_S2D.docx' %}">
+                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span> HEM User Guide</a><br>
+                <a href="{% static 'hem/files/dose_output_metadata.xlsx' %}">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Dose Metadata</a><br>
+                {% if rh.products == 1 %}
+                    <a href="{% static 'hem/files/lciametrics_output_metadata.xlsx' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> LCIA Metrics Metadata</a><br>
+                {% endif %}
+                <a href="{% static 'hem/files/population_output_metadata.xlsx' %}">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Population Metadata</a><br>
+            </div>
         </div>
     </div>  <!-- row div -->
+    <hr>
+    <div class="well well-sm" id="my_chart" style="width:100%; height:500px;">
+    </div>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+    <script>
+        Highcharts.chart('my_chart', {
+            chart: {
+                type: 'spline',
+                zoomType: 'xy'
+            },
+            tooltip: {
+                        formatter: function(){
+                            return parseFloat(Math.round(this.x * 100) / 100).toFixed(2) +
+                                ' dose (mg/kg/annually)<br>' +
+                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' % population'
+                        }
+            },
+            exporting: {
+                chartOptions: { // specific options for the exported image
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    }
+                },
+                fallbackToExportServer: false
+            },
+            title: {
+                text: 'Dose for {{ chem.name }}'
+            },
+            subtitle: {
+                text: '{{ chem.cas }}'
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Annual systemic dose (mg/kg/annually)'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true,
+                type: 'logarithmic'
+            },
+            yAxis: {
+                title: {
+                    text: 'Cumulative % of population'
+                },
+                min: 0,
+                max: 100,
+                tickInterval: 10,
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 150,
+                y: 70,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                borderWidth: 1
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                }
+            },
+            series: [{
+                name: '{{ chem.cas }}',
+                color: 'rgba(119, 152, 191, .5)',
+                data: {{ plot_data.dose }}
+            }]
+        });
+    </script>
+    <h3>Debug info</h3>
+    <pre>{% debug %}</pre>
 
+{% endblock %}
+{% block javascript %}
 {% endblock %}
