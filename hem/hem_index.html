@@ -26,21 +26,13 @@
                     </label>
                 </div>
                 <hr>
-                <div class="form-group pc option_prod" style="display:none;">
+                <div class="form-group pc option_prod"  style="display:none;">
                     <label class="control-label">Product</label>
-                    <select class="form-control" name="selectProduct">
-                        <option value="1" selected>All</option>
-                        <option value="2">body hygiene >> hand soap >> liquid hand soaps</option>
-                        <option value="3">dental care >> toothpaste >> toothpastes and dentrifices</option>
-                    </select>
+                    {{ form.categories |add_class:"form-control" }}
                 </div>
                 <div class="form-group pc option_chem">
                     <label class="control-label">Chemical</label>
                     {{ form.chemical |add_class:"form-control"}}
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Population</label>
-                    {{ form.population_size }}
                 </div>
                 <div class="form-group">
                     <label class="control-label">Gender</label>
