@@ -10,12 +10,12 @@
     <div>
         <div class="row">
             <div class="col-md-6">
-                {% if rh.products == 0 %}
+                {% if rh.is_product == 0 %}
                     <h2>{{ chem.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chem.dtxsid}}"
                                                   target="_blank" title="Explore on the Chemistry Dashboard">
                         {{ chem.cas }}</a></small></h2>
                 {% else %}
-                    <h2>{{ category.title }}</h2>
+                    <h2>{{ products.title }}</h2>
                 {% endif %}
 
                 population size: {{ rh.population_size }}<br>
@@ -143,8 +143,8 @@
             }]
         });
     </script>
-    <h3>Debug info</h3>
-    <pre>{% debug %}</pre>
+
+
 
 {% endblock %}
 {% block javascript %}
