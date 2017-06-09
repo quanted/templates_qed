@@ -11,9 +11,11 @@
         <div class="row">
             <div class="col-md-6">
                 {% if rh.is_product == 0 %}
-                    <h2>{{ chem.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chem.dtxsid}}"
+                    {% for chemical in chem %}
+                    <h2>{{ chemical.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chemical.dtxsid }}"
                                                   target="_blank" title="Explore on the Chemistry Dashboard">
-                        {{ chem.cas }}</a></small></h2>
+                        {{ chemical.cas }}</a></small></h2>
+                    {% endfor %}
                 {% else %}
                     <h2>{{ products.title }}</h2>
                 {% endif %}
@@ -143,8 +145,6 @@
             },{% endfor %}]
         });
     </script>
-
-
 
 {% endblock %}
 {% block javascript %}
