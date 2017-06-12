@@ -10,12 +10,14 @@
     <div>
         <div class="row">
             <div class="col-md-6">
-                {% if rh.products == 0 %}
-                    <h2>{{ chem.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chem.dtxsid}}"
+                {% if rh.is_product == 0 %}
+                    {% for chemical in chem %}
+                    <h2>{{ chemical.name }} <small><a href="https://comptox.epa.gov/dashboard/{{ chemical.dtxsid }}"
                                                   target="_blank" title="Explore on the Chemistry Dashboard">
-                        {{ chem.cas }}</a></small></h2>
+                        {{ chemical.cas }}</a></small></h2>
+                    {% endfor %}
                 {% else %}
-                    <h2>{{ category.title }}</h2>
+                    <h2>{{ products.title }}</h2>
                 {% endif %}
 
                 population size: {{ rh.population_size }}<br>
@@ -83,15 +85,15 @@
                 fallbackToExportServer: false
             },
             title: {
-                text: 'Dose for {{ chem.name }}'
+                text: 'Total Systemic Dose'
             },
             subtitle: {
-                text: '{{ chem.cas }}'
+                text: '(dermal, ingestion, and inhalation)'
             },
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'Annual systemic dose (mg/kg/annually)'
+                    text: 'Annual Average Daily Dose (mg/kg body weight/day)'
                 },
                 startOnTick: true,
                 endOnTick: true,
@@ -108,10 +110,10 @@
             },
             legend: {
                 layout: 'vertical',
-                align: 'left',
-                verticalAlign: 'top',
-                x: 150,
-                y: 70,
+                align: 'right',
+                verticalAlign: 'bottom',
+                x: -75,
+                y: -159,
                 floating: true,
                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
                 borderWidth: 1
@@ -136,16 +138,14 @@
                     },
                 }
             },
-            series: [{
-                name: '{{ chem.cas }}',
-                color: 'rgba(119, 152, 191, .5)',
-                data: {{ plot_data.dose }}
-            }]
+            series: [{% for chemical in chem %}{
+                name: '{{ chemical.cas }}',
+                color: '{{ chemical.plot_color }}',
+                data: {{ chemical.plot_data.dose }}
+            },{% endfor %}]
         });
     </script>
-    <h3>Debug info</h3>
-    <pre>{% debug %}</pre>
-
+<!--<pre>{#  debug #}</pre>
 {% endblock %}
 {% block javascript %}
 {% endblock %}
