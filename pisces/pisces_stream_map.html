@@ -78,7 +78,7 @@
         text-align: center !important;
         text-decoration: none !important;
         display: inline-block !important;
-        font-size: 10px !important;
+        font-size: 12px !important;
         border-radius: 12px !important;
         margin: 5px 0 !important;
         white-space: nowrap !important;
@@ -120,8 +120,7 @@
         text-align: left;
         border: none;
         outline: none;
-{#        transition: 0.4s;#}
-        margin: 0 !important;
+    {#        transition: 0.4s;#} margin: 0 !important;
     }
 
     button.accordion.active, button.accordion:hover {
@@ -133,7 +132,7 @@
         background-color: white;
         max-height: 0;
         overflow: hidden;
-{#        transition: max-height 0.2s ease-out;#}
+    {#        transition: max-height 0.2s ease-out;#}
     }
 
     button.accordion:after {
@@ -181,6 +180,10 @@
                 selectHUCs(this.value);
             });
 
+            $("#accordion").click(expandFilter());
+            $(document).on("click", ".filterButton",(function(event){
+                filterButtonClick(event.target.id);
+            }));
         });
 
 
@@ -192,10 +195,10 @@
 
         function getStreamData(lat, lng) {
             var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
-            latitude = lat.toString();
-            longitude = lng.toString();
-            $('#latVal').html(latitude);
-            $('#lngVal').html(longitude);
+            var latitude = lat.toString();
+            var longitude = lng.toString();
+            $('#latVal').html(Number(latitude).toFixed(6));
+            $('#lngVal').html(Number(longitude).toFixed(6));
 
             ptIndexParams = {
                 'pGeometry': 'POINT(' + longitude + ' ' + latitude + ')'
@@ -216,7 +219,7 @@
                 success: function (data, status, jqXHR) {
                     var streamData = JSON.parse(data);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
-                    $('#huc12').html(streamData.output.ary_flowlines[0].wbd_huc12);
+                    $('#huc8').html(streamData.output.ary_flowlines[0].wbd_huc12.substring(0,8));
                     addStreamSeg(streamData);
                     return data;
                 },
@@ -246,12 +249,13 @@
                 }
             });
 
-            var huc8 = JSON.stringify([document.getElementById('#huc12').value.substring(0, 8)]);
+            var huc8 = JSON.stringify([document.getElementById('#huc8').value]);
             $.ajax({
                 type: "POST",
                 url: "/pisces/rest/fishproperies",
                 data: huc8,
                 crossDomain: true,
+
                 success: function (data) {
                     populateFishTable(data)
                 },
@@ -545,14 +549,13 @@
             return huc8;
         }
 
-
     </script>
     <script>
 
         {# Filter functionality #}
         function filterButtonClick(id) {
-            var selectedFilter = document.getElementById(id);
-            if (selectedFilter.style.backgroundColor === 'transparent') {
+            var selectedFilter = document.getElementById(id).closest('div');
+            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {
                 selectedFilter.style.backgroundColor = '#0099FF';
                 {# based on id, apply appropriate filtering of the dataTable contents. #}
             }
@@ -564,6 +567,7 @@
         }
 
         {# Accordion JS #}
+
         function expandFilter() {
             var acc = document.getElementsByClassName("accordion");
             var i;
@@ -581,7 +585,6 @@
             }
             return false;
         }
-
     </script>
 </head>
 <body>
@@ -604,86 +607,56 @@
                             <option value="Imagery">Imagery</option>
                             <option value="ShadedRelief">Shaded Relief</option>
                         </select>
-                        <!-- strean data div -->
-
                     </div>
                 </div>
                 <br class="row" id="streamData">
-                <button class="accordion" onclick="expandFilter()">Fish Assemblage Filters</button>
+                <button class="accordion" >Fish Assemblage Filters</button>
                 <div class="panel" id="assemblage_filters" style="overflow: hidden;">
-{#                    <h3 style="text-align: center; width: 100%; padding-top: 10px;" align="center">Fish Assemblage#}
-{#                        Filters</h3>#}
 
-                    <div class="fish_filter" id="depth_filter">
-                        <input type="button" name="stream_depth" value="Stream Depth" class="filterButton"
-                               onclick="filterButtonClick('depth_filter')" align="center"><br>
+                    <div class="fish_filter">
+                        <input id="depth_filter" type="button" name="depth" value="Depth" class="filterButton" align="center"><br>
                         <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
                         <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
                     </div>
-                    <div class="fish_filter" id="width_filter">
-                        <input type="button" name="stream_width" value="Stream Width" class="filterButton"
-                               onclick="filterButtonClick('width_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
+                    <div class="fish_filter">
+                        <input  id="width_filter" type="button" name="width" value="Width" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="width_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="width_max" placeholder="(max)">
+                    </div>
+                    <div class="fish_filter">
+                        <input id="area_filter" type="button" name="area" value="Area" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="area_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="area_max" placeholder="(max)">
+                    </div>
+                    <div class="fish_filter">
+                        <input id="slope_filter" type="button" name="slope" value="Slope" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="slope_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="slope_max" placeholder="(max)">
+                    </div>
+                    <div class="fish_filter">
+                        <input id="tss_filter" type="button" name="tss" value="TSS" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="tss_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="tss_max" placeholder="(max)">
+                    </div>
+                    <div class="fish_filter">
+                        <input id="ph_filter" type="button" name="ph" value="pH" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="ph_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="ph_max" placeholder="(max)">
+                    </div>
+                    <div class="fish_filter">
+                        <input id="cond_filter" type="button" name="cond" value="Conductivity" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="cond_min" placeholder="(min)">
                         <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
                     </div>
-                    <div class="fish_filter" id="area_filter">
-                        <input type="button" name="stream_area" value="Stream Area" class="filterButton"
-                               onclick="filterButtonClick('area_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
-                    </div>
-                    <div class="fish_filter" id="slope_filter">
-                        <input type="button" name="stream_slope" value="Stream Slope" class="filterButton"
-                               onclick="filterButtonClick('slope_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
-                    </div>
-                    <div class="fish_filter" id="tss_filter">
-                        <input type="button" name="stream_tss" value="Stream TSS" class="filterButton"
-                               onclick="filterButtonClick('tss_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
-                    </div>
-                    <div class="fish_filter" id="ph_filter">
-                        <input type="button" name="stream_ph" value="Stream pH" class="filterButton"
-                               onclick="filterButtonClick('ph_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
-                    </div>
-                    <div class="fish_filter" id="cond_filter">
-                        <input type="button" name="stream_cond" value="Stream Conductivity" class="filterButton"
-                               onclick="filterButtonClick('cond_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
-                    </div>
-                    <div class="fish_filter" id="do_filter">
-                        <input type="button" name="stream_do" value="Dissolved Oxygen" class="filterButton"
-                               onclick="filterButtonClick('do_filter')" align="center"><br>
-                        <input type="text" id="filter_field_left" name="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
+                    <div class="fish_filter">
+                        <input id="do_filter" type="button" name="dis_o" value="Dissolved Oxygen" class="filterButton" align="center"><br>
+                        <input type="text" id="filter_field_left" name="do_min" placeholder="(min)">
+                        <input type="text" id="filter_field_right" name="do_max" placeholder="(max)">
                     </div>
                 </div>
                 <br>
                 <div class="col-md-12">
                     <div id="error_msg"></div>
-                    {#                            <table id="fish_data_table" class="display" cellspacing="0" width="100%">#}
-                    {#                                <tr>#}
-                    {#                                    <td>Latitude:</td>#}
-                    {#                                    <td id="latVal">0.00</td>#}
-                    {#                                    <td>Longitude:</td>#}
-                    {#                                    <td id="lngVal">0.00</td>#}
-                    {#                                    <td>Com ID</td>#}
-                    {#                                    <td id="comid"></td>#}
-                    {#                                </tr>#}
-                    {#                                <tr>#}
-                    {#                                    <td>EcoRegion ID:</td>#}
-                    {#                                    <td id="ecoRegionId">0</td>#}
-                    {#                                    <td>EcoRegion Name:</td>#}
-                    {#                                    <td id="ecoRegionName"></td>#}
-                    {#                                    <td>WBD HUC12</td>#}
-                    {#                                    <td id="huc12"></td>#}
-                    {#                                </tr>#}
-                    {#                            </table>#}
                     <h4 style="text-align: center; width: 30%" align="left">Fish in Selected HUC</h4>
                     <table id="fishTable" class="display compact hover" cellspacing="0" width="30%"
                            align="left">
@@ -802,7 +775,7 @@ info.update = function (props) {
         '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
         '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
         '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +
-        '<td>WBD HUC12:</td><td id="huc12"></td>';
+        '<td>WBD HUC8:</td><td id="huc8"></td>';
 };
 
 info.addTo(map);
