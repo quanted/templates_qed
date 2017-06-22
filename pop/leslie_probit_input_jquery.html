@@ -2,8 +2,8 @@
 $(document).ready(function(){ 
 
 	//$(".articles").find('table').addClass('table');
-    var tab_pool = ["tab_chem", "tab_dose", "tab_popu"];
-    var uptab_pool = ["chem", "dose", "popu"];
+    var tab_pool = ["tab_Chemical", "tab_DoseResponse", "tab_LeslieMatrix"];
+    var uptab_pool = ["Chemical", "DoseResponse", "LeslieMatrix"];
     var visible = $(".tab:visible").attr('class').split(" ")[1];
     var curr_ind = $.inArray(visible, tab_pool);
     $(".submit").hide();
