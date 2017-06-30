@@ -43,7 +43,7 @@
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
     <!-- local js -->
-    <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
+    <script src="/static_qed/sam/mtb_flowline_simple.js"></script>
     <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
 
 </head>
@@ -64,24 +64,24 @@
         <div class="col-md-10">
             <div class="box multi news">
                 <div class="pane-content" id="mapDiv">
-                    <p><strong>Select a catchment</strong> on the map to view a time series of output associated
+                    <p><strong>Select a stream reach</strong> on the map to view data associated
                         with the area.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
                     <!-- basemap wrapper -->
                     <div id="basemaps-wrapper" class="leaflet-bar">
                         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                            <option value="NationalGeographic">National Geographic</option>
                             <option value="Topographic">Topographic</option>
                             <option value="Imagery">Imagery</option>
                             <option value="Streets">Streets</option>
-                            <option value="NationalGeographic">National Geographic</option>
                             <option value="ShadedRelief">Shaded Relief</option>
                         </select>
                     </div>
                     <br>
                     <!-- datatables div -->
                     <div>
-                        <table id="fish_data_table" width="90%"></table>
+                        <table id="SAM_data_table" width="90%"></table>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
 
         <script>
 
-            //style HUC 8 polygon
+            //style streams (update this once sample data of stream pesticide concentraion is available)
             function getColor(d) {
                 return d > 110 ? '#084594' :
                     d > 86 ? '#2171b5' :
@@ -101,22 +101,21 @@
                                         'red';
             }
 
+
             //style HUC 8 polygon cont.
-            function hucStyle(feature) {
+            function streamStyle(feature) {
                 return {
                     fillColor: getColor(feature.properties.NumbSpc),
-                    weight: .5,
-                    opacity: 0.9,
-                    color: 'white',
-                    fillOpacity: 0.5
+                    weight: .8,
+                    color: '#2171b5',
                 };
             }
 
-            //style selected HUC 8 polygon
-            function selectHUCs(hucs) {
-                resetHUCLayer();
+            //style selected stream
+            function selectStream(hucs) {
+                resetStreamLayer();
                 //  properties of highlighted HUC
-                huc8Layer.eachLayer(function (layer) {
+                streamLayer.eachLayer(function (layer) {
                     if (hucs == layer.feature.properties.HUC_CODE)
                         layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
                     if (hucs == layer.feature.properties.HUC_CODE)
@@ -142,16 +141,16 @@
             }
 
             //get fish json data for selected HUC
-            function resetHUCLayer() {
-                huc8Layer.eachLayer(function (layer) {
-                    huc8Layer.resetStyle(layer);
+            function resetStreamLayer() {
+                streamLayer.eachLayer(function (layer) {
+                    streamLayer.resetStyle(layer);
                 });
             }
 
-            //Setup on click method for each huc8 feature
+            //Setup on click method for each stream feature
             function onEachFeature(feature, layer) {
                 layer.on('click', function (e) {
-                    selectHUCs(feature.properties.HUC_CODE);
+                    selectStream(feature.properties.HUC_CODE);
                     var data = getHUCFishData(feature.properties.HUC_CODE);
                     //initDT(fish_by_huc_columns, data);
                     //alert(e.latlng.toString());
@@ -160,15 +159,15 @@
 
 
             // initialize the map
-            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([39.5093, -91.7685], 8);
+            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([39.6093, -91.9685], 8);
 
             // load basemap
-            L.esri.basemapLayer('Topographic')
+            L.esri.basemapLayer('NationalGeographic')
                 .addTo(map);
 
             // load huc watershed boundaries
-            var huc8Layer = L.geoJson(huc8s, {
-                style: hucStyle,
+            var streamLayer = L.geoJson(markTwainStreams, {
+                style: streamStyle,
                 onEachFeature: onEachFeature
             }).addTo(map);
 
