@@ -116,6 +116,7 @@
             margin: 5px 0 !important;
             white-space: nowrap !important;
             padding: 0 !important;
+            box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 5px 5px #999 !important;
         }
 
         .filterButton:hover {
@@ -128,7 +129,11 @@
         {#        float: left;#} background-color: transparent;
             width: 11%;
             margin: 0 1px;
-            display: table-cell;
+            display: inline-block;
+        }
+
+        #filter_field {
+            font-size: 10px;
         }
 
         #filter_field_left {
@@ -142,6 +147,11 @@
             float: right;
             font-size: 10px;
         }
+
+        tr.filteredInFishTable td{
+            background-color: #86C1FF !important;
+        }
+
 
         {# Accordion css #}
         button.accordion {
@@ -166,6 +176,7 @@
             background-color: white;
             max-height: 0;
             overflow: hidden;
+            text-align: center;
         {#        transition: max-height 0.2s ease-out;#}
         }
 
@@ -190,10 +201,20 @@
             background: url('/static_qed/pisces/images/details_close.png') no-repeat center center;
         }
 
+        div.filtering {
+            background-color: #0099FF;
+        }
+
     </style>
 
     <script>
+
         $(document).ready(function () {
+
+            {#            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {#}
+            {#                var depthValue = parseFloat(document.getElementsByClassName('depth_value')[0].value);#}
+            {#                return table.columns(6).search(depthValue).draw();#}
+            {#            });#}
 
             $('#fishTable').closest('table').hide();
             $('#filteredFishTable').closest('table').hide();
@@ -203,8 +224,38 @@
             });
 
             $('#accordion').click(expandFilter());
+
             $(document).on("click", ".filterButton", (function (event) {
-                filterButtonClick(event.target.id);
+                var input = $(this).closest('div');
+                var fishTable = $('#fishTable').DataTable();
+                if (input.hasClass("filtering")) {
+                    input.removeClass('filtering');
+                }
+                else {
+                    input.addClass('filtering');
+                }
+                var filters = $("#assemblage_filters").find(".filtering");
+                var resetData = fishTable.rows().data();
+                populateFilteredFishTable(resetData);
+                fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
+                if (filters.length !== 0) {
+                    var filteredTable = $('#filteredFishTable').DataTable();
+                    var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
+                    filters.map(function (index) {
+                        var filterName = filters[index].firstElementChild.name.split('_');
+                        var notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                        for (var i = 0; i < notInTable.length; i++) {
+                            var v = notInTable[i];
+                            if (inTable.indexOf(v) !== -1) {
+                                inTable.splice(inTable.indexOf(v), 1);
+                            }
+                        }
+                    });
+                    var filterData = filteredTable.rows(inTable).data();
+                    //Indexing error, the inTable index array is correct but fishTable does not return the correct rows for those indexes.
+                    fishTable.rows(inTable, {order:'current'}).nodes().to$().addClass('filteredInFishTable');
+                    populateFilteredFishTable(filterData);
+                }
             }));
 
             // Add event listener for opening and closing details
@@ -223,60 +274,54 @@
                     tr.addClass('shown');
                 }
             });
-
-
-            $('#depth_filter').on('click', function (e) {
-                var input = $(this).closest('input');
-                if (input.hasClass("filtering")) {
-                    // remove filtering of this element in table.
-                    input.removeClass('filtering');
-                }
-                else {
-                    input.addClass('filtering');
-                    e.preventDefault();
-                    //filterFish(0, minValue, 6, maxValue);
-                    var ffTable = $('#filteredFishTable').DataTable();
-                    $.fn.dataTable.ext.search.push(function (oSettings, aData, iDataIndex) {
-                        var minValue = document.getElementsByClassName('depth_min')[0].value;
-                        var maxValue = document.getElementsByClassName('depth_max')[0].value;
-                        var rowMinValue = aData[0];
-                        var rowMaxValue = aData[6];
-
-                        if (minValue !== "" && maxValue !== "") {
-                            return (minValue <= rowMinValue && maxValue >= rowMaxValue);
-                        }
-                        else if (minValue !== "") {
-                            return (minValue <= rowMinValue);
-                        }
-                        else if (maxValue !== "") {
-                            return ( maxValue >= rowMaxValue);
-                        }
-                        else {
-                            return false;
-                        }
-                    });
-                    ffTable.draw();
-                }
-            });
-
         });
 
+        function filterDataTable(minColumn, maxColumn, compareValueName) {
+            var filteredTable = $('#filteredFishTable').DataTable();
+            var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
+            var notInTable = [];
+            var filterTable = filteredTable.column(minColumn).data().filter(function (value, index) {
+                if (value < cValue || isNaN(value) || value === null) {
+                    return true;
+                }
+                else {
+                    if (notInTable.indexOf(index) === -1) {
+                        notInTable.push(index);
+                    }
+                    return false;
+                }
+            });
+            var filterTable2 = filteredTable.column(maxColumn).data().filter(function (value, index) {
+                if (value > cValue || isNaN(value) || value === null) {
+                    return true;
+                }
+                else {
+                    if (notInTable.indexOf(index) === -1) {
+                        notInTable.push(index);
+                    }
+                    else {
+                        notInTable.splice(notInTable.indexOf(index), 1);
+                    }
+                    return false;
+                }
+            });
+            return notInTable;
+        }
 
         function formatDetails(details) {
-            return 'Genus ID: ' + details[5] + '<br>' +
-                'Species ID: ' + details[9] + '<br>' +
-                'Max Size: ' + details[10] + '<br>' +
-                'Stream Depth Range: ' + details[0] + ' - ' + details[6] + '<br>' +
-                'Stream Width Range: ' + details[16] + ' - ' + details[21] + '<br>' +
-                'Stream Area Range: ' + details[2] + ' - ' + details[3] + '<br>' +
-                'Stream TSS Range: ' + details[1] + ' - ' + details[8] + '<br>' +
-                'Stream Slope Range: ' + details[15] + ' - ' + details[11] + '<br>' +
-                'Stream pH Range: ' + details[13] + ' - ' + details[14] + '<br>' +
-                'Stream Conductivity Range: ' + details[18] + ' - ' + details[22] + '<br>' +
-                'Stream Dissolved Oxygen Range: ' + details[19] + ' - ' + details[20] + '<br>';
+            return 'Max Size (cm): ' + details[10] + '<br>' +
+                'Stream Depth Range (cm): (' + details[0] + ' - ' + details[6] + ')<br>' +
+                'Stream Width Range (m): (' + details[16] + ' - ' + details[21] + ')<br>' +
+                'Stream Area Range (ha): (' + details[2] + ' - ' + details[3] + ')<br>' +
+                'Stream Slope Range (%): (' + details[15] + ' - ' + details[11] + ')<br>' +
+                'Stream TSS Range (mg/l): (' + details[1] + ' - ' + details[8] + ')<br>' +
+                'Stream pH Range: (' + details[13] + ' - ' + details[14] + ')<br>' +
+                'Stream Conductivity Range (uS/cm2): (' + details[18] + ' - ' + details[22] + ')<br>' +
+                'Stream Dissolved Oxygen Range (% sat): (' + details[19] + ' - ' + details[20] + ')<br>';
         }
 
         function onStreamMapClick(e) {
+            document.getElementById('table-focus').focus();
             getStreamData(e.latlng.lat, e.latlng.lng);
             //getFishData();
             getTESTFishData();
@@ -538,17 +583,18 @@
                 }
             };
             populateFishTable(testFishData);
-            populateFilteredFishTable(testFishData);
+            var fishTableData = $('#fishTable').DataTable().rows().data();
+            populateFilteredFishTable(fishTableData);
         }
 
         function populateFishTable(data) {
             var fishArray = [];
             $('#fishTable').DataTable().destroy();
+            $('#fishTable').empty();
             Object.keys(data).forEach(function (key) {
                 fishArray.push(Object.values(data[key]));
             });
-            $('#fishTable').closest('table').show();
-            $('#fishTable').DataTable({
+            var config = {
                 data: fishArray,
                 "columns": [
                     {
@@ -559,95 +605,119 @@
                     },
                     {
                         data: 4,
-                        title: "Common Name"
+                        title: "Common Name",
+                        name: "common_name"
                     },
                     {
                         data: 7,
-                        title: "Scientific Name"
+                        title: "Scientific Name",
+                        name: "scientific_name"
                     },
                     {
                         data: 17,
-                        title: "Genus"
+                        title: "Genus",
+                        name: "genus"
                     },
                     {
                         data: 5,
-                        title: "Genus Id"
+                        title: "Genus Id",
+                        name: "genus_id"
                     },
                     {
                         data: 9,
-                        title: "Species Id"
+                        title: "Species Id",
+                        name: "species_id"
+
                     },
                     {
                         data: 10,
-                        title: "Max Size"
+                        title: "Max Size",
+                        name: "max_size"
                     },
                     {
                         data: 0,
-                        title: "Depth Lower"
+                        title: "Depth Lower",
+                        name: "depth_lower"
                     },
                     {
                         data: 6,
-                        title: "Depth Upper"
+                        title: "Depth Upper",
+                        name: "depth_upper"
                     },
                     {
                         data: 16,
-                        title: "Width Lower"
+                        title: "Width Lower",
+                        name: "width_lower"
                     },
                     {
                         data: 21,
-                        title: "Width Upper"
+                        title: "Width Upper",
+                        name: "width_upper"
                     },
                     {
                         data: 2,
-                        title: "Area Lower"
+                        title: "Area Lower",
+                        name: "area_lower"
                     },
                     {
                         data: 3,
-                        title: "Area Upper"
+                        title: "Area Upper",
+                        name: "area_upper"
                     },
                     {
                         data: 1,
-                        title: "TSS Lower"
+                        title: "TSS Lower",
+                        name: "tss_lower"
                     },
                     {
                         data: 8,
-                        title: "TSS Upper"
+                        title: "TSS Upper",
+                        name: "tss_upper"
                     },
                     {
                         data: 15,
-                        title: "Slope Lower"
+                        title: "Slope Lower",
+                        name: "slope_lower"
                     },
                     {
                         data: 11,
-                        title: "Sloper Upper"
+                        title: "Slope Upper",
+                        name: "slope_upper"
                     },
                     {
                         data: 12,
-                        title: "HUC ID"
+                        title: "HUC ID",
+                        name: "huc_id"
                     },
                     {
                         data: 13,
-                        title: "pH Lower"
+                        title: "pH Lower",
+                        name: "ph_lower"
                     },
                     {
                         data: 14,
-                        title: "pH Upper"
+                        title: "pH Upper",
+                        name: "ph_upper"
                     },
                     {
                         data: 18,
-                        title: "Conductivity Lower"
+                        title: "Conductivity Lower",
+                        name: "conduct_lower"
                     },
                     {
                         data: 22,
-                        title: "Conductivity Upper"
+                        title: "Conductivity Upper",
+                        name: "conduct_upper"
                     },
                     {
                         data: 19,
-                        title: "Dissolved Oxygen Lower"
+                        title: "Dissolved Oxygen Lower",
+                        name: "do_lower"
                     },
                     {
                         data: 20,
-                        title: "Dissolved Oxygen Upper"
+                        title: "Dissolved Oxygen Upper",
+                        name: "do_upper"
                     }
                 ],
                 "columnDefs": [
@@ -667,23 +737,143 @@
                 bInfo: false,
                 "order": [[1, 'asc']]
 
-            });
+            };
+            $('#fishTable').closest('table').show();
+            $('#fishTable').DataTable(config);
         }
 
         function populateFilteredFishTable(data) {
-            var fishArray = [];
+            {#            var fishArray = [];#}
+            var fishArray = data;
             $('#filteredFishTable').DataTable().destroy();
-            Object.keys(data).forEach(function (key) {
-                fishArray.push(Object.values(data[key]));
-            });
-            $('#filteredFishTable').closest('table').show();
-            $('#filteredFishTable').DataTable({
+            $('#filteredFishTable').empty();
+            {#            Object.keys(data).forEach(function (key) {#}
+            {#                fishArray.push(Object.values(data[key]));#}
+            {#            });#}
+            var config = {
                 data: fishArray,
                 "columns": [
-                    {data: 4},
-                    {data: 7}
+                    {
+                        data: 4,
+                        title: "Common Name",
+                        name: "common_name"
+                    },
+                    {
+                        data: 7,
+                        title: "Scientific Name",
+                        name: "scientific_name"
+                    },
+                    {
+                        data: 17,
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: 5,
+                        title: "Genus Id",
+                        name: "genus_id"
+                    },
+                    {
+                        data: 9,
+                        title: "Species Id",
+                        name: "species_id"
+                    },
+                    {
+                        data: 10,
+                        title: "Max Size",
+                        name: "max_size"
+                    },
+                    {
+                        data: 0,
+                        title: "Depth Lower",
+                        name: "depth_lower"
+                    },
+                    {
+                        data: 6,
+                        title: "Depth Upper",
+                        name: "depth_upper"
+                    },
+                    {
+                        data: 16,
+                        title: "Width Lower",
+                        name: "width_lower"
+                    },
+                    {
+                        data: 21,
+                        title: "Width Upper",
+                        name: "width_upper"
+                    },
+                    {
+                        data: 2,
+                        title: "Area Lower",
+                        name: "area_lower"
+                    },
+                    {
+                        data: 3,
+                        title: "Area Upper",
+                        name: "area_upper"
+                    },
+                    {
+                        data: 1,
+                        title: "TSS Lower",
+                        name: "tss_lower"
+                    },
+                    {
+                        data: 8,
+                        title: "TSS Upper",
+                        name: "tss_upper"
+                    },
+                    {
+                        data: 15,
+                        title: "Slope Lower",
+                        name: "slope_lower"
+                    },
+                    {
+                        data: 11,
+                        title: "Slope Upper",
+                        name: "slope_upper"
+                    },
+                    {
+                        data: 12,
+                        title: "HUC ID",
+                        name: "huc_id"
+                    },
+                    {
+                        data: 13,
+                        title: "pH Lower",
+                        name: "ph_lower"
+                    },
+                    {
+                        data: 14,
+                        title: "pH Upper",
+                        name: "ph_upper"
+                    },
+                    {
+                        data: 18,
+                        title: "Conductivity Lower",
+                        name: "cond_lower"
+                    },
+                    {
+                        data: 22,
+                        title: "Conductivity Upper",
+                        name: "cond_upper"
+                    },
+                    {
+                        data: 19,
+                        title: "Dissolved Oxygen Lower",
+                        name: "do_lower"
+                    },
+                    {
+                        data: 20,
+                        title: "Dissolved Oxygen Upper",
+                        name: "do_upper"
+                    }
                 ],
                 "columnDefs": [
+                    {
+                        "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+                        "visible": false
+                    },
                     {
                         "render": function (data, type, row) {
                             return row[17] + ' ' + data;
@@ -691,10 +881,13 @@
                         "targets": 1
                     }
                 ],
+                regex: true,
                 searching: false,
                 paging: false,
                 bInfo: false
-            });
+            };
+            $('#filteredFishTable').closest('table').show();
+            $('#filteredFishTable').DataTable(config);
         }
 
         function addStreamSeg(streamData) {
@@ -751,14 +944,14 @@
         {# Filter functionality #}
         function filterButtonClick(id) {
             var selectedFilter = document.getElementById(id).closest('div');
-            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {
-                selectedFilter.style.backgroundColor = '#0099FF';
-                {# based on id, apply appropriate filtering of the dataTable contents. #}
-            }
-            else {
-                selectedFilter.style.backgroundColor = 'transparent';
-                {# undo filtering of the appropriate id #}
-            }
+            {#            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {#}
+            {#                selectedFilter.style.backgroundColor = '#0099FF';#}
+            {# based on id, apply appropriate filtering of the dataTable contents. #}
+            {#            }#}
+            {#            else {#}
+            {#                selectedFilter.style.backgroundColor = 'transparent';#}
+            {# undo filtering of the appropriate id #}
+            {#            }#}
             return false;
         }
 
@@ -810,51 +1003,62 @@
                 <div class="panel" id="assemblage_filters" style="overflow: hidden;">
 
                     <div class="fish_filter">
-                        <input id="depth_filter" type="button" name="depth" value="Depth" class="filterButton"
+                        <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" class="depth_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" class="depth_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="depth_value" placeholder="(cm)">
+                        {#                        <input type="text" id="filter_field_left" class="depth_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" class="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="width_filter" type="button" name="width" value="Width" class="filterButton"
+                        <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="width_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="width_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="width_value" placeholder="(m)">
+                        {#                        <input type="text" id="filter_field_left" name="width_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="width_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="area_filter" type="button" name="area" value="Area" class="filterButton"
+                        <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="area_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="area_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="area_value" placeholder="(ha)">
+                        {#                        <input type="text" id="filter_field_left" name="area_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="area_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="slope_filter" type="button" name="slope" value="Slope" class="filterButton"
+                        <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="slope_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="slope_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="slope_value" placeholder="(%)">
+                        {#                        <input type="text" id="filter_field_left" name="slope_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="slope_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="tss_filter" type="button" name="tss" value="TSS" class="filterButton" align="center"><br>
-                        <input type="text" id="filter_field_left" name="tss_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="tss_max" placeholder="(max)">
+                        <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
+                               align="center"><br>
+                        <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)">
+                        {#                        <input type="text" id="filter_field_left" name="tss_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="tss_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="ph_filter" type="button" name="ph" value="pH" class="filterButton"
+                        <input id="ph_filter" type="button" name="ph_17_18" value="pH" class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="ph_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="ph_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="ph_value" placeholder="(pH)">
+                        {#                        <input type="text" id="filter_field_left" name="ph_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="ph_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="cond_filter" type="button" name="cond" value="Conductivity" class="filterButton"
+                        <input id="cond_filter" type="button" name="cond_19_20" value="Conductivity"
+                               class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="cond_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)">
+                        {#                        <input type="text" id="filter_field_left" name="cond_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
-                        <input id="do_filter" type="button" name="dis_o" value="Dissolved Oxygen" class="filterButton"
+                        <input id="do_filter" type="button" name="do_21_22" value="Dissolved Oxygen"
+                               class="filterButton"
                                align="center"><br>
-                        <input type="text" id="filter_field_left" name="do_min" placeholder="(min)">
-                        <input type="text" id="filter_field_right" name="do_max" placeholder="(max)">
+                        <input type="text" id="filter_field" class="do_value" placeholder="(% sat)">
+                        {#                        <input type="text" id="filter_field_left" name="do_min" placeholder="(min)">#}
+                        {#                        <input type="text" id="filter_field_right" name="do_max" placeholder="(max)">#}
                     </div>
                 </div>
                 <br>
@@ -893,7 +1097,8 @@
                             </thead>
                         </table>
                     </div>
-                    <div style="width:40%; margin: auto; display: inline-block; float: left;">
+                    <div id="fish_assemblage_estimator"
+                         style="width:40%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Estimated Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;">
@@ -909,6 +1114,7 @@
                     <div style="width:30%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
                     </div>
+                    <div id="table-focus" tabindex="-1"></div>
                 </div>
             </div>
         </div>
