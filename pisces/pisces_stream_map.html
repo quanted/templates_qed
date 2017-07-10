@@ -148,10 +148,9 @@
             font-size: 10px;
         }
 
-        tr.filteredInFishTable td{
+        tr.filteredInFishTable td {
             background-color: #86C1FF !important;
         }
-
 
         {# Accordion css #}
         button.accordion {
@@ -252,8 +251,12 @@
                         }
                     });
                     var filterData = filteredTable.rows(inTable).data();
-                    //Indexing error, the inTable index array is correct but fishTable does not return the correct rows for those indexes.
-                    fishTable.rows(inTable, {order:'current'}).nodes().to$().addClass('filteredInFishTable');
+                    var genusIDs = filteredTable.cells(inTable, 3).data().toArray();
+                    fishTable.column(4, {order: 'index'}).data().filter(function (value, index) {
+                        if (genusIDs.indexOf(value) >= 0) {
+                            fishTable.row(index, {order: 'index'}).nodes().to$().addClass('filteredInFishTable');
+                        }
+                    });
                     populateFilteredFishTable(filterData);
                 }
             }));
