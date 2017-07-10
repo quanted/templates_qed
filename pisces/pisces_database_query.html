@@ -33,8 +33,8 @@
             <div class="col-md-6">
                 <div class="pane-content">
 
-                    <p>Explore the PiSCES database by searching for fish species of interest.  Select species properties,
-                        habitat characteristics, or other features to get a list of fish species that meet the criteria.</p>
+                    <p>Query the database by searching for fish species of interest.  Select species properties,
+                        habitat characteristics, or other features to get a list of species that meet the criteria.</p>
 
                     <!--- section line -->
                     <hr />
@@ -96,7 +96,7 @@
                         <li>
                             <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish Properties</a>
                             <div class="accordion-pane" id="pane-1">
-                                <p>Fish properties include characteristics related to species morphology, behavior, life cycle, and ...</p>
+                                <p>Fish properties include characteristics related to species morphology, beneficial use, biogeography, and physiology.</p>
 
                                 <!--- fish property tables -->
 
@@ -108,7 +108,7 @@
 
                                                         <tr>
                                                             <td colspan="4">
-                                                                If a field is left blank, all options will be included in the query.
+                                                                If a field is left blank, it will not be used in the query.
                                                             </td>
                                                         </tr>
 
@@ -117,7 +117,7 @@
                                                             <td style="width:33%">Native to the U.S.?
                                                                 </br>
                                                                 </br>
-                                                                <input checked="checked" id="native_y" name="native" type="radio" value="1" />
+                                                                <input id="native_y" name="native" type="radio" value="1" />
                                                                 <label for="native_y"> Yes </label>
                                                                 <input id="native_n" name="native" type="radio" value="0" />
                                                                 <label for="native_n"> No</label>
@@ -130,7 +130,7 @@
                                                                 </br>
                                                                 <input id="still_occurring_y" name="sportfish" type="radio" value="1" />
                                                                 <label for="still_occurring_y"> Yes </label>
-                                                                <input checked="checked" id="still_occurring_n" name="sportfish" type="radio" value="0" />
+                                                                <input id="still_occurring_n" name="sportfish" type="radio" value="0" />
                                                                 <label for="still_occurring_n"> No</label>
                                                             </td>
 
@@ -138,10 +138,10 @@
                                                             <td style="width:33%">Subsistence?
                                                                 </br>
                                                                 </br>
-                                                                <input id="still_occurring_y" name="subsistence" type="radio" value="1" />
-                                                                <label for="still_occurring_y"> Yes </label>
-                                                                <input checked="checked" id="still_occurring_n" name="subsistence" type="radio" value="0" />
-                                                                <label for="still_occurring_n"> No</label>
+                                                                <input id="subsistence_y" name="subsistence" type="radio" value="1" />
+                                                                <label for="subsistence_y"> Yes </label>
+                                                                <input id="subsistence_n" name="subsistence" type="radio" value="0" />
+                                                                <label for="subsistence_n"> No</label>
                                                             </td>
                                                         </tr>
 
@@ -166,17 +166,43 @@
                                                                 </br>
 
                                                                 <select name="tolerance" size="1">
-                                                                    <option selected="selected" value="">Please Select</option>
-                                                                    <option value="I">I</option><option value="M">M</option><option value="T">T</option></select></td>
+                                                                    <option selected="selected" value="">Unspecified</option>
+                                                                    <option value="I">Intolerant</option><option value="M">Mid-Tolerant</option><option value="T">Tolerant</option><option value="T">No Designation</option></select></td>
                                                             </td>
 
 
-                                                            <td style="width:34%">Max Size<a name="qFalsified" id="qFalsified"></a>
-                                                                <br>
+{#                                                            <td style="width:34%">Max Total Length<a name="qFalsified" id="qFalsified"></a>#}
+{#                                                                <br>#}
+{#                                                                </br>#}
+{##}
+{#                                                                <input name="alleged_violation_date" size="10" type="text" value="(cm)" />#}
+{#                                                            </td>#}
+
+                                                             <td style="width:33%">Max Total Length (cm)
                                                                 </br>
+                                                                </br>
+                                                                <input type="text" id="amount2" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px;">
 
-                                                                <input name="alleged_violation_date" size="10" type="text" value="(cm)" />
+                                                                <script>
+                                                                    $( function() {
+                                                                        $( "#slider-range2" ).slider({
+                                                                            range: true,
+                                                                            min: 1,
+                                                                            max: 500,
+                                                                            values: [ 1, 500 ],
+                                                                            slide: function( event, ui ) {
+                                                                                $( "#amount2" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                                                                            }
+                                                                        });
+                                                                        $( "#amount2" ).val($( "#slider-range2" ).slider( "values", 0 ) +
+                                                                          " - " + $( "#slider-range2" ).slider( "values", 1 ) );
+                                                                    } );
+                                                                </script>
+
+                                                                <div id="slider-range2"></div>
+
                                                             </td>
+
 
 
                                                             <td style="width:33%">Rarity
@@ -188,9 +214,9 @@
                                                                     $( function() {
                                                                         $( "#slider-range" ).slider({
                                                                             range: true,
-                                                                            min: 0,
+                                                                            min: 1,
                                                                             max: 10,
-                                                                            values: [ 4, 7 ],
+                                                                            values: [ 1, 10 ],
                                                                             slide: function( event, ui ) {
                                                                                 $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                                                                             }
@@ -301,6 +327,15 @@
                             <div class="center"><input name="submit" type="submit" value="Submit" /></div>
                         </td>
                     </tr>
+
+
+{#                    <!--- clear all selections -->#}
+{#                    <p>Clear all selections</p>#}
+{#                    <tr>#}
+{#                        <td colspan="4">#}
+{#                            <div><input name="clear" type="submit" value="Clear"></div>#}
+{#                        </td>#}
+{#                    </tr>#}
 
 
                 </div>
