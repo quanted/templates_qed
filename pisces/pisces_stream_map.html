@@ -232,7 +232,6 @@
                 updateFilters(input);
             }));
 
-{#            $('#filter_field').on('input', function(event){#}
             $(document).on('input', "#filter_field", function(event){
                 var input = $(this.closest('div'));
                 if (input.hasClass("filtering")){
@@ -960,8 +959,8 @@
     <script>
 
         {# Filter functionality #}
-        function filterButtonClick(id) {
-            var selectedFilter = document.getElementById(id).closest('div');
+{#        function filterButtonClick(id) {#}
+{#            var selectedFilter = document.getElementById(id).closest('div');#}
             {#            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {#}
             {#                selectedFilter.style.backgroundColor = '#0099FF';#}
             {# based on id, apply appropriate filtering of the dataTable contents. #}
@@ -970,8 +969,8 @@
             {#                selectedFilter.style.backgroundColor = 'transparent';#}
             {# undo filtering of the appropriate id #}
             {#            }#}
-            return false;
-        }
+{#            return false;#}
+{#        }#}
 
         {# Accordion JS #}
 
