@@ -43,6 +43,10 @@
             border-bottom: 0 !important;
         }
 
+        .region-highlighted{
+            margin: 0 0 0 0 !important;
+        }
+
         #fishTable tr *, td * {
             border: 0 !important;
             text-align: center !important;
@@ -148,10 +152,9 @@
             font-size: 10px;
         }
 
-        tr.filteredInFishTable td{
+        tr.filteredInFishTable td {
             background-color: #86C1FF !important;
         }
-
 
         {# Accordion css #}
         button.accordion {
@@ -160,8 +163,7 @@
             cursor: pointer;
             padding: 10px 18px;
             width: 100%;
-            text-align: left;
-            border: none;
+        {#            text-align: left;#} border: none;
             outline: none;
             margin: 0 !important;
             text-align: center;
@@ -227,36 +229,15 @@
 
             $(document).on("click", ".filterButton", (function (event) {
                 var input = $(this).closest('div');
-                var fishTable = $('#fishTable').DataTable();
-                if (input.hasClass("filtering")) {
-                    input.removeClass('filtering');
-                }
-                else {
-                    input.addClass('filtering');
-                }
-                var filters = $("#assemblage_filters").find(".filtering");
-                var resetData = fishTable.rows().data();
-                populateFilteredFishTable(resetData);
-                fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
-                if (filters.length !== 0) {
-                    var filteredTable = $('#filteredFishTable').DataTable();
-                    var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
-                    filters.map(function (index) {
-                        var filterName = filters[index].firstElementChild.name.split('_');
-                        var notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
-                        for (var i = 0; i < notInTable.length; i++) {
-                            var v = notInTable[i];
-                            if (inTable.indexOf(v) !== -1) {
-                                inTable.splice(inTable.indexOf(v), 1);
-                            }
-                        }
-                    });
-                    var filterData = filteredTable.rows(inTable).data();
-                    //Indexing error, the inTable index array is correct but fishTable does not return the correct rows for those indexes.
-                    fishTable.rows(inTable, {order:'current'}).nodes().to$().addClass('filteredInFishTable');
-                    populateFilteredFishTable(filterData);
-                }
+                updateFilters(input);
             }));
+
+            $(document).on('input', "#filter_field", function(event){
+                var input = $(this.closest('div'));
+                if (input.hasClass("filtering")){
+                    updateFilters(input);
+                }
+            });
 
             // Add event listener for opening and closing details
             $('#fishTable').on('click', 'td.details-control', function () {
@@ -275,6 +256,42 @@
                 }
             });
         });
+
+        function updateFilters(input) {
+            var fishTable = $('#fishTable').DataTable();
+            if (input.hasClass("filtering")) {
+                input.removeClass('filtering');
+            }
+            else {
+                input.addClass('filtering');
+            }
+            var filters = $("#assemblage_filters").find(".filtering");
+            var resetData = fishTable.rows().data();
+            populateFilteredFishTable(resetData);
+            fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
+            if (filters.length !== 0) {
+                var filteredTable = $('#filteredFishTable').DataTable();
+                var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
+                filters.map(function (index) {
+                    var filterName = filters[index].firstElementChild.name.split('_');
+                    var notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    for (var i = 0; i < notInTable.length; i++) {
+                        var v = notInTable[i];
+                        if (inTable.indexOf(v) !== -1) {
+                            inTable.splice(inTable.indexOf(v), 1);
+                        }
+                    }
+                });
+                var filterData = filteredTable.rows(inTable).data();
+                var genusIDs = filteredTable.cells(inTable, 3).data().toArray();
+                fishTable.column(4, {order: 'index'}).data().filter(function (value, index) {
+                    if (genusIDs.indexOf(value) >= 0) {
+                        fishTable.row(index, {order: 'index'}).nodes().to$().addClass('filteredInFishTable');
+                    }
+                });
+                populateFilteredFishTable(filterData);
+            }
+        }
 
         function filterDataTable(minColumn, maxColumn, compareValueName) {
             var filteredTable = $('#filteredFishTable').DataTable();
@@ -942,8 +959,8 @@
     <script>
 
         {# Filter functionality #}
-        function filterButtonClick(id) {
-            var selectedFilter = document.getElementById(id).closest('div');
+{#        function filterButtonClick(id) {#}
+{#            var selectedFilter = document.getElementById(id).closest('div');#}
             {#            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {#}
             {#                selectedFilter.style.backgroundColor = '#0099FF';#}
             {# based on id, apply appropriate filtering of the dataTable contents. #}
@@ -952,8 +969,8 @@
             {#                selectedFilter.style.backgroundColor = 'transparent';#}
             {# undo filtering of the appropriate id #}
             {#            }#}
-            return false;
-        }
+{#            return false;#}
+{#        }#}
 
         {# Accordion JS #}
 
@@ -1004,59 +1021,57 @@
 
                     <div class="fish_filter">
                         <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="depth_value" placeholder="(cm)">
+                               align="center" title="Filter fish by stream depth."><br>
+                        <input type="text" id="filter_field" class="depth_value" placeholder="(cm)" title="Enter a value in centimeters.">
                         {#                        <input type="text" id="filter_field_left" class="depth_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" class="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="width_value" placeholder="(m)">
+                               align="center" title="Filter fish by stream width."><br>
+                        <input type="text" id="filter_field" class="width_value" placeholder="(m)" title="Enter a value in meters.">
                         {#                        <input type="text" id="filter_field_left" name="width_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="width_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="area_value" placeholder="(ha)">
+                               align="center" title="Filter fish by stream drainage area."><br>
+                        <input type="text" id="filter_field" class="area_value" placeholder="(ha)" title="Enter a value in hectares.">
                         {#                        <input type="text" id="filter_field_left" name="area_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="area_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="slope_value" placeholder="(%)">
+                               align="center" title="Filter fish by stream slope."><br>
+                        <input type="text" id="filter_field" class="slope_value" placeholder="(%)" title="Enter a value as a percent grade.">
                         {#                        <input type="text" id="filter_field_left" name="slope_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="slope_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)">
+                               align="center" title="Filter fish by stream tss."><br>
+                        <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)" title="Enter a value in milligrams per liter.">
                         {#                        <input type="text" id="filter_field_left" name="tss_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="tss_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="ph_filter" type="button" name="ph_17_18" value="pH" class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="ph_value" placeholder="(pH)">
+                               align="center" title="Filter fish by stream pH."><br>
+                        <input type="text" id="filter_field" class="ph_value" placeholder="(SU)" title="Enter a value in standard units.">
                         {#                        <input type="text" id="filter_field_left" name="ph_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="ph_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="cond_filter" type="button" name="cond_19_20" value="Conductivity"
-                               class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)">
+                               class="filterButton" align="center" title="Filter fish by stream conductivity."><br>
+                        <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)" title="Enter a value in micro-Siemens per square centimeter.">
                         {#                        <input type="text" id="filter_field_left" name="cond_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="do_filter" type="button" name="do_21_22" value="Dissolved Oxygen"
-                               class="filterButton"
-                               align="center"><br>
-                        <input type="text" id="filter_field" class="do_value" placeholder="(% sat)">
+                               class="filterButton" align="center" title="Filter fish by stream dissolved oxygen."><br>
+                        <input type="text" id="filter_field" class="do_value" placeholder="(% sat)" title="Enter a value as percentage.">
                         {#                        <input type="text" id="filter_field_left" name="do_min" placeholder="(min)">#}
                         {#                        <input type="text" id="filter_field_right" name="do_max" placeholder="(max)">#}
                     </div>
@@ -1099,7 +1114,7 @@
                     </div>
                     <div id="fish_assemblage_estimator"
                          style="width:40%; margin: auto; display: inline-block; float: left;">
-                        <h4 style="text-align: center; width: 100%">Estimated Fish Assemblage</h4>
+                        <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;">
                             <thead>
