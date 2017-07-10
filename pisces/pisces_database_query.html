@@ -2,7 +2,9 @@
     {#datatables font size#}
     td {
         font-size: 13px;
+        vertical-align: top;
     }
+
 </style>
 
 
@@ -14,6 +16,10 @@
     <!-- datatables import -->
     <link rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
+
+    <!-- range slider -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
 
@@ -27,8 +33,8 @@
             <div class="col-md-6">
                 <div class="pane-content">
 
-                    <p>Explore the PiSCES database by searching for fish species of interest.  Select species properties,
-                        habitat characteristics, or other features to get a list of fish species that meet the criteria.</p>
+                    <p>Query the database by searching for fish species of interest.  Select species properties,
+                        habitat characteristics, or other features to get a list of species that meet the criteria.</p>
 
                     <!--- section line -->
                     <hr />
@@ -36,64 +42,45 @@
                     <!-- DROP-DOWN ACCORDIONS-->
                     <ul class="accordion">
 
-                        <!-- fish properties-->
+
+
+                        <!-- taxonomic-->
                         <li>
-                            <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish Properties</a>
-                            <div class="accordion-pane" id="pane-1">
-                                <p>Select <strong>fish properties</strong>...</p>
+                            <a class="accordion-title" href="#pane-3" title="Click to expand description">Taxonomy</a>
+                            <div class="accordion-pane" id="pane-3">
+                                <p>Select <strong>fish by taxonomy</strong> to query the PiSCES database....</p>
 
-                                <!--- fish property tables -->
+                                <!--- tables -->
                                 <table style="width:95%">
-
-                                        <tr>
-                                            <td colspan="2" style="width:50%">
-                                                <strong>Fish properties include characteristics related to species morphology, behavior, life cycle, and ...</strong>
-                                            <br />
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2">
-                                                <span>If a field is left blank, all species will be included in the query...</span>
-                                            </td>
-                                        </tr>
 
                                         <tr>
                                             <td colspan="4">
                                                 <table style="width:100%">
-
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="4">
-                                                                <strong>Characteristics</strong>
+                                                            <td>
+                                                                <a name="qNotify_State" id="qNotify_State"></a>Is the species list as a Federally endangered or threatened species?</a>?
+                                                            </td>
+                                                            <td>
+                                                                <input id="notify_state_y" name="notify_state" type="radio" value="1" /><label for="notify_state_y">  Yes</label> <input checked="checked" id="notify_state_n" name="notify_state" type="radio" value="0" /><label for="notify_state_n">  No</label>
                                                             </td>
                                                         </tr>
+
                                                         <tr>
-                                                            <td colspan="4">
-                                                                <span>
-                                                                <strong>*</strong>
-                                                                </span> I would like to view species with the following properties:</td>
+                                                            <td style="width:33%">    Date of data collection:</td>
+                                                            <td>
+                                                                <input name="alleged_violation_date" size="10" type="text" value="mm/dd/yyyy" /> If known
+                                                            </td>
                                                         </tr>
+
                                                         <tr>
-                                                            <td style="width:24%">Species Group (Check One)</td>
-                                                            <td style="width:24%">Stream Width (Check One)<a name="qFalsified" id="qFalsified"></a></td>
-                                                            <td style="width:24%">Waterbody Type (Check All That Apply)</td>
-                                                            <td style="width:24%">Habitat (Check One)</td>
+                                                            <td>State of interest:    </td>
+                                                            <td>
+                                                                <select name="state" size="1">
+                                                                    <option selected="selected" value="">Please Select</option>
+                                                                    <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="American Samoa">American Samoa</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="District of Columbia">District of Columbia</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Guam">Guam</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option><option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option><option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option><option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option><option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Northern Mariana Islands">Northern Mariana Islands</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option><option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Puerto Rico">Puerto Rico</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option><option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Trust Territories">Trust Territories</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virgin Islands">Virgin Islands</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option><option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option></select></td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <input id="alleged_violation_intent-1" name="alleged_violation_intent" type="radio" value="Accidental" /><label for="alleged_violation_intent-1"> Ciclid</label><br /><input id="alleged_violation_intent-2" name="alleged_violation_intent" type="radio" value="Intentional" /><label for="alleged_violation_intent-2"> Perch</label><br /><input id="alleged_violation_intent-3" name="alleged_violation_intent" type="radio" value="Unknown" /><label for="alleged_violation_intent-3"> Darters</label>
-                                                            </td>
-                                                            <td>
-                                                                <input id="alleged_violation_type-1" name="alleged_violation_type" type="radio" value="Release" /><label for="alleged_violation_type-1">  <3 meters</label><br /><input id="alleged_violation_type-2" name="alleged_violation_type" type="radio" value="Dump/Buried" /><label for="alleged_violation_type-2">  3-6 meters</label><br /><input id="alleged_violation_type-3" name="alleged_violation_type" type="radio" value="Spill" /><label for="alleged_violation_type-3">  6-9 meters</label><br /><input id="alleged_violation_type-4" name="alleged_violation_type" type="radio" value="Spray" /><label for="alleged_violation_type-4">  9-12 meters</label><br /><input id="alleged_violation_type-5" name="alleged_violation_type" type="radio" value="Fill" /><label for="alleged_violation_type-5">  12-15 meters</label><br /><input id="alleged_violation_type-6" name="alleged_violation_type" type="radio" value="Falsified" /><label for="alleged_violation_type-6">  <a href="#falsified" title="Falsified refers to the tampering, misrepresentation, or otherwise altering of documents, permits, certifications, or any other records required by environmental statutes and/or regulations."><15 meters/a></label>
-                                                            </td>
-                                                            <td>
-                                                                <input id="media_type_land" name="media_type_land" type="checkbox" value="1" /><label for="media_type_land">  Caves</label><br /><input id="media_type_water" name="media_type_water" type="checkbox" value="1" /><label for="media_type_water">  Springs</label><br /><input id="media_type_air" name="media_type_air" type="checkbox" value="1" /><label for="media_type_air">  Headwaters </label><br /><input id="media_type_worker" name="media_type_worker" type="checkbox" value="1" /><label for="media_type_worker">  Creeks</label><br /><input id="media_type_document" name="media_type_document" type="checkbox" value="1" /><label for="media_type_document">  Small Rivers</label>
-                                                            </td>
-                                                            <td>
-                                                                <input id="alleged_violation_entity-1" name="alleged_violation_entity" type="radio" value="Individual" /><label for="alleged_violation_entity-1">  Mud, Silt, Detritus</label><br /><input id="alleged_violation_entity-2" name="alleged_violation_entity" type="radio" value="Company" /><label for="alleged_violation_entity-2">  Sand</label><br /><input id="alleged_violation_entity-3" name="alleged_violation_entity" type="radio" value="Government/Military" /><label for="alleged_violation_entity-3"> Gravel</label><br /><input id="alleged_violation_entity-4" name="alleged_violation_entity" type="radio" value="Unknown" /><label for="alleged_violation_entity-4"> Vegetation</label>
-                                                            </td>
-                                                        </tr>
+
                                                     </tbody>
                                                 </table>
                                             </td>
@@ -103,9 +90,161 @@
                             </div>
                         </li>
 
-                        <!-- watershed characteristics-->
+
+
+                        <!-- fish properties-->
                         <li>
-                            <a class="accordion-title" href="#pane-2" title="Click to expand description">Habitat Characteristics</a>
+                            <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish Properties</a>
+                            <div class="accordion-pane" id="pane-1">
+                                <p>Fish properties include characteristics related to species morphology, beneficial use, biogeography, and physiology.</p>
+
+                                <!--- fish property tables -->
+
+                                            <td colspan="4">
+                                                <table style="width:100%">
+
+                                                    <tbody>
+
+
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                If a field is left blank, it will not be used in the query.
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td style="width:33%">Native to the U.S.?
+                                                                </br>
+                                                                </br>
+                                                                <input id="native_y" name="native" type="radio" value="1" />
+                                                                <label for="native_y"> Yes </label>
+                                                                <input id="native_n" name="native" type="radio" value="0" />
+                                                                <label for="native_n"> No</label>
+                                                            </td>
+
+
+
+                                                            <td style="width:34%">Sportfish?
+                                                                </br>
+                                                                </br>
+                                                                <input id="still_occurring_y" name="sportfish" type="radio" value="1" />
+                                                                <label for="still_occurring_y"> Yes </label>
+                                                                <input id="still_occurring_n" name="sportfish" type="radio" value="0" />
+                                                                <label for="still_occurring_n"> No</label>
+                                                            </td>
+
+
+                                                            <td style="width:33%">Subsistence?
+                                                                </br>
+                                                                </br>
+                                                                <input id="subsistence_y" name="subsistence" type="radio" value="1" />
+                                                                <label for="subsistence_y"> Yes </label>
+                                                                <input id="subsistence_n" name="subsistence" type="radio" value="0" />
+                                                                <label for="subsistence_n"> No</label>
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+{#                                                            <td style="width:33%">Tolerance to Disturbance/Siltation#}
+{#                                                                <br>#}
+{#                                                                </br>#}
+{#                                                                <input id="alleged_violation_intent-1" name="alleged_violation_intent" type="radio" value="Accidental" />#}
+{#                                                                    <label for="alleged_violation_intent-1"> I</label#}
+{#                                                                    ><br/>#}
+{#                                                                <input id="alleged_violation_intent-2" name="alleged_violation_intent" type="radio" value="Intentional" />#}
+{#                                                                    <label for="alleged_violation_intent-2"> M</label>#}
+{#                                                                    <br/>#}
+{#                                                                <input checked="checked" id="alleged_violation_intent-3" name="alleged_violation_intent" type="radio" value="Unknown" />#}
+{#                                                                    <label for="alleged_violation_intent-3"> T</label>#}
+{#                                                            </td>#}
+
+
+                                                            <td style="width:33%">Tolerance to Disturbance/Siltation
+                                                                </br>
+                                                                </br>
+
+                                                                <select name="tolerance" size="1">
+                                                                    <option selected="selected" value="">Unspecified</option>
+                                                                    <option value="I">Intolerant</option><option value="M">Mid-Tolerant</option><option value="T">Tolerant</option><option value="T">No Designation</option></select></td>
+                                                            </td>
+
+
+{#                                                            <td style="width:34%">Max Total Length<a name="qFalsified" id="qFalsified"></a>#}
+{#                                                                <br>#}
+{#                                                                </br>#}
+{##}
+{#                                                                <input name="alleged_violation_date" size="10" type="text" value="(cm)" />#}
+{#                                                            </td>#}
+
+                                                             <td style="width:33%">Max Total Length (cm)
+                                                                </br>
+                                                                </br>
+                                                                <input type="text" id="amount2" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px;">
+
+                                                                <script>
+                                                                    $( function() {
+                                                                        $( "#slider-range2" ).slider({
+                                                                            range: true,
+                                                                            min: 1,
+                                                                            max: 500,
+                                                                            values: [ 1, 500 ],
+                                                                            slide: function( event, ui ) {
+                                                                                $( "#amount2" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                                                                            }
+                                                                        });
+                                                                        $( "#amount2" ).val($( "#slider-range2" ).slider( "values", 0 ) +
+                                                                          " - " + $( "#slider-range2" ).slider( "values", 1 ) );
+                                                                    } );
+                                                                </script>
+
+                                                                <div id="slider-range2"></div>
+
+                                                            </td>
+
+
+
+                                                            <td style="width:33%">Rarity
+                                                                </br>
+                                                                </br>
+                                                                <input type="text" id="amount" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px;">
+
+                                                                <script>
+                                                                    $( function() {
+                                                                        $( "#slider-range" ).slider({
+                                                                            range: true,
+                                                                            min: 1,
+                                                                            max: 10,
+                                                                            values: [ 1, 10 ],
+                                                                            slide: function( event, ui ) {
+                                                                                $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                                                                            }
+                                                                        });
+                                                                        $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
+                                                                          " - " + $( "#slider-range" ).slider( "values", 1 ) );
+                                                                    } );
+                                                                </script>
+
+                                                                <div id="slider-range"></div>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </td>
+
+                            </div>
+                        </li>
+
+
+
+
+
+                        <!-- Habitat Preferences (aka watershed characteristics)-->
+                        <li>
+                            <a class="accordion-title" href="#pane-2" title="Click to expand description">Habitat Preferences</a>
                             <div class="accordion-pane" id="pane-2">
                                 <p>Select <strong>habitat characteristics</strong>...</p>
                                 <!--- tables -->
@@ -165,60 +304,15 @@
                             </div>
                         </li>
 
-                        <!-- other features-->
-                        <li>
-                            <a class="accordion-title" href="#pane-3" title="Click to expand description">Other Features</a>
-                            <div class="accordion-pane" id="pane-3">
-                                <p>Select <strong>other features</strong> to query the PiSCES database....</p>
 
-                                <!--- tables -->
-                                <table style="width:95%">
 
-                                        <tr>
-                                            <td colspan="4">
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Is the species endemic to the U.S.?</td>
-                                                            <td>
-                                                                <input id="still_occurring_y" name="still_occurring" type="radio" value="1" />
-                                                                <label for="still_occurring_y"> Yes </label>
-                                                                <input checked="checked" id="still_occurring_n" name="still_occurring" type="radio" value="0" />
-                                                                <label for="still_occurring_n"> No</label>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a name="qNotify_State" id="qNotify_State"></a>Is the species list as a Federally endangered or threatened species?</a>?
-                                                            </td>
-                                                            <td>
-                                                                <input id="notify_state_y" name="notify_state" type="radio" value="1" /><label for="notify_state_y">  Yes</label> <input checked="checked" id="notify_state_n" name="notify_state" type="radio" value="0" /><label for="notify_state_n">  No</label>
-                                                            </td>
-                                                        </tr>
 
-                                                        <tr>
-                                                            <td style="width:33%">    Date of data collection:</td>
-                                                            <td>
-                                                                <input name="alleged_violation_date" size="10" type="text" value="mm/dd/yyyy" /> If known
-                                                            </td>
-                                                        </tr>
 
-                                                        <tr>
-                                                            <td>State of interest:    </td>
-                                                            <td>
-                                                                <select name="state" size="1">
-                                                                    <option selected="selected" value="">Please Select</option>
-                                                                    <option value="Alabama">Alabama</option><option value="Alaska">Alaska</option><option value="American Samoa">American Samoa</option><option value="Arizona">Arizona</option><option value="Arkansas">Arkansas</option><option value="California">California</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Delaware">Delaware</option><option value="District of Columbia">District of Columbia</option><option value="Florida">Florida</option><option value="Georgia">Georgia</option><option value="Guam">Guam</option><option value="Hawaii">Hawaii</option><option value="Idaho">Idaho</option><option value="Illinois">Illinois</option><option value="Indiana">Indiana</option><option value="Iowa">Iowa</option><option value="Kansas">Kansas</option><option value="Kentucky">Kentucky</option><option value="Louisiana">Louisiana</option><option value="Maine">Maine</option><option value="Maryland">Maryland</option><option value="Massachusetts">Massachusetts</option><option value="Michigan">Michigan</option><option value="Minnesota">Minnesota</option><option value="Mississippi">Mississippi</option><option value="Missouri">Missouri</option><option value="Montana">Montana</option><option value="Nebraska">Nebraska</option><option value="Nevada">Nevada</option><option value="New Hampshire">New Hampshire</option><option value="New Jersey">New Jersey</option><option value="New Mexico">New Mexico</option><option value="New York">New York</option><option value="North Carolina">North Carolina</option><option value="North Dakota">North Dakota</option><option value="Northern Mariana Islands">Northern Mariana Islands</option><option value="Ohio">Ohio</option><option value="Oklahoma">Oklahoma</option><option value="Oregon">Oregon</option><option value="Pennsylvania">Pennsylvania</option><option value="Puerto Rico">Puerto Rico</option><option value="Rhode Island">Rhode Island</option><option value="South Carolina">South Carolina</option><option value="South Dakota">South Dakota</option><option value="Tennessee">Tennessee</option><option value="Texas">Texas</option><option value="Trust Territories">Trust Territories</option><option value="Utah">Utah</option><option value="Vermont">Vermont</option><option value="Virgin Islands">Virgin Islands</option><option value="Virginia">Virginia</option><option value="Washington">Washington</option><option value="West Virginia">West Virginia</option><option value="Wisconsin">Wisconsin</option><option value="Wyoming">Wyoming</option></select></td>
-                                                        </tr>
 
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
 
-                                </table>
-                            </div>
-                        </li>
+
+
+
 
                     </ul><!-- END ACCORDIONS -->
 
@@ -233,6 +327,15 @@
                             <div class="center"><input name="submit" type="submit" value="Submit" /></div>
                         </td>
                     </tr>
+
+
+{#                    <!--- clear all selections -->#}
+{#                    <p>Clear all selections</p>#}
+{#                    <tr>#}
+{#                        <td colspan="4">#}
+{#                            <div><input name="clear" type="submit" value="Clear"></div>#}
+{#                        </td>#}
+{#                    </tr>#}
 
 
                 </div>
