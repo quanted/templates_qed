@@ -79,12 +79,12 @@
 <!--start 03pisces_links_left-->
 <div class="region-sidebar-first region-sidebar side-nav-div">
     <div id="nOpen" style="position:absolute;">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()" title="Open Menu">&#9776;</span>
     </div>
     <div id="cnav" class="sidenav" style="display:none;">
     <div id="block-og-menu-og-single-menu-block" class="block block-og-menu  block-og-menu-og-single-menu-block">
         <h2 class="element-invisible">PiSCES Model Information</h2>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="text-decoration:none; z-index:25;">&times;</a>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" title="Close Menu" style="text-decoration:none; z-index:25;">&times;</a>
 
         <ul class="menu">
             {% for key, value in LINK_DICT.items %}
