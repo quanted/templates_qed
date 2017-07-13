@@ -218,8 +218,10 @@
             {#                return table.columns(6).search(depthValue).draw();#}
             {#            });#}
 
-            $('#fishTable').closest('table').hide();
-            $('#filteredFishTable').closest('table').hide();
+            $('#fishTable').closest('div').hide();
+            $('#filteredFishTable').closest('div').hide();
+            $('#abundance_calc').closest('div').hide();
+            $('#fish_filters').closest('div').hide();
 
             $('#selectHUC').on('change', function () {
                 selectHUCs(this.value);
@@ -243,7 +245,6 @@
             $('#fishTable').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr);
-
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
@@ -339,6 +340,7 @@
 
         function onStreamMapClick(e) {
             document.getElementById('table-focus').focus();
+            $('#fish_filters').closest('div').show();
             getStreamData(e.latlng.lat, e.latlng.lng);
             //getFishData();
             getTESTFishData();
@@ -755,7 +757,7 @@
                 "order": [[1, 'asc']]
 
             };
-            $('#fishTable').closest('table').show();
+            $('#fishTable').closest('div').show();
             $('#fishTable').DataTable(config);
         }
 
@@ -903,7 +905,7 @@
                 paging: false,
                 bInfo: false
             };
-            $('#filteredFishTable').closest('table').show();
+            $('#filteredFishTable').closest('div').show();
             $('#filteredFishTable').DataTable(config);
         }
 
@@ -1006,7 +1008,7 @@
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
                     <div id="basemaps-wrapper" class="leaflet-bar">
-                        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
                             <option value="Topographic">Topographic</option>
                             <option value="Streets">Streets</option>
                             <option value="NationalGeographic">National Geographic</option>
@@ -1016,70 +1018,56 @@
                     </div>
                 </div>
                 <br class="row" id="streamData">
-                <button class="accordion">Fish Assemblage Filters</button>
-                <div class="panel" id="assemblage_filters" style="overflow: hidden;">
+                <div id="fish_filters">
+                    <button class="accordion">Fish Assemblage Filters</button>
+                    <div class="panel" id="assemblage_filters" style="overflow: hidden;">
 
                     <div class="fish_filter">
                         <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
                                align="center" title="Filter fish by stream depth."><br>
                         <input type="text" id="filter_field" class="depth_value" placeholder="(cm)" title="Enter a value in centimeters.">
-                        {#                        <input type="text" id="filter_field_left" class="depth_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" class="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
                                align="center" title="Filter fish by stream width."><br>
                         <input type="text" id="filter_field" class="width_value" placeholder="(m)" title="Enter a value in meters.">
-                        {#                        <input type="text" id="filter_field_left" name="width_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="width_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
                                align="center" title="Filter fish by stream drainage area."><br>
                         <input type="text" id="filter_field" class="area_value" placeholder="(ha)" title="Enter a value in hectares.">
-                        {#                        <input type="text" id="filter_field_left" name="area_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="area_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
                                align="center" title="Filter fish by stream slope."><br>
                         <input type="text" id="filter_field" class="slope_value" placeholder="(%)" title="Enter a value as a percent grade.">
-                        {#                        <input type="text" id="filter_field_left" name="slope_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="slope_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
                                align="center" title="Filter fish by stream tss."><br>
                         <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)" title="Enter a value in milligrams per liter.">
-                        {#                        <input type="text" id="filter_field_left" name="tss_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="tss_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="ph_filter" type="button" name="ph_17_18" value="pH" class="filterButton"
                                align="center" title="Filter fish by stream pH."><br>
                         <input type="text" id="filter_field" class="ph_value" placeholder="(SU)" title="Enter a value in standard units.">
-                        {#                        <input type="text" id="filter_field_left" name="ph_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="ph_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="cond_filter" type="button" name="cond_19_20" value="Conductivity"
                                class="filterButton" align="center" title="Filter fish by stream conductivity."><br>
                         <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)" title="Enter a value in micro-Siemens per square centimeter.">
-                        {#                        <input type="text" id="filter_field_left" name="cond_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="depth_max" placeholder="(max)">#}
                     </div>
                     <div class="fish_filter">
                         <input id="do_filter" type="button" name="do_21_22" value="Dissolved Oxygen"
                                class="filterButton" align="center" title="Filter fish by stream dissolved oxygen."><br>
                         <input type="text" id="filter_field" class="do_value" placeholder="(% sat)" title="Enter a value as percentage.">
-                        {#                        <input type="text" id="filter_field_left" name="do_min" placeholder="(min)">#}
-                        {#                        <input type="text" id="filter_field_right" name="do_max" placeholder="(max)">#}
                     </div>
+                </div>
                 </div>
                 <br>
                 <div class="col-md-12">
                     <div id="error_msg"></div>
-                    <div style="width: 30%; margin: auto; display: inline-block; float: left;">
+                    <div style="width: 45%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
@@ -1113,7 +1101,7 @@
                         </table>
                     </div>
                     <div id="fish_assemblage_estimator"
-                         style="width:40%; margin: auto; display: inline-block; float: left;">
+                         style="width:45%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;">
@@ -1126,7 +1114,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div style="width:30%; margin: auto; display: inline-block; float: left;">
+                    <div id="abundance_calc" style="width:45%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
                     </div>
                     <div id="table-focus" tabindex="-1"></div>

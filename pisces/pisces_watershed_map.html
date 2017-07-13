@@ -68,10 +68,13 @@
         cursor: pointer;
     }
 
-    #fishTable tr:hover td{
+    #fishTable tr:hover td {
         background-color: #02bfe7;
     }
 
+    tr.selected_fish td{
+        background-color: #6baed6 !important;
+    }
 
 
 </style>
@@ -115,7 +118,7 @@
                     <div id="map" class="mapNoTransition"></div>
                     <!-- basemap wrapper -->
                     <div id="basemaps-wrapper" class="leaflet-bar">
-                        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
                             <option value="Topographic">Topographic</option>
                             <option value="Imagery">Imagery</option>
                             <option value="Streets">Streets</option>
@@ -136,6 +139,7 @@
                         <input class="fishSearchButton" type="button">
                     </div>
                     <div class="fishTable">
+                        <h5 align="center">Fish in selected HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -151,12 +155,21 @@
 
 
         <script>
-            $('#fishTable').closest('table').hide();
 
-            $(document).ready(function () {
-
-
+            $(document).ready(function(){
+                $('#fishTable').on('click', 'tr', function(){
+                    $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
+                    var common_name = $('#fishTable').DataTable().row(this).node().children[0].innerHTML;
+                    alert(common_name + " selected from fish in HUC.");
+                    $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish')
+                    // Make ajax call to get all hucs where selected fish is present. (new function)
+                    // Highlight all returned hucs
+                    // Set map bounds to bounds of new hucs selected.
+                });
             });
+
+
+            $('.fishTable').closest('div').hide();
 
             //style HUC 8 polygon
             function getColor(d) {
@@ -175,7 +188,7 @@
                     fillColor: getColor(feature.properties.NumbSpc),
                     weight: .5,
                     opacity: 0.9,
-                    color: 'white',
+                    color: 'black',
                     fillOpacity: 0.5
                 };
             }
@@ -185,9 +198,9 @@
                 resetHUCLayer();
                 //  properties of highlighted HUC
                 huc8Layer.eachLayer(function (layer) {
-                    if (hucs == layer.feature.properties.HUC_CODE)
+                    if (hucs === layer.feature.properties.HUC_CODE)
                         layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
-                    if (hucs == layer.feature.properties.HUC_CODE)
+                    if (hucs === layer.feature.properties.HUC_CODE)
                         layer.bringToFront();
                 });
             }
@@ -216,17 +229,24 @@
                 });
             }
 
-            //Setup on click method for each huc8 feature
+            var currentHUC = null;
+
             function onEachFeature(feature, layer) {
                 layer.on('click', function (e) {
-                    selectHUCs(feature.properties.HUC_CODE);
-                    //var data = getHUCFishData(feature.properties.HUC_CODE);
-                    getFishDataonMapClick(feature.properties.HUC_CODE);
-                    //initDT(fish_by_huc_columns, data);
-                    //alert(e.latlng.toString());
+
+                    if (this.currentHUC !== feature.properties.HUC_CODE || this.currentHUC === null) {
+                        this.currentHUC = feature.properties.HUC_CODE;
+                        selectHUCs(feature.properties.HUC_CODE);
+                        //var data = getHUCFishData(feature.properties.HUC_CODE);
+                        getFishDataonMapClick(feature.properties.HUC_CODE);
+                    }
+                    else {
+                        $('.fishTable').closest('div').hide();
+                        resetHUCLayer();
+                        this.currentHUC = null;
+                    }
                 });
             }
-
 
             // initialize the map
             var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([33.95, -83.38], 8);
@@ -506,7 +526,7 @@
                     bInfo: false,
                     "order": [[0, 'asc']]
                 };
-                $('#fishTable').closest('table').show();
+                $('.fishTable').closest('div').show();
                 $('#fishTable').DataTable(config);
             }
 
