@@ -5,6 +5,14 @@
         vertical-align: top;
     }
 
+    .clearButton {
+        background:linear-gradient(to bottom,#efaa4a,#ec911c)
+    }
+
+    .resetButton {
+        background:linear-gradient(to bottom,#898896,#898896)
+    }
+
 </style>
 
 
@@ -188,8 +196,8 @@
                                                                         $( "#slider-range2" ).slider({
                                                                             range: true,
                                                                             min: 1,
-                                                                            max: 500,
-                                                                            values: [ 1, 500 ],
+                                                                            max: 610,
+                                                                            values: [ 1, 610 ],
                                                                             slide: function( event, ui ) {
                                                                                 $( "#amount2" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                                                                             }
@@ -305,15 +313,6 @@
                         </li>
 
 
-
-
-
-
-
-
-
-
-
                     </ul><!-- END ACCORDIONS -->
 
 
@@ -321,21 +320,24 @@
                     <hr />
 
                     <!--- submit query -->
-                    <p>Submit selections to query the PiSCES database.</p>
+{#                    <p>Submit selections to query the PiSCES database.</p>#}
                     <tr>
-                        <td colspan="4">
-                            <div class="center"><input name="submit" type="submit" value="Submit" /></div>
-                        </td>
+                                            <!--- reset -->
+                    <div>
+                    <input class="resetButton" type="button" value="Reset"><input name="submit" type="submit" value="Submit Query" />
+                    </div>
+
+
+{#                        <td colspan="4">#}
+{#                            <div class="center"></div>#}
+{#                        </td>#}
                     </tr>
 
-
 {#                    <!--- clear all selections -->#}
-{#                    <p>Clear all selections</p>#}
-{#                    <tr>#}
-{#                        <td colspan="4">#}
-{#                            <div><input name="clear" type="submit" value="Clear"></div>#}
-{#                        </td>#}
-{#                    </tr>#}
+{#                    <div class="btn1">#}
+{#                    <input class="clearButton" type="button" value="Clear Selections">#}
+{#                    </div>#}
+
 
 
                 </div>
