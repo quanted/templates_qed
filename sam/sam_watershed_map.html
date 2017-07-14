@@ -92,17 +92,18 @@
 
     <!-- local js stream lines, watershed bnds, -->
     <script src="/static_qed/sam/mtb_flowline_simple.js"></script>
+    <script src="/static_qed/sam/testExposureOutput.js"></script>
     <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
-
-{#    this EPA waters layer may be unnecessary bc using local martk twain bounds, only#}
-    <script src="/static_qed/sam/streamlayer.js"></script>
-
-
 
 
 
 
     <script>
+
+    //  create placeholder global comid variable
+    var comid = 5641438;
+    console.log(comid);
+
 
         function onStreamMapClick(e) {
             getStreamData(e.latlng.lat, e.latlng.lng);
@@ -150,175 +151,10 @@
 
 
 
-        // set temporary stream data
-        function getTESTExposureData() {
-
-            var testExposureData = {
-                "5640182": {
-                    "chronic_em_inv": 0,
-                    "overall_vasc_plant": 0,
-                    "chronic_vasc_plant": 0,
-                    "chronic_em_fish": 0,
-                    "acute_fw_fish": 0,
-                    "chronic_fw_inv": 0,
-                    "overall_em_fish": 0.754114717485187,
-                    "overall_em_inv": 0,
-                    "overall_fw_fish": 0.4679898396879304,
-                    "chronic_nonvasc_plant": 0,
-                    "acute_fw_inv": 0,
-                    "overall_nonvasc_plant": 0,
-                    "acute_em_fish": 0,
-                    "acute_nonvasc_plant": 0,
-                    "acute_em_inv": 0,
-                    "acute_vasc_plant": 0,
-                    "overall_fw_inv": 0,
-                    "chronic_human": 0,
-                    "overall_human": 0,
-                    "chronic_fw_fish": 0,
-                    "acute_human": 0
-                },
-                "5640184": {
-                    "chronic_em_inv": 0,
-                    "overall_vasc_plant": 0,
-                    "chronic_vasc_plant": 0,
-                    "chronic_em_fish": 0,
-                    "acute_fw_fish": 0.42668567590704876,
-                    "chronic_fw_inv": 0,
-                    "overall_em_fish": 0,
-                    "overall_em_inv": 0,
-                    "overall_fw_fish": 0,
-                    "chronic_nonvasc_plant": 0.7351075937647533,
-                    "acute_fw_inv": 0,
-                    "overall_nonvasc_plant": 0,
-                    "acute_em_fish": 0.8480008894499366,
-                    "acute_nonvasc_plant": 0,
-                    "acute_em_inv": 0,
-                    "acute_vasc_plant": 0,
-                    "overall_fw_inv": 0,
-                    "chronic_human": 0,
-                    "overall_human": 0.6217874864221814,
-                    "chronic_fw_fish": 0.9538269578442033,
-                    "acute_human": 0
-                },
-                "5640186": {
-                    "chronic_em_inv": 0,
-                    "overall_vasc_plant": 0.49568854350085245,
-                    "chronic_vasc_plant": 0,
-                    "chronic_em_fish": 0,
-                    "acute_fw_fish": 0.8863686479065248,
-                    "chronic_fw_inv": 0.8650523820202058,
-                    "overall_em_fish": 0,
-                    "overall_em_inv": 0.3747017375507252,
-                    "overall_fw_fish": 0.7469833298411305,
-                    "chronic_nonvasc_plant": 0,
-                    "acute_fw_inv": 0,
-                    "overall_nonvasc_plant": 0.28703157664976087,
-                    "acute_em_fish": 0,
-                    "acute_nonvasc_plant": 0,
-                    "acute_em_inv": 0,
-                    "acute_vasc_plant": 0,
-                    "overall_fw_inv": 0,
-                    "chronic_human": 0.8358374927614529,
-                    "overall_human": 0,
-                    "chronic_fw_fish": 0,
-                    "acute_human": 0
-                },
-                "5640188": {
-                    "chronic_em_inv": 0.9336950905930761,
-                    "overall_vasc_plant": 0,
-                    "chronic_vasc_plant": 0.8789607039909177,
-                    "chronic_em_fish": 0.8891596275855403,
-                    "acute_fw_fish": 0,
-                    "chronic_fw_inv": 0,
-                    "overall_em_fish": 0,
-                    "overall_em_inv": 0,
-                    "overall_fw_fish": 0,
-                    "chronic_nonvasc_plant": 0,
-                    "acute_fw_inv": 0.12265838402964424,
-                    "overall_nonvasc_plant": 0,
-                    "acute_em_fish": 0,
-                    "acute_nonvasc_plant": 0,
-                    "acute_em_inv": 0.2565000493466124,
-                    "acute_vasc_plant": 0,
-                    "overall_fw_inv": 0,
-                    "chronic_human": 0,
-                    "overall_human": 0.35665779697197286,
-                    "chronic_fw_fish": 0,
-                    "acute_human": 0
-                },
-                "5640190": {
-                    "chronic_em_inv": 0,
-                    "overall_vasc_plant": 0.9726766747960591,
-                    "chronic_vasc_plant": 0.5780019034782554,
-                    "chronic_em_fish": 0,
-                    "acute_fw_fish": 0,
-                    "chronic_fw_inv": 0.17738342744018876,
-                    "overall_em_fish": 0,
-                    "overall_em_inv": 0,
-                    "overall_fw_fish": 0,
-                    "chronic_nonvasc_plant": 0,
-                    "acute_fw_inv": 0,
-                    "overall_nonvasc_plant": 0,
-                    "acute_em_fish": 0,
-                    "acute_nonvasc_plant": 0,
-                    "acute_em_inv": 0,
-                    "acute_vasc_plant": 0,
-                    "overall_fw_inv": 0.20781477031036233,
-                    "chronic_human": 0,
-                    "overall_human": 0,
-                    "chronic_fw_fish": 0,
-                    "acute_human": 0.35438273933858233
-                }
-            };
-            populateFilteredTable(testExposureData);
-        }
-
-
-            function populateFilteredTable(data, comid) {
-
-                $('#filteredTable').DataTable().destroy();
-                console.log(data);
-                data = data[5640182];
-                console.log(data);
-                //convert object into an array of objects
-                dataAsArray = [];
-                 data = JSON.stringify(data, function(key, value) {
-                     dataAsArray.push(value);
-                 })
-                 console.log(data);
-
-                $('#filteredTable').DataTable({
-                    data: dataAsArray,
-                    "columns": [
-                        { "data": "overall_vasc_plant" },
-                        { "data": "chronic_vasc_plant" },
-                        { "data": "chronic_em_fish" },
-                        { "data": "acute_fw_fish" },
-                        { "data": "chronic_fw_inv" },
-                        { "data": "overall_em_fish" },
-                        { "data": "overall_em_inv" },
-                        { "data": "overall_fw_fish" },
-                        { "data": "chronic_nonvasc_plant" },
-                        { "data": "acute_fw_inv" },
-                        { "data": "overall_nonvasc_plant" },
-                        { "data": "acute_em_fish" },
-                        { "data": "acute_nonvasc_plant" },
-                        { "data": "acute_em_inv" },
-                        { "data": "acute_vasc_plant" },
-                        { "data": "overall_fw_inv" },
-                        { "data": "chronic_human" },
-                        { "data": "overall_human" },
-                        { "data": "chronic_fw_fish" },
-                        { "data": "acute_human" }
-                    ],
-                searching: false,
-                paging: false,
-                bInfo: false
-            });
-        }
-
         <!--- add stream to map -->
         function addStreamSeg(streamData) {
+            comid = streamData.output.ary_flowlines[0].comid;
+            console.log(comid);
             var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function (c) {
                 return c.reverse();
             });
@@ -352,7 +188,49 @@
                 fillOpacity: 0.3
             }).addTo(map);
             map.fitBounds(selectedStream.getBounds());
+
         }
+
+
+        function populateFilteredTable(data) {
+            $('#filteredTable').DataTable().destroy();
+            console.log(comid);
+            data = data[comid];
+            //convert object into an array of objects
+            dataAsArray = [];
+            data = JSON.stringify(data, function(key, value) {
+                 dataAsArray.push(value);
+                })
+            console.log(dataAsArray);
+            $('#filteredTable').DataTable({
+                data: dataAsArray,
+                "columns": [
+                    { "data": "overall_vasc_plant" },
+                    { "data": "chronic_vasc_plant" },
+                    { "data": "chronic_em_fish" },
+                    { "data": "acute_fw_fish" },
+                    { "data": "chronic_fw_inv" },
+                    { "data": "overall_em_fish" },
+                    { "data": "overall_em_inv" },
+                    { "data": "overall_fw_fish" },
+                    { "data": "chronic_nonvasc_plant" },
+                    { "data": "acute_fw_inv" },
+                    { "data": "overall_nonvasc_plant" },
+                    { "data": "acute_em_fish" },
+                    { "data": "acute_nonvasc_plant" },
+                    { "data": "acute_em_inv" },
+                    { "data": "acute_vasc_plant" },
+                    { "data": "overall_fw_inv" },
+                    { "data": "chronic_human" },
+                    { "data": "overall_human" },
+                    { "data": "chronic_fw_fish" },
+                    { "data": "acute_human" }
+                ],
+            searching: false,
+            paging: false,
+            bInfo: false
+        });
+    }
 
         <!--- get HUC -->
         function getStreamHuc(hucID) {
@@ -366,7 +244,6 @@
             });
             return huc8;
         }
-
     </script>
 
 </head>
@@ -439,12 +316,31 @@
 </div>
 
 </div>
-<script> // initialize the map
-var map = L.map('map').setView([33.95, -83.38], 11);
+<script>
+
+
+
+//stream style
+function streamStyle(feature) {
+    return {
+        weight: .5,
+        opacity: 0.9,
+        color: 'blue',
+    };
+}
+
+
+// initialize the map
+var map = L.map('map').setView([39.609280, -92.100678], 8);
 // sets variable for selected stream
 var selectedStream;
 // sets the Huc for the selected stream
 var streamHuc;
+
+// load huc watershed boundaries
+var markTwainStreams = L.geoJson(markTwainStreams, {
+    style: streamStyle,
+}).addTo(map);
 
 // load a tile layer
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -522,6 +418,9 @@ info.update = function (props) {
 };
 
 info.addTo(map);
+
+
+
 
 </script>
 </body>
