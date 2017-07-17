@@ -308,9 +308,9 @@
                     <div id="map" class="mapNoTransition"></div>
                     <div id="basemaps-wrapper" class="leaflet-bar">
                         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                            <option value="NationalGeographic">National Geographic</option>
                             <option value="Topographic">Topographic</option>
                             <option value="Streets">Streets</option>
-                            <option value="NationalGeographic">National Geographic</option>
                             <option value="Imagery">Imagery</option>
                             <option value="ShadedRelief">Shaded Relief</option>
                         </select>
@@ -420,7 +420,7 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // -------------- BASE MAP code -------------- //
 
-var layer = L.esri.basemapLayer('Imagery').addTo(map);
+var layer = L.esri.basemapLayer('NationalGeographic').addTo(map);
 var layerLabels;
 
 function setBasemap(basemap) {
