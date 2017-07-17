@@ -22,12 +22,34 @@
         border-bottom: 0 !important;
     }
 
-    #filteredTable tr *, td * {
+    #acuteFilteredTable tr *, td * {
         border: 0 !important;
         text-align: center !important;
     }
 
-    #filteredTable th * {
+    #acuteFilteredTable th * {
+        border: 0 !important;
+        border-bottom: solid;
+        border-bottom-width: 1px;
+    }
+
+    #chronicFilteredTable tr *, td * {
+        border: 0 !important;
+        text-align: center !important;
+    }
+
+    #chronicFilteredTable th * {
+        border: 0 !important;
+        border-bottom: solid;
+        border-bottom-width: 1px;
+    }
+
+    #overallFilteredTable tr *, td * {
+        border: 0 !important;
+        text-align: center !important;
+    }
+
+    #overallFilteredTable th * {
         border: 0 !important;
         border-bottom: solid;
         border-bottom-width: 1px;
@@ -193,7 +215,9 @@
 
 
         function populateFilteredTable(data) {
-            $('#filteredTable').DataTable().destroy();
+            $('#acuteFilteredTable').DataTable().destroy();
+            $('#chronicFilteredTable').DataTable().destroy();
+            $('#overallFilteredTable').DataTable().destroy();
             console.log(comid);
             data = data[comid];
             //convert object into an array of objects
@@ -202,34 +226,54 @@
                  dataAsArray.push(value);
                 })
             console.log(dataAsArray);
-            $('#filteredTable').DataTable({
+            $('#acuteFilteredTable').DataTable({
                 data: dataAsArray,
                 "columns": [
-                    { "data": "overall_vasc_plant" },
-                    { "data": "chronic_vasc_plant" },
-                    { "data": "chronic_em_fish" },
-                    { "data": "acute_fw_fish" },
-                    { "data": "chronic_fw_inv" },
-                    { "data": "overall_em_fish" },
-                    { "data": "overall_em_inv" },
-                    { "data": "overall_fw_fish" },
-                    { "data": "chronic_nonvasc_plant" },
-                    { "data": "acute_fw_inv" },
-                    { "data": "overall_nonvasc_plant" },
                     { "data": "acute_em_fish" },
-                    { "data": "acute_nonvasc_plant" },
                     { "data": "acute_em_inv" },
-                    { "data": "acute_vasc_plant" },
-                    { "data": "overall_fw_inv" },
-                    { "data": "chronic_human" },
-                    { "data": "overall_human" },
-                    { "data": "chronic_fw_fish" },
-                    { "data": "acute_human" }
+                    { "data": "acute_fw_fish" },
+                    { "data": "acute_fw_inv" },
+                    { "data": "acute_human" },
+                    { "data": "acute_nonvasc_plant" },
+                    { "data": "acute_vasc_plant" }
                 ],
             searching: false,
             paging: false,
-            bInfo: false
-        });
+            bInfo: false,
+            bSort: false
+            });
+            $('#chronicFilteredTable').DataTable({
+                data: dataAsArray,
+                "columns": [
+                    { "data": "chronic_em_fish" },
+                    { "data": "chronic_em_inv" },
+                    { "data": "chronic_fw_fish" },
+                    { "data": "chronic_fw_inv" },
+                    { "data": "chronic_human" },
+                    { "data": "chronic_nonvasc_plant" },
+                    { "data": "chronic_vasc_plant" }
+                ],
+            searching: false,
+            paging: false,
+            bInfo: false,
+            bSort: false
+            });
+            $('#overallFilteredTable').DataTable({
+                data: dataAsArray,
+                "columns": [
+                    { "data": "overall_em_fish" },
+                    { "data": "overall_em_inv" },
+                    { "data": "overall_fw_fish" },
+                    { "data": "overall_fw_inv" },
+                    { "data": "overall_human" },
+                    { "data": "overall_nonvasc_plant" },
+                    { "data": "overall_vasc_plant" }
+                ],
+            searching: false,
+            paging: false,
+            bInfo: false,
+            bSort: false
+            });
     }
 
         <!--- get HUC -->
@@ -275,40 +319,65 @@
 
                 <br>
 
-                <!--- datable -->
+                <!--- acute datable -->
                 <div class="col-md-12">
                     <div style="width:100%; margin: auto; display: inline-block; float: left;">
                         <h4 style="text-align: center; width: 100%">Probability of Pesticide Concentration Exceedance</h4>
-                        <table id="filteredTable" class="display compact hover" cellspacing="0" width="50%"
+                        <table id="acuteFilteredTable" class="display compact hover" cellspacing="0" width="50%"
                                style="padding: 0 2px; margin: 0 2px;">
                             <thead>
                             <tr>
-                                <th>chronic_em_inv</th>
-                                <th>overall_vasc_plant</th>
-                                <th>chronic_vasc_plant</th>
-                                <th>chronic_em_fish</th>
-                                <th>acute_fw_fish</th>
-                                <th>chronic_fw_inv</th>
-                                <th>overall_em_fish</th>
-                                <th>overall_em_inv</th>
-                                <th>overall_fw_fish</th>
-                                <th>chronic_nonvasc_plant</th>
-                                <th>acute_fw_inv</th>
-                                <th>overall_nonvasc_plant</th>
                                 <th>acute_em_fish</th>
-                                <th>acute_nonvasc_plant</th>
                                 <th>acute_em_inv</th>
-                                <th>acute_vasc_plant</th>
-                                <th>overall_fw_inv</th>
-                                <th>chronic_human</th>
-                                <th>overall_human</th>
-                                <th>chronic_fw_fish</th>
+                                <th>acute_fw_fish</th>
+                                <th>acute_fw_inv</th>
                                 <th>acute_human</th>
+                                <th>acute_nonvasc_plant</th>
+                                <th>acute_vasc_plant</th>
                             </tr>
                             </thead>
                         </table>
                     </div>
-                </div>
+
+                    <!--- chronic datable -->
+                    <div class="col-md-12">
+                        <div style="width:100%; margin: auto; display: inline-block; float: left;">
+                            <table id="chronicFilteredTable" class="display compact hover" cellspacing="0" width="50%"
+                                   style="padding: 0 2px; margin: 0 2px;">
+                                <thead>
+                                <tr>
+                                    <th>chronic_em_fish</th>
+                                    <th>chronic_em_inv</th>
+                                    <th>chronic_fw_fish</th>
+                                    <th>chronic_fw_inv</th>
+                                    <th>chronic_human</th>
+                                    <th>chronic_nonvasc_plant</th>
+                                    <th>chronic_vasc_plant</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--- overall datable -->
+                    <div class="col-md-12">
+                        <div style="width:100%; margin: auto; display: inline-block; float: left;">
+                            <table id="overallFilteredTable" class="display compact hover" cellspacing="0" width="50%"
+                                   style="padding: 0 2px; margin: 0 2px;">
+                                <thead>
+                                <tr>
+                                    <th>overall_em_fish</th>
+                                    <th>overall_em_inv</th>
+                                    <th>overall_fw_fish</th>
+                                    <th>overall_fw_inv</th>
+                                    <th>overall_human</th>
+                                    <th>overall_nonvasc_plant</th>
+                                    <th>overall_vasc_plant</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
 
             </div>
         </div>
