@@ -152,10 +152,6 @@
                         </select>
                     </div>
                     <br>
-                    <!-- datatables div -->
-                    {#                    <div>#}
-                    {#                        <table id="fish_data_table" width="100%"></table>#}
-                    {#                    </div>#}
                 </div>
                 <div class="fishSearch">
                     <div>
@@ -573,7 +569,8 @@
             function setFishDetails(cName, sName, details) {
                 var d = document.getElementById('selectedFishTable');
                 document.getElementById('focusDetails').focus();
-                d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4><h5>' + capitalize_Words(sName) + '</h5><p>' +
+                d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
+                    '<h5>' + capitalize_Words(sName) + '</h5><p>' +
                     'Max Size (cm): ' + (details[10] || 'N/A ') + '<br>' +
                     'Stream Depth Range (cm): ' + (details[0] || 'N/A ') + ' - ' + (details[6] || 'N/A ') + '<br>' +
                     'Stream Width Range (m): ' + (details[16] || 'N/A ') + ' - ' + (details[21] || 'N/A ') + '<br>' +
