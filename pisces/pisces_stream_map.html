@@ -3,6 +3,8 @@
     <!-- jquery -->
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- datatables import -->
     <link rel="stylesheet"
@@ -43,7 +45,7 @@
             border-bottom: 0 !important;
         }
 
-        .region-highlighted{
+        .region-highlighted {
             margin: 0 0 0 0 !important;
         }
 
@@ -130,8 +132,8 @@
         .fish_filter {
             border-radius: 4px;
             padding: 2px 4px 4px 4px;
-        {#        float: left;#} background-color: transparent;
-            width: 11%;
+            background-color: transparent;
+        {#            width: 11%;#} width: 9%;
             margin: 0 1px;
             display: inline-block;
         }
@@ -207,6 +209,86 @@
             background-color: #0099FF;
         }
 
+        {# flipswitch css #}
+        .envelope_toggle {
+            position: relative;
+            width: 100px;
+            height: 24px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .envelope_toggle-checkbox {
+            display: none;
+        }
+
+        .envelope_toggle-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #75A6D9;
+            border-radius: 6px;
+        }
+
+        .envelope_toggle-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .envelope_toggle-inner:before, .envelope_toggle-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 24px;
+            padding: 0;
+            line-height: 24px;
+            font-size: 12px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .envelope_toggle-inner:before {
+            content: "Detailed";
+            padding-left: 10px;
+            background-color: #86C1FF;
+            color: #FFFFFF;
+        }
+
+        .envelope_toggle-inner:after {
+            content: "Rounded";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .envelope_toggle-switch {
+            display: block;
+            width: 13px;
+            margin: 5.5px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 72px;
+            border: 2px solid #75A6D9;
+            border-radius: 6px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .envelope_toggle-checkbox:checked + .envelope_toggle-label .envelope_toggle-inner {
+            margin-left: 0;
+        }
+
+        .envelope_toggle-checkbox:checked + .envelope_toggle-label .envelope_toggle-switch {
+            right: 0px;
+        }
+
     </style>
 
     <script>
@@ -234,9 +316,9 @@
                 updateFilters(input);
             }));
 
-            $(document).on('input', "#filter_field", function(event){
+            $(document).on('input', "#filter_field", function (event) {
                 var input = $(this.closest('div'));
-                if (input.hasClass("filtering")){
+                if (input.hasClass("filtering")) {
                     updateFilters(input);
                 }
             });
@@ -960,19 +1042,19 @@
     </script>
     <script>
 
-        {# Filter functionality #}
-{#        function filterButtonClick(id) {#}
-{#            var selectedFilter = document.getElementById(id).closest('div');#}
-            {#            if (selectedFilter.style.backgroundColor !== 'rgb(0, 153, 255)') {#}
-            {#                selectedFilter.style.backgroundColor = '#0099FF';#}
-            {# based on id, apply appropriate filtering of the dataTable contents. #}
-            {#            }#}
-            {#            else {#}
-            {#                selectedFilter.style.backgroundColor = 'transparent';#}
-            {# undo filtering of the appropriate id #}
-            {#            }#}
-{#            return false;#}
-{#        }#}
+        $(function () {
+            $("#rarity_range").slider({
+                range: true,
+                min: 1,
+                max: 10,
+                values: [1, 10],
+                slide: function (event, ui) {
+                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);
+                }
+            });
+            $("#rarity_value").val($("#rarity_range").slider("values", 0) +
+                " - " + $("#rarity_range").slider("values", 1));
+        });
 
         {# Accordion JS #}
 
@@ -1022,49 +1104,77 @@
                     <button class="accordion">Fish Assemblage Filters</button>
                     <div class="panel" id="assemblage_filters" style="overflow: hidden;">
 
-                    <div class="fish_filter">
-                        <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
-                               align="center" title="Filter fish by stream depth."><br>
-                        <input type="text" id="filter_field" class="depth_value" placeholder="(cm)" title="Enter a value in centimeters.">
+                        <div class="fish_filter">
+                            <input id="rarity_filter" type="button" name="rarity_23" value="Rarity" class="filterButton"
+                                   align="center" title="Filter fish by rarity."><br>
+                            {#                            <input type="text" id="filter_field" class="rarity_value" placeholder="(cm)"#}
+                            {#                                   title="Enter a value in centimeters.">#}
+                            <label for="rarity_value"></label>
+                            <input title="Rarity Range" type="text" id="rarity_value" readonly
+                                   style="border:0; color:black; font-weight:bold; font-size: 12px; text-align: center; background-color: transparent;">
+                            <div id="rarity_range" style="margin: 0 10px;"></div>
+                        </div>
+                        <div class="fish_filter">
+                            <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
+                                   align="center" title="Filter fish by stream depth."><br>
+                            <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"
+                                   title="Enter a value in centimeters.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
+                                   align="center" title="Filter fish by stream width."><br>
+                            <input type="text" id="filter_field" class="width_value" placeholder="(m)"
+                                   title="Enter a value in meters.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
+                                   align="center" title="Filter fish by stream drainage area."><br>
+                            <input type="text" id="filter_field" class="area_value" placeholder="(ha)"
+                                   title="Enter a value in hectares.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
+                                   align="center" title="Filter fish by stream slope."><br>
+                            <input type="text" id="filter_field" class="slope_value" placeholder="(%)"
+                                   title="Enter a value as a percent grade.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
+                                   align="center" title="Filter fish by stream tss."><br>
+                            <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"
+                                   title="Enter a value in milligrams per liter.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="ph_filter" type="button" name="ph_17_18" value="pH" class="filterButton"
+                                   align="center" title="Filter fish by stream pH."><br>
+                            <input type="text" id="filter_field" class="ph_value" placeholder="(SU)"
+                                   title="Enter a value in standard units.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="cond_filter" type="button" name="cond_19_20" value="Conductivity"
+                                   class="filterButton" align="center" title="Filter fish by stream conductivity."><br>
+                            <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)"
+                                   title="Enter a value in micro-Siemens per square centimeter.">
+                        </div>
+                        <div class="fish_filter">
+                            <input id="do_filter" type="button" name="do_21_22" value="Dissolved Oxygen"
+                                   class="filterButton" align="center"
+                                   title="Filter fish by stream dissolved oxygen."><br>
+                            <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"
+                                   title="Enter a value as percentage.">
+                        </div>
                     </div>
-                    <div class="fish_filter">
-                        <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
-                               align="center" title="Filter fish by stream width."><br>
-                        <input type="text" id="filter_field" class="width_value" placeholder="(m)" title="Enter a value in meters.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
-                               align="center" title="Filter fish by stream drainage area."><br>
-                        <input type="text" id="filter_field" class="area_value" placeholder="(ha)" title="Enter a value in hectares.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
-                               align="center" title="Filter fish by stream slope."><br>
-                        <input type="text" id="filter_field" class="slope_value" placeholder="(%)" title="Enter a value as a percent grade.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
-                               align="center" title="Filter fish by stream tss."><br>
-                        <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)" title="Enter a value in milligrams per liter.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="ph_filter" type="button" name="ph_17_18" value="pH" class="filterButton"
-                               align="center" title="Filter fish by stream pH."><br>
-                        <input type="text" id="filter_field" class="ph_value" placeholder="(SU)" title="Enter a value in standard units.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="cond_filter" type="button" name="cond_19_20" value="Conductivity"
-                               class="filterButton" align="center" title="Filter fish by stream conductivity."><br>
-                        <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)" title="Enter a value in micro-Siemens per square centimeter.">
-                    </div>
-                    <div class="fish_filter">
-                        <input id="do_filter" type="button" name="do_21_22" value="Dissolved Oxygen"
-                               class="filterButton" align="center" title="Filter fish by stream dissolved oxygen."><br>
-                        <input type="text" id="filter_field" class="do_value" placeholder="(% sat)" title="Enter a value as percentage.">
-                    </div>
-                </div>
                 </div>
                 <br>
+{#                <div class="envelope_toggle">#}
+{#                    <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"#}
+{#                           id="myenvelope_toggle"#}
+{#                           checked>#}
+{#                    <label class="envelope_toggle-label" for="myenvelope_toggle">#}
+{#                        <span class="envelope_toggle-inner"></span>#}
+{#                        <span class="envelope_toggle-switch"></span>#}
+{#                    </label>#}
+{#                </div>#}
                 <div class="col-md-12">
                     <div id="error_msg"></div>
                     <div style="width: 45%; margin: auto; display: inline-block; float: left;">
