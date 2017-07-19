@@ -102,6 +102,17 @@
         border-style: solid;
     }
 
+    .link_image{
+        max-width: 25px;
+        width: 100%;
+        margin: 5px 5px;
+    }
+
+    .fish_links{
+        display: flex;
+        padding: 5px;
+    }
+
 </style>
 
 <head>
@@ -156,8 +167,8 @@
                 <div class="fishSearch">
                     <div>
                         <input class="fishSearchBox" type="text" name="fish_search"
-                               placeholder="Search for fish species...">
-                        <input class="fishSearchButton" type="button">
+                               placeholder="Search for fish species..." title="Fish common or scientific name">
+                        <input class="fishSearchButton" type="button" title="Search">
                     </div>
                     <div class="fishTable">
                         <h5 align="center">Fish in selected HUC</h5>
@@ -172,10 +183,13 @@
                     </div>
                 </div>
                 <div id="selectedFishTable" class="fishDetails"></div>
-                <div id="fish_weight_length" style="float:right; width:25%; font-size:12px; margin-top:10px">
-                    <h4>Weight - Length Calculator</h4>
-                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_weight" title="Fish Weight" placeholder="Fish weight...">
-                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_length" title="Fish Length" placeholder="Fish length...">
+                <div id="fish_weight_length"
+                     style="float:right; width:25%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 3px 3px 3px;">
+                    <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
+                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_weight"
+                           title="Fish Weight" placeholder="Fish weight...">
+                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_length"
+                           title="Fish Length" placeholder="Fish length...">
                 </div>
             </div>
         </div>
@@ -190,7 +204,7 @@
                     var sName = $('#fishTable').DataTable().row(this).node().children[1].innerHTML;
                     var details = $('#fishTable').DataTable().row(this).data();
                     setFishDetails(cName, sName, details);
-                    $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish')
+                    $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish');
                     $('#fish_weight_length').show();
 
                     // Make ajax call to get all hucs where selected fish is present. (new function)
@@ -335,7 +349,6 @@
                     url: "/pisces/rest/fishproperies",
                     data: huc8,
                     crossDomain: true,
-
                     success: function (data) {
                         populateFishTable(data)
                     },
@@ -569,17 +582,22 @@
             function setFishDetails(cName, sName, details) {
                 var d = document.getElementById('selectedFishTable');
                 document.getElementById('focusDetails').focus();
+                var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
+                var wiki_link = "https://en.wikipedia.org/wiki/" + cName.replace(" ", "_");
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
                     'Max Size (cm): ' + (details[10] || 'N/A ') + '<br>' +
                     'Stream Depth Range (cm): ' + (details[0] || 'N/A ') + ' - ' + (details[6] || 'N/A ') + '<br>' +
                     'Stream Width Range (m): ' + (details[16] || 'N/A ') + ' - ' + (details[21] || 'N/A ') + '<br>' +
                     'Stream Area Range (ha): ' + (details[2] || 'N/A ') + ' - ' + (details[3] || 'N/A ') + '<br>' +
-                    'Stream Slope Range (%): ' + (details[15]|| 'N/A ') + ' - ' + (details[11] || 'N/A ') + '<br>' +
+                    'Stream Slope Range (%): ' + (details[15] || 'N/A ') + ' - ' + (details[11] || 'N/A ') + '<br>' +
                     'Stream TSS Range (mg/l): ' + (details[1] || 'N/A ') + ' - ' + (details[8] || 'N/A ') + '<br>' +
                     'Stream pH Range: ' + (details[13] || 'N/A ') + ' - ' + ( details[14] || 'N/A ') + '<br>' +
                     'Stream Conductivity Range (uS/cm2): ' + (details[18] || 'N/A ') + ' - ' + (details[22] || 'N/A ') + '<br>' +
-                    'Stream Dissolved Oxygen Range (%): ' + (details[19] || 'N/A ') + ' - ' + (details[20] || 'N/A ') + '<br></p>';
+                    'Stream Dissolved Oxygen Range (%): ' + (details[19] || 'N/A ') + ' - ' + (details[20] || 'N/A ') + '<br></p>' +
+                    '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
+                    '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
+                ;
             }
 
             function capitalize_Words(str) {
