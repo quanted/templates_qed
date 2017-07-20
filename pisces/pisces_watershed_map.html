@@ -1,4 +1,10 @@
 <style>
+
+    div.main-column {
+        padding-left: 0 !important;
+        width: 80% !important;
+    }
+
     #map {
         width: 100%;
         height: 450px;
@@ -34,7 +40,7 @@
         float: right;
         border-style: solid;
         border-width: 1px;
-        width: 28%;
+        width: 33%;
         max-height: 450px;
         margin: 1px 1px;
     {#        padding: 10px 10px#} padding: 1.3529em 1em;
@@ -78,6 +84,10 @@
         text-align: center !important;
     }
 
+    #fishTable td * {
+        width: 50% !important;
+    }
+
     #fishTable tr:hover td {
         background-color: #02bfe7;
     }
@@ -91,7 +101,7 @@
         font-size: 12px;
         padding: 5px 5px;
         margin-top: 10px;
-        width: 70%;
+        width: 65%;
     }
 
     div.fishDetails p {
@@ -102,15 +112,20 @@
         border-style: solid;
     }
 
-    .link_image{
+    .link_image {
         max-width: 25px;
         width: 100%;
         margin: 5px 5px;
     }
 
-    .fish_links{
+    .fish_links {
         display: flex;
         padding: 5px;
+    }
+
+    #fish_weight_length * label {
+        float: left !important;
+        display: inline-block !important;
     }
 
 </style>
@@ -147,7 +162,7 @@
         <!--- content div -->
         <div class="col-md-10">
             <div class="box multi news">
-                <div class="pane-content" id="mapDiv" style="display: inline-block; float:left; width: 70%">
+                <div class="pane-content" id="mapDiv" style="display: inline-block; float:left; width: 65%">
                     <p><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish species associated
                         with the area.</p>
                     <!-- leaflet map div -->
@@ -184,12 +199,14 @@
                 </div>
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
-                     style="float:right; width:25%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 3px 3px 3px;">
+                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
-                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_weight"
-                           title="Fish Weight" placeholder="Fish weight...">
-                    <input style="float:left; width:75%; margin: 10px 10px;" type="text" id="fish_length"
-                           title="Fish Length" placeholder="Fish length...">
+                    <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
+                        (kg): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_weight"
+                                             title="Fish Weight" placeholder="Fish weight..."></div>
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length">Length
+                        (cm): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_length"
+                                             title="Fish Length" placeholder="Fish length..."></div>
                 </div>
             </div>
         </div>
@@ -207,10 +224,16 @@
                     $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish');
                     $('#fish_weight_length').show();
 
+                    console.log(details);
+                    searchFishHuc(details[5]);
                     // Make ajax call to get all hucs where selected fish is present. (new function)
                     // Highlight all returned hucs
                     // Set map bounds to bounds of new hucs selected.
                 });
+
+                $('.fishSearchButton').on('click', searchForFish);
+                $('#fish_weight').keyup(calculateFishLength);
+                $('#fish_length').keyup(calculateFishWeight);
             });
 
             $('#fish_weight_length').hide();
@@ -240,19 +263,26 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
+                console.log("highlighted hucs: " + hucs);
                 resetHUCLayer();
                 //  properties of highlighted HUC
+                var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
-                    if (hucs === layer.feature.properties.HUC_CODE)
-                        layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
-                    if (hucs === layer.feature.properties.HUC_CODE)
-                        layer.bringToFront();
+                    $.each(hucs, function (index, value) {
+                        if (value === layer.feature.properties.HUC_CODE)
+                            layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
+                        if (value === layer.feature.properties.HUC_CODE)
+                            layerGroup.push(layer);
+                            layer.bringToFront();
+                    });
                 });
+                map.fitBounds(L.featureGroup(layerGroup).getBounds());
             }
 
             //get fish json data for selected HUC
             function getHUCFishData(hucs) {
                 var url = "http://127.0.0.1:8000/fishhucs/" + hucs;
+                console.log(hucs);
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -280,10 +310,12 @@
 
             function onEachFeature(feature, layer) {
                 layer.on('click', function (e) {
-
+                    $('.fishSearchBox').val("");
                     if (this.currentHUC !== feature.properties.HUC_CODE || this.currentHUC === null) {
                         this.currentHUC = feature.properties.HUC_CODE;
-                        selectHUCs(feature.properties.HUC_CODE);
+                        var hucs = [];
+                        hucs.push(feature.properties.HUC_CODE);
+                        selectHUCs(hucs);
                         //var data = getHUCFishData(feature.properties.HUC_CODE);
                         getFishDataonMapClick(feature.properties.HUC_CODE);
                     }
@@ -336,14 +368,13 @@
 
             // -------- FISH Functions ---------- //
 
-
             function getFishDataonMapClick(huc8) {
-                var data = getFishData(huc8);
-                //var data = getTESTFishData();
+                //var data = getFishData(huc8);
+                var data = getTESTFishData();
             }
 
             function getFishData(huc8) {
-
+                console.log(huc8);
                 $.ajax({
                     type: "POST",
                     url: "/pisces/rest/fishproperies",
@@ -605,6 +636,75 @@
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                 });
             }
+
+            function calculateFishWeight() {
+                // Get coefficients for selected fish.
+                var A = 0.5;
+                var B = 0.9;
+                var L = $('#fish_length').val();
+                if ($.isNumeric(L) && L !== "") {
+                    var length = Math.pow(A * L, B);
+                    $('#fish_weight').val(length);
+                }
+                else {
+                    $('#fish_weight').val("");
+                }
+            }
+
+            function calculateFishLength() {
+                // Get coefficients for selected fish.
+                var A = 0.3;
+                var B = 0.4;
+                var W = $('#fish_weight').val();
+                if ($.isNumeric(W) && W !== "") {
+                    var weight = Math.pow(A * W, B);
+                    $('#fish_length').val(weight);
+                }
+                else {
+                    $('#fish_length').val("");
+                }
+            }
+
+            function searchForFish() {
+                var fish = $('.fishSearchBox').val();
+                resetHUCLayer();
+                console.log(fish);
+                {#                $.ajax({#}
+                {#                    type: "POST",#}
+                {#                    url: "/pisces/rest/fishsearch",#}
+                {#                    data: fish,#}
+                {#                    crossDomain: true,#}
+                {#                    success: function (data) {#}
+                {#                        populateFishTable(data)#}
+                {#                    },#}
+                {#                    error: function (jqXHR, status) {#}
+                {#                        $('#error_msg').html("Error: failed to get fish data for the selected huc.");#}
+                {#                        return null;#}
+                {#                    }#}
+                {#                });#}
+                getTESTFishData();
+            }
+
+            function searchFishHuc(speciesID) {
+                var testHUCS = ['03130001', '03070101', '03060104', '03060102'];
+                console.log("speciesID: " + speciesID);
+                selectHUCs(testHUCS);
+
+                {#                 $.ajax({#}
+                {#                    type: "POST",#}
+                {#                    url: "/pisces/rest/fishranges",#}
+                {#                    data: speciesID,#}
+                {#                    crossDomain: true,#}
+                {#                    success: function (data) {#}
+                {#                        selectHUCs(data)#}
+                {#                    },#}
+                {#                    error: function (jqXHR, status) {#}
+                {#                        $('#error_msg').html("Error: failed to get fish data for the selected huc.");#}
+                {#                        return null;#}
+                {#                    }#}
+                {#                });#}
+            }
+
         </script>
 
     </div>
