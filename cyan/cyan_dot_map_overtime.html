@@ -1,0 +1,127 @@
+<style>
+
+</style>
+
+<head>
+	<!-- jquery ajax, morris, and raphael for timeseries chart-->
+{#	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+{#	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>#}
+
+
+	<!-- d3 -->
+{#	<link rel="stylesheet" type="text/css" href="/static_qed/cyan/css/d3.parcoords.css">#}
+
+  <link rel="stylesheet" href="/static_qed/cyan/css/main.css" />
+  <link rel="stylesheet" href="/static_qed/cyan/css/d3.slider.css" />
+
+{#	<script src="/static_qed/cyan/scripts/d3.min.js"></script>#}
+
+
+
+
+<!--jquery import. leave here to set nav bar at top of page-->
+    <script src="//www2.epa.gov/sites/all/libraries/template/jquery.js"></script>
+    <script src="//www2.epa.gov/sites/all/libraries/template/js.js"></script>
+    <script src="//www2.epa.gov/sites/all/modules/custom/epa_core/js/alert.js"></script>
+
+
+    <script src="/static_qed/cyan/scripts/d3.v3.min.js"></script>
+    <script src="/static_qed/cyan/scripts/topojson.v1.min.js"></script>
+
+
+</head>
+
+
+<body class="node-type-page resource-directory wide-template col-1cm full-width gecko">
+
+<!--large content section (white background)-->
+<section id="main-content" class="main-content clearfix" role="main" style="margin-left: 2.5%; margin-right: 2.5%">
+
+
+	<!--additional nav header-->
+	<div class="main-content clearfix" role="main" lang="en">
+        <h1 class="page-title">Visualizing CyAN:</h1>
+        <h2>CyAN HAB Surface Area Trends (2008-2011)</h2>
+
+		<!--header showing location of website for navigation "You are here:"-->
+		<h2 class="breadcrumb-title">You are here:</h2>
+		<p class="breadcrumb"><a href="//www.epa.gov/">EPA Home</a> >>  <a href="//qed.epa.gov/">QED</a> >>  <a href="//qed.epa.gov/cyan">QED CyAN</a> >> <a href="//qed.epa.gov/cyan/lakecomparison">CyAN Lake Comparison Explorer</a></p>
+        <br>
+	</div>
+
+	<!-- NOTE: set responsive/width styles here! -->
+    <section class="content">
+
+        <!--- white space div-->
+	    <div class="node node-page clearfix view-mode-full ">
+
+
+
+	            <!---d3.js Cyano Bloom Properties-->
+	            <div class="col size-1of2">
+	                <div class="box multi news">
+{#	                	<h3 class="pane-title">Cyano Bloom Properties</h3>#}
+
+
+                          <div id="container">
+{#                            <h1>Visualizing CyAN:</h1>#}
+{#                            <h2>CyAN HAB Surface Area Trends (2008-2011)</h2>#}
+
+                            <p id="intro"></p>
+                            <div id="date">
+                              <!-- <p>12 months ending on:</p> -->
+                              <p id="month"></p>
+                            </div>
+                            <div id="play"></div>
+                            <div id="slider-container">
+                              <div id="slider-div"></div>
+                              <div id="slider-probe">
+                                <p></p>
+                                <div></div>
+                              </div>
+                            </div>
+                            <div id="map-container"></div>
+                             <p id="source"></p>
+                          </div>
+
+
+
+    <script src="/static_qed/cyan/scripts/d3.slider.js"></script>
+    <script src="/static_qed/cyan/scripts/main.js"></script>
+
+	                </div>
+	            </div>
+
+
+            </div>
+
+<br/>
+	</section>
+
+
+
+
+
+
+<script>
+        var winCount=0;
+        function openAsset(assetName,assetID) {
+            var url = 'https://iaspub.epa.gov/sor_internet/registry2/reusereg/searchandretrieve/details/'+assetID;
+            //lets user open multiple resources w/out them all opening in the same window:
+            winCount++;
+            var width=jQuery(window).width() * .8;
+            var height=jQuery(window).height() * .9;
+            //new windows will offset 20 pixels:
+            var leftOffset = winCount*20;
+
+            var WINDOW_OPTIONS2 = 'height='+height+',width='+width+',resizable=1,scrollbars=1,location=1,left='+leftOffset;
+            // NOTE: We need unique window names to allow opening multiple detail windows at a time instead of replacing.
+            // However, don't put the assetID in the name, it causes bugs in IE because there are dashes in the assetID.
+            var detailWindow = window.open(url, 'detailWindow'+winCount, WINDOW_OPTIONS2);
+        }
+</script>
+
+
+
+</body>
+</html>
