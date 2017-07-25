@@ -53,7 +53,7 @@
         width: 75%;
         height: 22px;
         border-radius: 3px 0 0 3px !important;
-
+        padding-left: 5px;
     }
 
     input.fishSearchButton {
@@ -128,6 +128,7 @@
         display: inline-block !important;
     }
 
+
 </style>
 
 <head>
@@ -186,7 +187,8 @@
                         <input class="fishSearchButton" type="button" title="Search">
                     </div>
                     <div class="fishTable">
-                        <h5 align="center">Fish in selected HUC</h5>
+                        <h5 style="padding: 0 0 0 15%; font-size: smaller; float:left;" align="center">Fish in selected
+                            HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -197,6 +199,7 @@
                         </table>
                     </div>
                 </div>
+                <div id="focusDetails" tabindex="-1"></div>
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
                      style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
@@ -210,7 +213,6 @@
                 </div>
             </div>
         </div>
-        <div id="focusDetails" tabindex="-1"></div>
 
         <script>
 
@@ -273,7 +275,7 @@
                             layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
                         if (value === layer.feature.properties.HUC_CODE)
                             layerGroup.push(layer);
-                            layer.bringToFront();
+                        layer.bringToFront();
                     });
                 });
                 map.fitBounds(L.featureGroup(layerGroup).getBounds());
