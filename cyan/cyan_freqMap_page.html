@@ -36,6 +36,16 @@
   <div class="panel-display panel-1col clearfix" >
     <div class="panel-panel panel-col">
 
+        	<!--additional nav header-->
+	<div class="main-content clearfix" role="main" lang="en">
+        <h1 class="page-title">BETA Cyanobacteria Frequency</h1>
+		<!--header showing location of website for navigation "You are here:"-->
+		<h2 class="breadcrumb-title">You are here:</h2>
+		<p class="breadcrumb"><a href="//www.epa.gov/">EPA Home</a> >>  <a href="//qed.epa.gov/">QED</a> >>  <a href="//qed.epa.gov/cyan">QED CyAN</a> >> <a href="//qed.epa.gov/cyan/freqMap">Frequency Map</a></p>
+        <br>
+	</div>
+
+
         <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
@@ -47,7 +57,8 @@
         <div class="col-md-10">
           <div class="box multi news">
             <div class="pane-content" id="mapDiv">
-              <p><strong>Click the map</strong> to view the most recent weekly cyanobacteria concentration estimate.</p>
+              <p>Explore <strong> how often</strong> cyanobaceria was observed using MERIS satellite imagery from years 2008-2011.
+                  The map shows the percent of observation dates with high concentration cyanobacteria (>100,000 cells/ml).</p>
                 <!-- leaflet map div -->
                 <div id="map"></div>
                 <!-- basemap wrapper -->
