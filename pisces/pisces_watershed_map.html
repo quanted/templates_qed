@@ -665,6 +665,20 @@
             }
 
             function getFishDetails(fish) {
+                $.ajax({
+                    type: "GET",
+                    url: "/rest/api/v1/fish/properties/" + fish["speciesid"],
+                    crossDomain: true,
+                    success: function (data) {
+                        console.log(data);
+                        return data;
+                    },
+                    error: function (jqXHR, status) {
+                        console.log("ERROR: failed to get fish detail for speciesid: " + fish["speciesid"]);
+                        $('#error_msg').html("Error: failed to get fish details for the selected fish.");
+                        return null;
+                    }
+                });
                 {#                return {#}
                 {#                    "speciesid":#}
                 {#                        "14",#}
@@ -730,21 +744,6 @@
                 {#                            }#}
                 {#                        ]#}
                 {#                };#}
-
-                $.ajax({
-                    type: "GET",
-                    url: "/rest/api/v1/fish/properties/" + fish,
-                    crossDomain: true,
-                    success: function (data) {
-                        console.log(data);
-                        return data;
-                    },
-                    error: function (jqXHR, status) {
-                        console.log("ERROR: failed to get fish detail for fish: " + fish);
-                        $('#error_msg').html("Error: failed to get fish details for the selected fish.");
-                        return null;
-                    }
-                });
             }
 
             function setFishDetails(details) {
@@ -1135,7 +1134,7 @@
                 $.ajax({
                     type: "GET",
                     url: "/pisces/rest/api/v1/hucs/fish/" + speciesID,
-{#                    data: speciesID,#}
+                    {#                    data: speciesID,#}
                     crossDomain: true,
                     success: function (data) {
                         var hucList = details["species"].map(function (h) {
