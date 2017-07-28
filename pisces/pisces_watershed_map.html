@@ -352,12 +352,7 @@
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
                 var fish = $('#fishTable').DataTable().row(e).data();
                 getFishDetails(fish);
-{#                setFishDetails(details["species"][0]);#}
-
-                a = details["species"][0]["w_l_a"];
-                b = details["species"][0]["w_l_b"];
-                c = details["species"][0]["l_w_c"];
-                d = details["species"][0]["l_w_d"];
+                {#                setFishDetails(details["species"][0]);#}
 
                 $('#fishTable').DataTable().row(e).nodes().to$().addClass('selected_fish');
                 $('#fish_weight_length').show();
@@ -672,6 +667,10 @@
                     async: false,
                     success: function (data) {
                         console.log(data);
+                        a = data["species"][0]["w_l_a"];
+                        b = data["species"][0]["w_l_b"];
+                        c = data["species"][0]["l_w_c"];
+                        d = data["species"][0]["l_w_d"];
                         setFishDetails(data["species"][0]);
                     },
                     error: function (jqXHR, status) {
