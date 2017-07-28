@@ -351,8 +351,8 @@
             function setFishTable(e) {
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
                 var fish = $('#fishTable').DataTable().row(e).data();
-                var details = getFishDetails(fish);
-                setFishDetails(details["species"][0]);
+                getFishDetails(fish);
+{#                setFishDetails(details["species"][0]);#}
 
                 a = details["species"][0]["w_l_a"];
                 b = details["species"][0]["w_l_b"];
@@ -672,7 +672,7 @@
                     async: false,
                     success: function (data) {
                         console.log(data);
-                        return data;
+                        setFishDetails(data["species"][0]);
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get fish detail for speciesid: " + fish["speciesid"]);
