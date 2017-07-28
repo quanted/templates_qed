@@ -359,8 +359,7 @@
                 $('#selectedFishTable').show();
                 $('#fish_weight_length').show();
 
-                console.log(details["species"][0]["speciesid"]);
-                searchFishHuc(details["species"][0]["speciesid"]);
+{#                searchFishHuc(details["species"][0]["speciesid"]);#}
                 endLoad();
             }
 
@@ -672,6 +671,7 @@
                         c = data["species"][0]["l_w_c"];
                         d = data["species"][0]["l_w_d"];
                         setFishDetails(data["species"][0]);
+                        searchFishHuc(data["species"][0]["speciesid"]);
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get fish detail for speciesid: " + fish["speciesid"]);
@@ -1138,7 +1138,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
-                        var hucList = details["species"].map(function (h) {
+                        var hucList = data["species"].map(function (h) {
                             return h["huc"];
                         });
                         selectHUCs(hucList)
