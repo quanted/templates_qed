@@ -667,7 +667,7 @@
             function getFishDetails(fish) {
                 $.ajax({
                     type: "GET",
-                    url: "/rest/api/v1/fish/properties/" + fish["speciesid"],
+                    url: "/pisces/rest/api/v1/fish/properties/" + fish["speciesid"].toString(),
                     crossDomain: true,
                     success: function (data) {
                         console.log(data);
