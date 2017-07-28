@@ -491,6 +491,7 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/hucs/" + huc8,
                     crossDomain: true,
+                    async: false,
                     success: function (data) {
                         console.log(data);
                         populateFishTable(data);
@@ -669,6 +670,7 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/properties/" + fish["speciesid"].toString(),
                     crossDomain: true,
+                    async: false,
                     success: function (data) {
                         console.log(data);
                         return data;
@@ -1136,6 +1138,7 @@
                     url: "/pisces/rest/api/v1/hucs/fish/" + speciesID,
                     {#                    data: speciesID,#}
                     crossDomain: true,
+                    async: false,
                     success: function (data) {
                         var hucList = details["species"].map(function (h) {
                             return h["huc"];
