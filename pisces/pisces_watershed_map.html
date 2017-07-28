@@ -104,12 +104,30 @@
         width: 65%;
     }
 
-    div.fishDetails p {
-        background-color: #DBF1FF;
-        padding: 0 5px;
-        border-width: 1px;
+{#    div.fishDetails p {#}
+{#        background-color: #DBF1FF;#}
+{#        padding: 0 5px;#}
+{#        border-width: 1px;#}
+{#        border-color: black;#}
+{#        border-style: solid;#}
+{#    }#}
+
+    table.fishDetails {
+        line-height: 5px;
+        width: 100%;
         border-color: black;
         border-style: solid;
+        border-width: 1px;
+        background-color: #DBF1FF;
+    }
+
+    table.fishDetails col:nth-child(even) {
+        background-color: white !important;
+        width: 15%;
+    }
+
+    table.fishDetails col:last-child{
+        width: 45%;
     }
 
     .link_image {
@@ -205,10 +223,10 @@
                      style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
                     <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
-                        (kg): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_weight"
+                        (kg): </label><input style="margin: 0 10px; width:65%; padding-left: 3px;" type="text" id="fish_weight"
                                              title="Fish Weight" placeholder="Fish weight..."></div>
                     <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length">Length
-                        (cm): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_length"
+                        (cm): </label><input style="margin: 0 10px; width:65%; padding-left: 3px; " type="text" id="fish_length"
                                              title="Fish Length" placeholder="Fish length..."></div>
                 </div>
             </div>
@@ -224,6 +242,8 @@
                     var details = $('#fishTable').DataTable().row(this).data();
                     setFishDetails(cName, sName, details);
                     $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish');
+                    $('#fish_weight_length').show();
+                    $('#selectedFishTable').show();
                     $('#fish_weight_length').show();
 
                     console.log(details);
@@ -332,7 +352,7 @@
             }
 
             // initialize the map
-            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([33.95, -83.38], 8);
+            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([40.265306, -98.623725], 3);
 
             // load basemap
             L.esri.basemapLayer('Topographic')
@@ -619,15 +639,16 @@
                 var wiki_link = "https://en.wikipedia.org/wiki/" + cName.replace(" ", "_");
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
-                    'Max Size (cm): ' + (details[10] || 'N/A ') + '<br>' +
-                    'Stream Depth Range (cm): ' + (details[0] || 'N/A ') + ' - ' + (details[6] || 'N/A ') + '<br>' +
-                    'Stream Width Range (m): ' + (details[16] || 'N/A ') + ' - ' + (details[21] || 'N/A ') + '<br>' +
-                    'Stream Area Range (ha): ' + (details[2] || 'N/A ') + ' - ' + (details[3] || 'N/A ') + '<br>' +
-                    'Stream Slope Range (%): ' + (details[15] || 'N/A ') + ' - ' + (details[11] || 'N/A ') + '<br>' +
-                    'Stream TSS Range (mg/l): ' + (details[1] || 'N/A ') + ' - ' + (details[8] || 'N/A ') + '<br>' +
-                    'Stream pH Range: ' + (details[13] || 'N/A ') + ' - ' + ( details[14] || 'N/A ') + '<br>' +
-                    'Stream Conductivity Range (uS/cm2): ' + (details[18] || 'N/A ') + ' - ' + (details[22] || 'N/A ') + '<br>' +
-                    'Stream Dissolved Oxygen Range (%): ' + (details[19] || 'N/A ') + ' - ' + (details[20] || 'N/A ') + '<br></p>' +
+                    '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + ' TBA ' + '</td><td>Biogeography</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>Max Length (cm)</td><td>' + details[10] + '</td><td>System</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>Mean Weight (g)</td><td>' + ' TBA ' + '</td><td>Lotic Habitat</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>Mean Length (cm)</td><td>' + ' TBA ' + '</td><td>Water Column</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>Max Age (yr)</td><td>' + ' TBA ' + '</td><td>Substrate</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + ' TBA ' + '</td><td>Water Clarity</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + ' TBA ' + '</td><td>Thermal</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>C (W=C*L<sup>D</sup>)</td><td>' + ' TBA ' + '</td><td>Gradient</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>D (W=C*L<sup>D</sup>)</td><td>' + ' TBA ' + ' </td><td>Location Notes</td><td>' + ' TBA ' + '</td></tr>' +
+                    '<tr><td>Rarity</td><td>' + ' TBA ' + '</td><td>Habitat Notes</td><td>' + ' TBA '+ '</td></tr></table>' +
                     '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
@@ -685,6 +706,8 @@
                 {#                    }#}
                 {#                });#}
                 getTESTFishData();
+                $('#selectedFishTable').hide();
+                $('#fish_weight_length').hide();
             }
 
             function searchFishHuc(speciesID) {
