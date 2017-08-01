@@ -251,7 +251,7 @@
                     <div>
                         <input class="fishSearchBox" type="text" name="fish_search"
                                placeholder="Search for fish species..." title="Fish common or scientific name">
-                        <input class="fishSearchButton" type="button" title="Search">
+                        <input class="fishSearchButton" type="submit" title="Search">
                     </div>
                     <div class="fishTable" style="display:none;">
                         <h5 style="padding: 0 0 0 15%; font-size: smaller; float:left;" align="center">Fish in selected
@@ -651,7 +651,7 @@
             }
 
             function setFishDetails(details) {
-                document.getElementById('focusDetails').focus();
+                //document.getElementById('focusDetails').focus();
 
                 var cName = capitalize_Words(details["commonname"]);
                 var sName = capitalize_Words(details["genus"] + " " + details["species"]);
@@ -782,6 +782,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
+                        console.log(data);
                         populateFishTable(data)
                     },
                     error: function (jqXHR, status) {
@@ -929,6 +930,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
+                        console.log(data);
                         var hucs = data["species"].map(function (h) {
                             return h["huc"];
                         });
