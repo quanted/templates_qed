@@ -52,8 +52,7 @@
         display: inline-block;
         width: 75%;
         height: 22px;
-{#        border-radius: 3px 0 0 3px !important;#}
-        padding-left: 5px;
+    {#        border-radius: 3px 0 0 3px !important;#} padding-left: 5px;
     }
 
     input.fishSearchButton {
@@ -231,7 +230,8 @@
             <div class="box multi news">
                 <div class="pane-content" id="mapDiv"
                      style="display: inline-block; float:left; width: 65%; height: 625px;">
-                    <p><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish species associated
+                    <p id="huc_table_title"><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish
+                        species associated
                         with the area.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
@@ -254,7 +254,8 @@
                         <input class="fishSearchButton" type="submit" title="Search" value="">
                     </div>
                     <div class="fishTable" style="display:none;">
-                        <h5 style="padding: 0 0 0 15%; font-size: smaller; float:left;" align="center">Fish in selected
+                        <h5 style="padding: 0 0 0 15%; font-size: smaller; float:left;" align="center"
+                            id="fish_search_title">Fish in selected
                             HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
@@ -358,6 +359,12 @@
             function selectHUCs(hucs) {
                 console.log("highlighted hucs: " + hucs);
                 resetHUCLayer();
+                if (hucs.length > 1) {
+                    document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
+                }
+                else {
+                    document.getElementById('huc_table_title').innerHTML = "<strong>Selected HUC 8 watershed.</strong>";
+                }
                 //  properties of highlighted HUC
                 var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
@@ -455,6 +462,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
+                        document.getElementById('fish_search_title').innerHTML = "Fish in selected HUC 8";
                         console.log(data);
                         populateFishTable(data);
                     },
@@ -780,6 +788,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
+                        document.getElementById('fish_search_title').innerHTML = "Search results for: " + fish;
                         console.log(data);
                         populateFishTable(data)
                     },
@@ -789,132 +798,6 @@
                         return null;
                     }
                 });
-                {#                var testData = {#}
-                {#                    "search_string": "bass",#}
-                {#                    "species": [#}
-                {#                        {#}
-                {#                            "speciesid": 16,#}
-                {#                            "common_name": "shadow bass",#}
-                {#                            "scientific_name": "ariommus",#}
-                {#                            "genus": "Ambloplites"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 18,#}
-                {#                            "common_name": "ozark bass",#}
-                {#                            "scientific_name": "constellatus",#}
-                {#                            "genus": "Ambloplites"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 19,#}
-                {#                            "common_name": "rock bass",#}
-                {#                            "scientific_name": "rupestris",#}
-                {#                            "genus": "Ambloplites"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 611,#}
-                {#                            "common_name": "shoal bass",#}
-                {#                            "scientific_name": "cataractae",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 612,#}
-                {#                            "common_name": "redeye bass",#}
-                {#                            "scientific_name": "coosae",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 613,#}
-                {#                            "common_name": "smallmouth bass",#}
-                {#                            "scientific_name": "dolomieu",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 615,#}
-                {#                            "common_name": "suwannee bass",#}
-                {#                            "scientific_name": "notius",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 616,#}
-                {#                            "common_name": "spotted bass",#}
-                {#                            "scientific_name": "punctulatus",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 618,#}
-                {#                            "common_name": "largemouth bass",#}
-                {#                            "scientific_name": "salmoides",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 619,#}
-                {#                            "common_name": "florida largemouth bass",#}
-                {#                            "scientific_name": "salmoides floridanus",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 620,#}
-                {#                            "common_name": "northern largemouth bass",#}
-                {#                            "scientific_name": "salmoides salmoides",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 621,#}
-                {#                            "common_name": "black bass",#}
-                {#                            "scientific_name": "sp.",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 628,#}
-                {#                            "common_name": "white bass",#}
-                {#                            "scientific_name": "chrysops",#}
-                {#                            "genus": "Morone"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 630,#}
-                {#                            "common_name": "yellow bass",#}
-                {#                            "scientific_name": "mississippiensis",#}
-                {#                            "genus": "Morone"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 631,#}
-                {#                            "common_name": "striped bass",#}
-                {#                            "scientific_name": "saxatilis",#}
-                {#                            "genus": "Morone"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 17,#}
-                {#                            "common_name": "roanoke bass",#}
-                {#                            "scientific_name": "cavifrons",#}
-                {#                            "genus": "Ambloplites"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 103,#}
-                {#                            "common_name": "butterfly peacock bass",#}
-                {#                            "scientific_name": "ocellaris",#}
-                {#                            "genus": "Cichla"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 614,#}
-                {#                            "common_name": "alabama bass",#}
-                {#                            "scientific_name": "henshalli",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 617,#}
-                {#                            "common_name": "northern spotted bass",#}
-                {#                            "scientific_name": "punctulatus punctulatus",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 622,#}
-                {#                            "common_name": "guadalupe bass",#}
-                {#                            "scientific_name": "treculii",#}
-                {#                            "genus": "Micropterus"#}
-                {#                        }#}
-                {#                    ]#}
-                {#                };#}
-                {#                populateFishTable(testData);#}
                 $('#selectedFishTable').hide();
                 $('#fish_weight_length').hide();
                 endLoad();
