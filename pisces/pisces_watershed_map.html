@@ -92,6 +92,14 @@
         background-color: #02bfe7;
     }
 
+    table.dataTable.display tbody tr.odd {
+        background-color: #D4D4D4 !important;
+    }
+
+    #fishTable thead th {
+        background-color: white !important;
+    }
+
     tr.selected_fish td {
         background-color: #6baed6 !important;
     }
@@ -258,7 +266,7 @@
                         </table>
                     </div>
                 </div>
-{#                <div id="focusDetails" tabindex="-1"></div>#}
+                {#                <div id="focusDetails" tabindex="-1"></div>#}
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
                      style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
@@ -268,11 +276,13 @@
                                             type="text"
                                             id="fish_weight"
                                             title="Fish Weight" placeholder="Fish weight..."></div>
-                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length" style="margin-top: 3px;">Length
-                        (cm): </label><input style="margin: 3px 10px 0 10px; width:65%; padding-left: 3px; float: right;"
-                                             type="text"
-                                             id="fish_length"
-                                             title="Fish Length" placeholder="Fish length..."></div>
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"
+                                                                               style="margin-top: 3px;">Length
+                        (cm): </label><input
+                            style="margin: 3px 10px 0 10px; width:65%; padding-left: 3px; float: right;"
+                            type="text"
+                            id="fish_length"
+                            title="Fish Length" placeholder="Fish length..."></div>
                 </div>
             </div>
         </div>
@@ -346,15 +356,12 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-                var hucList = data["species"].map(function (h) {
-                    return h["huc"];
-                });
-                console.log("highlighted hucs: " + hucList);
+                console.log("highlighted hucs: " + hucs);
                 resetHUCLayer();
                 //  properties of highlighted HUC
                 var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
-                    $.each(hucList, function (index, value) {
+                    $.each(hucs, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE)
                             layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
                         if (value === layer.feature.properties.HUC_CODE)
@@ -763,7 +770,11 @@
                 var fish = $('.fishSearchBox').val();
                 resetHUCLayer();
                 console.log(fish);
-                var fishrequest = {"search_string": fish};
+                var fishrequest = [];
+                fishrequest.push({
+                    key: "search_string",
+                    value: fish
+                });
                 $.ajax({
                     type: "POST",
                     url: "/pisces/rest/api/v1/fish/properties/names",
@@ -918,7 +929,10 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
-                        selectHUCs(data)
+                        var hucs = data["species"].map(function (h) {
+                            return h["huc"];
+                        });
+                        selectHUCs(hucs)
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get huc list for fish:" + speciesID);
