@@ -778,7 +778,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/pisces/rest/api/v1/fish/properties/names",
-                    data: fishrequest,
+                    data: fishrequest[0],
                     crossDomain: true,
                     async: false,
                     success: function (data) {
@@ -931,7 +931,7 @@
                     async: false,
                     success: function (data) {
                         console.log(data);
-                        var hucs = data["species"].map(function (h) {
+                        var hucs = data["hucs"].map(function (h) {
                             return h["huc"];
                         });
                         selectHUCs(hucs)
