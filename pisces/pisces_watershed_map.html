@@ -366,7 +366,7 @@
             function selectHUCs(hucs) {
                 console.log("highlighted hucs: " + hucs);
                 $('#fish_weight_length').hide();
-                $('.fishTable').closest('div').hide();
+                $('#selectedFishTable').hide();
                 resetHUCLayer();
                 if (hucs.length > 1) {
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
