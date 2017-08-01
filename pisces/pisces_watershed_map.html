@@ -130,7 +130,7 @@
         width: 45%;
     }
 
-    table.fishDetails > tr > td:nth-child(odd):hover, table.fishDetails > tr > td:nth-child(odd):hover + td {
+    table.fishDetails > tbody > tr > td:nth-child(odd):hover, table.fishDetails > tbody > tr > td:nth-child(odd):hover + td {
         background: #BFD2DE;
     }
 
@@ -316,6 +316,7 @@
                     setTimeout(function () {
                         searchForFish()
                     }, 1);
+                    return false;
                 });
                 $('#fish_weight').keyup(calculateFishLength);
                 $('#fish_length').keyup(calculateFishWeight);
