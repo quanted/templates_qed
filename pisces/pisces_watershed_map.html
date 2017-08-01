@@ -253,10 +253,10 @@
                 </div>
                 <div class="fishSearch">
                     <div>
-                        <form>
+                        <form class="searchForm" onsubmit="return false;">
                             <input class="fishSearchBox" type="text" name="fish_search"
                                    placeholder="Search for fish species..." title="Fish common or scientific name">
-                            <input class="fishSearchButton" type="button" title="Search" value="">
+                            <button class="fishSearchButton" type="button" title="Search"></button>
                         </form>
                     </div>
                     <div class="fishTable" style="display:none;">
@@ -318,6 +318,15 @@
                     }, 1);
                     return false;
                 });
+
+                $('.searchForm').on('submit', function () {
+                    startLoad();
+                    setTimeout(function () {
+                        searchForFish()
+                    }, 1);
+                    return false;
+                });
+
                 $('#fish_weight').keyup(calculateFishLength);
                 $('#fish_length').keyup(calculateFishWeight);
             });
@@ -803,6 +812,7 @@
                     url: "/pisces/rest/api/v1/fish/properties/names",
                     data: fishrequest,
                     dataType: "json",
+                    contentType: "application/json; charset=utf-8",
                     crossDomain: true,
                     async: false,
                     success: function (data) {
