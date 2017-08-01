@@ -41,9 +41,9 @@
         border-style: solid;
         border-width: 1px;
         width: 33%;
-    {#        max-height: 450px;#} margin: 1px 1px;
+        margin: 1px 1px;
         max-height: 620px;
-    {#        padding: 10px 10px;#} padding: 1.3529em 1em;
+        padding: 1.3529em 1em;
     }
 
     input.fishSearchBox {
@@ -104,14 +104,6 @@
         width: 65%;
     }
 
-    {#    div.fishDetails p {#}
-    {#        background-color: #DBF1FF;#}
-    {#        padding: 0 5px;#}
-    {#        border-width: 1px;#}
-    {#        border-color: black;#}
-    {#        border-style: solid;#}
-    {#    }#}
-
     table.fishDetails {
         line-height: 12px;
         width: 100%;
@@ -124,6 +116,7 @@
     table.fishDetails col:nth-child(even) {
         background-color: white !important;
         width: 15%;
+        min-width: 50px;
     }
 
     table.fishDetails col:last-child {
@@ -151,14 +144,11 @@
     }
 
     {#    Loader    #}
-
     #loader {
         position: absolute;
         left: 50%;
         top: 85%;
         z-index: 999;
-        width: 150px;
-        height: 150px;
         margin: -75px 0 0 -75px;
         border: 16px solid #f3f3f3;
         border-radius: 50%;
@@ -174,7 +164,7 @@
         background-color: rgba(255, 255, 255, 0.5);
         z-index: 995;
         position: absolute;
-        height: 1000px;
+        height: 625px;
         width: 100%;
     }
 
@@ -195,37 +185,6 @@
             transform: rotate(360deg);
         }
     }
-
-    /* Add animation to "page content" */
-    {#    .animate-bottom {#}
-    {#        position: relative;#}
-    {#        -webkit-animation-name: animatebottom;#}
-    {#        -webkit-animation-duration: 1s;#}
-    {#        animation-name: animatebottom;#}
-    {#        animation-duration: 1s#}
-    {#    }#}
-    {##}
-    {#    @-webkit-keyframes animatebottom {#}
-    {#        from {#}
-    {#            bottom: -100px;#}
-    {#            opacity: 0#}
-    {#        }#}
-    {#        to {#}
-    {#            bottom: 0px;#}
-    {#            opacity: 1#}
-    {#        }#}
-    {#    }#}
-    {##}
-    {#    @keyframes animatebottom {#}
-    {#        from {#}
-    {#            bottom: -100px;#}
-    {#            opacity: 0#}
-    {#        }#}
-    {#        to {#}
-    {#            bottom: 0;#}
-    {#            opacity: 1#}
-    {#        }#}
-    {#    }#}
 
 </style>
 
@@ -299,7 +258,7 @@
                         </table>
                     </div>
                 </div>
-                <div id="focusDetails" tabindex="-1"></div>
+{#                <div id="focusDetails" tabindex="-1"></div>#}
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
                      style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
@@ -309,8 +268,8 @@
                                             type="text"
                                             id="fish_weight"
                                             title="Fish Weight" placeholder="Fish weight..."></div>
-                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length">Length
-                        (cm): </label><input style="margin: 0 10px; width:65%; padding-left: 3px; float: right;"
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length" style="margin-top: 3px;">Length
+                        (cm): </label><input style="margin: 3px 10px 0 10px; width:65%; padding-left: 3px; float: right;"
                                              type="text"
                                              id="fish_length"
                                              title="Fish Length" placeholder="Fish length..."></div>
@@ -359,7 +318,7 @@
                 $('#selectedFishTable').show();
                 $('#fish_weight_length').show();
 
-{#                searchFishHuc(details["species"][0]["speciesid"]);#}
+                {#                searchFishHuc(details["species"][0]["speciesid"]);#}
                 endLoad();
             }
 
@@ -387,12 +346,15 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-                console.log("highlighted hucs: " + hucs);
+                var hucList = data["species"].map(function (h) {
+                    return h["huc"];
+                });
+                console.log("highlighted hucs: " + hucList);
                 resetHUCLayer();
                 //  properties of highlighted HUC
                 var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
-                    $.each(hucs, function (index, value) {
+                    $.each(hucList, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE)
                             layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
                         if (value === layer.feature.properties.HUC_CODE)
@@ -679,71 +641,6 @@
                         return null;
                     }
                 });
-                {#                return {#}
-                {#                    "speciesid":#}
-                {#                        "14",#}
-                {#                    "species":#}
-                {#                        [#}
-                {#                            {#}
-                {#                                "speciesid": 14,#}
-                {#                                "genusid": 6,#}
-                {#                                "genus": "Alosa",#}
-                {#                                "species": "pseudoharengus",#}
-                {#                                "commonname": "alewife",#}
-                {#                                "group": "Clupeids",#}
-                {#                                "native": "Y",#}
-                {#                                "pfg_page": "148",#}
-                {#                                "sportfishing": "1",#}
-                {#                                "nongame": "0",#}
-                {#                                "subsis_fish": "1",#}
-                {#                                "pollut_tol": "",#}
-                {#                                "max_length": 37.5,#}
-                {#                                "mean_length": 10.8,#}
-                {#                                "mean_weight": 10.8,#}
-                {#                                "thinning": 0.569,#}
-                {#                                "thin_adj": 0,#}
-                {#                                "max_age": 6,#}
-                {#                                "w_l_a": 55.1,#}
-                {#                                "w_l_b": 0.312,#}
-                {#                                "l_w_c": 0.00000268,#}
-                {#                                "l_w_d": 3.2,#}
-                {#                                "regress": "0",#}
-                {#                                "rarity": 3,#}
-                {#                                "caves": "",#}
-                {#                                "springs": "",#}
-                {#                                "headwaters": "",#}
-                {#                                "creeks": "",#}
-                {#                                "small_riv": "",#}
-                {#                                "med_riv": "",#}
-                {#                                "lge_riv": "A",#}
-                {#                                "lk_imp_pnd": "A",#}
-                {#                                "swp_msh_by": "",#}
-                {#                                "coast_ocea": "A",#}
-                {#                                "riffles": "",#}
-                {#                                "run_flopool": "",#}
-                {#                                "pool_bckwtr": "A",#}
-                {#                                "benthic": "",#}
-                {#                                "surface": "",#}
-                {#                                "nrshre_litt": "",#}
-                {#                                "opnwtr_pelag": "A",#}
-                {#                                "mud_slt_det": "",#}
-                {#                                "sand": "",#}
-                {#                                "gravel": "",#}
-                {#                                "rck_rub_bol": "",#}
-                {#                                "vegatation": "",#}
-                {#                                "wdyd_brush": "",#}
-                {#                                "clearwater": "",#}
-                {#                                "turbidwater": "",#}
-                {#                                "warmwater": "",#}
-                {#                                "coolwater": "A",#}
-                {#                                "coldwater": "",#}
-                {#                                "lowlands_lgr": "",#}
-                {#                                "uplands_hgr": "",#}
-                {#                                "locat_notes": "",#}
-                {#                                "habit_notes": ""#}
-                {#                            }#}
-                {#                        ]#}
-                {#                };#}
             }
 
             function setFishDetails(details) {
@@ -872,6 +769,7 @@
                     url: "/pisces/rest/api/v1/fish/properties/names",
                     data: fishrequest,
                     crossDomain: true,
+                    async: false,
                     success: function (data) {
                         populateFishTable(data)
                     },
@@ -1013,124 +911,6 @@
             }
 
             function searchFishHuc(speciesID) {
-                {#                var testHUCS = {#}
-                {#                    "speciesid": "14",#}
-                {#                    "hucs": [#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01000000"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01010004"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01020005"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01030003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01040002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01050001"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01050002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01050003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01060001"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01060002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01060003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01070002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01070003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01080205"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01080207"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01090001"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01090002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01090003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01090004"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01090005"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100001"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100002"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100003"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100004"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100005"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "01100006"#}
-                {#                        },#}
-                {#                        {#}
-                {#                            "speciesid": 14,#}
-                {#                            "huc": "02010000"#}
-                {#                        }]#}
-                {#                };#}
-                {#                console.log ("speciesID: " + speciesID);#}
-                {#                var hucList = testHUCS["hucs"].map(function (h) {#}
-                {#                    return h["huc"];#}
-                {#                });#}
-                {#                selectHUCs(hucList);#}
-
                 $.ajax({
                     type: "GET",
                     url: "/pisces/rest/api/v1/hucs/fish/" + speciesID,
@@ -1138,10 +918,7 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
-                        var hucList = data["species"].map(function (h) {
-                            return h["huc"];
-                        });
-                        selectHUCs(hucList)
+                        selectHUCs(data)
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get huc list for fish:" + speciesID);
