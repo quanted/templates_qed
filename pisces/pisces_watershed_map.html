@@ -770,15 +770,13 @@
                 var fish = $('.fishSearchBox').val();
                 resetHUCLayer();
                 console.log(fish);
-                var fishrequest = [];
-                fishrequest.push({
-                    key: "search_string",
-                    value: fish
-                });
+                var fishrequest = JSON.stringify({"search_string": fish});
+                console.log(fishrequest);
                 $.ajax({
                     type: "POST",
                     url: "/pisces/rest/api/v1/fish/properties/names",
-                    data: fishrequest[0],
+                    data: fishrequest,
+                    dataType: "json",
                     crossDomain: true,
                     async: false,
                     success: function (data) {
