@@ -253,7 +253,7 @@
                 </div>
                 <div class="fishSearch">
                     <div>
-                        <form>
+                        <form action="javascript:fishSearch()">
                             <input class="fishSearchBox" type="text" name="fish_search"
                                    placeholder="Search for fish species..." title="Fish common or scientific name">
                             <input class="fishSearchButton" type="submit" title="Search" value="">
@@ -311,19 +311,27 @@
                     }, 1);
                 });
 
-                $('.fishSearchButton').on('click', function () {
-                    startLoad();
-                    setTimeout(function () {
-                        searchForFish()
-                    }, 1);
-                    return false;
-                });
+                {#                $('.fishSearchButton').on('click', function () {#}
+                {#                    startLoad();#}
+                {#                    setTimeout(function () {#}
+                {#                        searchForFish()#}
+                {#                    }, 1);#}
+                {#                    return false;#}
+                {#                });#}
                 $('#fish_weight').keyup(calculateFishLength);
                 $('#fish_length').keyup(calculateFishWeight);
             });
 
             $('#fish_weight_length').hide();
             $('.fishTable').closest('div').hide();
+
+            function fishSearch() {
+                startLoad();
+                setTimeout(function () {
+                    searchForFish()
+                }, 1);
+                return false;
+            }
 
             function setFishTable(e) {
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
