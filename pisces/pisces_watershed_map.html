@@ -253,10 +253,10 @@
                 </div>
                 <div class="fishSearch">
                     <div>
-                        <form action="" onsubmit="fishSearch();return false;">
+                        <form>
                             <input class="fishSearchBox" type="text" name="fish_search"
                                    placeholder="Search for fish species..." title="Fish common or scientific name">
-                            <input class="fishSearchButton" type="submit" title="Search" value="">
+                            <input class="fishSearchButton" type="button" title="Search" value="">
                         </form>
                     </div>
                     <div class="fishTable" style="display:none;">
@@ -311,27 +311,19 @@
                     }, 1);
                 });
 
-                {#                $('.fishSearchButton').on('click', function () {#}
-                {#                    startLoad();#}
-                {#                    setTimeout(function () {#}
-                {#                        searchForFish()#}
-                {#                    }, 1);#}
-                {#                    return false;#}
-                {#                });#}
+                $('.fishSearchButton').on('click', function () {
+                    startLoad();
+                    setTimeout(function () {
+                        searchForFish()
+                    }, 1);
+                    return false;
+                });
                 $('#fish_weight').keyup(calculateFishLength);
                 $('#fish_length').keyup(calculateFishWeight);
             });
 
             $('#fish_weight_length').hide();
             $('.fishTable').closest('div').hide();
-
-            function fishSearch() {
-                startLoad();
-                setTimeout(function () {
-                    searchForFish()
-                }, 1);
-                return false;
-            }
 
             function setFishTable(e) {
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
@@ -740,9 +732,9 @@
 
                 // tolerance
                 var tolerance = [];
-                if (details["pollut_tol"] !== "I") tolerance.push(" Intolerant");
-                if (details["pollut_tol"] !== "T") tolerance.push(" Tolerant");
-                if (details["pollut_tol"] !== "M") tolerance.push(" Mid-Tolerant");
+                if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
+                if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
+                if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
 
                 // use
                 var use = [];
