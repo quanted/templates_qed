@@ -130,6 +130,10 @@
         width: 45%;
     }
 
+    table.fishDetails > tr > td:nth-child(odd):hover, table.fishDetails > tr > td:nth-child(odd):hover + td {
+        background: #BFD2DE;
+    }
+
     .link_image {
         max-width: 25px;
         width: 100%;
@@ -143,7 +147,7 @@
 
     #fish_weight_length * label {
         float: left !important;
-        display: inline-block !important;
+    {#        display: inline-block !important;#} display: none;
     }
 
     div.dataTables_scrollBody {
@@ -358,6 +362,8 @@
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
                 console.log("highlighted hucs: " + hucs);
+                $('#fish_weight_length').hide();
+                $('.fishTable').closest('div').hide();
                 resetHUCLayer();
                 if (hucs.length > 1) {
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
@@ -370,7 +376,7 @@
                 huc8Layer.eachLayer(function (layer) {
                     $.each(hucs, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE)
-                            layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
+                            layer.setStyle({color: 'black', weight: 1, fillColor: '#02bfe7', fillOpacity: 0.6});
                         if (value === layer.feature.properties.HUC_CODE)
                             layerGroup.push(layer);
                         layer.bringToFront();
@@ -660,64 +666,65 @@
 
             function setFishDetails(details) {
                 //document.getElementById('focusDetails').focus();
-
+                $('#fish_length').val("");
+                $('#fish_width').val("");
                 var cName = capitalize_Words(details["commonname"]);
                 var sName = capitalize_Words(details["genus"] + " " + details["species"]);
                 var d = document.getElementById('selectedFishTable');
 
                 // biogeography
-                var native = (details["native"] === "Y") ? "Native" : "Non-Native";
+                var native = (details["native"] === "Y") ? "Native" : " Non-Native";
 
                 // gradient
                 var gradient = [];
-                if (details["lowlands_lgr"] === "A") gradient.push("Lowlands");
-                if (details["upland_hgr"] === "A") gradient.push("Uplands");
+                if (details["lowlands_lgr"] === "A") gradient.push(" Lowlands");
+                if (details["upland_hgr"] === "A") gradient.push(" Uplands");
 
                 // thermal
                 var thermal = [];
-                if (details["warmwater"] === "A") thermal.push("Warmwater");
-                if (details["coolwater"] === "A") thermal.push("Coolwater");
-                if (details["coldwater"] === "A") thermal.push("Coldwater");
+                if (details["warmwater"] === "A") thermal.push(" Warmwater");
+                if (details["coolwater"] === "A") thermal.push(" Coolwater");
+                if (details["coldwater"] === "A") thermal.push(" Coldwater");
 
                 // clarity
                 var clarity = [];
-                if (details["clearwater"] === "A") clarity.push("Clearwater");
-                if (details["turbidwater"] === "A") clarity.push("Turbidwater");
+                if (details["clearwater"] === "A") clarity.push(" Clearwater");
+                if (details["turbidwater"] === "A") clarity.push(" Turbidwater");
 
                 // system
                 var system = [];
-                if (details["caves"] === "A") system.push("Caves");
-                if (details["springs"] === "A") system.push("Springs");
-                if (details["headwaters"] === "A") system.push("Headwaters");
-                if (details["creeks"] === "A") system.push("Creeks");
-                if (details["small_riv"] === "A") system.push("Small Rivers");
-                if (details["med_riv"] === "A") system.push("Medium Rivers");
-                if (details["lge_riv"] === "A") system.push("Large Rivers");
-                if (details["lk_imp_pnd"] === "A") system.push("Lakes/Impoundments/Ponds");
-                if (details["swp_msh_by"] === "A") system.push("Swamps/Marshes/Bayous");
-                if (details["coast_ocea"] === "A") system.push("Coasts/Oceans");
-                if (details["riffles"] === "A") system.push("Riffles");
+                if (details["caves"] === "A") system.push(" Caves");
+                if (details["springs"] === "A") system.push(" Springs");
+                if (details["headwaters"] === "A") system.push(" Headwaters");
+                if (details["creeks"] === "A") system.push(" Creeks");
+                if (details["small_riv"] === "A") system.push(" Small Rivers");
+                if (details["med_riv"] === "A") system.push(" Medium Rivers");
+                if (details["lge_riv"] === "A") system.push(" Large Rivers");
+                if (details["lk_imp_pnd"] === "A") system.push(" Lakes/Impoundments/Ponds");
+                if (details["swp_msh_by"] === "A") system.push(" Swamps/Marshes/Bayous");
+                if (details["coast_ocea"] === "A") system.push(" Coasts/Oceans");
+                if (details["riffles"] === "A") system.push(" Riffles");
 
                 // lotic habitat
                 var lotic = [];
-                if (details["run_flopool"] === "A") lotic.push("Running/Flow Pools");
-                if (details["pool_bckwtr"] === "A") lotic.push("Pools/Backwaters");
+                if (details["run_flopool"] === "A") lotic.push(" Running/Flow Pools");
+                if (details["pool_bckwtr"] === "A") lotic.push(" Pools/Backwaters");
 
                 // water column
                 var column = [];
-                if (details["benthic"] === "A") column.push("Benthic");
-                if (details["surface"] === "A") column.push("Surface");
-                if (details["nrshre_litt"] === "A") column.push("Nearshore/???");
-                if (details["opnwtr_pelag"] === "A") column.push("Openwater/???");
+                if (details["benthic"] === "A") column.push(" Benthic");
+                if (details["surface"] === "A") column.push(" Surface");
+                if (details["nrshre_litt"] === "A") column.push(" Nearshore/???");
+                if (details["opnwtr_pelag"] === "A") column.push(" Openwater/???");
 
                 // substrate
                 var substrate = [];
-                if (details["mud_slt_det"] === "A") substrate.push("Mud/Silt/Detritus");
-                if (details["sand"] === "A") substrate.push("Sand");
-                if (details["gravel"] === "A") substrate.push("Gravel");
-                if (details["rck_rub_bol"] === "A") substrate.push("Rocks/Rubble/Boulders");
-                if (details["vegatation"] === "A") substrate.push("Vegetation");
-                if (details["wdyd_brush"] === "A") substrate.push("???/Brush");
+                if (details["mud_slt_det"] === "A") substrate.push(" Mud/Silt/Detritus");
+                if (details["sand"] === "A") substrate.push(" Sand");
+                if (details["gravel"] === "A") substrate.push(" Gravel");
+                if (details["rck_rub_bol"] === "A") substrate.push(" Rocks/Rubble/Boulders");
+                if (details["vegatation"] === "A") substrate.push(" Vegetation");
+                if (details["wdyd_brush"] === "A") substrate.push(" ???/Brush");
 
                 // links
                 var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
@@ -726,13 +733,13 @@
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
                     '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
-                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"] + ' </td><td>System</td><td>' + system.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"] + '</td><td>Water Column</td><td>' + column.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString().replace(',', ', ') + '</td></tr>' +
-                    '<tr><td>C (L=C*W<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString().replace(',', ', ') + '</td></tr>' +
+                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"] + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"] + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                    '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>C (L=C*W<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +
                     '<tr><td>D (L=C*W<sup>D</sup>)</td><td>' + details["l_w_d"] + ' </td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
                     '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr></table>' +
                     '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
@@ -747,9 +754,6 @@
             }
 
             function calculateFishWeight() {
-                // Get coefficients for selected fish.
-                {#                var A = 0.5;#}
-                {#                var B = 0.9;#}
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
                     var length = a * Math.pow(L, b);
@@ -761,9 +765,6 @@
             }
 
             function calculateFishLength() {
-                // Get coefficients for selected fish.
-                {#                var A = 0.3;#}
-                {#                var B = 0.4;#}
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
                     var weight = c * Math.pow(W, d);
