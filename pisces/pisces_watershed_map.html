@@ -478,7 +478,7 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/hucs/" + huc8,
                     crossDomain: true,
-                    async: false,
+                    {#                    async: false,#}
                     success: function (data) {
                         document.getElementById('fish_search_title').innerHTML = "Fish in selected HUC 8";
                         {#                        console.log(data);#}
@@ -658,7 +658,7 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/properties/" + fish["speciesid"].toString(),
                     crossDomain: true,
-                    async: false,
+                    {#                    async: false,#}
                     success: function (data) {
                         {#                        console.log(data);#}
                         a = data["species"][0]["w_l_a"];
@@ -814,21 +814,24 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     crossDomain: true,
-                    async: false,
+                    {#                    async: false,#}
                     success: function (data) {
                         document.getElementById('fish_search_title').innerHTML = "Search results for: " + fish;
-                        {#                        console.log(data);#}
-                        populateFishTable(data)
+                        populateFishTable(data);
+                        $('#selectedFishTable').hide();
+                        $('#fish_weight_length').hide();
+                        endLoad();
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get fish data from search: " + fish);
                         $('#error_msg').html("Error: failed to query for provided string.");
+                        $('#selectedFishTable').hide();
+                        $('#fish_weight_length').hide();
+                        endLoad();
                         return null;
                     }
                 });
-                $('#selectedFishTable').hide();
-                $('#fish_weight_length').hide();
-                endLoad();
+
             }
 
             function searchFishHuc(speciesID) {
@@ -862,6 +865,39 @@
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("loader_background").style.display = "none";
             }
+
+            // CSRF Handling
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            // End of CSRF handling
 
         </script>
 
