@@ -43,9 +43,9 @@
 {#        <div class="node node-page clearfix view-mode-full">#}
           <div class="model_inputs">
           {% if SUBMODEL == NULL %}
-              <form method="post" action="/hms/{{ MODEL }}/output/" name="input_table">
+              <form method="post" action="/hms/{{ MODEL }}/output/" name="input_table">{% csrf_token %}
           {% else %}
-              <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
+              <form id="inputOptions" method="post"  enctype="multipart/form-data" action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">{% csrf_token %}
           {% endif %}
               <table class="nostripe input_table">
               <thead>
