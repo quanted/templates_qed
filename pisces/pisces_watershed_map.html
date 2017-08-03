@@ -815,6 +815,8 @@
                     contentType: "application/json; charset=utf-8",
                     crossDomain: true,
                     beforeSend: function (xhr, settings) {
+                        console.log("Method Type: " + !csrfSafeMethod(settings.type));
+                        console.log("this.crossDomain");
                         {#                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {#}
                         xhr.setRequestHeader("X-CSRFToken", csrftoken);
                         {#                        }#}
