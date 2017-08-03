@@ -260,7 +260,7 @@
                         </form>
                     </div>
                     <div class="fishTable" style="display:none;">
-                        <h5 style="padding: 0 0 0 15%; font-size: smaller; float:left;" align="center"
+                        <h5 style="font-size: 14px; float:left; position:relative" align="center"
                             id="fish_search_title">Fish in selected
                             HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
@@ -276,7 +276,7 @@
                 {#                <div id="focusDetails" tabindex="-1"></div>#}
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
-                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
+                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px; display: none;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
                     <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
                         (g): </label><input style="margin: 0 10px; width:65%; padding-left: 3px; float: right;"
@@ -303,6 +303,7 @@
             var d = 0;
 
             $(document).ready(function () {
+                // On click event for fish list
                 $('#fishTable').on('click', 'tr', function () {
                     startLoad();
                     var e = this;
@@ -310,7 +311,7 @@
                         setFishTable(e);
                     }, 1);
                 });
-
+                // on click event for fish search button
                 $('.fishSearchButton').on('click', function () {
                     startLoad();
                     setTimeout(function () {
@@ -318,7 +319,7 @@
                     }, 1);
                     return false;
                 });
-
+                // on submit event for fish search button
                 $('.searchForm').on('submit', function () {
                     startLoad();
                     setTimeout(function () {
@@ -338,14 +339,10 @@
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
                 var fish = $('#fishTable').DataTable().row(e).data();
                 getFishDetails(fish);
-                {#                setFishDetails(details["species"][0]);#}
 
                 $('#fishTable').DataTable().row(e).nodes().to$().addClass('selected_fish');
                 $('#fish_weight_length').show();
                 $('#selectedFishTable').show();
-                $('#fish_weight_length').show();
-
-                {#                searchFishHuc(details["species"][0]["speciesid"]);#}
                 endLoad();
             }
 
@@ -373,7 +370,6 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-                console.log("highlighted hucs: " + hucs);
                 $('#fish_weight_length').hide();
                 $('#selectedFishTable').hide();
                 resetHUCLayer();
@@ -401,8 +397,6 @@
                 huc8Layer.eachLayer(function (layer) {
                     huc8Layer.resetStyle(layer);
                 });
-                {#                document.getElementsByClassName('#selectedFishTable').innerHTML = "";#}
-
             }
 
             var currentHUC = null;
@@ -415,7 +409,6 @@
                         var hucs = [];
                         hucs.push(feature.properties.HUC_CODE);
                         selectHUCs(hucs);
-                        //var data = getHUCFishData(feature.properties.HUC_CODE);
                         getFishDataonMapClick(feature.properties.HUC_CODE);
                     }
                     else {
@@ -425,7 +418,6 @@
                         resetHUCLayer();
                         this.currentHUC = null;
                     }
-
                 });
             }
 
@@ -469,8 +461,7 @@
             // -------- FISH Functions ---------- //
 
             function getFishDataonMapClick(huc8) {
-                var data = getFishData(huc8);
-                //var data = getTESTFishData();
+                getFishData(huc8);
             }
 
             function getFishData(huc8) {
@@ -478,10 +469,8 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/hucs/" + huc8,
                     crossDomain: true,
-                    {#                    async: false,#}
                     success: function (data) {
                         document.getElementById('fish_search_title').innerHTML = "Fish in selected HUC 8";
-                        {#                        console.log(data);#}
                         populateFishTable(data);
                     },
                     error: function (jqXHR, status) {
@@ -490,117 +479,6 @@
                         return null;
                     }
                 });
-            }
-
-            function getTESTFishData() {
-                var testFishData = {
-                    "huc": "04030101",
-                    "species": [
-                        {
-                            "speciesid": 14,
-                            "common_name": "alewife",
-                            "scientific_name": "pseudoharengus",
-                            "genus": "Alosa"
-                        },
-                        {
-                            "speciesid": 19,
-                            "common_name": "rock bass",
-                            "scientific_name": "rupestris",
-                            "genus": "Ambloplites"
-                        },
-                        {
-                            "speciesid": 24,
-                            "common_name": "black bullhead",
-                            "scientific_name": "melas",
-                            "genus": "Ameiurus"
-                        },
-                        {
-                            "speciesid": 25,
-                            "common_name": "yellow bullhead",
-                            "scientific_name": "natalis",
-                            "genus": "Ameiurus"
-                        },
-                        {
-                            "speciesid": 26,
-                            "common_name": "brown bullhead",
-                            "scientific_name": "nebulosus",
-                            "genus": "Ameiurus"
-                        },
-                        {
-                            "speciesid": 39,
-                            "common_name": "american eel",
-                            "scientific_name": "rostrata",
-                            "genus": "Anguilla"
-                        },
-                        {
-                            "speciesid": 51,
-                            "common_name": "central stoneroller",
-                            "scientific_name": "anomalum",
-                            "genus": "Campostoma"
-                        },
-                        {
-                            "speciesid": 52,
-                            "common_name": "largescale stoneroller",
-                            "scientific_name": "oligolepis",
-                            "genus": "Campostoma"
-                        },
-                        {
-                            "speciesid": 56,
-                            "common_name": "goldfish",
-                            "scientific_name": "auratus",
-                            "genus": "Carassius"
-                        },
-                        {
-                            "speciesid": 64,
-                            "common_name": "longnose sucker",
-                            "scientific_name": "catostomus",
-                            "genus": "Catostomus"
-                        },
-                        {
-                            "speciesid": 67,
-                            "common_name": "white sucker",
-                            "scientific_name": "commersonii",
-                            "genus": "Catostomus"
-                        },
-                        {
-                            "speciesid": 97,
-                            "common_name": "northern redbelly dace",
-                            "scientific_name": "eos",
-                            "genus": "Chrosomus"
-                        },
-                        {
-                            "speciesid": 98,
-                            "common_name": "southern redbelly dace",
-                            "scientific_name": "erythrogaster",
-                            "genus": "Chrosomus"
-                        },
-                        {
-                            "speciesid": 99,
-                            "common_name": "finescale dace",
-                            "scientific_name": "neogaeus",
-                            "genus": "Chrosomus"
-                        },
-                        {
-                            "speciesid": 109,
-                            "common_name": "redside dace",
-                            "scientific_name": "elongatus",
-                            "genus": "Clinostomus"
-                        },
-                        {
-                            "speciesid": 111,
-                            "common_name": "cisco",
-                            "scientific_name": "artedi",
-                            "genus": "Coregonus"
-                        },
-                        {
-                            "speciesid": 113,
-                            "common_name": "lake whitefish",
-                            "scientific_name": "clupeaformis",
-                            "genus": "Coregonus"
-                        }
-                    ]
-                };
-                populateFishTable(testFishData);
             }
 
             function populateFishTable(data) {
@@ -658,15 +536,15 @@
                     type: "GET",
                     url: "/pisces/rest/api/v1/fish/properties/" + fish["speciesid"].toString(),
                     crossDomain: true,
-                    {#                    async: false,#}
                     success: function (data) {
-                        {#                        console.log(data);#}
                         a = data["species"][0]["w_l_a"];
                         b = data["species"][0]["w_l_b"];
                         c = data["species"][0]["l_w_c"];
                         d = data["species"][0]["l_w_d"];
                         setFishDetails(data["species"][0]);
                         searchFishHuc(data["species"][0]["speciesid"]);
+                        $('#fish_weight_length').show();
+                        $('#selectedFishTable').show();
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get fish detail for speciesid: " + fish["speciesid"]);
@@ -677,7 +555,6 @@
             }
 
             function setFishDetails(details) {
-                //document.getElementById('focusDetails').focus();
                 $('#fish_length').val("");
                 $('#fish_width').val("");
                 var cName = capitalize_Words(details["commonname"]);
@@ -804,7 +681,6 @@
             function searchForFish() {
                 var fish = $('.fishSearchBox').val();
                 resetHUCLayer();
-                {#                console.log(fish);#}
                 var fishrequest = JSON.stringify({"search_string": fish});
                 console.log(fishrequest);
                 $.ajax({
@@ -817,25 +693,23 @@
                     beforeSend: function (xhr, settings) {
                         console.log("Method Type: " + !csrfSafeMethod(settings.type));
                         console.log("this.crossDomain");
-                        {#                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {#}
+                        {# if (!csrfSafeMethod(settings.type) && !this.crossDomain) {#}
                         xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                        {#                        }#}
+                        {# } #}
                     },
-                    {#                    async: false,#}
                     success: function (data) {
                         document.getElementById('fish_search_title').innerHTML = "Search results for: " + fish;
                         populateFishTable(data);
-                        $('#selectedFishTable').hide();
-                        $('#fish_weight_length').hide();
-                        endLoad();
                     },
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get fish data from search: " + fish);
                         $('#error_msg').html("Error: failed to query for provided string.");
+                        return null;
+                    },
+                    complete: function (jgXHR, status) {
                         $('#selectedFishTable').hide();
                         $('#fish_weight_length').hide();
                         endLoad();
-                        return null;
                     }
                 });
 
@@ -845,11 +719,9 @@
                 $.ajax({
                     type: "GET",
                     url: "/pisces/rest/api/v1/hucs/fish/" + speciesID,
-                    {#                    data: speciesID,#}
                     crossDomain: true,
                     async: false,
                     success: function (data) {
-                        {#                        console.log(data);#}
                         var hucs = data["hucs"].map(function (h) {
                             return h["huc"];
                         });
@@ -880,7 +752,6 @@
                     var cookies = document.cookie.split(';');
                     for (var i = 0; i < cookies.length; i++) {
                         var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
                         if (cookie.substring(0, name.length + 1) === (name + '=')) {
                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                             break;
@@ -897,6 +768,7 @@
                 return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
             }
 
+            // NOT BEING USED, token being set directly in ajax POST function in searchForFish()
             $.ajaxSetup({
                 beforeSend: function (xhr, settings) {
                     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
