@@ -101,33 +101,34 @@
             });
             var chart;
             if (columnNames.length === 2) {
-                {#                chart = c3.generate({#}
-                {#                    bindto: '#compareChart',#}
-                {#                    data: {#}
-                {#                        x: columnNames[1],#}
-                {#                        columns: [#}
-                {#                            data[0],#}
-                {#                            data[1]#}
-                {#                            ]#}
-                {#                    },#}
-                {#                    axis:{#}
-                {#                        x:{#}
-                {#                            type: 'timeseries',#}
-                {#                            tick: {#}
-                {#                                format: '%Y-%m-%d'#}
-                {#                            }#}
-                {#                        },#}
-                {#                        y:{#}
-                {#                            label:{#}
-                {#                                text: "(mm)",#}
-                {#                                position: 'outer-middle'#}
-                {#                            }#}
-                {#                        }#}
-                {#                    },#}
-                {#                    subchart: {#}
-                {#                        show: true#}
-                {#                    }#}
-                {#                });#}
+                $("#chartContainerTop").show();
+                cart = c3.generate({
+                    bindto: '#compareChart',
+                    data: {
+                        x: columnNames[0],
+                        columns: [
+                            data[0],
+                            data[1],
+                        ]
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%Y-%m-%d'
+                            }
+                        },
+                        y: {
+                            label: {
+                                text: "(mm)",
+                                position: 'outer-middle'
+                            }
+                        }
+                    },
+                    subchart: {
+                        show: true
+                    }
+                });
             }
             else {
                 $("#chartContainerTop").show();
