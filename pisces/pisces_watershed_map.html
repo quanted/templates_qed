@@ -310,6 +310,7 @@
                     setTimeout(function () {
                         setFishTable(e);
                     }, 1);
+                    return false;
                 });
                 // on click event for fish search button
                 $('.fishSearchButton').on('click', function () {
@@ -343,7 +344,7 @@
                 $('#fishTable').DataTable().row(e).nodes().to$().addClass('selected_fish');
                 $('#fish_weight_length').show();
                 $('#selectedFishTable').show();
-                endLoad();
+
             }
 
             //style HUC 8 polygon
@@ -731,6 +732,9 @@
                         console.log("ERROR: failed to get huc list for fish:" + speciesID);
                         $('#error_msg').html("Error: failed to get huc list for the specified fish.");
                         return null;
+                    },
+                    complete: function(jqXHR, status){
+                        endLoad();
                     }
                 });
             }
