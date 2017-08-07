@@ -231,10 +231,8 @@
             position: relative;
             width: 50%;
             height: 24px;
-        {#            margin: 0px 0px 10px 5%;#}
-            float: left;
-{#            display: block;#}
-            -webkit-user-select: none;
+        {#            margin: 0px 0px 10px 5%;#} float: left;
+        {#            display: block;#} -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
@@ -369,14 +367,14 @@
             content: "Display Calculator";
             background-color: #86C1FF;
             text-align: center;
-            color: #FFFFFF;
+            color: black;
         }
 
         .huc_calc_toggle-inner:after {
             content: "Hide Calculator";
             background-color: #EEEEEE;
             text-align: center;
-            color: #999999;
+            color: black;
         }
 
         .huc_calc_toggle-switch {
@@ -446,7 +444,8 @@
                 selectHUCs(this.value);
             });
 
-            $('#accordion').click(expandFilter());
+            $('#accordion').on('click', expandFilter());
+            expandFilter();
 
             $(document).on("click", ".filterButton", (function (event) {
                 var input = $(this).closest('div');
@@ -491,28 +490,47 @@
             });
 
             $('#in_huc_calc_toggle').on('click', function () {
-                var button = $(this).closest('div');
-                if (!button[0].classList.contains("calculator")) {
-                    button.removeClass("fishHucTable");
-                    button.addClass("calculator");
-                    document.getElementById('fish_assemblage_estimator').style.float = 'left';
-                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 5px 0px 55px';
-                    $('#hucFish').closest('div').hide();
-                    $('#abundance_calc').closest('div').show();
-                    // either make new call to server for detailed values or change columns used to populate table.
-                }
-                else {
-                    button.removeClass("calculator");
-                    button.addClass("fishHucTable");
-                    document.getElementById('fish_assemblage_estimator').style.float = 'right';
-                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 55px 0px 5px';
-                    $('#abundance_calc').closest('div').hide();
-                    $('#hucFish').closest('div').show();
-                    // either make new call to server for rounded values or change columns used to populate table.
-                }
+                setTimeout(toggleCalculator(this), 1);
+            });
+
+            $('#biomass_weight').on('click', function () {
+                document.getElementById('biomass_field').placeholder = "biomass in (g)";
+            });
+
+            $('#biomass_count').on('click', function () {
+                document.getElementById('biomass_field').placeholder = "fish count";
             });
 
         });
+
+        function toggleCalculator(e) {
+            var button = $(e).closest('div');
+            if (!button[0].classList.contains("calculator")) {
+                button.removeClass("fishHucTable");
+                button.addClass("calculator");
+                document.getElementById('fish_assemblage_estimator').style.float = 'left';
+                document.getElementById('fish_assemblage_estimator').style.margin = '0px 5px 0px 55px';
+
+                $('#hucFish').closest('div').hide();
+                $('#abundance_calc').closest('div').show();
+                // either make new call to server for detailed values or change columns used to populate table.
+            }
+            else {
+                button.removeClass("calculator");
+                button.addClass("fishHucTable");
+                document.getElementById('fish_assemblage_estimator').style.float = 'right';
+                document.getElementById('fish_assemblage_estimator').style.margin = '0px 55px 0px 5px';
+
+                $('#abundance_calc').closest('div').hide();
+                $('#hucFish').closest('div').show();
+                // either make new call to server for rounded values or change columns used to populate table.
+            }
+        }
+
+        function resetFilters(){
+            $("#assemblage_filters");
+            // Iterate over each filter and if hasClass(filtering) remove it and revert all values back to ""
+        }
 
         function updateFilters(input) {
             var fishTable = $('#fishTable').DataTable();
@@ -531,7 +549,13 @@
                 var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
                 filters.map(function (index) {
                     var filterName = filters[index].firstElementChild.name.split('_');
-                    var notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    var notInTable;
+                    if (filterName[0] === "rarity"){
+                        notInTable = filterRarity(Number(filterName[1]));
+                    }
+                    else {
+                        notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    }
                     for (var i = 0; i < notInTable.length; i++) {
                         var v = notInTable[i];
                         if (inTable.indexOf(v) !== -1) {
@@ -548,6 +572,26 @@
                 });
                 populateFilteredFishTable(filterData);
             }
+        }
+
+        function filterRarity(columnN){
+            var filteredTable = $('#filteredFishTable').DataTable();
+            var rarityRange = $('#rarity_value').val().split(' - ');
+            var min = parseInt(rarityRange[0]);
+            var max = parseInt(rarityRange[1]);
+            var notInTable = [];
+            var filterTable = filteredTable.column(columnN).data().filter(function(value, index){
+                if((value >= min && value <= max) || value === null || isNaN(value)){
+                    return true;
+                }
+                else {
+                    if (notInTable.indexOf(index) === -1) {
+                        notInTable.push(index);
+                    }
+                    return false;
+                }
+            });
+            return notInTable;
         }
 
         function filterDataTable(minColumn, maxColumn, compareValueName) {
@@ -600,6 +644,7 @@
             $('#envelope_toggle').closest('div').show();
             $('#huc_calc_toggle').closest('div').show();
             getStreamData(e.latlng.lat, e.latlng.lng);
+            resetFilters();
             //getFishData();
             getTESTFishData();
         }
@@ -1402,44 +1447,6 @@
         }
 
     </script>
-    <script>
-
-        {#        $(function () {#}
-        {#            $("#rarity_range").slider({#}
-        {#                range: true,#}
-        {#                min: 1,#}
-        {#                max: 10,#}
-        {#                values: [1, 10],#}
-        {#                slide: function (event, ui) {#}
-        {#                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);#}
-        {#                }#}
-        {#            });#}
-        {#            $("#rarity_value").val($("#rarity_range").slider("values", 0) +#}
-        {#                " - " + $("#rarity_range").slider("values", 1));#}
-        {##}
-        {#        });#}
-        {##}
-        {# Accordion JS #}
-        {##}
-        {#        function expandFilter() {#}
-        {#            var acc = document.getElementsByClassName("accordion");#}
-        {#            var i;#}
-        {##}
-        {#            for (i = 0; i < acc.length; i++) {#}
-        {#                acc[i].onclick = function () {#}
-        {#                    this.classList.toggle("active");#}
-        {#                    var panel = this.nextElementSibling;#}
-        {#                    if (panel.style.maxHeight) {#}
-        {#                        panel.style.maxHeight = null;#}
-        {#                    } else {#}
-        {#                        panel.style.maxHeight = panel.scrollHeight + "px";#}
-        {#                    }#}
-        {#                }#}
-        {#            }#}
-        {#            return false;#}
-        {#        }#}
-
-    </script>
 </head>
 <body>
 <div class="panel-display panel-1col clearfix">
@@ -1464,7 +1471,7 @@
                     </div>
                 </div>
                 <br class="row" id="streamData">
-                <div id="fish_filters">
+                <div id="fish_filters" style="display:none;">
                     <button class="accordion">Fish Assemblage Filters</button>
                     <div class="panel" id="assemblage_filters" style="overflow: hidden;">
 
@@ -1529,16 +1536,17 @@
                     </div>
                 </div>
                 <br>
-                <div class="envelope_toggle detailed" id="envelope_toggle">
+                <div class="envelope_toggle detailed" id="envelope_toggle" style="display:none;">
                     <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"
                            id="myenvelope_toggle"
                            checked>
-                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type" style="display:none;">
+                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type"
+                           style="display:none;">
                         <span class="envelope_toggle-inner"></span>
                         {#                        <span class="envelope_toggle-switch"></span>#}
                     </label>
                 </div>
-                <div class="huc_calc_toggle huc_table" id="huc_calc_toggle">
+                <div class="huc_calc_toggle huc_table" id="huc_calc_toggle" style="display:none;">
                     <input type="checkbox" name="huc_calc_toggle" class="huc_calc_toggle-checkbox"
                            id="in_huc_calc_toggle"
                            checked>
@@ -1549,7 +1557,7 @@
                 </div>
                 <div class="col-md-12">
                     <div id="error_msg"></div>
-                    <div id="hucFish">
+                    <div id="hucFish" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
@@ -1582,7 +1590,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div id="abundance_calc">
+                    <div id="abundance_calc" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
                         <table id="calc_table" class="display compact hover" cellspacing="0"
                                style="float: left;width:95%; margin: 0 3px;">
@@ -1627,7 +1635,7 @@
                         </div>
                     </div>
                     <div id="fish_assemblage_estimator"
-                         style="width:45%; margin:0px 55px 0px 5px; display: inline-block; float: right;">
+                         style="width:45%; margin:0px 55px 0px 5px; display: none; float: right; left:0;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;">

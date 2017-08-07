@@ -5,15 +5,16 @@
             <div id="statisticsDiv">
                 <h4>{{ TITLE }} Chart</h4>
                 <div>
-                    <div class="chartContainer" id="chartContainerTop" style="display:none;overflow:hidden;margin:10px">
+                    <div class="chartContainer" id="chartContainerTop" style="display:none;margin:10px">
                         <div class="chart" id="compareChart"></div>
+                        <button style="width: 90px;font-size: 9px;height: 35px;" type="button" title="Save chart as png image" name="Save as Image" id="saveChart">Save as Image</button>
                     </div>
                 </div>
             </div>
             <div id="metaTableDiv" style="margin-top: 15px;">
                 <h4> {{ TITLE }} Metadata</h4>
                 <div style="padding:25px !important;">
-                    <table id="metaTable" class="display table-style" style="width:100%">
+                    <table id="metaTable" class="display table-style" style="width:100%;">
                         <thead>
                         <tr>
                             <th>Metadata</th>
