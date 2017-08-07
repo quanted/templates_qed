@@ -24,7 +24,7 @@
     <style>
         #map {
             width: 100%;
-            height: 450px;
+            height: 500px;
         }
 
         #streamData {
@@ -69,6 +69,23 @@
             border: 0 !important;
             border-bottom: solid;
             border-bottom-width: 1px;
+        }
+
+        #calc_table tr *, td * {
+            border: 0 !important;
+            text-align: center !important;
+        }
+
+        #calc_table th * {
+            border: 0 !important;
+            border-bottom: solid;
+            border-bottom-width: 1px;
+        }
+
+        #calc_table_wrapper {
+            display: inline-block;
+            width: 50%;
+            float: left;
         }
 
         .box > .pane-content {
@@ -212,8 +229,11 @@
         {# flipswitch css #}
         .envelope_toggle {
             position: relative;
-            width: 100px;
+            width: 50%;
             height: 24px;
+        {#            margin: 0px 0px 10px 5%;#}
+            float: left;
+{#            display: block;#}
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -227,8 +247,11 @@
             display: block;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid #75A6D9;
-            border-radius: 6px;
+        {#            border: 2px solid #75A6D9;#} border-radius: 6px;
+            width: 120px;
+            box-shadow: 0px 2px 2px black;
+            float: right;
+            margin-right: 10px;
         }
 
         .envelope_toggle-inner {
@@ -253,18 +276,17 @@
         }
 
         .envelope_toggle-inner:before {
-            content: "Detailed";
-            padding-left: 10px;
+            content: "Detailed Envelope";
             background-color: #86C1FF;
+            text-align: center;
             color: #FFFFFF;
         }
 
         .envelope_toggle-inner:after {
-            content: "Rounded";
-            padding-right: 10px;
-            background-color: #EEEEEE;
+            content: "Rounded Envelope";
+        {#            padding-right: 10px;#} background-color: #EEEEEE;
+            text-align: center;
             color: #999999;
-            text-align: right;
         }
 
         .envelope_toggle-switch {
@@ -289,21 +311,136 @@
             right: 0px;
         }
 
+        input[type="checkbox"]:checked + label::before {
+            display: none;
+        }
+
+        input[type="checkbox"] + label::before {
+            display: none;
+        }
+
+        .huc_calc_toggle {
+            position: relative;
+            width: 50%;
+            height: 24px;
+        {#            margin: 0px 0px 10px 5%;#} float: left;
+            display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .huc_calc_toggle-checkbox, .huc_calc_toggle-checkbox {
+            display: none;
+        }
+
+        .huc_calc_toggle-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 6px;
+            width: 120px;
+            box-shadow: 0px 2px 2px black;
+            margin-left: 10px;
+        }
+
+        .huc_calc_toggle-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .huc_calc_toggle-inner:before, .huc_calc_toggle-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 24px;
+            padding: 0;
+            line-height: 24px;
+            font-size: 12px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .huc_calc_toggle-inner:before {
+            content: "Display Calculator";
+            background-color: #86C1FF;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .huc_calc_toggle-inner:after {
+            content: "Hide Calculator";
+            background-color: #EEEEEE;
+            text-align: center;
+            color: #999999;
+        }
+
+        .huc_calc_toggle-switch {
+            display: block;
+            width: 13px;
+            margin: 5.5px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 72px;
+            border: 2px solid #75A6D9;
+            border-radius: 6px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .huc_calc_toggle-checkbox:checked + .huc_calc_toggle-label .huc_calc_toggle-inner {
+            margin-left: 0;
+        }
+
+        .huc_calc_toggle-checkbox:checked + .huc_calc_toggle-label .huc_calc_toggle-switch {
+            right: 0px;
+        }
+
+        div.ui-slider-horizontal {
+            height: 0.3em !important;
+        }
+
+        span.ui-slider-handle {
+            width: 0.8em !important;
+            height: 0.8em !important;
+        }
+
+        div #hucFish {
+            width: 45%;
+            margin: 0 5px 0 55px;;
+            display: inline-block;
+            float: left;
+        }
+
+        div #abundance_calc {
+            width: 45%;
+            margin: 0 55px 0 5px;;
+            display: inline-block;
+            float: right;
+        }
+
+        input.biomass_reset_button {
+            padding: 8px 16px !important;
+            font-size: 14px;
+        }
+
     </style>
 
     <script>
 
         $(document).ready(function () {
 
-            {#            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {#}
-            {#                var depthValue = parseFloat(document.getElementsByClassName('depth_value')[0].value);#}
-            {#                return table.columns(6).search(depthValue).draw();#}
-            {#            });#}
-
             $('#fishTable').closest('div').hide();
             $('#filteredFishTable').closest('div').hide();
             $('#abundance_calc').closest('div').hide();
             $('#fish_filters').closest('div').hide();
+            $('#envelope_toggle').closest('div').hide();
+            $('#huc_calc_toggle').closest('div').hide();
 
             $('#selectHUC').on('change', function () {
                 selectHUCs(this.value);
@@ -338,6 +475,43 @@
                     tr.addClass('shown');
                 }
             });
+
+            $('#myenvelope_toggle').on('click', function () {
+                var button = $(this).closest('div');
+                if (!button[0].classList.contains("detailed")) {
+                    button.removeClass("rounded");
+                    button.addClass("detailed");
+                    // either make new call to server for detailed values or change columns used to populate table.
+                }
+                else {
+                    button.removeClass("detailed");
+                    button.addClass("rounded");
+                    // either make new call to server for rounded values or change columns used to populate table.
+                }
+            });
+
+            $('#in_huc_calc_toggle').on('click', function () {
+                var button = $(this).closest('div');
+                if (!button[0].classList.contains("calculator")) {
+                    button.removeClass("fishHucTable");
+                    button.addClass("calculator");
+                    document.getElementById('fish_assemblage_estimator').style.float = 'left';
+                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 5px 0px 55px';
+                    $('#hucFish').closest('div').hide();
+                    $('#abundance_calc').closest('div').show();
+                    // either make new call to server for detailed values or change columns used to populate table.
+                }
+                else {
+                    button.removeClass("calculator");
+                    button.addClass("fishHucTable");
+                    document.getElementById('fish_assemblage_estimator').style.float = 'right';
+                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 55px 0px 5px';
+                    $('#abundance_calc').closest('div').hide();
+                    $('#hucFish').closest('div').show();
+                    // either make new call to server for rounded values or change columns used to populate table.
+                }
+            });
+
         });
 
         function updateFilters(input) {
@@ -423,6 +597,8 @@
         function onStreamMapClick(e) {
             document.getElementById('table-focus').focus();
             $('#fish_filters').closest('div').show();
+            $('#envelope_toggle').closest('div').show();
+            $('#huc_calc_toggle').closest('div').show();
             getStreamData(e.latlng.lat, e.latlng.lng);
             //getFishData();
             getTESTFishData();
@@ -466,6 +642,8 @@
         }
 
         function getFishData() {
+            var latitude = $('#latVal').html(Number(latitude));
+            var longitude = $('#lngVal').html(Number(longitude));
             var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});
             var ecoURL = "/pisces/rest/ecoregion";
             $.ajax({
@@ -479,7 +657,7 @@
                     $('#ecoRegionName').html(ecoData.region);
                 },
                 error: function (jqXHR, status) {
-                    $('#error_msg').html("Error attempting to get ecoRegion data.");
+                    $('#error_msg').html("Error attempting to get fish data.");
                     return null;
                 }
             });
@@ -492,7 +670,10 @@
                 crossDomain: true,
 
                 success: function (data) {
-                    populateFishTable(data)
+                    populateFishTable(data);
+                    var fishTableData = $('#fishTable').DataTable().rows().data();
+                    populateFilteredFishTable(fishTableData);
+                    populateCalcTable(fishTableData);
                 },
                 error: function (jqXHR, status) {
                     $('#error_msg').html("Error: failed to get fish data for the selected huc.");
@@ -686,6 +867,7 @@
             populateFishTable(testFishData);
             var fishTableData = $('#fishTable').DataTable().rows().data();
             populateFilteredFishTable(fishTableData);
+            populateCalcTable(testFishData);
         }
 
         function populateFishTable(data) {
@@ -844,13 +1026,9 @@
         }
 
         function populateFilteredFishTable(data) {
-            {#            var fishArray = [];#}
             var fishArray = data;
             $('#filteredFishTable').DataTable().destroy();
             $('#filteredFishTable').empty();
-            {#            Object.keys(data).forEach(function (key) {#}
-            {#                fishArray.push(Object.values(data[key]));#}
-            {#            });#}
             var config = {
                 data: fishArray,
                 "columns": [
@@ -980,8 +1158,13 @@
                             return row[17] + ' ' + data;
                         },
                         "targets": 1
+                    },
+                    {
+                        "bSortable": false,
+                        "aTargets": [0, 1]
                     }
                 ],
+                sorting: false,
                 regex: true,
                 searching: false,
                 paging: false,
@@ -989,6 +1172,150 @@
             };
             $('#filteredFishTable').closest('div').show();
             $('#filteredFishTable').DataTable(config);
+        }
+
+        function populateCalcTable(data) {
+
+
+            $('#calc_table').DataTable().destroy();
+            $('#calc_table').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        data: 4,
+                        title: "&alpha;",
+                        name: "alpha"
+                    },
+                    {
+                        data: 7,
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: 17,
+                        title: "Biomass",
+                        name: "biomass"
+                    },
+                    {
+                        data: 5,
+                        title: "Count",
+                        name: "count"
+                    },
+                    {
+                        data: 9,
+                        title: "Species Id",
+                        name: "species_id"
+                    },
+                    {
+                        data: 10,
+                        title: "Max Size",
+                        name: "max_size"
+                    },
+                    {
+                        data: 0,
+                        title: "Depth Lower",
+                        name: "depth_lower"
+                    },
+                    {
+                        data: 6,
+                        title: "Depth Upper",
+                        name: "depth_upper"
+                    },
+                    {
+                        data: 16,
+                        title: "Width Lower",
+                        name: "width_lower"
+                    },
+                    {
+                        data: 21,
+                        title: "Width Upper",
+                        name: "width_upper"
+                    },
+                    {
+                        data: 2,
+                        title: "Area Lower",
+                        name: "area_lower"
+                    },
+                    {
+                        data: 3,
+                        title: "Area Upper",
+                        name: "area_upper"
+                    },
+                    {
+                        data: 1,
+                        title: "TSS Lower",
+                        name: "tss_lower"
+                    },
+                    {
+                        data: 8,
+                        title: "TSS Upper",
+                        name: "tss_upper"
+                    },
+                    {
+                        data: 15,
+                        title: "Slope Lower",
+                        name: "slope_lower"
+                    },
+                    {
+                        data: 11,
+                        title: "Slope Upper",
+                        name: "slope_upper"
+                    },
+                    {
+                        data: 12,
+                        title: "HUC ID",
+                        name: "huc_id"
+                    },
+                    {
+                        data: 13,
+                        title: "pH Lower",
+                        name: "ph_lower"
+                    },
+                    {
+                        data: 14,
+                        title: "pH Upper",
+                        name: "ph_upper"
+                    },
+                    {
+                        data: 18,
+                        title: "Conductivity Lower",
+                        name: "cond_lower"
+                    },
+                    {
+                        data: 22,
+                        title: "Conductivity Upper",
+                        name: "cond_upper"
+                    },
+                    {
+                        data: 19,
+                        title: "Dissolved Oxygen Lower",
+                        name: "do_lower"
+                    },
+                    {
+                        data: 20,
+                        title: "Dissolved Oxygen Upper",
+                        name: "do_upper"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+                        "visible": false
+                    },
+                    {
+                        "bSortable": false,
+                        "aTargets": [0, 1, 2, 3]
+                    }
+                ],
+                sorting: false,
+                regex: true,
+                searching: false,
+                paging: false,
+                bInfo: false
+            };
+            {#            $('#calc_table').closest('div').show();#}
+            $('#calc_table').DataTable(config);
         }
 
         function addStreamSeg(streamData) {
@@ -1013,7 +1340,7 @@
 
             selectedStream = L.polyline(latlon, {
                 color: '#02bfe7',
-                weight: 8,
+                weight: 5,
                 opacity: 0.9,
                 lineJoin: 'round'
             }).addTo(map);
@@ -1039,9 +1366,6 @@
             return huc8;
         }
 
-    </script>
-    <script>
-
         $(function () {
             $("#rarity_range").slider({
                 range: true,
@@ -1054,6 +1378,7 @@
             });
             $("#rarity_value").val($("#rarity_range").slider("values", 0) +
                 " - " + $("#rarity_range").slider("values", 1));
+
         });
 
         {# Accordion JS #}
@@ -1075,6 +1400,45 @@
             }
             return false;
         }
+
+    </script>
+    <script>
+
+        {#        $(function () {#}
+        {#            $("#rarity_range").slider({#}
+        {#                range: true,#}
+        {#                min: 1,#}
+        {#                max: 10,#}
+        {#                values: [1, 10],#}
+        {#                slide: function (event, ui) {#}
+        {#                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);#}
+        {#                }#}
+        {#            });#}
+        {#            $("#rarity_value").val($("#rarity_range").slider("values", 0) +#}
+        {#                " - " + $("#rarity_range").slider("values", 1));#}
+        {##}
+        {#        });#}
+        {##}
+        {# Accordion JS #}
+        {##}
+        {#        function expandFilter() {#}
+        {#            var acc = document.getElementsByClassName("accordion");#}
+        {#            var i;#}
+        {##}
+        {#            for (i = 0; i < acc.length; i++) {#}
+        {#                acc[i].onclick = function () {#}
+        {#                    this.classList.toggle("active");#}
+        {#                    var panel = this.nextElementSibling;#}
+        {#                    if (panel.style.maxHeight) {#}
+        {#                        panel.style.maxHeight = null;#}
+        {#                    } else {#}
+        {#                        panel.style.maxHeight = panel.scrollHeight + "px";#}
+        {#                    }#}
+        {#                }#}
+        {#            }#}
+        {#            return false;#}
+        {#        }#}
+
     </script>
 </head>
 <body>
@@ -1091,10 +1455,10 @@
                     <div id="map" class="mapNoTransition"></div>
                     <div id="basemaps-wrapper" class="leaflet-bar">
                         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
-                            <option value="Topographic">Topographic</option>
+                            <option value="Imagery">Imagery</option>
+                            {#                            <option value="Topographic">Topographic</option>#}
                             <option value="Streets">Streets</option>
                             <option value="NationalGeographic">National Geographic</option>
-                            <option value="Imagery">Imagery</option>
                             <option value="ShadedRelief">Shaded Relief</option>
                         </select>
                     </div>
@@ -1106,13 +1470,12 @@
 
                         <div class="fish_filter">
                             <input id="rarity_filter" type="button" name="rarity_23" value="Rarity" class="filterButton"
-                                   align="center" title="Filter fish by rarity."><br>
-                            {#                            <input type="text" id="filter_field" class="rarity_value" placeholder="(cm)"#}
-                            {#                                   title="Enter a value in centimeters.">#}
-                            <label for="rarity_value"></label>
+                                   align="center" title="Filter fish by rarity.">
+                            {#                            <br>#}
+                            {#                            <label for="rarity_value"></label>#}
                             <input title="Rarity Range" type="text" id="rarity_value" readonly
-                                   style="border:0; color:black; font-weight:bold; font-size: 12px; text-align: center; background-color: transparent;">
-                            <div id="rarity_range" style="margin: 0 10px;"></div>
+                                   style="border:0; color:black; font-weight:bold; font-size: 10px; text-align: center; background-color: transparent;height: 10px;vertical-align: super;">
+                            <div id="rarity_range" style="width: 75%; margin: -7px 0 3px 15%;"></div>
                         </div>
                         <div class="fish_filter">
                             <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
@@ -1166,18 +1529,27 @@
                     </div>
                 </div>
                 <br>
-{#                <div class="envelope_toggle">#}
-{#                    <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"#}
-{#                           id="myenvelope_toggle"#}
-{#                           checked>#}
-{#                    <label class="envelope_toggle-label" for="myenvelope_toggle">#}
-{#                        <span class="envelope_toggle-inner"></span>#}
-{#                        <span class="envelope_toggle-switch"></span>#}
-{#                    </label>#}
-{#                </div>#}
+                <div class="envelope_toggle detailed" id="envelope_toggle">
+                    <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"
+                           id="myenvelope_toggle"
+                           checked>
+                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type" style="display:none;">
+                        <span class="envelope_toggle-inner"></span>
+                        {#                        <span class="envelope_toggle-switch"></span>#}
+                    </label>
+                </div>
+                <div class="huc_calc_toggle huc_table" id="huc_calc_toggle">
+                    <input type="checkbox" name="huc_calc_toggle" class="huc_calc_toggle-checkbox"
+                           id="in_huc_calc_toggle"
+                           checked>
+                    <label class="huc_calc_toggle-label" for="in_huc_calc_toggle" title="Toggle Abundance Calculator">
+                        <span class="huc_calc_toggle-inner"></span>
+                        {#                        <span class="envelope_toggle-switch"></span>#}
+                    </label>
+                </div>
                 <div class="col-md-12">
                     <div id="error_msg"></div>
-                    <div style="width: 45%; margin: auto; display: inline-block; float: left;">
+                    <div id="hucFish">
                         <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
@@ -1210,8 +1582,52 @@
                             </thead>
                         </table>
                     </div>
+                    <div id="abundance_calc">
+                        <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
+                        <table id="calc_table" class="display compact hover" cellspacing="0"
+                               style="float: left;width:95%; margin: 0 3px;">
+                            <thead>
+                            <tr>
+                                <td>&alpha;</td>
+                                <td>&beta;</td>
+                                <td>Count</td>
+                                <td>Biomass</td>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div style="float:right; width: 50%;">
+                            <div style="float:left; width: 55%;">
+                                <input type="text" id="biomass_field" class="biomass_value" placeholder="biomass in (g)"
+                                       style="float:left; width:90%; font-size: 12px;"
+                                       title="Enter a total biomass for the selected stream segment.">
+                            </div>
+                            <div style="float:right; width: 45%;">
+                                <input type="radio" id="biomass_weight" class="biomass_weight_value" name="biomass"
+                                       value="weight" checked>
+                                <label for="biomass_weight"
+                                       style="display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By
+                                    weight</label>
+                                <input type="radio" id="biomass_count" class="biomass_count_value" name="biomass"
+                                       value="count">
+                                <label for="biomass_count"
+                                       style=" display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By
+                                    count</label>
+                            </div>
+                            <div style="float: left;">
+                                <input style="margin: 25px 10px 10px 10px;" type="button" id="biomass_submit"
+                                       class="biomass_button"
+                                       name="biomass_button"
+                                       value="Calculate" title="Calculate fish assemblage biomass.">
+                                <input style="margin: 25px 10px 10px 10px;" type="button" id="biomass_reset"
+                                       class="biomass_reset_button"
+                                       name="biomass_reset_button"
+                                       value="Reset" title="Reset &alpha; and &beta; coefficients.">
+
+                            </div>
+                        </div>
+                    </div>
                     <div id="fish_assemblage_estimator"
-                         style="width:45%; margin: auto; display: inline-block; float: left;">
+                         style="width:45%; margin:0px 55px 0px 5px; display: inline-block; float: right;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;">
@@ -1224,9 +1640,6 @@
                             </thead>
                         </table>
                     </div>
-                    <div id="abundance_calc" style="width:45%; margin: auto; display: inline-block; float: left;">
-                        <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
-                    </div>
                     <div id="table-focus" tabindex="-1"></div>
                 </div>
             </div>
@@ -1235,7 +1648,10 @@
 </div>
 </div>
 <script> // initialize the map
-var map = L.map('map').setView([33.95, -83.38], 11);
+
+document.getElementById("map").focus();
+
+var map = L.map('map').setView([40.265306, -98.623725], 5);
 // sets variable for selected stream
 var selectedStream;
 // sets the Huc for the selected stream
@@ -1269,7 +1685,7 @@ function setBasemap(basemap) {
     if (basemap === 'ShadedRelief'
         || basemap === 'Imagery'
         || basemap === 'Terrain'
-        || basemap === 'Topographic'
+        {#        || basemap === 'Topographic'#}
     ) {
         layerLabels = L.esri.basemapLayer(basemap + 'Labels');
         map.addLayer(layerLabels);
@@ -1314,7 +1730,8 @@ info.update = function (props) {
         '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
         '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
         '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +
-        '<td>WBD HUC8:</td><td id="huc8"></td>';
+        '<tr style="display:none;"><td>EcoRegion ID:</td><td id=ecoRegionId></td></tr>' +
+        '<tr><td>WBD HUC8:</td><td id="huc8"></td></tr>';
 };
 
 info.addTo(map);

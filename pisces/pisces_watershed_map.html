@@ -41,9 +41,9 @@
         border-style: solid;
         border-width: 1px;
         width: 33%;
-        max-height: 450px;
         margin: 1px 1px;
-    {#        padding: 10px 10px#} padding: 1.3529em 1em;
+        max-height: 620px;
+        padding: 1.3529em 1em;
     }
 
     input.fishSearchBox {
@@ -52,8 +52,7 @@
         display: inline-block;
         width: 75%;
         height: 22px;
-        border-radius: 3px 0 0 3px !important;
-
+    {#        border-radius: 3px 0 0 3px !important;#} padding-left: 5px;
     }
 
     input.fishSearchButton {
@@ -92,6 +91,14 @@
         background-color: #02bfe7;
     }
 
+    table.dataTable.display tbody tr.odd {
+        background-color: #D4D4D4 !important;
+    }
+
+    #fishTable thead th {
+        background-color: white !important;
+    }
+
     tr.selected_fish td {
         background-color: #6baed6 !important;
     }
@@ -104,12 +111,27 @@
         width: 65%;
     }
 
-    div.fishDetails p {
-        background-color: #DBF1FF;
-        padding: 0 5px;
-        border-width: 1px;
+    table.fishDetails {
+        line-height: 12px;
+        width: 100%;
         border-color: black;
         border-style: solid;
+        border-width: 1px;
+        background-color: #DBF1FF;
+    }
+
+    table.fishDetails col:nth-child(even) {
+        background-color: white !important;
+        width: 15%;
+        min-width: 50px;
+    }
+
+    table.fishDetails col:last-child {
+        width: 45%;
+    }
+
+    table.fishDetails > tbody > tr > td:nth-child(odd):hover, table.fishDetails > tbody > tr > td:nth-child(odd):hover + td {
+        background: #BFD2DE;
     }
 
     .link_image {
@@ -128,13 +150,59 @@
         display: inline-block !important;
     }
 
+    div.dataTables_scrollBody {
+        max-height: 470px !important;
+    }
+
+    {#    Loader    #}
+    #loader {
+        position: absolute;
+        left: 50%;
+        top: 85%;
+        z-index: 999;
+        margin: -75px 0 0 -75px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 100px;
+        height: 100px;
+        -webkit-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
+        transition: ease-in-out;
+    }
+
+    #loader_background {
+        background-color: rgba(255, 255, 255, 0.5);
+        z-index: 995;
+        position: absolute;
+        height: 625px;
+        width: 100%;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
 </style>
 
 <head>
 
     <!-- jquery -->
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- datatables import -->
     <link rel="stylesheet"
@@ -161,9 +229,13 @@
 
         <!--- content div -->
         <div class="col-md-10">
+            <div id="loader" style="display:none;"></div>
+            <div id="loader_background" style="display:none"></div>
             <div class="box multi news">
-                <div class="pane-content" id="mapDiv" style="display: inline-block; float:left; width: 65%">
-                    <p><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish species associated
+                <div class="pane-content" id="mapDiv"
+                     style="display: inline-block; float:left; width: 65%; height: 625px;">
+                    <p id="huc_table_title"><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish
+                        species associated
                         with the area.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
@@ -181,12 +253,16 @@
                 </div>
                 <div class="fishSearch">
                     <div>
-                        <input class="fishSearchBox" type="text" name="fish_search"
-                               placeholder="Search for fish species..." title="Fish common or scientific name">
-                        <input class="fishSearchButton" type="button" title="Search">
+                        <form class="searchForm" onsubmit="return false;">
+                            <input class="fishSearchBox" type="text" name="fish_search"
+                                   placeholder="Search for fish species..." title="Fish common or scientific name">
+                            <input class="fishSearchButton" type="button" title="Search">
+                        </form>
                     </div>
-                    <div class="fishTable">
-                        <h5 align="center">Fish in selected HUC</h5>
+                    <div class="fishTable" style="display:none;">
+                        <h5 style="font-size: 14px; float:left; position:relative" align="center"
+                            id="fish_search_title">Fish in selected
+                            HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -197,47 +273,79 @@
                         </table>
                     </div>
                 </div>
+                {#                <div id="focusDetails" tabindex="-1"></div>#}
                 <div id="selectedFishTable" class="fishDetails"></div>
                 <div id="fish_weight_length"
-                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px;">
+                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px; display: none;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
                     <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
-                        (kg): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_weight"
-                                             title="Fish Weight" placeholder="Fish weight..."></div>
-                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length">Length
-                        (cm): </label><input style="margin: 0 10px; width:65%; " type="text" id="fish_length"
-                                             title="Fish Length" placeholder="Fish length..."></div>
+                        (g): </label><input style="margin: 0 10px; width:65%; padding-left: 3px; float: right;"
+                                            type="text"
+                                            id="fish_weight"
+                                            title="Fish Weight" placeholder="Fish weight..."></div>
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"
+                                                                               style="margin-top: 3px;">Length
+                        (cm): </label><input
+                            style="margin: 3px 10px 0 10px; width:65%; padding-left: 3px; float: right;"
+                            type="text"
+                            id="fish_length"
+                            title="Fish Length" placeholder="Fish length..."></div>
                 </div>
             </div>
         </div>
-        <div id="focusDetails" tabindex="-1"></div>
 
         <script>
 
-            $(document).ready(function () {
-                $('#fishTable').on('click', 'tr', function () {
-                    $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
-                    var cName = $('#fishTable').DataTable().row(this).node().children[0].innerHTML;
-                    var sName = $('#fishTable').DataTable().row(this).node().children[1].innerHTML;
-                    var details = $('#fishTable').DataTable().row(this).data();
-                    setFishDetails(cName, sName, details);
-                    $('#fishTable').DataTable().row(this).nodes().to$().addClass('selected_fish');
-                    $('#fish_weight_length').show();
+            //Weight-length coefficients
+            var a = 0;
+            var b = 0;
+            var c = 0;
+            var d = 0;
 
-                    console.log(details);
-                    searchFishHuc(details[5]);
-                    // Make ajax call to get all hucs where selected fish is present. (new function)
-                    // Highlight all returned hucs
-                    // Set map bounds to bounds of new hucs selected.
+            $(document).ready(function () {
+                // On click event for fish list
+                $('#fishTable').on('click', 'tr', function () {
+                    startLoad();
+                    var e = this;
+                    setTimeout(function () {
+                        setFishTable(e);
+                    }, 1);
+                    return false;
+                });
+                // on click event for fish search button
+                $('.fishSearchButton').on('click', function () {
+                    startLoad();
+                    setTimeout(function () {
+                        searchForFish()
+                    }, 1);
+                    return false;
+                });
+                // on submit event for fish search button
+                $('.searchForm').on('submit', function () {
+                    startLoad();
+                    setTimeout(function () {
+                        searchForFish()
+                    }, 1);
+                    return false;
                 });
 
-                $('.fishSearchButton').on('click', searchForFish);
                 $('#fish_weight').keyup(calculateFishLength);
                 $('#fish_length').keyup(calculateFishWeight);
             });
 
             $('#fish_weight_length').hide();
             $('.fishTable').closest('div').hide();
+
+            function setFishTable(e) {
+                $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
+                var fish = $('#fishTable').DataTable().row(e).data();
+                getFishDetails(fish);
+
+                $('#fishTable').DataTable().row(e).nodes().to$().addClass('selected_fish');
+                $('#fish_weight_length').show();
+                $('#selectedFishTable').show();
+
+            }
 
             //style HUC 8 polygon
             function getColor(d) {
@@ -263,47 +371,33 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-                console.log("highlighted hucs: " + hucs);
+                $('#fish_weight_length').hide();
+                $('#selectedFishTable').hide();
                 resetHUCLayer();
+                if (hucs.length > 1) {
+                    document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
+                }
+                else {
+                    document.getElementById('huc_table_title').innerHTML = "<strong>Selected HUC 8 watershed.</strong>";
+                }
                 //  properties of highlighted HUC
                 var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
                     $.each(hucs, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE)
-                            layer.setStyle({color: 'black', weight: 2.5, fillColor: '#02bfe7', fillOpacity: 0.6});
+                            layer.setStyle({color: 'black', weight: 1, fillColor: '#02bfe7', fillOpacity: 0.6});
                         if (value === layer.feature.properties.HUC_CODE)
                             layerGroup.push(layer);
-                            layer.bringToFront();
+                        layer.bringToFront();
                     });
                 });
                 map.fitBounds(L.featureGroup(layerGroup).getBounds());
             }
 
-            //get fish json data for selected HUC
-            function getHUCFishData(hucs) {
-                var url = "http://127.0.0.1:8000/fishhucs/" + hucs;
-                console.log(hucs);
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (data, status, jqXHR) {
-                        populateFishTable(data);
-                        return data;
-                    },
-                    error: function (jqXHR, status) {
-                        return null;
-                    }
-                })
-            }
-
-            //get fish json data for selected HUC
             function resetHUCLayer() {
                 huc8Layer.eachLayer(function (layer) {
                     huc8Layer.resetStyle(layer);
                 });
-                {#                document.getElementsByClassName('#selectedFishTable').innerHTML = "";#}
-
             }
 
             var currentHUC = null;
@@ -316,7 +410,6 @@
                         var hucs = [];
                         hucs.push(feature.properties.HUC_CODE);
                         selectHUCs(hucs);
-                        //var data = getHUCFishData(feature.properties.HUC_CODE);
                         getFishDataonMapClick(feature.properties.HUC_CODE);
                     }
                     else {
@@ -330,7 +423,7 @@
             }
 
             // initialize the map
-            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([33.95, -83.38], 8);
+            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([40.265306, -98.623725], 4);
 
             // load basemap
             L.esri.basemapLayer('Topographic')
@@ -369,238 +462,67 @@
             // -------- FISH Functions ---------- //
 
             function getFishDataonMapClick(huc8) {
-                //var data = getFishData(huc8);
-                var data = getTESTFishData();
+                getFishData(huc8);
             }
 
             function getFishData(huc8) {
-                console.log(huc8);
                 $.ajax({
-                    type: "POST",
-                    url: "/pisces/rest/fishproperies",
-                    data: huc8,
+                    type: "GET",
+                    url: "/pisces/rest/api/v1/fish/hucs/" + huc8,
                     crossDomain: true,
                     success: function (data) {
-                        populateFishTable(data)
+                        document.getElementById('fish_search_title').innerHTML = "Fish in selected HUC 8";
+                        populateFishTable(data);
                     },
                     error: function (jqXHR, status) {
+                        console.log("ERROR: failed to get fish data for huc: " + huc8);
                         $('#error_msg').html("Error: failed to get fish data for the selected huc.");
                         return null;
                     }
                 });
             }
 
-            function getTESTFishData() {
-                var testFishData = {
-                    "cognatus": {
-                        "depth_l": 10.09,
-                        "tss_l": 0.0001,
-                        "area_l": 208.1,
-                        "area_u": 25890.0,
-                        "common_name": "slimy sculpin",
-                        "genusID": 41,
-                        "depth_u": 59.3727,
-                        "species": "cognatus",
-                        "tss_u": 22.2,
-                        "species_id": 137,
-                        "max_Size": 12.0,
-                        "slope_u": 3.45,
-                        "huc": "04030101",
-                        "ph_l": 6.65,
-                        "ph_u": 8.35,
-                        "slope_l": 0.255,
-                        "width_l": 2.025,
-                        "genus": "Cottus",
-                        "cond_l": 23.6,
-                        "do_l": 47.5254,
-                        "do_u": 95.1819,
-                        "width_u": 18.51,
-                        "cond_u": 534.0
-                    },
-                    "zenithicus": {
-                        "depth_l": null,
-                        "tss_l": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "common_name": "shortjaw cisco",
-                        "genusID": 40,
-                        "depth_u": null,
-                        "species": "zenithicus",
-                        "tss_u": null,
-                        "species_id": 126,
-                        "max_Size": 40.0,
-                        "slope_u": null,
-                        "huc": "04030101",
-                        "ph_l": null,
-                        "ph_u": null,
-                        "slope_l": null,
-                        "width_l": null,
-                        "genus": "Coregonus",
-                        "cond_l": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "width_u": null,
-                        "cond_u": null
-                    },
-                    "heterolepis": {
-                        "depth_l": 16.27,
-                        "tss_l": 0.8,
-                        "area_l": 595.8,
-                        "area_u": 77418.0,
-                        "common_name": "blacknose shiner",
-                        "genusID": 134,
-                        "depth_u": 66.32,
-                        "species": "heterolepis",
-                        "tss_u": 34.0,
-                        "species_id": 706,
-                        "max_Size": 10.0,
-                        "slope_u": 2.0,
-                        "huc": "04030101",
-                        "ph_l": 7.1,
-                        "ph_u": 8.43,
-                        "slope_l": 0.2,
-                        "width_l": 2.467,
-                        "genus": "Notropis",
-                        "cond_l": 46.0,
-                        "do_l": 42.1327,
-                        "do_u": 99.3147,
-                        "width_u": 27.4545,
-                        "cond_u": 883.0
-                    },
-                    "elongatus": {
-                        "depth_l": 13.48,
-                        "tss_l": 0.4,
-                        "area_l": 129.4,
-                        "area_u": 10614.0,
-                        "common_name": "redside dace",
-                        "genusID": 39,
-                        "depth_u": 61.52,
-                        "species": "elongatus",
-                        "tss_u": 31.4,
-                        "species_id": 109,
-                        "max_Size": 12.0,
-                        "slope_u": 3.25,
-                        "huc": "04030101",
-                        "ph_l": 6.56,
-                        "ph_u": 8.18,
-                        "slope_l": 0.1889,
-                        "width_l": 1.25,
-                        "genus": "Clinostomus",
-                        "cond_l": 22.8,
-                        "do_l": 49.0757,
-                        "do_u": 90.2983,
-                        "width_u": 14.25,
-                        "cond_u": 496.0
-                    },
-                    "hankinsoni": {
-                        "depth_l": null,
-                        "tss_l": null,
-                        "area_l": 1782.9,
-                        "area_u": 279035.0,
-                        "common_name": "brassy minnow",
-                        "genusID": 86,
-                        "depth_u": null,
-                        "species": "hankinsoni",
-                        "tss_u": null,
-                        "species_id": 493,
-                        "max_Size": 10.0,
-                        "slope_u": null,
-                        "huc": "04030101",
-                        "ph_l": 6.81,
-                        "ph_u": 8.13,
-                        "slope_l": null,
-                        "width_l": 4.02,
-                        "genus": "Hybognathus",
-                        "cond_l": 89.0,
-                        "do_l": 24.8836,
-                        "do_u": 82.509,
-                        "width_u": 62.7273,
-                        "cond_u": 388.4
-                    },
-                    "nigrum": {
-                        "depth_l": 13.17,
-                        "tss_l": 0.8,
-                        "area_l": 213.6,
-                        "area_u": 34914.5,
-                        "common_name": "johnny darter",
-                        "genusID": 69,
-                        "depth_u": 63.7386,
-                        "species": "nigrum",
-                        "tss_u": 34.0,
-                        "species_id": 352,
-                        "max_Size": 7.0,
-                        "slope_u": 2.44,
-                        "huc": "04030101",
-                        "ph_l": 6.85,
-                        "ph_u": 8.36,
-                        "slope_l": 0.155,
-                        "width_l": 1.635,
-                        "genus": "Etheostoma",
-                        "cond_l": 43.0,
-                        "do_l": 45.0836,
-                        "do_u": 99.3147,
-                        "width_u": 21.6364,
-                        "cond_u": 714.0
-                    },
-                    "umbratilis": {
-                        "depth_l": 23.68,
-                        "tss_l": 2.5,
-                        "area_l": 1997.9,
-                        "area_u": 63266.0,
-                        "common_name": "redfin shiner",
-                        "genusID": 112,
-                        "depth_u": 62.04,
-                        "species": "umbratilis",
-                        "tss_u": 15.8,
-                        "species_id": 591,
-                        "max_Size": 8.5,
-                        "slope_u": 2.0,
-                        "huc": "04030101",
-                        "ph_l": 6.83,
-                        "ph_u": 8.22,
-                        "slope_l": 0.06,
-                        "width_l": 4.4355,
-                        "genus": "Lythrurus",
-                        "cond_l": 36.7,
-                        "do_l": 48.2465,
-                        "do_u": 84.8443,
-                        "width_u": 16.88,
-                        "cond_u": 340.7
-                    }
-                };
-                populateFishTable(testFishData);
-            }
-
             function populateFishTable(data) {
-                var fishArray = [];
                 $('#fishTable').DataTable().destroy();
                 $('#fishTable').empty();
-                Object.keys(data).forEach(function (key) {
-                    fishArray.push(Object.values(data[key]));
-                });
+                var fishData = data["species"];
                 var config = {
-                    data: fishArray,
+                    data: fishData,
                     "columns": [
                         {
-                            data: 4,
+                            data: "speciesid",
+                            title: "Species ID",
+                            name: "species_id"
+                        },
+                        {
+                            data: "common_name",
                             title: "Common Name",
                             name: "common_name"
                         },
                         {
-                            data: 7,
+                            data: "scientific_name",
                             title: "Scientific Name",
                             name: "scientific_name"
+                        },
+                        {
+                            data: "genus",
+                            title: "Genus",
+                            name: "genus"
                         }
                     ],
                     "columnDefs": [
                         {
                             "render": function (data, type, row) {
-                                return row[17] + ' ' + data;
+                                return row["genus"] + " " + data;
                             },
-                            "targets": 1
+                            "targets": 2
+                        },
+                        {
+                            "targets": [0, 3],
+                            "visible": false
                         }
                     ],
-                    scrollX: true,
+                    scrollY: true,
                     searching: false,
                     paging: false,
                     bInfo: false,
@@ -610,22 +532,120 @@
                 $('#fishTable').DataTable(config);
             }
 
-            function setFishDetails(cName, sName, details) {
+            function getFishDetails(fish) {
+                $.ajax({
+                    type: "GET",
+                    url: "/pisces/rest/api/v1/fish/properties/" + fish["speciesid"].toString(),
+                    crossDomain: true,
+                    success: function (data) {
+                        a = data["species"][0]["w_l_a"];
+                        b = data["species"][0]["w_l_b"];
+                        c = data["species"][0]["l_w_c"];
+                        d = data["species"][0]["l_w_d"];
+                        setFishDetails(data["species"][0]);
+                        searchFishHuc(data["species"][0]["speciesid"]);
+                        $('#fish_weight_length').show();
+                        $('#selectedFishTable').show();
+                    },
+                    error: function (jqXHR, status) {
+                        console.log("ERROR: failed to get fish detail for speciesid: " + fish["speciesid"]);
+                        $('#error_msg').html("Error: failed to get fish details for the selected fish.");
+                        return null;
+                    }
+                });
+            }
+
+            function setFishDetails(details) {
+                $('#fish_length').val("");
+                $('#fish_width').val("");
+                var cName = capitalize_Words(details["commonname"]);
+                var sName = capitalize_Words(details["genus"] + " " + details["species"]);
                 var d = document.getElementById('selectedFishTable');
-                document.getElementById('focusDetails').focus();
+
+                // biogeography
+                var native = (details["native"] === "Y") ? "Native" : " Non-Native";
+
+                // gradient
+                var gradient = [];
+                if (details["lowlands_lgr"] === "A") gradient.push(" Lowlands");
+                if (details["upland_hgr"] === "A") gradient.push(" Uplands");
+
+                // thermal
+                var thermal = [];
+                if (details["warmwater"] === "A") thermal.push(" Warmwater");
+                if (details["coolwater"] === "A") thermal.push(" Coolwater");
+                if (details["coldwater"] === "A") thermal.push(" Coldwater");
+
+                // clarity
+                var clarity = [];
+                if (details["clearwater"] === "A") clarity.push(" Clear");
+                if (details["turbidwater"] === "A") clarity.push(" Turbid");
+
+                // system
+                var system = [];
+                if (details["caves"] === "A") system.push(" Caves");
+                if (details["springs"] === "A") system.push(" Springs");
+                if (details["headwaters"] === "A") system.push(" Headwaters");
+                if (details["creeks"] === "A") system.push(" Creeks");
+                if (details["small_riv"] === "A") system.push(" Small Rivers");
+                if (details["med_riv"] === "A") system.push(" Medium Rivers");
+                if (details["lge_riv"] === "A") system.push(" Large Rivers");
+                if (details["lk_imp_pnd"] === "A") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
+                if (details["swp_msh_by"] === "A") system.push(" Swamps/Marshes/Bayou");
+                if (details["coast_ocea"] === "A") system.push(" Coastal/Ocean");
+
+
+                // lotic habitat
+                var lotic = [];
+                if (details["riffles"] === "A") lotic.push(" Riffles");
+                if (details["run_flopool"] === "A") lotic.push(" Runs/Flowing Pools");
+                if (details["pool_bckwtr"] === "A") lotic.push(" Pools/Backwaters");
+
+                // water column
+                var column = [];
+                if (details["benthic"] === "A") column.push(" Benthic");
+                if (details["surface"] === "A") column.push(" Surface");
+                if (details["nrshre_litt"] === "A") column.push(" Nearshore/Littoral");
+                if (details["opnwtr_pelag"] === "A") column.push(" Open Water/Pelagic");
+
+                // substrate
+                var substrate = [];
+                if (details["mud_slt_det"] === "A") substrate.push(" Mud/Silt/Detritus");
+                if (details["sand"] === "A") substrate.push(" Sand");
+                if (details["gravel"] === "A") substrate.push(" Gravel");
+                if (details["rck_rub_bol"] === "A") substrate.push(" Rocks/Rubble/Boulders");
+                if (details["vegatation"] === "A") substrate.push(" Vegetation");
+                if (details["wdyd_brush"] === "A") substrate.push(" Woody Debris/Brush");
+
+                // tolerance
+                var tolerance = [];
+                if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
+                if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
+                if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
+
+                // use
+                var use = [];
+                if (details["sportfishing"] === "1") use.push(" Sportfishing");
+                if (details["nongame"] === "1") use.push(" Nongame");
+                if (details["subsis_fish"] === "1") use.push(" Subsistence");
+
+                // links
                 var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
                 var wiki_link = "https://en.wikipedia.org/wiki/" + cName.replace(" ", "_");
+
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
-                    'Max Size (cm): ' + (details[10] || 'N/A ') + '<br>' +
-                    'Stream Depth Range (cm): ' + (details[0] || 'N/A ') + ' - ' + (details[6] || 'N/A ') + '<br>' +
-                    'Stream Width Range (m): ' + (details[16] || 'N/A ') + ' - ' + (details[21] || 'N/A ') + '<br>' +
-                    'Stream Area Range (ha): ' + (details[2] || 'N/A ') + ' - ' + (details[3] || 'N/A ') + '<br>' +
-                    'Stream Slope Range (%): ' + (details[15] || 'N/A ') + ' - ' + (details[11] || 'N/A ') + '<br>' +
-                    'Stream TSS Range (mg/l): ' + (details[1] || 'N/A ') + ' - ' + (details[8] || 'N/A ') + '<br>' +
-                    'Stream pH Range: ' + (details[13] || 'N/A ') + ' - ' + ( details[14] || 'N/A ') + '<br>' +
-                    'Stream Conductivity Range (uS/cm2): ' + (details[18] || 'N/A ') + ' - ' + (details[22] || 'N/A ') + '<br>' +
-                    'Stream Dissolved Oxygen Range (%): ' + (details[19] || 'N/A ') + ' - ' + (details[20] || 'N/A ') + '<br></p>' +
+                    '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
+                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"] + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"] + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                    '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>C (L=C*W<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +
+                    '<tr><td>D (L=C*W<sup>D</sup>)</td><td>' + details["l_w_d"] + ' </td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
+                    '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                    '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
                     '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
@@ -638,12 +658,9 @@
             }
 
             function calculateFishWeight() {
-                // Get coefficients for selected fish.
-                var A = 0.5;
-                var B = 0.9;
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
-                    var length = Math.pow(A * L, B);
+                    var length = a * Math.pow(L, b);
                     $('#fish_weight').val(length);
                 }
                 else {
@@ -652,12 +669,9 @@
             }
 
             function calculateFishLength() {
-                // Get coefficients for selected fish.
-                var A = 0.3;
-                var B = 0.4;
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
-                    var weight = Math.pow(A * W, B);
+                    var weight = c * Math.pow(W, d);
                     $('#fish_length').val(weight);
                 }
                 else {
@@ -668,42 +682,105 @@
             function searchForFish() {
                 var fish = $('.fishSearchBox').val();
                 resetHUCLayer();
-                console.log(fish);
-                {#                $.ajax({#}
-                {#                    type: "POST",#}
-                {#                    url: "/pisces/rest/fishsearch",#}
-                {#                    data: fish,#}
-                {#                    crossDomain: true,#}
-                {#                    success: function (data) {#}
-                {#                        populateFishTable(data)#}
-                {#                    },#}
-                {#                    error: function (jqXHR, status) {#}
-                {#                        $('#error_msg').html("Error: failed to get fish data for the selected huc.");#}
-                {#                        return null;#}
-                {#                    }#}
-                {#                });#}
-                getTESTFishData();
+                var fishrequest = JSON.stringify({"search_string": fish});
+                console.log(fishrequest);
+                $.ajax({
+                    type: "POST",
+                    url: "/pisces/rest/api/v1/fish/properties/names",
+                    data: fishrequest,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    crossDomain: true,
+                    beforeSend: function (xhr, settings) {
+                        console.log("Method Type: " + !csrfSafeMethod(settings.type));
+                        console.log("this.crossDomain");
+                        {# if (!csrfSafeMethod(settings.type) && !this.crossDomain) {#}
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        {# } #}
+                    },
+                    success: function (data) {
+                        document.getElementById('fish_search_title').innerHTML = "Search results for: " + fish;
+                        populateFishTable(data);
+                    },
+                    error: function (jqXHR, status) {
+                        console.log("ERROR: failed to get fish data from search: " + fish);
+                        $('#error_msg').html("Error: failed to query for provided string.");
+                        return null;
+                    },
+                    complete: function (jgXHR, status) {
+                        $('#selectedFishTable').hide();
+                        $('#fish_weight_length').hide();
+                        endLoad();
+                    }
+                });
+
             }
 
             function searchFishHuc(speciesID) {
-                var testHUCS = ['03130001', '03070101', '03060104', '03060102'];
-                console.log("speciesID: " + speciesID);
-                selectHUCs(testHUCS);
-
-                {#                 $.ajax({#}
-                {#                    type: "POST",#}
-                {#                    url: "/pisces/rest/fishranges",#}
-                {#                    data: speciesID,#}
-                {#                    crossDomain: true,#}
-                {#                    success: function (data) {#}
-                {#                        selectHUCs(data)#}
-                {#                    },#}
-                {#                    error: function (jqXHR, status) {#}
-                {#                        $('#error_msg').html("Error: failed to get fish data for the selected huc.");#}
-                {#                        return null;#}
-                {#                    }#}
-                {#                });#}
+                $.ajax({
+                    type: "GET",
+                    url: "/pisces/rest/api/v1/hucs/fish/" + speciesID,
+                    crossDomain: true,
+                    async: false,
+                    success: function (data) {
+                        var hucs = data["hucs"].map(function (h) {
+                            return h["huc"];
+                        });
+                        selectHUCs(hucs)
+                    },
+                    error: function (jqXHR, status) {
+                        console.log("ERROR: failed to get huc list for fish:" + speciesID);
+                        $('#error_msg').html("Error: failed to get huc list for the specified fish.");
+                        return null;
+                    },
+                    complete: function(jqXHR, status){
+                        endLoad();
+                    }
+                });
             }
+
+            function startLoad() {
+                document.getElementById("loader").style.display = "block";
+                document.getElementById("loader_background").style.display = "block";
+            }
+
+            function endLoad() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("loader_background").style.display = "none";
+            }
+
+            // CSRF Handling
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            // NOT BEING USED, token being set directly in ajax POST function in searchForFish()
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            // End of CSRF handling
 
         </script>
 
