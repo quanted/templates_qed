@@ -195,22 +195,19 @@
 						    ]
 						  }).addTo(map);
 
-                          //on map click, pop-up lat long info
-                          var popup = L.popup();
-                          function onMapClick(e) {
-                              popup
-                                  .setLatLng(e.latlng)
-                                  .setContent(e.latlng.toString())
-                                  .openOn(map);
-                          }
-                          map.on('click', onMapClick);
 
-                          //add lake geojson file to map
-						  var layer = L.geoJson(lakes, {
-							}).addTo(map);
+                        var myLayer = L.geoJson(lakes, {
+                            onEachFeature: yourOnEachFeatureFunction
+                        }).addTo(map);
+
+                        function yourOnEachFeatureFunction(feature, layer){
+                            if (feature.properties.COMID) {
+                                layer.bindPopup('Lake COMID: ' + feature.properties.COMID);
+                            }
+                        }
 
 
-                          //resize leaflet map based on window/div size
+                            //resize leaflet map based on window/div size
 							$(window).on("resize", function() {
 							    $("#map")
 							    .height($("#mapDiv").height()*.8)
