@@ -119,12 +119,14 @@
                             type: 'timeseries',
                             tick: {
                                 fit: true,
+                                count: 8,
                                 format: '%Y-%m-%d'
                             },
                             label: {
                                 text: '{{ LABEL }}',
                                 position: 'outer-center'
-                            }
+                            },
+                            margin: {right: 25}
                         },
                         y: {
                             label: {
@@ -153,9 +155,11 @@
                         x: {
                             type: 'timeseries',
                             tick: {
+                                fit: true,
+                                count: 8,
                                 format: '%Y-%m-%d'
                             },
-                            label:{
+                            label: {
                                 text: '{{ LABEL }}',
                                 position: 'outer-center'
                             }
@@ -186,9 +190,10 @@
                 d3.selectAll(".tick line").style({'fill': 'none', 'stroke': '#000'});
                 d3.selectAll(".domain").style({'fill': 'none', 'stroke': '#000'});
                 d3.selectAll(".c3-brush .extent").style({'fill-opacity': 0.1});
+                d3.selectAll(".c3 text").style({'font-size': '8px'});
                 var bBox = chart.children()[0].getBBox();
                 var svgString = getSVGString(svg.node());
-                svgString2Image(svgString, 2 * bBox.width, 2* bBox.height, 'png', save);
+                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);
 
                 function save(dataBlob, filesize) {
                     saveAs(dataBlob, 'hms_timeseries_chart')
@@ -364,7 +369,6 @@
             };
             image.src = imgsrc;
         }
-
     </script>
     <style>
         table.table-style {
@@ -400,9 +404,7 @@
         }
 
         .ui-accordion .ui-accordion-content {
-{#            padding: 25px 0 0 0 !important;#}
-        {#            height: 100% !important;#}
-                    overflow: hidden !important;
+        {#            padding: 25px 0 0 0 !important;#}{#            height: 100% !important;#} overflow: hidden !important;
         }
 
     </style>
