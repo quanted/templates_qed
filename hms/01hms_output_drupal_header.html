@@ -118,7 +118,12 @@
                         x: {
                             type: 'timeseries',
                             tick: {
+                                fit: true,
                                 format: '%Y-%m-%d'
+                            },
+                            label: {
+                                text: '{{ LABEL }}',
+                                position: 'outer-center'
                             }
                         },
                         y: {
@@ -149,6 +154,10 @@
                             type: 'timeseries',
                             tick: {
                                 format: '%Y-%m-%d'
+                            },
+                            label:{
+                                text: '{{ LABEL }}',
+                                position: 'outer-center'
                             }
                         },
                         y: {
@@ -184,21 +193,28 @@
                 function save(dataBlob, filesize) {
                     saveAs(dataBlob, 'hms_timeseries_chart')
                 }
-            })
+            });
+
         });
 
         $(function () {
-            $('#statisticsDiv').accordion({
+            $('#statisticsChartDiv').accordion({
                 collapsible: true,
                 active: 0
             });
-            $('#metaTableDiv').accordion({
+            $('#statisticsDiv').accordion({
                 collapsible: true,
                 active: 1
             });
+            $('#metaTableDiv').accordion({
+                collapsible: true,
+                active: 2,
+                heightStyle: "content"
+            });
             $('#dataTableDiv').accordion({
                 collapsible: true,
-                active: 2
+                active: 3,
+                heightStyle: "content"
             });
         });
 
@@ -384,7 +400,7 @@
         }
 
         .ui-accordion .ui-accordion-content {
-            padding: 25px 0 0 0 !important;
+{#            padding: 25px 0 0 0 !important;#}
         {#            height: 100% !important;#}
                     overflow: hidden !important;
         }

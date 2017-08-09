@@ -2,17 +2,56 @@
     <h1 class="page-title">{{ TITLE }}</h1>
     <div class="panel-pane pane-node-content" style="">
         <div class="pane-content">
-            <div id="statisticsDiv">
+            <div id="statisticsChartDiv">
                 <h4>{{ TITLE }} Chart</h4>
-                <div>
+                <div style="padding: 0 !important;">
                     <div class="chartContainer" id="chartContainerTop" style="display:none;margin:10px">
+                        <div style="margin-left: 5%;">{{ DATASET }}</div>
                         <div class="chart" id="compareChart"></div>
-                        <button style="width: 90px;font-size: 9px;height: 35px;" type="button" title="Save chart as png image" name="Save as Image" id="saveChart">Save as Image</button>
+                        <button style="width: 90px;font-size: 9px;height: 35px;" type="button"
+                                title="Save chart as png image" name="Save as Image" id="saveChart">Save as Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="statisticsDiv" style="margin-top: 15px;">
+                <h4>{{ TITLE }} Statistics</h4>
+                <div>
+                    <div class="statisticsContainer" id="statisticsContainerTop" style="margin:10px;">
+                        <div class="stats" id="statsTable">
+                        <div>{{ LABEL }}</div>
+                            <table style="font-size: 12px;float: left;">
+                                <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Average (mm)</th>
+                                    <th>Total (mm)</th>
+                                    <th>Std Deviation (mm)</th>
+                                    <th>R-Squared</th>
+                                    <th>GORE</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if STATS %}
+                                    {% for item in STATS %}
+                                        <tr>
+                                            <td>{{ item.0 }}</td>
+                                            <td>{{ item.1 }}</td>
+                                            <td>{{ item.2 }}</td>
+                                            <td>{{ item.3 }}</td>
+                                            <td>{{ item.4 }}</td>
+                                            <td>{{ item.5 }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="metaTableDiv" style="margin-top: 15px;">
-                <h4> {{ TITLE }} Metadata</h4>
+                <h4>{{ TITLE }} Metadata</h4>
                 <div style="padding:25px !important;">
                     <table id="metaTable" class="display table-style" style="width:100%;">
                         <thead>
