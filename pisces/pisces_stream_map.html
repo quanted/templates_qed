@@ -717,7 +717,7 @@
             setTimeout(getStreamData(e.latlng.lat, e.latlng.lng), 1);
             resetFilters();
             getFishData();
-{#            getTESTFishData();#}
+            {#            getTESTFishData();#}
         }
 
         function getStreamData(lat, lng) {
@@ -759,25 +759,25 @@
         }
 
         function getFishData() {
-{#            var latitude = $('#latVal').html(Number(latitude));#}
-{#            var longitude = $('#lngVal').html(Number(longitude));#}
-{#            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});#}
-{#            var ecoURL = "/pisces/rest/ecoregion";#}
-{#            $.ajax({#}
-{#                type: "POST",#}
-{#                url: ecoURL,#}
-{#                data: ecoAJAX,#}
-{#                crossDomain: true,#}
-{#                success: function (data) {#}
-{#                    var ecoData = JSON.parse(data);#}
-{#                    $('#ecoRegionId').html(ecoData.gid);#}
-{#                    $('#ecoRegionName').html(ecoData.region);#}
-{#                },#}
-{#                error: function (jqXHR, status) {#}
-{#                    $('#error_msg').html("Error attempting to get fish data.");#}
-{#                    return null;#}
-{#                }#}
-{#            });#}
+            {#            var latitude = $('#latVal').html(Number(latitude));#}
+            {#            var longitude = $('#lngVal').html(Number(longitude));#}
+            {#            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});#}
+            {#            var ecoURL = "/pisces/rest/ecoregion";#}
+            {#            $.ajax({#}
+            {#                type: "POST",#}
+            {#                url: ecoURL,#}
+            {#                data: ecoAJAX,#}
+            {#                crossDomain: true,#}
+            {#                success: function (data) {#}
+            {#                    var ecoData = JSON.parse(data);#}
+            {#                    $('#ecoRegionId').html(ecoData.gid);#}
+            {#                    $('#ecoRegionName').html(ecoData.region);#}
+            {#                },#}
+            {#                error: function (jqXHR, status) {#}
+            {#                    $('#error_msg').html("Error attempting to get fish data.");#}
+            {#                    return null;#}
+            {#                }#}
+            {#            });#}
             var huc8 = selectedHuc;
             $.ajax({
                 type: "GET",
@@ -1109,6 +1109,8 @@
                     }
                 ],
                 searching: false,
+                "scrollY": 500,
+                "scrollX": true,
                 paging: false,
                 bInfo: false,
                 "order": [[1, 'asc']]
@@ -1276,6 +1278,8 @@
                 sorting: false,
                 regex: true,
                 searching: false,
+                "scrollY": 500,
+                "scrollX": true,
                 paging: false,
                 bInfo: false
             };
@@ -1327,6 +1331,8 @@
                 sorting: false,
                 regex: true,
                 searching: false,
+                "scrollY": 500,
+                "scrollX": true,
                 paging: false,
                 bInfo: false
             };
@@ -1378,7 +1384,7 @@
                     }
                 }
             });
-            selectedHuc = hucID.substring(0,8);
+            selectedHuc = hucID.substring(0, 8);
             return huc8;
         }
 
