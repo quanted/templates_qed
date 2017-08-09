@@ -1,8 +1,7 @@
 <head>
 
     <!-- jquery -->
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -471,6 +470,7 @@
     <script>
 
         var searchCount = 0;
+        var selectedHuc;
         $(document).ready(function () {
 
             $('#fishTable').closest('div').hide();
@@ -714,7 +714,7 @@
             $('#fish_filters').closest('div').show();
             $('#envelope_toggle').closest('div').show();
             $('#huc_calc_toggle').closest('div').show();
-            getStreamData(e.latlng.lat, e.latlng.lng);
+            setTimeout(getStreamData(e.latlng.lat, e.latlng.lng), 1);
             resetFilters();
             getFishData();
 {#            getTESTFishData();#}
@@ -743,6 +743,7 @@
                 url: url,
                 jsonp: true,
                 data: ptIndexParams,
+                async: false,
                 success: function (data, status, jqXHR) {
                     var streamData = JSON.parse(data);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
@@ -758,9 +759,9 @@
         }
 
         function getFishData() {
-            var latitude = $('#latVal').html(Number(latitude));
-            var longitude = $('#lngVal').html(Number(longitude));
-            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});
+{#            var latitude = $('#latVal').html(Number(latitude));#}
+{#            var longitude = $('#lngVal').html(Number(longitude));#}
+{#            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});#}
 {#            var ecoURL = "/pisces/rest/ecoregion";#}
 {#            $.ajax({#}
 {#                type: "POST",#}
@@ -777,12 +778,10 @@
 {#                    return null;#}
 {#                }#}
 {#            });#}
-
-            var huc8 = JSON.stringify([document.getElementById('#huc8').value]);
+            var huc8 = selectedHuc;
             $.ajax({
                 type: "GET",
                 url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
-                data: huc8,
                 crossDomain: true,
                 success: function (data) {
                     populateFishTable(data["species"]);
@@ -1379,6 +1378,7 @@
                     }
                 }
             });
+            selectedHuc = hucID.substring(0,8);
             return huc8;
         }
 
