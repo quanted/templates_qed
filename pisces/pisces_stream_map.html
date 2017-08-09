@@ -34,6 +34,8 @@
         {#datatables font size#}
         th {
             font-size: 12px;
+            border: none;
+            text-align: center;
         }
 
         td {
@@ -450,10 +452,6 @@
             position: absolute;
             height: 625px;
             width: 100%;
-        }
-
-        td.tblCellEdit {
-
         }
 
         #calc_table input {
@@ -1110,7 +1108,7 @@
                 ],
                 searching: false,
                 "scrollY": 500,
-                "scrollX": true,
+{#                "scrollX": true,#}
                 paging: false,
                 bInfo: false,
                 "order": [[1, 'asc']]
@@ -1279,7 +1277,7 @@
                 regex: true,
                 searching: false,
                 "scrollY": 500,
-                "scrollX": true,
+{#                "scrollX": true,#}
                 paging: false,
                 bInfo: false
             };
@@ -1652,7 +1650,7 @@
                     <div id="error_msg"></div>
                     <div id="hucFish" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
-                        <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
+                        <table id="fishTable" class="display compact hover" cellspacing="0" width="100%" style="table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th></th>
@@ -1686,7 +1684,7 @@
                     <div id="abundance_calc" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
                         <table id="calc_table" class="display compact hover" cellspacing="0"
-                               style="float: left;width:95%; margin: 0 3px;"
+                               style="float: left;width:95%; margin: 0 3px; table-layout: fixed;"
                                title="Click on &beta; and W&#772; to modify values.">
                             <thead>
                             <tr>
@@ -1733,7 +1731,7 @@
                          style="width:45%; margin:0px 55px 0px 5px; display: none; float: right; left:0;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
-                               style="padding: 0 2px; margin: 0 2px;">
+                               style="padding: 0 2px; margin: 0 2px;table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th>Common Name</th>
