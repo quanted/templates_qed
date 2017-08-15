@@ -30,6 +30,57 @@
     }
   ],
   "paths": {
+    "/locations":  {
+      "post": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Retrieve information for HWBI locations endpoint.",
+        "description": "The /locations endpoint retrieves meta data and relative links.",
+        "responses": {
+          "200": {
+            "description": "Successful return"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/locations/inputs":  {
+      "post": {
+        "tags": [
+          "locations"
+        ],
+        "summary": "Retrieve input information for HWBI locations endpoint.",
+        "description": "The /locations/inputs endpoint retrieves meta data about inputs for /locations/run endpoint.",
+        "responses": {
+          "200": {
+            "description": "Successful return"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/locations/outputs":  {
+      "post": {
+        "tags": [
+        "locations"
+      ],
+      "summary": "Retrieve input information for HWBI locations endpoint.",
+      "description": "The /locations/outputs endpoint retrieves meta data about outputs for /locations/run endpoint.",
+      "responses": {
+        "200": {
+          "description": "Successful return"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
+    }
+  },
     "/locations/run": {
       "post": {
         "tags": [
@@ -85,7 +136,58 @@
           }
         }
       }
+    },
+    "/calc":  {
+      "post": {
+        "tags": [
+          "calc"
+        ],
+        "summary": "Retrieve information for HWBI calc endpoint.",
+        "description": "The /calc endpoint retrieves meta data and relative links.",
+        "responses": {
+          "200": {
+            "description": "Successful return"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/calc/inputs":  {
+      "post": {
+        "tags": [
+          "calc"
+        ],
+        "summary": "Retrieve input information for HWBI locations endpoint.",
+        "description": "The /calc/inputs endpoint retrieves meta data about inputs for /calc/run endpoint.",
+        "responses": {
+          "200": {
+            "description": "Successful return"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/calc/outputs":  {
+      "post": {
+        "tags": [
+        "calc"
+      ],
+      "summary": "Retrieve input information for HWBI locations endpoint.",
+      "description": "The /calc/outputs endpoint retrieves meta data about outputs for /calc/run endpoint.",
+      "responses": {
+        "200": {
+          "description": "Successful return"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
     }
+  },
   },
   "definitions": {
     "Location": {
