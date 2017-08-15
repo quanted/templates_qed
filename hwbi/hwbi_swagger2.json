@@ -112,7 +112,7 @@
     "/calc":  {
       "post": {
         "tags": [
-          "locations"
+          "calc"
         ],
         "summary": "Retrieve information for HWBI calc endpoint.",
         "description": "The /calc endpoint retrieves meta data and relative links.",
@@ -148,7 +148,7 @@
         "tags": [
         "calc"
       ],
-      "summary": "Retrieve input information for HWBI calc endpoint.",
+      "summary": "Retrieve output information for HWBI calc endpoint.",
       "description": "The /calc/outputs endpoint retrieves meta data about outputs for /calc/run endpoint.",
       "responses": {
         "200": {
