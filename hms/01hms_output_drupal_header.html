@@ -88,11 +88,13 @@
             });
             var data = [];
 
+            var includeHr = (columnNames.length === 2) ? 13 : 10;
+
             table.columns().data().map(function (c, i) {
                 if (i === 0) {
                     var date = [];
                     c.map(function (e) {
-                        date.push(e.substring(0, 13));
+                        date.push(e.substring(0, includeHr));
                     });
                     date.unshift(columnNames[i]);
                     data.push(date);
@@ -121,13 +123,13 @@
                             tick: {
                                 fit: true,
                                 count: 8,
-                                format: '%Y-%m-%d %H'
+                                format: '%Y-%m-%d %H',
                             },
                             label: {
                                 text: '{{ LABEL }}',
                                 position: 'outer-center'
                             },
-{#                            margin: {right: 25}#}
+                            margin: {right: 25}
                         },
                         y: {
                             label: {
