@@ -1,8 +1,7 @@
 <head>
 
     <!-- jquery -->
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -35,6 +34,8 @@
         {#datatables font size#}
         th {
             font-size: 12px;
+            border: none !important;
+            text-align: center !important;
         }
 
         td {
@@ -84,7 +85,7 @@
 
         #calc_table_wrapper {
             display: inline-block;
-            width: 50%;
+            width: 65%;
             float: left;
         }
 
@@ -231,10 +232,8 @@
             position: relative;
             width: 50%;
             height: 24px;
-        {#            margin: 0px 0px 10px 5%;#}
-            float: left;
-{#            display: block;#}
-            -webkit-user-select: none;
+        {#            margin: 0px 0px 10px 5%;#} float: left;
+        {#            display: block;#} -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
@@ -321,7 +320,8 @@
 
         .huc_calc_toggle {
             position: relative;
-            width: 50%;
+        {#            width: 50%;#} width: 100%;
+            left: 45%;
             height: 24px;
         {#            margin: 0px 0px 10px 5%;#} float: left;
             display: block;
@@ -369,14 +369,14 @@
             content: "Display Calculator";
             background-color: #86C1FF;
             text-align: center;
-            color: #FFFFFF;
+            color: black;
         }
 
         .huc_calc_toggle-inner:after {
             content: "Hide Calculator";
             background-color: #EEEEEE;
             text-align: center;
-            color: #999999;
+            color: black;
         }
 
         .huc_calc_toggle-switch {
@@ -429,10 +429,58 @@
             font-size: 14px;
         }
 
+        {#    Loader    #}
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 85%;
+            z-index: 999;
+            margin: -75px 0 0 -75px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 100px;
+            height: 100px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            transition: ease-in-out;
+        }
+
+        #loader_background {
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 995;
+            position: absolute;
+            height: 625px;
+            width: 100%;
+        }
+
+        #calc_table input {
+            padding: 0;
+            font: inherit;
+            width: 75%;
+            display: inline;
+            background: #98DED9;
+        }
+
+        #filteredFishTable_wrapper * {
+            overflow-x: hidden !important;
+        }
+
+        .dataTables_scrollHeadInner div {
+            width: 100% !important;
+        }
+
+        div.dataTables_scrollBody {
+            overflow-x: hidden !important;
+        }
+
+
     </style>
 
     <script>
 
+        var searchCount = 0;
+        var selectedHuc;
         $(document).ready(function () {
 
             $('#fishTable').closest('div').hide();
@@ -446,21 +494,24 @@
                 selectHUCs(this.value);
             });
 
-            $('#accordion').click(expandFilter());
+            $('#accordion').on('click', expandFilter());
 
             $(document).on("click", ".filterButton", (function (event) {
                 var input = $(this).closest('div');
                 updateFilters(input);
+                var filteredData = $('#filteredFishTable').DataTable().data();
+                populateCalcTable(filteredData);
             }));
 
             $(document).on('input', "#filter_field", function (event) {
                 var input = $(this.closest('div'));
                 if (input.hasClass("filtering")) {
                     updateFilters(input);
+                    var filteredData = $('#filteredFishTable').DataTable().data();
+                    populateCalcTable(filteredData);
                 }
             });
 
-            // Add event listener for opening and closing details
             $('#fishTable').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr);
@@ -491,28 +542,74 @@
             });
 
             $('#in_huc_calc_toggle').on('click', function () {
-                var button = $(this).closest('div');
-                if (!button[0].classList.contains("calculator")) {
-                    button.removeClass("fishHucTable");
-                    button.addClass("calculator");
-                    document.getElementById('fish_assemblage_estimator').style.float = 'left';
-                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 5px 0px 55px';
-                    $('#hucFish').closest('div').hide();
-                    $('#abundance_calc').closest('div').show();
-                    // either make new call to server for detailed values or change columns used to populate table.
+                setTimeout(toggleCalculator(this), 1);
+            });
+
+            $('#biomass_weight').on('click', function () {
+                document.getElementById('biomass_field').placeholder = "biomass in (kg)";
+                document.getElementById('biomass_field').value = "";
+                document.getElementById('biomass_field').title = "Enter a total biomass (kg) for the selected stream segment.";
+            });
+
+            $('#biomass_count').on('click', function () {
+                document.getElementById('biomass_field').placeholder = "fish count";
+                document.getElementById('biomass_field').value = "";
+                document.getElementById('biomass_field').title = "Enter a total biomass (count) for the selected stream segment.";
+            });
+
+            $('#biomass_submit').on('click', function () {
+                startLoad();
+                setTimeout(startCalculation(), 1);
+            });
+
+            $('#biomass_reset').on('click', function () {
+                var filteredData = $('#filteredFishTable').DataTable().data();
+                populateCalcTable(filteredData);
+            });
+
+            $('#calc_table').on('click', 'td', function (e) {
+                var v = this.innerHTML;
+                if (!v.includes('<input') && ($(this).index() === 0 || $(this).index() === 2)) {
+                    this.innerHTML = "<input id='tblCell' class='tblCellEdit' onfocus='this.value = this.value;' type='text' value='" + v + "'/>";
                 }
-                else {
-                    button.removeClass("calculator");
-                    button.addClass("fishHucTable");
-                    document.getElementById('fish_assemblage_estimator').style.float = 'right';
-                    document.getElementById('fish_assemblage_estimator').style.margin = '0px 55px 0px 5px';
-                    $('#abundance_calc').closest('div').hide();
-                    $('#hucFish').closest('div').show();
-                    // either make new call to server for rounded values or change columns used to populate table.
-                }
+                document.getElementById('tblCell').focus();
+
+            });
+            $('#calc_table').on('blur', 'td', function (e) {
+                var v = this.childNodes[0].value;
+                $('#calc_table').DataTable().cell(this).data(v).draw();
             });
 
         });
+
+        function toggleCalculator(e) {
+            var button = $(e).closest('div');
+            if (!button[0].classList.contains("calculator")) {
+                button.removeClass("fishHucTable");
+                button.addClass("calculator");
+                document.getElementById('fish_assemblage_estimator').style.float = 'left';
+                document.getElementById('fish_assemblage_estimator').style.margin = '0px 5px 0px 55px';
+
+                $('#hucFish').closest('div').hide();
+                $('#abundance_calc').closest('div').show();
+                // either make new call to server for detailed values or change columns used to populate table.
+            }
+            else {
+                button.removeClass("calculator");
+                button.addClass("fishHucTable");
+                document.getElementById('fish_assemblage_estimator').style.float = 'right';
+                document.getElementById('fish_assemblage_estimator').style.margin = '0px 55px 0px 5px';
+
+                $('#abundance_calc').closest('div').hide();
+                $('#hucFish').closest('div').show();
+                // either make new call to server for rounded values or change columns used to populate table.
+            }
+        }
+
+        function resetFilters() {
+            $("#assemblage_filters");
+            // Iterate over each filter and if hasClass(filtering) remove it and revert all values back to ""
+        }
 
         function updateFilters(input) {
             var fishTable = $('#fishTable').DataTable();
@@ -531,7 +628,13 @@
                 var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
                 filters.map(function (index) {
                     var filterName = filters[index].firstElementChild.name.split('_');
-                    var notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    var notInTable;
+                    if (filterName[0] === "rarity") {
+                        notInTable = filterRarity(Number(filterName[1]));      // TODO: Update n to column value for rarity from request
+                    }
+                    else {
+                        notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    }
                     for (var i = 0; i < notInTable.length; i++) {
                         var v = notInTable[i];
                         if (inTable.indexOf(v) !== -1) {
@@ -540,14 +643,35 @@
                     }
                 });
                 var filterData = filteredTable.rows(inTable).data();
-                var genusIDs = filteredTable.cells(inTable, 3).data().toArray();
-                fishTable.column(4, {order: 'index'}).data().filter(function (value, index) {
+                var genusIDs = filteredTable.cells(inTable, 6).data().toArray();
+                fishTable.column(6, {order: 'index'}).data().filter(function (value, index) {
                     if (genusIDs.indexOf(value) >= 0) {
                         fishTable.row(index, {order: 'index'}).nodes().to$().addClass('filteredInFishTable');
                     }
                 });
                 populateFilteredFishTable(filterData);
+                populateCalcTable(filterData);
             }
+        }
+
+        function filterRarity(columnN) {
+            var filteredTable = $('#filteredFishTable').DataTable();
+            var rarityRange = $('#rarity_value').val().split(' - ');
+            var min = parseInt(rarityRange[0]);
+            var max = parseInt(rarityRange[1]);
+            var notInTable = [];
+            var filterTable = filteredTable.column(columnN).data().filter(function (value, index) {
+                if ((value >= min && value <= max) || value === null || isNaN(value)) {
+                    return true;
+                }
+                else {
+                    if (notInTable.indexOf(index) === -1) {
+                        notInTable.push(index);
+                    }
+                    return false;
+                }
+            });
+            return notInTable;
         }
 
         function filterDataTable(minColumn, maxColumn, compareValueName) {
@@ -555,7 +679,7 @@
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
             var filterTable = filteredTable.column(minColumn).data().filter(function (value, index) {
-                if (value < cValue || isNaN(value) || value === null) {
+                if (value < cValue || isNaN(cValue) || value === null) {
                     return true;
                 }
                 else {
@@ -566,7 +690,7 @@
                 }
             });
             var filterTable2 = filteredTable.column(maxColumn).data().filter(function (value, index) {
-                if (value > cValue || isNaN(value) || value === null) {
+                if (value > cValue || isNaN(cValue) || value === null) {
                     return true;
                 }
                 else {
@@ -583,15 +707,16 @@
         }
 
         function formatDetails(details) {
-            return 'Max Size (cm): ' + details[10] + '<br>' +
-                'Stream Depth Range (cm): (' + details[0] + ' - ' + details[6] + ')<br>' +
-                'Stream Width Range (m): (' + details[16] + ' - ' + details[21] + ')<br>' +
-                'Stream Area Range (ha): (' + details[2] + ' - ' + details[3] + ')<br>' +
-                'Stream Slope Range (%): (' + details[15] + ' - ' + details[11] + ')<br>' +
-                'Stream TSS Range (mg/l): (' + details[1] + ' - ' + details[8] + ')<br>' +
-                'Stream pH Range: (' + details[13] + ' - ' + details[14] + ')<br>' +
-                'Stream Conductivity Range (uS/cm2): (' + details[18] + ' - ' + details[22] + ')<br>' +
-                'Stream Dissolved Oxygen Range (% sat): (' + details[19] + ' - ' + details[20] + ')<br>';
+            return 'Mean Weight (g): ' + details[4] + '<br>' +
+                'Rarity: ' + details[7] + '<br>' +
+                'Stream Depth Range (cm): (' + details[20] + ' - ' + details[21] + ')<br>' +
+                'Stream Width Range (m): (' + details[14] + ' - ' + details[15] + ')<br>' +
+                'Stream Area Range (ha): (' + details[18] + ' - ' + details[19] + ')<br>' +
+                'Stream Slope Range (%): (' + details[16] + ' - ' + details[16] + ')<br>' +
+                'Stream TSS Range (mg/l): (' + details[24] + ' - ' + details[25] + ')<br>' +
+                'Stream pH Range: (' + details[12] + ' - ' + details[13] + ')<br>' +
+                'Stream Conductivity Range (uS/cm2): (' + details[10] + ' - ' + details[11] + ')<br>' +
+                'Stream Dissolved Oxygen Range (% sat): (' + details[22] + ' - ' + details[23] + ')<br>';
         }
 
         function onStreamMapClick(e) {
@@ -599,9 +724,10 @@
             $('#fish_filters').closest('div').show();
             $('#envelope_toggle').closest('div').show();
             $('#huc_calc_toggle').closest('div').show();
-            getStreamData(e.latlng.lat, e.latlng.lng);
-            //getFishData();
-            getTESTFishData();
+            setTimeout(getStreamData(e.latlng.lat, e.latlng.lng), 1);
+            resetFilters();
+            getFishData();
+            //getTESTFishData();
         }
 
         function getStreamData(lat, lng) {
@@ -627,6 +753,7 @@
                 url: url,
                 jsonp: true,
                 data: ptIndexParams,
+                async: false,
                 success: function (data, status, jqXHR) {
                     var streamData = JSON.parse(data);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
@@ -642,40 +769,38 @@
         }
 
         function getFishData() {
-            var latitude = $('#latVal').html(Number(latitude));
-            var longitude = $('#lngVal').html(Number(longitude));
-            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});
-            var ecoURL = "/pisces/rest/ecoregion";
+            {#            var latitude = $('#latVal').html(Number(latitude));#}
+            {#            var longitude = $('#lngVal').html(Number(longitude));#}
+            {#            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});#}
+            {#            var ecoURL = "/pisces/rest/ecoregion";#}
+            {#            $.ajax({#}
+            {#                type: "POST",#}
+            {#                url: ecoURL,#}
+            {#                data: ecoAJAX,#}
+            {#                crossDomain: true,#}
+            {#                success: function (data) {#}
+            {#                    var ecoData = JSON.parse(data);#}
+            {#                    $('#ecoRegionId').html(ecoData.gid);#}
+            {#                    $('#ecoRegionName').html(ecoData.region);#}
+            {#                },#}
+            {#                error: function (jqXHR, status) {#}
+            {#                    $('#error_msg').html("Error attempting to get fish data.");#}
+            {#                    return null;#}
+            {#                }#}
+            {#            });#}
+            var huc8 = selectedHuc;
             $.ajax({
-                type: "POST",
-                url: ecoURL,
-                data: ecoAJAX,
+                type: "GET",
+                url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
                 crossDomain: true,
                 success: function (data) {
-                    var ecoData = JSON.parse(data);
-                    $('#ecoRegionId').html(ecoData.gid);
-                    $('#ecoRegionName').html(ecoData.region);
-                },
-                error: function (jqXHR, status) {
-                    $('#error_msg').html("Error attempting to get fish data.");
-                    return null;
-                }
-            });
-
-            var huc8 = JSON.stringify([document.getElementById('#huc8').value]);
-            $.ajax({
-                type: "POST",
-                url: "/pisces/rest/fishproperies",
-                data: huc8,
-                crossDomain: true,
-
-                success: function (data) {
-                    populateFishTable(data);
+                    populateFishTable(data["species"]);
                     var fishTableData = $('#fishTable').DataTable().rows().data();
                     populateFilteredFishTable(fishTableData);
                     populateCalcTable(fishTableData);
                 },
                 error: function (jqXHR, status) {
+                    console.log("ERROR: ajax call failed. " + status);
                     $('#error_msg').html("Error: failed to get fish data for the selected huc.");
                     return null;
                 }
@@ -688,186 +813,2478 @@
             $('#ecoRegionName').html(ecoData.region);
 
             var testFishData = {
-                "cognatus": {
-                    "depth_l": 10.09,
-                    "tss_l": 0.0001,
-                    "area_l": 208.1,
-                    "area_u": 25890.0,
-                    "common_name": "slimy sculpin",
-                    "genusID": 41,
-                    "depth_u": 59.3727,
-                    "species": "cognatus",
-                    "tss_u": 22.2,
-                    "species_id": 137,
-                    "max_Size": 12.0,
-                    "slope_u": 3.45,
-                    "huc": "04030101",
-                    "ph_l": 6.65,
-                    "ph_u": 8.35,
-                    "slope_l": 0.255,
-                    "width_l": 2.025,
-                    "genus": "Cottus",
-                    "cond_l": 23.6,
-                    "do_l": 47.5254,
-                    "do_u": 95.1819,
-                    "width_u": 18.51,
-                    "cond_u": 534.0
-                },
-                "zenithicus": {
-                    "depth_l": null,
-                    "tss_l": null,
-                    "area_l": null,
-                    "area_u": null,
-                    "common_name": "shortjaw cisco",
-                    "genusID": 40,
-                    "depth_u": null,
-                    "species": "zenithicus",
-                    "tss_u": null,
-                    "species_id": 126,
-                    "max_Size": 40.0,
-                    "slope_u": null,
-                    "huc": "04030101",
-                    "ph_l": null,
-                    "ph_u": null,
-                    "slope_l": null,
-                    "width_l": null,
-                    "genus": "Coregonus",
-                    "cond_l": null,
-                    "do_l": null,
-                    "do_u": null,
-                    "width_u": null,
-                    "cond_u": null
-                },
-                "heterolepis": {
-                    "depth_l": 16.27,
-                    "tss_l": 0.8,
-                    "area_l": 595.8,
-                    "area_u": 77418.0,
-                    "common_name": "blacknose shiner",
-                    "genusID": 134,
-                    "depth_u": 66.32,
-                    "species": "heterolepis",
-                    "tss_u": 34.0,
-                    "species_id": 706,
-                    "max_Size": 10.0,
-                    "slope_u": 2.0,
-                    "huc": "04030101",
-                    "ph_l": 7.1,
-                    "ph_u": 8.43,
-                    "slope_l": 0.2,
-                    "width_l": 2.467,
-                    "genus": "Notropis",
-                    "cond_l": 46.0,
-                    "do_l": 42.1327,
-                    "do_u": 99.3147,
-                    "width_u": 27.4545,
-                    "cond_u": 883.0
-                },
-                "elongatus": {
-                    "depth_l": 13.48,
-                    "tss_l": 0.4,
-                    "area_l": 129.4,
-                    "area_u": 10614.0,
-                    "common_name": "redside dace",
-                    "genusID": 39,
-                    "depth_u": 61.52,
-                    "species": "elongatus",
-                    "tss_u": 31.4,
-                    "species_id": 109,
-                    "max_Size": 12.0,
-                    "slope_u": 3.25,
-                    "huc": "04030101",
-                    "ph_l": 6.56,
-                    "ph_u": 8.18,
-                    "slope_l": 0.1889,
-                    "width_l": 1.25,
-                    "genus": "Clinostomus",
-                    "cond_l": 22.8,
-                    "do_l": 49.0757,
-                    "do_u": 90.2983,
-                    "width_u": 14.25,
-                    "cond_u": 496.0
-                },
-                "hankinsoni": {
-                    "depth_l": null,
-                    "tss_l": null,
-                    "area_l": 1782.9,
-                    "area_u": 279035.0,
-                    "common_name": "brassy minnow",
-                    "genusID": 86,
-                    "depth_u": null,
-                    "species": "hankinsoni",
-                    "tss_u": null,
-                    "species_id": 493,
-                    "max_Size": 10.0,
-                    "slope_u": null,
-                    "huc": "04030101",
-                    "ph_l": 6.81,
-                    "ph_u": 8.13,
-                    "slope_l": null,
-                    "width_l": 4.02,
-                    "genus": "Hybognathus",
-                    "cond_l": 89.0,
-                    "do_l": 24.8836,
-                    "do_u": 82.509,
-                    "width_u": 62.7273,
-                    "cond_u": 388.4
-                },
-                "nigrum": {
-                    "depth_l": 13.17,
-                    "tss_l": 0.8,
-                    "area_l": 213.6,
-                    "area_u": 34914.5,
-                    "common_name": "johnny darter",
-                    "genusID": 69,
-                    "depth_u": 63.7386,
-                    "species": "nigrum",
-                    "tss_u": 34.0,
-                    "species_id": 352,
-                    "max_Size": 7.0,
-                    "slope_u": 2.44,
-                    "huc": "04030101",
-                    "ph_l": 6.85,
-                    "ph_u": 8.36,
-                    "slope_l": 0.155,
-                    "width_l": 1.635,
-                    "genus": "Etheostoma",
-                    "cond_l": 43.0,
-                    "do_l": 45.0836,
-                    "do_u": 99.3147,
-                    "width_u": 21.6364,
-                    "cond_u": 714.0
-                },
-                "umbratilis": {
-                    "depth_l": 23.68,
-                    "tss_l": 2.5,
-                    "area_l": 1997.9,
-                    "area_u": 63266.0,
-                    "common_name": "redfin shiner",
-                    "genusID": 112,
-                    "depth_u": 62.04,
-                    "species": "umbratilis",
-                    "tss_u": 15.8,
-                    "species_id": 591,
-                    "max_Size": 8.5,
-                    "slope_u": 2.0,
-                    "huc": "04030101",
-                    "ph_l": 6.83,
-                    "ph_u": 8.22,
-                    "slope_l": 0.06,
-                    "width_l": 4.4355,
-                    "genus": "Lythrurus",
-                    "cond_l": 36.7,
-                    "do_l": 48.2465,
-                    "do_u": 84.8443,
-                    "width_u": 16.88,
-                    "cond_u": 340.7
-                }
+                "huc": "04030101",
+                "species": [
+                    {
+                        "species_id": 14,
+                        "common_name": "alewife",
+                        "genus": "Alosa",
+                        "species": "pseudoharengus",
+                        "mean_weight": 8.52,
+                        "thinning": 0.568586,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 6,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 19,
+                        "common_name": "rock bass",
+                        "genus": "Ambloplites",
+                        "species": "rupestris",
+                        "mean_weight": 83.9,
+                        "thinning": 0.652222,
+                        "thin_adj": 0.0141556,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 7,
+                        "cond_l": 48,
+                        "cond_u": 672,
+                        "ph_l": 7.07,
+                        "ph_u": 8.4,
+                        "width_l": 3.54,
+                        "width_u": 43.25,
+                        "slope_l": 0.172,
+                        "slope_u": 2.15,
+                        "area_l": 1123.1,
+                        "area_u": 86552.3,
+                        "depth_l": 18.51,
+                        "depth_u": 71.25,
+                        "do_l": 45.0836,
+                        "do_u": 97.3476,
+                        "tss_l": 0.2,
+                        "tss_u": 35.2
+                    },
+                    {
+                        "species_id": 24,
+                        "common_name": "black bullhead",
+                        "genus": "Ameiurus",
+                        "species": "melas",
+                        "mean_weight": 31.8,
+                        "thinning": 0.615341,
+                        "thin_adj": -0.010577,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 9,
+                        "cond_l": 44,
+                        "cond_u": 714,
+                        "ph_l": 6.62,
+                        "ph_u": 8.32,
+                        "width_l": 2.677,
+                        "width_u": 41.3,
+                        "slope_l": 0.2,
+                        "slope_u": 1.89,
+                        "area_l": 702.8,
+                        "area_u": 168338,
+                        "depth_l": 16.7475,
+                        "depth_u": 70.34,
+                        "do_l": 44.8378,
+                        "do_u": 95.4602,
+                        "tss_l": 0.0001,
+                        "tss_u": 29.4
+                    },
+                    {
+                        "species_id": 25,
+                        "common_name": "yellow bullhead",
+                        "genus": "Ameiurus",
+                        "species": "natalis",
+                        "mean_weight": 39.2,
+                        "thinning": 0.623114,
+                        "thin_adj": -0.0244977,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 9,
+                        "cond_l": 44,
+                        "cond_u": 714,
+                        "ph_l": 6.62,
+                        "ph_u": 8.32,
+                        "width_l": 2.677,
+                        "width_u": 41.3,
+                        "slope_l": 0.2,
+                        "slope_u": 1.89,
+                        "area_l": 702.8,
+                        "area_u": 168338,
+                        "depth_l": 16.7475,
+                        "depth_u": 70.34,
+                        "do_l": 44.8378,
+                        "do_u": 95.4602,
+                        "tss_l": 0.0001,
+                        "tss_u": 29.4
+                    },
+                    {
+                        "species_id": 26,
+                        "common_name": "brown bullhead",
+                        "genus": "Ameiurus",
+                        "species": "nebulosus",
+                        "mean_weight": 21.9,
+                        "thinning": 0.601723,
+                        "thin_adj": -0.0180852,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 9,
+                        "cond_l": 44,
+                        "cond_u": 714,
+                        "ph_l": 6.62,
+                        "ph_u": 8.32,
+                        "width_l": 2.677,
+                        "width_u": 41.3,
+                        "slope_l": 0.2,
+                        "slope_u": 1.89,
+                        "area_l": 702.8,
+                        "area_u": 168338,
+                        "depth_l": 16.7475,
+                        "depth_u": 70.34,
+                        "do_l": 44.8378,
+                        "do_u": 95.4602,
+                        "tss_l": 0.0001,
+                        "tss_u": 29.4
+                    },
+                    {
+                        "species_id": 39,
+                        "common_name": "american eel",
+                        "genus": "Anguilla",
+                        "species": "rostrata",
+                        "mean_weight": 153,
+                        "thinning": 0.676163,
+                        "thin_adj": 0.034996,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 14,
+                        "cond_l": 51,
+                        "cond_u": 321,
+                        "ph_l": 6.65,
+                        "ph_u": 8.08,
+                        "width_l": 1.425,
+                        "width_u": 30.5455,
+                        "slope_l": 0.16,
+                        "slope_u": 2.17,
+                        "area_l": 115.2,
+                        "area_u": 208472,
+                        "depth_l": 9.9728,
+                        "depth_u": 67.25,
+                        "do_l": 42.3664,
+                        "do_u": 90.9341,
+                        "tss_l": 0.6,
+                        "tss_u": 30
+                    },
+                    {
+                        "species_id": 51,
+                        "common_name": "central stoneroller",
+                        "genus": "Campostoma",
+                        "species": "anomalum",
+                        "mean_weight": 6.77,
+                        "thinning": 0.560797,
+                        "thin_adj": 0.0613044,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 26,
+                        "cond_l": 39.9,
+                        "cond_u": 881,
+                        "ph_l": 7,
+                        "ph_u": 8.43,
+                        "width_l": 2.235,
+                        "width_u": 19.714,
+                        "slope_l": 0.1889,
+                        "slope_u": 2.3,
+                        "area_l": 346.4,
+                        "area_u": 31953,
+                        "depth_l": 12.99,
+                        "depth_u": 60.3,
+                        "do_l": 44.0511,
+                        "do_u": 100.201,
+                        "tss_l": 0.4,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 52,
+                        "common_name": "largescale stoneroller",
+                        "genus": "Campostoma",
+                        "species": "oligolepis",
+                        "mean_weight": 5.57742008546038,
+                        "thinning": 0.554314,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 26,
+                        "cond_l": 39.9,
+                        "cond_u": 881,
+                        "ph_l": 7,
+                        "ph_u": 8.43,
+                        "width_l": 2.235,
+                        "width_u": 19.714,
+                        "slope_l": 0.1889,
+                        "slope_u": 2.3,
+                        "area_l": 346.4,
+                        "area_u": 31953,
+                        "depth_l": 12.99,
+                        "depth_u": 60.3,
+                        "do_l": 44.0511,
+                        "do_u": 100.201,
+                        "tss_l": 0.4,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 56,
+                        "common_name": "goldfish",
+                        "genus": "Carassius",
+                        "species": "auratus",
+                        "mean_weight": 19.4107707106632,
+                        "thinning": 0.597383,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 27,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 64,
+                        "common_name": "longnose sucker",
+                        "genus": "Catostomus",
+                        "species": "catostomus",
+                        "mean_weight": 81.9,
+                        "thinning": 0.651279,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 29,
+                        "cond_l": 45,
+                        "cond_u": 635,
+                        "ph_l": 6.81,
+                        "ph_u": 8.31,
+                        "width_l": 2.2654,
+                        "width_u": 21.7225,
+                        "slope_l": 0.15,
+                        "slope_u": 2.1415,
+                        "area_l": 362.4,
+                        "area_u": 39243,
+                        "depth_l": 15.4,
+                        "depth_u": 65.06,
+                        "do_l": 45.0836,
+                        "do_u": 98.5172,
+                        "tss_l": 0.9,
+                        "tss_u": 35
+                    },
+                    {
+                        "species_id": 67,
+                        "common_name": "white sucker",
+                        "genus": "Catostomus",
+                        "species": "commersonii",
+                        "mean_weight": 116,
+                        "thinning": 0.665024,
+                        "thin_adj": 0.0647392,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 29,
+                        "cond_l": 45,
+                        "cond_u": 635,
+                        "ph_l": 6.81,
+                        "ph_u": 8.31,
+                        "width_l": 2.2654,
+                        "width_u": 21.7225,
+                        "slope_l": 0.15,
+                        "slope_u": 2.1415,
+                        "area_l": 362.4,
+                        "area_u": 39243,
+                        "depth_l": 15.4,
+                        "depth_u": 65.06,
+                        "do_l": 45.0836,
+                        "do_u": 98.5172,
+                        "tss_l": 0.9,
+                        "tss_u": 35
+                    },
+                    {
+                        "species_id": 97,
+                        "common_name": "northern redbelly dace",
+                        "genus": "Chrosomus",
+                        "species": "eos",
+                        "mean_weight": 0.59295986003961,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 35,
+                        "cond_l": 27.5,
+                        "cond_u": 497,
+                        "ph_l": 6.8,
+                        "ph_u": 8.3,
+                        "width_l": 0.9955,
+                        "width_u": 10.2333,
+                        "slope_l": 0.354,
+                        "slope_u": 3.5417,
+                        "area_l": 48.6,
+                        "area_u": 9067.5,
+                        "depth_l": 12.06,
+                        "depth_u": 50.95,
+                        "do_l": 49.5575,
+                        "do_u": 90.2983,
+                        "tss_l": 1,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 98,
+                        "common_name": "southern redbelly dace",
+                        "genus": "Chrosomus",
+                        "species": "erythrogaster",
+                        "mean_weight": 1.09,
+                        "thinning": 0.502592,
+                        "thin_adj": 0.056823,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 35,
+                        "cond_l": 27.5,
+                        "cond_u": 497,
+                        "ph_l": 6.8,
+                        "ph_u": 8.3,
+                        "width_l": 0.9955,
+                        "width_u": 10.2333,
+                        "slope_l": 0.354,
+                        "slope_u": 3.5417,
+                        "area_l": 48.6,
+                        "area_u": 9067.5,
+                        "depth_l": 12.06,
+                        "depth_u": 50.95,
+                        "do_l": 49.5575,
+                        "do_u": 90.2983,
+                        "tss_l": 1,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 99,
+                        "common_name": "finescale dace",
+                        "genus": "Chrosomus",
+                        "species": "neogaeus",
+                        "mean_weight": 1.18248705038746,
+                        "thinning": 0.505054,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 35,
+                        "cond_l": 27.5,
+                        "cond_u": 497,
+                        "ph_l": 6.8,
+                        "ph_u": 8.3,
+                        "width_l": 0.9955,
+                        "width_u": 10.2333,
+                        "slope_l": 0.354,
+                        "slope_u": 3.5417,
+                        "area_l": 48.6,
+                        "area_u": 9067.5,
+                        "depth_l": 12.06,
+                        "depth_u": 50.95,
+                        "do_l": 49.5575,
+                        "do_u": 90.2983,
+                        "tss_l": 1,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 109,
+                        "common_name": "redside dace",
+                        "genus": "Clinostomus",
+                        "species": "elongatus",
+                        "mean_weight": 0.753,
+                        "thinning": 0.5,
+                        "thin_adj": 0.0240258,
+                        "rarity": 5,
+                        "huc": "04030101",
+                        "genusID": 39,
+                        "cond_l": 22.8,
+                        "cond_u": 496,
+                        "ph_l": 6.56,
+                        "ph_u": 8.18,
+                        "width_l": 1.25,
+                        "width_u": 14.25,
+                        "slope_l": 0.1889,
+                        "slope_u": 3.25,
+                        "area_l": 129.4,
+                        "area_u": 10614,
+                        "depth_l": 13.48,
+                        "depth_u": 61.52,
+                        "do_l": 49.0757,
+                        "do_u": 90.2983,
+                        "tss_l": 0.4,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 111,
+                        "common_name": "cisco",
+                        "genus": "Coregonus",
+                        "species": "artedi",
+                        "mean_weight": 38.7091716492683,
+                        "thinning": 0.622643,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 40,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 113,
+                        "common_name": "lake whitefish",
+                        "genus": "Coregonus",
+                        "species": "clupeaformis",
+                        "mean_weight": 191,
+                        "thinning": 0.685223,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 40,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 114,
+                        "common_name": "bloater",
+                        "genus": "Coregonus",
+                        "species": "hoyi",
+                        "mean_weight": 83,
+                        "thinning": 0.651801,
+                        "thin_adj": 0,
+                        "rarity": 8,
+                        "huc": "04030101",
+                        "genusID": 40,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 118,
+                        "common_name": "kiyi",
+                        "genus": "Coregonus",
+                        "species": "kiyi",
+                        "mean_weight": 75.4,
+                        "thinning": 0.648056,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 40,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 126,
+                        "common_name": "shortjaw cisco",
+                        "genus": "Coregonus",
+                        "species": "zenithicus",
+                        "mean_weight": 19.4107707106632,
+                        "thinning": 0.597383,
+                        "thin_adj": 0,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 40,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 131,
+                        "common_name": "mottled sculpin",
+                        "genus": "Cottus",
+                        "species": "bairdii",
+                        "mean_weight": 2.77,
+                        "thinning": 0.531519,
+                        "thin_adj": 0.0858286,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 41,
+                        "cond_l": 23.6,
+                        "cond_u": 534,
+                        "ph_l": 6.65,
+                        "ph_u": 8.35,
+                        "width_l": 2.025,
+                        "width_u": 18.51,
+                        "slope_l": 0.255,
+                        "slope_u": 3.45,
+                        "area_l": 208.1,
+                        "area_u": 25890,
+                        "depth_l": 10.09,
+                        "depth_u": 59.3727,
+                        "do_l": 47.5254,
+                        "do_u": 95.1819,
+                        "tss_l": 0.0001,
+                        "tss_u": 22.2
+                    },
+                    {
+                        "species_id": 137,
+                        "common_name": "slimy sculpin",
+                        "genus": "Cottus",
+                        "species": "cognatus",
+                        "mean_weight": 2.75,
+                        "thinning": 0.531288,
+                        "thin_adj": 0.0650333,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 41,
+                        "cond_l": 23.6,
+                        "cond_u": 534,
+                        "ph_l": 6.65,
+                        "ph_u": 8.35,
+                        "width_l": 2.025,
+                        "width_u": 18.51,
+                        "slope_l": 0.255,
+                        "slope_u": 3.45,
+                        "area_l": 208.1,
+                        "area_u": 25890,
+                        "depth_l": 10.09,
+                        "depth_u": 59.3727,
+                        "do_l": 47.5254,
+                        "do_u": 95.1819,
+                        "tss_l": 0.0001,
+                        "tss_u": 22.2
+                    },
+                    {
+                        "species_id": 164,
+                        "common_name": "lake chub",
+                        "genus": "Couesius",
+                        "species": "plumbeus",
+                        "mean_weight": 5.57742008546038,
+                        "thinning": 0.554314,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 42,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 174,
+                        "common_name": "brook stickleback",
+                        "genus": "Culaea",
+                        "species": "inconstans",
+                        "mean_weight": 0.765417500193729,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 47,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 196,
+                        "common_name": "spotfin shiner",
+                        "genus": "Cyprinella",
+                        "species": "spiloptera",
+                        "mean_weight": 1.42791744397315,
+                        "thinning": 0.510802,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 50,
+                        "cond_l": 48,
+                        "cond_u": 672,
+                        "ph_l": 7.07,
+                        "ph_u": 8.36,
+                        "width_l": 4.435,
+                        "width_u": 57.4545,
+                        "slope_l": 0.31,
+                        "slope_u": 1.8,
+                        "area_l": 1685.8,
+                        "area_u": 250882,
+                        "depth_l": 19.41,
+                        "depth_u": 72.68,
+                        "do_l": 45.0836,
+                        "do_u": 96.9703,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 217,
+                        "common_name": "common carp",
+                        "genus": "Cyprinus",
+                        "species": "carpio",
+                        "mean_weight": 818,
+                        "thinning": 0.747713,
+                        "thin_adj": -0.0151578,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 52,
+                        "cond_l": 98.8,
+                        "cond_u": 1487,
+                        "ph_l": 7.16,
+                        "ph_u": 8.84,
+                        "width_l": 5.363,
+                        "width_u": 168.818,
+                        "slope_l": 0.1,
+                        "slope_u": 1.7539,
+                        "area_l": 2797.9,
+                        "area_u": 1528150,
+                        "depth_l": 18.62,
+                        "depth_u": 70.7,
+                        "do_l": 36.1193,
+                        "do_u": 108.148,
+                        "tss_l": 1.6,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 227,
+                        "common_name": "gizzard shad",
+                        "genus": "Dorosoma",
+                        "species": "cepedianum",
+                        "mean_weight": 158,
+                        "thinning": 0.677469,
+                        "thin_adj": -0.0421108,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 58,
+                        "cond_l": 94,
+                        "cond_u": 1487,
+                        "ph_l": 7.15,
+                        "ph_u": 8.57,
+                        "width_l": 8.03,
+                        "width_u": 263.1,
+                        "slope_l": 0.538,
+                        "slope_u": 1.487,
+                        "area_l": 7964,
+                        "area_u": 2282850,
+                        "depth_l": 24.26,
+                        "depth_u": 88.89,
+                        "do_l": 32.5074,
+                        "do_u": 110.272,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 259,
+                        "common_name": "lake chubsucker",
+                        "genus": "Erimyzon",
+                        "species": "sucetta",
+                        "mean_weight": 57.1,
+                        "thinning": 0.637336,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 67,
+                        "cond_l": 48,
+                        "cond_u": 292.4,
+                        "ph_l": 6,
+                        "ph_u": 7.95,
+                        "width_l": 1.92,
+                        "width_u": 16.175,
+                        "slope_l": 0.1,
+                        "slope_u": 1.6,
+                        "area_l": 287.1,
+                        "area_u": 24635,
+                        "depth_l": 11.9,
+                        "depth_u": 66.7955,
+                        "do_l": 35.726,
+                        "do_u": 87.0993,
+                        "tss_l": 1.5,
+                        "tss_u": 30
+                    },
+                    {
+                        "species_id": 261,
+                        "common_name": "redfin pickerel",
+                        "genus": "Esox",
+                        "species": "americanus americanus",
+                        "mean_weight": 2.27,
+                        "thinning": 0.525208,
+                        "thin_adj": 0.00582569,
+                        "rarity": 4,
+                        "huc": "04030101",
+                        "genusID": 68,
+                        "cond_l": 32,
+                        "cond_u": 321,
+                        "ph_l": 6,
+                        "ph_u": 8.04,
+                        "width_l": 1.6714,
+                        "width_u": 31.95,
+                        "slope_l": 0.1,
+                        "slope_u": 1.5,
+                        "area_l": 344.3,
+                        "area_u": 111516,
+                        "depth_l": 18.29,
+                        "depth_u": 64.94,
+                        "do_l": 36.1193,
+                        "do_u": 88.3317,
+                        "tss_l": 0.4,
+                        "tss_u": 10.7
+                    },
+                    {
+                        "species_id": 263,
+                        "common_name": "northern pike",
+                        "genus": "Esox",
+                        "species": "lucius",
+                        "mean_weight": 44.4,
+                        "thinning": 0.627788,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 68,
+                        "cond_l": 32,
+                        "cond_u": 321,
+                        "ph_l": 6,
+                        "ph_u": 8.04,
+                        "width_l": 1.6714,
+                        "width_u": 31.95,
+                        "slope_l": 0.1,
+                        "slope_u": 1.5,
+                        "area_l": 344.3,
+                        "area_u": 111516,
+                        "depth_l": 18.29,
+                        "depth_u": 64.94,
+                        "do_l": 36.1193,
+                        "do_u": 88.3317,
+                        "tss_l": 0.4,
+                        "tss_u": 10.7
+                    },
+                    {
+                        "species_id": 312,
+                        "common_name": "iowa darter",
+                        "genus": "Etheostoma",
+                        "species": "exile",
+                        "mean_weight": 0.454,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 69,
+                        "cond_l": 43,
+                        "cond_u": 714,
+                        "ph_l": 6.85,
+                        "ph_u": 8.36,
+                        "width_l": 1.635,
+                        "width_u": 21.6364,
+                        "slope_l": 0.155,
+                        "slope_u": 2.44,
+                        "area_l": 213.6,
+                        "area_u": 34914.5,
+                        "depth_l": 13.17,
+                        "depth_u": 63.7386,
+                        "do_l": 45.0836,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 313,
+                        "common_name": "fantail darter",
+                        "genus": "Etheostoma",
+                        "species": "flabellare",
+                        "mean_weight": 0.134,
+                        "thinning": 0.5,
+                        "thin_adj": 0.0310045,
+                        "rarity": 1,
+                        "huc": "04030101",
+                        "genusID": 69,
+                        "cond_l": 43,
+                        "cond_u": 714,
+                        "ph_l": 6.85,
+                        "ph_u": 8.36,
+                        "width_l": 1.635,
+                        "width_u": 21.6364,
+                        "slope_l": 0.155,
+                        "slope_u": 2.44,
+                        "area_l": 213.6,
+                        "area_u": 34914.5,
+                        "depth_l": 13.17,
+                        "depth_u": 63.7386,
+                        "do_l": 45.0836,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 346,
+                        "common_name": "least darter",
+                        "genus": "Etheostoma",
+                        "species": "microperca",
+                        "mean_weight": 0.218,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 69,
+                        "cond_l": 43,
+                        "cond_u": 714,
+                        "ph_l": 6.85,
+                        "ph_u": 8.36,
+                        "width_l": 1.635,
+                        "width_u": 21.6364,
+                        "slope_l": 0.155,
+                        "slope_u": 2.44,
+                        "area_l": 213.6,
+                        "area_u": 34914.5,
+                        "depth_l": 13.17,
+                        "depth_u": 63.7386,
+                        "do_l": 45.0836,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 352,
+                        "common_name": "johnny darter",
+                        "genus": "Etheostoma",
+                        "species": "nigrum",
+                        "mean_weight": 0.497,
+                        "thinning": 0.5,
+                        "thin_adj": -0.00979816,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 69,
+                        "cond_l": 43,
+                        "cond_u": 714,
+                        "ph_l": 6.85,
+                        "ph_u": 8.36,
+                        "width_l": 1.635,
+                        "width_u": 21.6364,
+                        "slope_l": 0.155,
+                        "slope_u": 2.44,
+                        "area_l": 213.6,
+                        "area_u": 34914.5,
+                        "depth_l": 13.17,
+                        "depth_u": 63.7386,
+                        "do_l": 45.0836,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 433,
+                        "common_name": "banded killifish",
+                        "genus": "Fundulus",
+                        "species": "diaphanus",
+                        "mean_weight": 0.0707,
+                        "thinning": 0.5,
+                        "thin_adj": -0.024545,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 73,
+                        "cond_l": 67,
+                        "cond_u": 590,
+                        "ph_l": 7.12,
+                        "ph_u": 8.5,
+                        "width_l": 2.77,
+                        "width_u": 19.714,
+                        "slope_l": 0.29,
+                        "slope_u": 1.7,
+                        "area_l": 387.6,
+                        "area_u": 37216.4,
+                        "depth_l": 22.54,
+                        "depth_u": 46.81,
+                        "do_l": 54.982,
+                        "do_u": 102.114,
+                        "tss_l": 3,
+                        "tss_u": 29.4
+                    },
+                    {
+                        "species_id": 493,
+                        "common_name": "brassy minnow",
+                        "genus": "Hybognathus",
+                        "species": "hankinsoni",
+                        "mean_weight": 0.961784443674583,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 86,
+                        "cond_l": 89,
+                        "cond_u": 388.4,
+                        "ph_l": 6.81,
+                        "ph_u": 8.13,
+                        "width_l": 4.02,
+                        "width_u": 62.7273,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": 1782.9,
+                        "area_u": 279035,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": 24.8836,
+                        "do_u": 82.509,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 506,
+                        "common_name": "northern hog sucker",
+                        "genus": "Hypentelium",
+                        "species": "nigricans",
+                        "mean_weight": 106,
+                        "thinning": 0.661437,
+                        "thin_adj": 0.0414825,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 88,
+                        "cond_l": 44.8,
+                        "cond_u": 883,
+                        "ph_l": 7.15,
+                        "ph_u": 8.43,
+                        "width_l": 3.3212,
+                        "width_u": 25.3636,
+                        "slope_l": 0.21,
+                        "slope_u": 2.07,
+                        "area_l": 1116.6,
+                        "area_u": 64572,
+                        "depth_l": 18.4667,
+                        "depth_u": 65.06,
+                        "do_l": 43.6906,
+                        "do_u": 100.378,
+                        "tss_l": 1,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 524,
+                        "common_name": "channel catfish",
+                        "genus": "Ictalurus",
+                        "species": "punctatus",
+                        "mean_weight": 45.9,
+                        "thinning": 0.629041,
+                        "thin_adj": -0.0634708,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 94,
+                        "cond_l": 88.6,
+                        "cond_u": 1475,
+                        "ph_l": 7.05,
+                        "ph_u": 8.57,
+                        "width_l": 4.4355,
+                        "width_u": 110.05,
+                        "slope_l": 0.25,
+                        "slope_u": 2,
+                        "area_l": 3791.4,
+                        "area_u": 1528150,
+                        "depth_l": 18.4667,
+                        "depth_u": 72.68,
+                        "do_l": 62.8594,
+                        "do_u": 102.966,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 551,
+                        "common_name": "green sunfish",
+                        "genus": "Lepomis",
+                        "species": "cyanellus",
+                        "mean_weight": 28.5,
+                        "thinning": 0.611309,
+                        "thin_adj": 0.0152154,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 104,
+                        "cond_l": 48,
+                        "cond_u": 575,
+                        "ph_l": 6.77,
+                        "ph_u": 8.3,
+                        "width_l": 1.7775,
+                        "width_u": 32.4545,
+                        "slope_l": 0.145,
+                        "slope_u": 2.2,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 12.5446,
+                        "depth_u": 69.8,
+                        "do_l": 41.4618,
+                        "do_u": 96.5257,
+                        "tss_l": 1,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 552,
+                        "common_name": "pumpkinseed",
+                        "genus": "Lepomis",
+                        "species": "gibbosus",
+                        "mean_weight": 18.3,
+                        "thinning": 0.595274,
+                        "thin_adj": 0.00605355,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 104,
+                        "cond_l": 48,
+                        "cond_u": 575,
+                        "ph_l": 6.77,
+                        "ph_u": 8.3,
+                        "width_l": 1.7775,
+                        "width_u": 32.4545,
+                        "slope_l": 0.145,
+                        "slope_u": 2.2,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 12.5446,
+                        "depth_u": 69.8,
+                        "do_l": 41.4618,
+                        "do_u": 96.5257,
+                        "tss_l": 1,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 553,
+                        "common_name": "warmouth",
+                        "genus": "Lepomis",
+                        "species": "gulosus",
+                        "mean_weight": 30,
+                        "thinning": 0.613193,
+                        "thin_adj": -0.00952049,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 104,
+                        "cond_l": 48,
+                        "cond_u": 575,
+                        "ph_l": 6.77,
+                        "ph_u": 8.3,
+                        "width_l": 1.7775,
+                        "width_u": 32.4545,
+                        "slope_l": 0.145,
+                        "slope_u": 2.2,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 12.5446,
+                        "depth_u": 69.8,
+                        "do_l": 41.4618,
+                        "do_u": 96.5257,
+                        "tss_l": 1,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 555,
+                        "common_name": "bluegill",
+                        "genus": "Lepomis",
+                        "species": "macrochirus",
+                        "mean_weight": 10.7,
+                        "thinning": 0.576412,
+                        "thin_adj": 0.00251196,
+                        "rarity": 1,
+                        "huc": "04030101",
+                        "genusID": 104,
+                        "cond_l": 48,
+                        "cond_u": 575,
+                        "ph_l": 6.77,
+                        "ph_u": 8.3,
+                        "width_l": 1.7775,
+                        "width_u": 32.4545,
+                        "slope_l": 0.145,
+                        "slope_u": 2.2,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 12.5446,
+                        "depth_u": 69.8,
+                        "do_l": 41.4618,
+                        "do_u": 96.5257,
+                        "tss_l": 1,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 560,
+                        "common_name": "northern sunfish",
+                        "genus": "Lepomis",
+                        "species": "peltastes",
+                        "mean_weight": 10.7,
+                        "thinning": 0.576412,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 104,
+                        "cond_l": 48,
+                        "cond_u": 575,
+                        "ph_l": 6.77,
+                        "ph_u": 8.3,
+                        "width_l": 1.7775,
+                        "width_u": 32.4545,
+                        "slope_l": 0.145,
+                        "slope_u": 2.2,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 12.5446,
+                        "depth_u": 69.8,
+                        "do_l": 41.4618,
+                        "do_u": 96.5257,
+                        "tss_l": 1,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 566,
+                        "common_name": "american brook lamprey",
+                        "genus": "Lethenteron",
+                        "species": "appendix",
+                        "mean_weight": 14.5326640608168,
+                        "thinning": 0.587098,
+                        "thin_adj": 0,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 107,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 575,
+                        "common_name": "striped shiner",
+                        "genus": "Luxilus",
+                        "species": "chrysocephalus",
+                        "mean_weight": 3.43859401657746,
+                        "thinning": 0.538459,
+                        "thin_adj": 0,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 111,
+                        "cond_l": 46,
+                        "cond_u": 612,
+                        "ph_l": 7,
+                        "ph_u": 8.37,
+                        "width_l": 2.76,
+                        "width_u": 20.128,
+                        "slope_l": 0.2,
+                        "slope_u": 2.3,
+                        "area_l": 733.2,
+                        "area_u": 34544,
+                        "depth_l": 18.4667,
+                        "depth_u": 64.91,
+                        "do_l": 42.3664,
+                        "do_u": 98.5172,
+                        "tss_l": 1,
+                        "tss_u": 35.2
+                    },
+                    {
+                        "species_id": 577,
+                        "common_name": "common shiner",
+                        "genus": "Luxilus",
+                        "species": "cornutus",
+                        "mean_weight": 4.03,
+                        "thinning": 0.543611,
+                        "thin_adj": 0,
+                        "rarity": 1,
+                        "huc": "04030101",
+                        "genusID": 111,
+                        "cond_l": 46,
+                        "cond_u": 612,
+                        "ph_l": 7,
+                        "ph_u": 8.37,
+                        "width_l": 2.76,
+                        "width_u": 20.128,
+                        "slope_l": 0.2,
+                        "slope_u": 2.3,
+                        "area_l": 733.2,
+                        "area_u": 34544,
+                        "depth_l": 18.4667,
+                        "depth_u": 64.91,
+                        "do_l": 42.3664,
+                        "do_u": 98.5172,
+                        "tss_l": 1,
+                        "tss_u": 35.2
+                    },
+                    {
+                        "species_id": 591,
+                        "common_name": "redfin shiner",
+                        "genus": "Lythrurus",
+                        "species": "umbratilis",
+                        "mean_weight": 0.676228187696085,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 112,
+                        "cond_l": 36.7,
+                        "cond_u": 340.7,
+                        "ph_l": 6.83,
+                        "ph_u": 8.22,
+                        "width_l": 4.4355,
+                        "width_u": 16.88,
+                        "slope_l": 0.06,
+                        "slope_u": 2,
+                        "area_l": 1997.9,
+                        "area_u": 63266,
+                        "depth_l": 23.68,
+                        "depth_u": 62.04,
+                        "do_l": 48.2465,
+                        "do_u": 84.8443,
+                        "tss_l": 2.5,
+                        "tss_u": 15.8
+                    },
+                    {
+                        "species_id": 603,
+                        "common_name": "allegheny pearl dace",
+                        "genus": "Margariscus",
+                        "species": "margarita",
+                        "mean_weight": 0.657,
+                        "thinning": 0.5,
+                        "thin_adj": 0.0284677,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 114,
+                        "cond_l": 18,
+                        "cond_u": 683,
+                        "ph_l": 5.13,
+                        "ph_u": 8.14,
+                        "width_l": 2.73,
+                        "width_u": 7.16,
+                        "slope_l": 0.1,
+                        "slope_u": 1.53,
+                        "area_l": 487.7,
+                        "area_u": 5976.8,
+                        "depth_l": 18.77,
+                        "depth_u": 56.05,
+                        "do_l": 56.7224,
+                        "do_u": 86.4962,
+                        "tss_l": 3.4,
+                        "tss_u": 61
+                    },
+                    {
+                        "species_id": 613,
+                        "common_name": "smallmouth bass",
+                        "genus": "Micropterus",
+                        "species": "dolomieu",
+                        "mean_weight": 122,
+                        "thinning": 0.66704,
+                        "thin_adj": 0.00604998,
+                        "rarity": 4,
+                        "huc": "04030101",
+                        "genusID": 119,
+                        "cond_l": 46.3,
+                        "cond_u": 828,
+                        "ph_l": 7.01,
+                        "ph_u": 8.5,
+                        "width_l": 2.798,
+                        "width_u": 51.75,
+                        "slope_l": 0.2,
+                        "slope_u": 2.1,
+                        "area_l": 724,
+                        "area_u": 146085,
+                        "depth_l": 17.1,
+                        "depth_u": 68.59,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.4,
+                        "tss_u": 18.4
+                    },
+                    {
+                        "species_id": 618,
+                        "common_name": "largemouth bass",
+                        "genus": "Micropterus",
+                        "species": "salmoides",
+                        "mean_weight": 191,
+                        "thinning": 0.685223,
+                        "thin_adj": -0.00513768,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 119,
+                        "cond_l": 46.3,
+                        "cond_u": 828,
+                        "ph_l": 7.01,
+                        "ph_u": 8.5,
+                        "width_l": 2.798,
+                        "width_u": 51.75,
+                        "slope_l": 0.2,
+                        "slope_u": 2.1,
+                        "area_l": 724,
+                        "area_u": 146085,
+                        "depth_l": 17.1,
+                        "depth_u": 68.59,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.4,
+                        "tss_u": 18.4
+                    },
+                    {
+                        "species_id": 628,
+                        "common_name": "white bass",
+                        "genus": "Morone",
+                        "species": "chrysops",
+                        "mean_weight": 230,
+                        "thinning": 0.692905,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 124,
+                        "cond_l": 99,
+                        "cond_u": 328,
+                        "ph_l": 7.29,
+                        "ph_u": 7.74,
+                        "width_l": 8.03,
+                        "width_u": 281,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": 19204,
+                        "area_u": 1790130,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": 63.4218,
+                        "do_u": 80.4359,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 630,
+                        "common_name": "yellow bass",
+                        "genus": "Morone",
+                        "species": "mississippiensis",
+                        "mean_weight": 230,
+                        "thinning": 0.692905,
+                        "thin_adj": 0,
+                        "rarity": 4,
+                        "huc": "04030101",
+                        "genusID": 124,
+                        "cond_l": 99,
+                        "cond_u": 328,
+                        "ph_l": 7.29,
+                        "ph_u": 7.74,
+                        "width_l": 8.03,
+                        "width_u": 281,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": 19204,
+                        "area_u": 1790130,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": 63.4218,
+                        "do_u": 80.4359,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 632,
+                        "common_name": "silver redhorse",
+                        "genus": "Moxostoma",
+                        "species": "anisurum",
+                        "mean_weight": 103,
+                        "thinning": 0.660298,
+                        "thin_adj": -0.0534385,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 125,
+                        "cond_l": 28.9,
+                        "cond_u": 530,
+                        "ph_l": 6.97,
+                        "ph_u": 8.37,
+                        "width_l": 2.34,
+                        "width_u": 49.35,
+                        "slope_l": 0.35,
+                        "slope_u": 3.25,
+                        "area_l": 368.1,
+                        "area_u": 244845,
+                        "depth_l": 14.8687,
+                        "depth_u": 62.04,
+                        "do_l": 39.8755,
+                        "do_u": 96.5257,
+                        "tss_l": 0.4,
+                        "tss_u": 18.6
+                    },
+                    {
+                        "species_id": 641,
+                        "common_name": "golden redhorse",
+                        "genus": "Moxostoma",
+                        "species": "erythrurum",
+                        "mean_weight": 82.8,
+                        "thinning": 0.651706,
+                        "thin_adj": -0.00567142,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 125,
+                        "cond_l": 28.9,
+                        "cond_u": 530,
+                        "ph_l": 6.97,
+                        "ph_u": 8.37,
+                        "width_l": 2.34,
+                        "width_u": 49.35,
+                        "slope_l": 0.35,
+                        "slope_u": 3.25,
+                        "area_l": 368.1,
+                        "area_u": 244845,
+                        "depth_l": 14.8687,
+                        "depth_u": 62.04,
+                        "do_l": 39.8755,
+                        "do_u": 96.5257,
+                        "tss_l": 0.4,
+                        "tss_u": 18.6
+                    },
+                    {
+                        "species_id": 645,
+                        "common_name": "shorthead redhorse",
+                        "genus": "Moxostoma",
+                        "species": "macrolepidotum",
+                        "mean_weight": 56.5,
+                        "thinning": 0.636932,
+                        "thin_adj": -0.0775032,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 125,
+                        "cond_l": 28.9,
+                        "cond_u": 530,
+                        "ph_l": 6.97,
+                        "ph_u": 8.37,
+                        "width_l": 2.34,
+                        "width_u": 49.35,
+                        "slope_l": 0.35,
+                        "slope_u": 3.25,
+                        "area_l": 368.1,
+                        "area_u": 244845,
+                        "depth_l": 14.8687,
+                        "depth_u": 62.04,
+                        "do_l": 39.8755,
+                        "do_u": 96.5257,
+                        "tss_l": 0.4,
+                        "tss_u": 18.6
+                    },
+                    {
+                        "species_id": 655,
+                        "common_name": "greater redhorse",
+                        "genus": "Moxostoma",
+                        "species": "valenciennesi",
+                        "mean_weight": 120,
+                        "thinning": 0.666378,
+                        "thin_adj": 0,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 125,
+                        "cond_l": 28.9,
+                        "cond_u": 530,
+                        "ph_l": 6.97,
+                        "ph_u": 8.37,
+                        "width_l": 2.34,
+                        "width_u": 49.35,
+                        "slope_l": 0.35,
+                        "slope_u": 3.25,
+                        "area_l": 368.1,
+                        "area_u": 244845,
+                        "depth_l": 14.8687,
+                        "depth_u": 62.04,
+                        "do_l": 39.8755,
+                        "do_u": 96.5257,
+                        "tss_l": 0.4,
+                        "tss_u": 18.6
+                    },
+                    {
+                        "species_id": 662,
+                        "common_name": "Round Goby",
+                        "genus": "Neogobius",
+                        "species": "melanostomus",
+                        "mean_weight": 10.4049037687006,
+                        "thinning": 0.575446,
+                        "thin_adj": 0,
+                        "rarity": 1,
+                        "huc": "04030101",
+                        "genusID": 131,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 664,
+                        "common_name": "hornyhead chub",
+                        "genus": "Nocomis",
+                        "species": "biguttatus",
+                        "mean_weight": 12.8,
+                        "thinning": 0.582643,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 132,
+                        "cond_l": 33.3,
+                        "cond_u": 548,
+                        "ph_l": 6.83,
+                        "ph_u": 8.41,
+                        "width_l": 1.25,
+                        "width_u": 22.8182,
+                        "slope_l": 0.31,
+                        "slope_u": 3.1,
+                        "area_l": 134.2,
+                        "area_u": 50569.1,
+                        "depth_l": 14.73,
+                        "depth_u": 65.3505,
+                        "do_l": 45.0836,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 670,
+                        "common_name": "golden shiner",
+                        "genus": "Notemigonus",
+                        "species": "crysoleucas",
+                        "mean_weight": 60.7,
+                        "thinning": 0.639678,
+                        "thin_adj": 0.0228118,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 133,
+                        "cond_l": 56,
+                        "cond_u": 386,
+                        "ph_l": 6.12,
+                        "ph_u": 7.95,
+                        "width_l": 1.3763,
+                        "width_u": 28.95,
+                        "slope_l": 0.1,
+                        "slope_u": 2.1415,
+                        "area_l": 185.3,
+                        "area_u": 111516,
+                        "depth_l": 10.09,
+                        "depth_u": 74.63,
+                        "do_l": 35.726,
+                        "do_u": 90.2983,
+                        "tss_l": 0.9,
+                        "tss_u": 11.2
+                    },
+                    {
+                        "species_id": 681,
+                        "common_name": "emerald shiner",
+                        "genus": "Notropis",
+                        "species": "atherinoides",
+                        "mean_weight": 0.901,
+                        "thinning": 0.5,
+                        "thin_adj": -0.0808867,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 686,
+                        "common_name": "river shiner",
+                        "genus": "Notropis",
+                        "species": "blennius",
+                        "mean_weight": 0.942,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 705,
+                        "common_name": "blackchin shiner",
+                        "genus": "Notropis",
+                        "species": "heterodon",
+                        "mean_weight": 0.24,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 706,
+                        "common_name": "blacknose shiner",
+                        "genus": "Notropis",
+                        "species": "heterolepis",
+                        "mean_weight": 0.553,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 707,
+                        "common_name": "spottail shiner",
+                        "genus": "Notropis",
+                        "species": "hudsonius",
+                        "mean_weight": 1.32,
+                        "thinning": 0.508399,
+                        "thin_adj": -0.0144937,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 729,
+                        "common_name": "rosyface shiner",
+                        "genus": "Notropis",
+                        "species": "rubellus",
+                        "mean_weight": 0.445,
+                        "thinning": 0.5,
+                        "thin_adj": -0.0610595,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 742,
+                        "common_name": "sand shiner",
+                        "genus": "Notropis",
+                        "species": "stramineus",
+                        "mean_weight": 0.349,
+                        "thinning": 0.5,
+                        "thin_adj": -0.00747254,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 748,
+                        "common_name": "mimic shiner",
+                        "genus": "Notropis",
+                        "species": "volucellus",
+                        "mean_weight": 0.297,
+                        "thinning": 0.5,
+                        "thin_adj": -0.0684085,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 134,
+                        "cond_l": 46,
+                        "cond_u": 883,
+                        "ph_l": 7.1,
+                        "ph_u": 8.43,
+                        "width_l": 2.467,
+                        "width_u": 27.4545,
+                        "slope_l": 0.2,
+                        "slope_u": 2,
+                        "area_l": 595.8,
+                        "area_u": 77418,
+                        "depth_l": 16.27,
+                        "depth_u": 66.32,
+                        "do_l": 42.1327,
+                        "do_u": 99.3147,
+                        "tss_l": 0.8,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 760,
+                        "common_name": "stonecat",
+                        "genus": "Noturus",
+                        "species": "flavus",
+                        "mean_weight": 13,
+                        "thinning": 0.583185,
+                        "thin_adj": -0.0549675,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 135,
+                        "cond_l": 43,
+                        "cond_u": 382,
+                        "ph_l": 6.86,
+                        "ph_u": 8.43,
+                        "width_l": 3,
+                        "width_u": 27.2105,
+                        "slope_l": 0.1889,
+                        "slope_u": 2.5,
+                        "area_l": 742.5,
+                        "area_u": 79754.4,
+                        "depth_l": 18.4667,
+                        "depth_u": 68.59,
+                        "do_l": 45.0836,
+                        "do_u": 98.2825,
+                        "tss_l": 0.8,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 765,
+                        "common_name": "tadpole madtom",
+                        "genus": "Noturus",
+                        "species": "gyrinus",
+                        "mean_weight": 0.607,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 135,
+                        "cond_l": 43,
+                        "cond_u": 382,
+                        "ph_l": 6.86,
+                        "ph_u": 8.43,
+                        "width_l": 3,
+                        "width_u": 27.2105,
+                        "slope_l": 0.1889,
+                        "slope_u": 2.5,
+                        "area_l": 742.5,
+                        "area_u": 79754.4,
+                        "depth_l": 18.4667,
+                        "depth_u": 68.59,
+                        "do_l": 45.0836,
+                        "do_u": 98.2825,
+                        "tss_l": 0.8,
+                        "tss_u": 31.4
+                    },
+                    {
+                        "species_id": 830,
+                        "common_name": "yellow perch",
+                        "genus": "Perca",
+                        "species": "flavescens",
+                        "mean_weight": 1.91,
+                        "thinning": 0.519795,
+                        "thin_adj": -0.0718234,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 146,
+                        "cond_l": 32,
+                        "cond_u": 404.5,
+                        "ph_l": 6.38,
+                        "ph_u": 8.47,
+                        "width_l": 3.235,
+                        "width_u": 202.455,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": 716.3,
+                        "area_u": 848530,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": 42.3992,
+                        "do_u": 85.8997,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 840,
+                        "common_name": "logperch",
+                        "genus": "Percina",
+                        "species": "caprodes",
+                        "mean_weight": 6.48,
+                        "thinning": 0.559325,
+                        "thin_adj": -0.0674861,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 147,
+                        "cond_l": 44.8,
+                        "cond_u": 714,
+                        "ph_l": 7.06,
+                        "ph_u": 8.31,
+                        "width_l": 4.875,
+                        "width_u": 43.25,
+                        "slope_l": 0.2,
+                        "slope_u": 2.15,
+                        "area_l": 2018.8,
+                        "area_u": 196744,
+                        "depth_l": 20.1386,
+                        "depth_u": 74.2929,
+                        "do_l": 41.7109,
+                        "do_u": 96.9703,
+                        "tss_l": 1.2,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 855,
+                        "common_name": "blackside darter",
+                        "genus": "Percina",
+                        "species": "maculata",
+                        "mean_weight": 2.64,
+                        "thinning": 0.529988,
+                        "thin_adj": -0.0578004,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 147,
+                        "cond_l": 44.8,
+                        "cond_u": 714,
+                        "ph_l": 7.06,
+                        "ph_u": 8.31,
+                        "width_l": 4.875,
+                        "width_u": 43.25,
+                        "slope_l": 0.2,
+                        "slope_u": 2.15,
+                        "area_l": 2018.8,
+                        "area_u": 196744,
+                        "depth_l": 20.1386,
+                        "depth_u": 74.2929,
+                        "do_l": 41.7109,
+                        "do_u": 96.9703,
+                        "tss_l": 1.2,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 864,
+                        "common_name": "slenderhead darter",
+                        "genus": "Percina",
+                        "species": "phoxocephala",
+                        "mean_weight": 2.02,
+                        "thinning": 0.521544,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 147,
+                        "cond_l": 44.8,
+                        "cond_u": 714,
+                        "ph_l": 7.06,
+                        "ph_u": 8.31,
+                        "width_l": 4.875,
+                        "width_u": 43.25,
+                        "slope_l": 0.2,
+                        "slope_u": 2.15,
+                        "area_l": 2018.8,
+                        "area_u": 196744,
+                        "depth_l": 20.1386,
+                        "depth_u": 74.2929,
+                        "do_l": 41.7109,
+                        "do_u": 96.9703,
+                        "tss_l": 1.2,
+                        "tss_u": 31.8
+                    },
+                    {
+                        "species_id": 879,
+                        "common_name": "trout-perch",
+                        "genus": "Percopsis",
+                        "species": "omiscomaycus",
+                        "mean_weight": 15,
+                        "thinning": 0.588214,
+                        "thin_adj": 0,
+                        "rarity": 6,
+                        "huc": "04030101",
+                        "genusID": 148,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 888,
+                        "common_name": "bluntnose minnow",
+                        "genus": "Pimephales",
+                        "species": "notatus",
+                        "mean_weight": 4.26,
+                        "thinning": 0.545424,
+                        "thin_adj": 0.0190185,
+                        "rarity": 1,
+                        "huc": "04030101",
+                        "genusID": 152,
+                        "cond_l": 56,
+                        "cond_u": 797,
+                        "ph_l": 7.15,
+                        "ph_u": 8.39,
+                        "width_l": 2.798,
+                        "width_u": 24.6,
+                        "slope_l": 0.172,
+                        "slope_u": 1.86,
+                        "area_l": 867,
+                        "area_u": 55637.7,
+                        "depth_l": 17.68,
+                        "depth_u": 69.8,
+                        "do_l": 42.1327,
+                        "do_u": 100.201,
+                        "tss_l": 1.1,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 889,
+                        "common_name": "fathead minnow",
+                        "genus": "Pimephales",
+                        "species": "promelas",
+                        "mean_weight": 3.36,
+                        "thinning": 0.537713,
+                        "thin_adj": 0.0000664415,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 152,
+                        "cond_l": 56,
+                        "cond_u": 797,
+                        "ph_l": 7.15,
+                        "ph_u": 8.39,
+                        "width_l": 2.798,
+                        "width_u": 24.6,
+                        "slope_l": 0.172,
+                        "slope_u": 1.86,
+                        "area_l": 867,
+                        "area_u": 55637.7,
+                        "depth_l": 17.68,
+                        "depth_u": 69.8,
+                        "do_l": 42.1327,
+                        "do_u": 100.201,
+                        "tss_l": 1.1,
+                        "tss_u": 34
+                    },
+                    {
+                        "species_id": 905,
+                        "common_name": "white crappie",
+                        "genus": "Pomoxis",
+                        "species": "annularis",
+                        "mean_weight": 66.3,
+                        "thinning": 0.643074,
+                        "thin_adj": -0.0938554,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 159,
+                        "cond_l": 72,
+                        "cond_u": 457,
+                        "ph_l": 6.81,
+                        "ph_u": 8.49,
+                        "width_l": 5.363,
+                        "width_u": 133.091,
+                        "slope_l": 0.15,
+                        "slope_u": 1.2,
+                        "area_l": 2797.9,
+                        "area_u": 1086260,
+                        "depth_l": 26.14,
+                        "depth_u": 72.68,
+                        "do_l": 43.6906,
+                        "do_u": 95.4602,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 906,
+                        "common_name": "black crappie",
+                        "genus": "Pomoxis",
+                        "species": "nigromaculatus",
+                        "mean_weight": 163,
+                        "thinning": 0.678737,
+                        "thin_adj": -0.0722192,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 159,
+                        "cond_l": 72,
+                        "cond_u": 457,
+                        "ph_l": 6.81,
+                        "ph_u": 8.49,
+                        "width_l": 5.363,
+                        "width_u": 133.091,
+                        "slope_l": 0.15,
+                        "slope_u": 1.2,
+                        "area_l": 2797.9,
+                        "area_u": 1086260,
+                        "depth_l": 26.14,
+                        "depth_u": 72.68,
+                        "do_l": 43.6906,
+                        "do_u": 95.4602,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 933,
+                        "common_name": "ninespine stickleback",
+                        "genus": "Pungitius",
+                        "species": "pungitius",
+                        "mean_weight": 0.765417500193729,
+                        "thinning": 0.5,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 165,
+                        "cond_l": null,
+                        "cond_u": null,
+                        "ph_l": null,
+                        "ph_u": null,
+                        "width_l": null,
+                        "width_u": null,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": null,
+                        "area_u": null,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": null,
+                        "do_u": null,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 936,
+                        "common_name": "blacknose dace",
+                        "genus": "Rhinichthys",
+                        "species": "atratulus",
+                        "mean_weight": 5.33,
+                        "thinning": 0.552807,
+                        "thin_adj": 0.102443,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 168,
+                        "cond_l": 30,
+                        "cond_u": 578,
+                        "ph_l": 6.71,
+                        "ph_u": 8.31,
+                        "width_l": 1.1447,
+                        "width_u": 15.9857,
+                        "slope_l": 0.18,
+                        "slope_u": 3.6925,
+                        "area_l": 92.5,
+                        "area_u": 17358,
+                        "depth_l": 6.6693,
+                        "depth_u": 55.68,
+                        "do_l": 47.2222,
+                        "do_u": 94.7394,
+                        "tss_l": 0.6,
+                        "tss_u": 35
+                    },
+                    {
+                        "species_id": 937,
+                        "common_name": "longnose dace",
+                        "genus": "Rhinichthys",
+                        "species": "cataractae",
+                        "mean_weight": 5.18,
+                        "thinning": 0.551861,
+                        "thin_adj": 0.0423272,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 168,
+                        "cond_l": 30,
+                        "cond_u": 578,
+                        "ph_l": 6.71,
+                        "ph_u": 8.31,
+                        "width_l": 1.1447,
+                        "width_u": 15.9857,
+                        "slope_l": 0.18,
+                        "slope_u": 3.6925,
+                        "area_l": 92.5,
+                        "area_u": 17358,
+                        "depth_l": 6.6693,
+                        "depth_u": 55.68,
+                        "do_l": 47.2222,
+                        "do_u": 94.7394,
+                        "tss_l": 0.6,
+                        "tss_u": 35
+                    },
+                    {
+                        "species_id": 942,
+                        "common_name": "western blacknose dace",
+                        "genus": "Rhinichthys",
+                        "species": "obtusus",
+                        "mean_weight": 10.2,
+                        "thinning": 0.574759,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 168,
+                        "cond_l": 30,
+                        "cond_u": 578,
+                        "ph_l": 6.71,
+                        "ph_u": 8.31,
+                        "width_l": 1.1447,
+                        "width_u": 15.9857,
+                        "slope_l": 0.18,
+                        "slope_u": 3.6925,
+                        "area_l": 92.5,
+                        "area_u": 17358,
+                        "depth_l": 6.6693,
+                        "depth_u": 55.68,
+                        "do_l": 47.2222,
+                        "do_u": 94.7394,
+                        "tss_l": 0.6,
+                        "tss_u": 35
+                    },
+                    {
+                        "species_id": 957,
+                        "common_name": "brown trout",
+                        "genus": "Salmo",
+                        "species": "trutta",
+                        "mean_weight": 82.9,
+                        "thinning": 0.651753,
+                        "thin_adj": 0.0447693,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 172,
+                        "cond_l": 35,
+                        "cond_u": 573,
+                        "ph_l": 6.61,
+                        "ph_u": 8.23,
+                        "width_l": 2.8429,
+                        "width_u": 16.6476,
+                        "slope_l": 0.11,
+                        "slope_u": 2.1,
+                        "area_l": 666.7,
+                        "area_u": 20334.8,
+                        "depth_l": 16.4091,
+                        "depth_u": 60.33,
+                        "do_l": 55.8096,
+                        "do_u": 87.0895,
+                        "tss_l": 0.8,
+                        "tss_u": 22.2
+                    },
+                    {
+                        "species_id": 963,
+                        "common_name": "brook trout",
+                        "genus": "Salvelinus",
+                        "species": "fontinalis",
+                        "mean_weight": 34.4,
+                        "thinning": 0.618249,
+                        "thin_adj": 0.0499779,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 173,
+                        "cond_l": 17.7,
+                        "cond_u": 314,
+                        "ph_l": 6.45,
+                        "ph_u": 7.99,
+                        "width_l": 1.96,
+                        "width_u": 13.782,
+                        "slope_l": 0.2835,
+                        "slope_u": 9.1,
+                        "area_l": 137.9,
+                        "area_u": 11151,
+                        "depth_l": 8.38,
+                        "depth_u": 49.14,
+                        "do_l": 55.7522,
+                        "do_u": 83.0652,
+                        "tss_l": 0.0001,
+                        "tss_u": 10.7
+                    },
+                    {
+                        "species_id": 966,
+                        "common_name": "lake trout",
+                        "genus": "Salvelinus",
+                        "species": "namaycush",
+                        "mean_weight": 215,
+                        "thinning": 0.690107,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 173,
+                        "cond_l": 17.7,
+                        "cond_u": 314,
+                        "ph_l": 6.45,
+                        "ph_u": 7.99,
+                        "width_l": 1.96,
+                        "width_u": 13.782,
+                        "slope_l": 0.2835,
+                        "slope_u": 9.1,
+                        "area_l": 137.9,
+                        "area_u": 11151,
+                        "depth_l": 8.38,
+                        "depth_u": 49.14,
+                        "do_l": 55.7522,
+                        "do_u": 83.0652,
+                        "tss_l": 0.0001,
+                        "tss_u": 10.7
+                    },
+                    {
+                        "species_id": 969,
+                        "common_name": "walleye",
+                        "genus": "Sander",
+                        "species": "vitreus",
+                        "mean_weight": 162,
+                        "thinning": 0.678486,
+                        "thin_adj": 0,
+                        "rarity": 4,
+                        "huc": "04030101",
+                        "genusID": 174,
+                        "cond_l": 121,
+                        "cond_u": 3590,
+                        "ph_l": 7.49,
+                        "ph_u": 8.97,
+                        "width_l": 3.0225,
+                        "width_u": 252.1,
+                        "slope_l": null,
+                        "slope_u": null,
+                        "area_l": 1462,
+                        "area_u": 1225420,
+                        "depth_l": null,
+                        "depth_u": null,
+                        "do_l": 57.2435,
+                        "do_u": 100.049,
+                        "tss_l": null,
+                        "tss_u": null
+                    },
+                    {
+                        "species_id": 976,
+                        "common_name": "creek chub",
+                        "genus": "Semotilus",
+                        "species": "atromaculatus",
+                        "mean_weight": 33.3,
+                        "thinning": 0.617045,
+                        "thin_adj": 0.0811215,
+                        "rarity": 2,
+                        "huc": "04030101",
+                        "genusID": 179,
+                        "cond_l": 43.4,
+                        "cond_u": 597,
+                        "ph_l": 6.8,
+                        "ph_u": 8.31,
+                        "width_l": 1.3,
+                        "width_u": 14.1975,
+                        "slope_l": 0.155,
+                        "slope_u": 3.125,
+                        "area_l": 103.9,
+                        "area_u": 20334.8,
+                        "depth_l": 6.9133,
+                        "depth_u": 55.17,
+                        "do_l": 44.0511,
+                        "do_u": 96.9703,
+                        "tss_l": 0.8,
+                        "tss_u": 35.2
+                    },
+                    {
+                        "species_id": 1009,
+                        "common_name": "central mudminnow",
+                        "genus": "Umbra",
+                        "species": "limi",
+                        "mean_weight": 2.31609064460654,
+                        "thinning": 0.525842,
+                        "thin_adj": 0,
+                        "rarity": 3,
+                        "huc": "04030101",
+                        "genusID": 198,
+                        "cond_l": 53.7,
+                        "cond_u": 442,
+                        "ph_l": 5.42,
+                        "ph_u": 7.21,
+                        "width_l": 0.0293,
+                        "width_u": 7.3295,
+                        "slope_l": 0.1,
+                        "slope_u": 1.415,
+                        "area_l": 185.3,
+                        "area_u": 9311.9,
+                        "depth_l": 1.61,
+                        "depth_u": 48.06,
+                        "do_l": 35.726,
+                        "do_u": 75.6637,
+                        "tss_l": null,
+                        "tss_u": null
+                    }
+                ]
             };
-            populateFishTable(testFishData);
+            populateFishTable(testFishData["species"]);
             var fishTableData = $('#fishTable').DataTable().rows().data();
             populateFilteredFishTable(fishTableData);
-            populateCalcTable(testFishData);
+            populateCalcTable(fishTableData);
         }
 
         function populateFishTable(data) {
@@ -887,135 +3304,150 @@
                         "defaultContent": ""
                     },
                     {
-                        data: 4,
+                        data: 1,
                         title: "Common Name",
                         name: "common_name"
                     },
                     {
-                        data: 7,
+                        data: 2,
                         title: "Scientific Name",
                         name: "scientific_name"
+
                     },
                     {
-                        data: 17,
+                        data: 3,
                         title: "Genus",
                         name: "genus"
                     },
                     {
-                        data: 5,
+                        data: 7,
                         title: "Genus Id",
                         name: "genus_id"
                     },
                     {
-                        data: 9,
+                        data: 0,
                         title: "Species Id",
                         name: "species_id"
 
                     },
                     {
-                        data: 10,
-                        title: "Max Size",
-                        name: "max_size"
+                        data: 4,
+                        title: "Mean Weight",
+                        name: "mean_weight"
                     },
                     {
-                        data: 0,
+                        data: 20,
                         title: "Depth Lower",
                         name: "depth_lower"
                     },
                     {
-                        data: 6,
+                        data: 21,
                         title: "Depth Upper",
                         name: "depth_upper"
                     },
                     {
-                        data: 16,
+                        data: 14,
                         title: "Width Lower",
                         name: "width_lower"
                     },
                     {
-                        data: 21,
+                        data: 15,
                         title: "Width Upper",
                         name: "width_upper"
                     },
                     {
-                        data: 2,
+                        data: 18,
                         title: "Area Lower",
                         name: "area_lower"
                     },
                     {
-                        data: 3,
+                        data: 19,
                         title: "Area Upper",
                         name: "area_upper"
                     },
                     {
-                        data: 1,
+                        data: 24,
                         title: "TSS Lower",
                         name: "tss_lower"
                     },
                     {
-                        data: 8,
+                        data: 25,
                         title: "TSS Upper",
                         name: "tss_upper"
                     },
                     {
-                        data: 15,
+                        data: 16,
                         title: "Slope Lower",
                         name: "slope_lower"
                     },
                     {
-                        data: 11,
+                        data: 17,
                         title: "Slope Upper",
                         name: "slope_upper"
                     },
                     {
                         data: 12,
-                        title: "HUC ID",
-                        name: "huc_id"
-                    },
-                    {
-                        data: 13,
                         title: "pH Lower",
                         name: "ph_lower"
                     },
                     {
-                        data: 14,
+                        data: 13,
                         title: "pH Upper",
                         name: "ph_upper"
                     },
                     {
-                        data: 18,
+                        data: 10,
                         title: "Conductivity Lower",
                         name: "conduct_lower"
                     },
                     {
-                        data: 22,
+                        data: 11,
                         title: "Conductivity Upper",
                         name: "conduct_upper"
                     },
                     {
-                        data: 19,
+                        data: 22,
                         title: "Dissolved Oxygen Lower",
                         name: "do_lower"
                     },
                     {
-                        data: 20,
+                        data: 23,
                         title: "Dissolved Oxygen Upper",
                         name: "do_upper"
+                    },
+                    {
+                        data: 7,
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: 5,
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: 6,
+                        title: "&Delta;",
+                        name: "delta"
                     }
                 ],
                 "columnDefs": [
                     {
-                        "targets": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+                        "targets": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
                         "visible": false
                     },
                     {
                         "render": function (data, type, row) {
-                            return row[17] + ' ' + data;
+                            return data + " " + row[3];
                         },
                         "targets": 2
+                    },
+                    {
+                        width: 50, targets: 0
                     }
                 ],
                 searching: false,
+{#                "scrollY": 500,#}
                 paging: false,
                 bInfo: false,
                 "order": [[1, 'asc']]
@@ -1026,136 +3458,152 @@
         }
 
         function populateFilteredFishTable(data) {
-            var fishArray = data;
             $('#filteredFishTable').DataTable().destroy();
             $('#filteredFishTable').empty();
             var config = {
-                data: fishArray,
+                data: data,
                 "columns": [
                     {
-                        data: 4,
+                        data: 1,
                         title: "Common Name",
                         name: "common_name"
                     },
                     {
-                        data: 7,
+                        data: 2,
                         title: "Scientific Name",
                         name: "scientific_name"
+
                     },
                     {
-                        data: 17,
+                        data: 3,
                         title: "Genus",
                         name: "genus"
                     },
                     {
-                        data: 5,
+                        data: 3,
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: 7,
                         title: "Genus Id",
                         name: "genus_id"
                     },
                     {
-                        data: 9,
+                        data: 0,
                         title: "Species Id",
                         name: "species_id"
+
                     },
                     {
-                        data: 10,
-                        title: "Max Size",
-                        name: "max_size"
+                        data: 4,
+                        title: "Mean Weight",
+                        name: "mean_weight"
                     },
                     {
-                        data: 0,
+                        data: 20,
                         title: "Depth Lower",
                         name: "depth_lower"
                     },
                     {
-                        data: 6,
+                        data: 21,
                         title: "Depth Upper",
                         name: "depth_upper"
                     },
                     {
-                        data: 16,
+                        data: 14,
                         title: "Width Lower",
                         name: "width_lower"
                     },
                     {
-                        data: 21,
+                        data: 15,
                         title: "Width Upper",
                         name: "width_upper"
                     },
                     {
-                        data: 2,
+                        data: 18,
                         title: "Area Lower",
                         name: "area_lower"
                     },
                     {
-                        data: 3,
+                        data: 19,
                         title: "Area Upper",
                         name: "area_upper"
                     },
                     {
-                        data: 1,
+                        data: 24,
                         title: "TSS Lower",
                         name: "tss_lower"
                     },
                     {
-                        data: 8,
+                        data: 25,
                         title: "TSS Upper",
                         name: "tss_upper"
                     },
                     {
-                        data: 15,
+                        data: 16,
                         title: "Slope Lower",
                         name: "slope_lower"
                     },
                     {
-                        data: 11,
+                        data: 17,
                         title: "Slope Upper",
                         name: "slope_upper"
                     },
                     {
                         data: 12,
-                        title: "HUC ID",
-                        name: "huc_id"
-                    },
-                    {
-                        data: 13,
                         title: "pH Lower",
                         name: "ph_lower"
                     },
                     {
-                        data: 14,
+                        data: 13,
                         title: "pH Upper",
                         name: "ph_upper"
                     },
                     {
-                        data: 18,
+                        data: 10,
                         title: "Conductivity Lower",
-                        name: "cond_lower"
+                        name: "conduct_lower"
+                    },
+                    {
+                        data: 11,
+                        title: "Conductivity Upper",
+                        name: "conduct_upper"
                     },
                     {
                         data: 22,
-                        title: "Conductivity Upper",
-                        name: "cond_upper"
-                    },
-                    {
-                        data: 19,
                         title: "Dissolved Oxygen Lower",
                         name: "do_lower"
                     },
                     {
-                        data: 20,
+                        data: 23,
                         title: "Dissolved Oxygen Upper",
                         name: "do_upper"
+                    },
+                    {
+                        data: 7,
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: 5,
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: 6,
+                        title: "&Delta;",
+                        name: "delta"
                     }
                 ],
                 "columnDefs": [
                     {
-                        "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+                        "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
                         "visible": false
                     },
                     {
                         "render": function (data, type, row) {
-                            return row[17] + ' ' + data;
+                            return data + " " + row[3];
                         },
                         "targets": 1
                     },
@@ -1165,8 +3613,8 @@
                     }
                 ],
                 sorting: false,
-                regex: true,
                 searching: false,
+{#                "scrollY": 500,#}
                 paging: false,
                 bInfo: false
             };
@@ -1175,146 +3623,54 @@
         }
 
         function populateCalcTable(data) {
-
-
+            var d2 = JSON.parse(JSON.stringify(data));
             $('#calc_table').DataTable().destroy();
             $('#calc_table').empty();
             var config = {
-                data: data,
+                data: d2,
                 "columns": [
                     {
-                        data: 4,
-                        title: "&alpha;",
-                        name: "alpha"
-                    },
-                    {
-                        data: 7,
+                        data: 5,
                         title: "&beta;",
                         name: "beta"
                     },
                     {
-                        data: 17,
-                        title: "Biomass",
-                        name: "biomass"
-                    },
-                    {
-                        data: 5,
-                        title: "Count",
-                        name: "count"
-                    },
-                    {
-                        data: 9,
-                        title: "Species Id",
-                        name: "species_id"
-                    },
-                    {
-                        data: 10,
-                        title: "Max Size",
-                        name: "max_size"
-                    },
-                    {
-                        data: 0,
-                        title: "Depth Lower",
-                        name: "depth_lower"
-                    },
-                    {
                         data: 6,
-                        title: "Depth Upper",
-                        name: "depth_upper"
+                        title: "&Delta;",
+                        name: "delta"
                     },
                     {
-                        data: 16,
-                        title: "Width Lower",
-                        name: "width_lower"
+                        data: 4,
+                        title: "W&#772;",
+                        name: "mean_weight"
                     },
                     {
-                        data: 21,
-                        title: "Width Upper",
-                        name: "width_upper"
+                        data: 26,
+                        title: "Biomass(kg)",
+                        name: "biomass",
+                        defaultContent: ''
                     },
                     {
-                        data: 2,
-                        title: "Area Lower",
-                        name: "area_lower"
-                    },
-                    {
-                        data: 3,
-                        title: "Area Upper",
-                        name: "area_upper"
-                    },
-                    {
-                        data: 1,
-                        title: "TSS Lower",
-                        name: "tss_lower"
-                    },
-                    {
-                        data: 8,
-                        title: "TSS Upper",
-                        name: "tss_upper"
-                    },
-                    {
-                        data: 15,
-                        title: "Slope Lower",
-                        name: "slope_lower"
-                    },
-                    {
-                        data: 11,
-                        title: "Slope Upper",
-                        name: "slope_upper"
-                    },
-                    {
-                        data: 12,
-                        title: "HUC ID",
-                        name: "huc_id"
-                    },
-                    {
-                        data: 13,
-                        title: "pH Lower",
-                        name: "ph_lower"
-                    },
-                    {
-                        data: 14,
-                        title: "pH Upper",
-                        name: "ph_upper"
-                    },
-                    {
-                        data: 18,
-                        title: "Conductivity Lower",
-                        name: "cond_lower"
-                    },
-                    {
-                        data: 22,
-                        title: "Conductivity Upper",
-                        name: "cond_upper"
-                    },
-                    {
-                        data: 19,
-                        title: "Dissolved Oxygen Lower",
-                        name: "do_lower"
-                    },
-                    {
-                        data: 20,
-                        title: "Dissolved Oxygen Upper",
-                        name: "do_upper"
+                        data: 27,
+                        title: "Count",
+                        name: "count",
+                        defaultContent: ''
                     }
                 ],
                 "columnDefs": [
                     {
-                        "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
-                        "visible": false
-                    },
-                    {
                         "bSortable": false,
-                        "aTargets": [0, 1, 2, 3]
+                        "aTargets": [0, 1, 2, 3, 4]
                     }
                 ],
                 sorting: false,
-                regex: true,
+{#                regex: true,#}
                 searching: false,
+{#                "scrollY": 500,#}
+{#                "scrollX": true,#}
                 paging: false,
                 bInfo: false
             };
-            {#            $('#calc_table').closest('div').show();#}
             $('#calc_table').DataTable(config);
         }
 
@@ -1363,6 +3719,7 @@
                     }
                 }
             });
+            selectedHuc = hucID.substring(0, 8);
             return huc8;
         }
 
@@ -1401,49 +3758,131 @@
             return false;
         }
 
-    </script>
-    <script>
+        function startCalculation() {
+            var test = document.getElementById('biomass_weight');
+            if (document.getElementById('biomass_weight').checked) {
+                calculateAbundanceFromBiomass(10000);
+            }
+            else {
+                calculateAbundanceFromCount(Number($('#biomass_field').val()));
+            }
+            endLoad();
+        }
 
-        {#        $(function () {#}
-        {#            $("#rarity_range").slider({#}
-        {#                range: true,#}
-        {#                min: 1,#}
-        {#                max: 10,#}
-        {#                values: [1, 10],#}
-        {#                slide: function (event, ui) {#}
-        {#                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);#}
-        {#                }#}
-        {#            });#}
-        {#            $("#rarity_value").val($("#rarity_range").slider("values", 0) +#}
-        {#                " - " + $("#rarity_range").slider("values", 1));#}
-        {##}
-        {#        });#}
-        {##}
-        {# Accordion JS #}
-        {##}
-        {#        function expandFilter() {#}
-        {#            var acc = document.getElementsByClassName("accordion");#}
-        {#            var i;#}
-        {##}
-        {#            for (i = 0; i < acc.length; i++) {#}
-        {#                acc[i].onclick = function () {#}
-        {#                    this.classList.toggle("active");#}
-        {#                    var panel = this.nextElementSibling;#}
-        {#                    if (panel.style.maxHeight) {#}
-        {#                        panel.style.maxHeight = null;#}
-        {#                    } else {#}
-        {#                        panel.style.maxHeight = panel.scrollHeight + "px";#}
-        {#                    }#}
-        {#                }#}
-        {#            }#}
-        {#            return false;#}
-        {#        }#}
+        function calculateAbundanceFromCount(c) {
+            var fishList = $('#calc_table').DataTable();
+            var beta = fishList.column(0).data();
+            var delta = fishList.column(1).data();
+            var mW = fishList.column(2).data();
+
+            // Calculating abundance for each fish.
+            var A = mW.map(function (W, i) {
+                return Math.pow(W, -(beta[i] - delta[i]));
+            });
+            // Sum of abundance
+            var sumA = A.reduce(function (pv, cv) {
+                return pv + cv;
+            }, 0);
+
+            // Relative abundance
+            var RA = A.map(function (a) {
+                return a / sumA;
+            });
+
+            // Species Count
+            var count = RA.map(function (ra) {
+                return Math.round(ra * c);
+            });
+
+            // Biomass for each species
+            var BM = count.map(function (cnt, i) {
+                return Number(((cnt * mW[i]) / 1000).toFixed(1));
+            });
+
+            var fishData = fishList.data().map(function (f, i) {
+                if (searchCount > 0) {
+                    f.pop();
+                    f.pop();
+                }
+                f.push(BM[i]);
+                f.push(count[i]);
+                return f;
+            });
+            searchCount++;
+            populateCalcTable(fishData);
+        }
+
+        function calculateAbundanceFromBiomass(c) {
+            var B = Number($('#biomass_field').val());
+
+            var fishList = $('#calc_table').DataTable();
+            var beta = fishList.column(0).data();
+            var delta = fishList.column(1).data();
+            var mW = fishList.column(2).data();
+
+            // Calculating abundance for each fish.
+            var A = mW.map(function (W, i) {
+                return Math.pow(W, -(beta[i] - delta[i]));
+            });
+            // Sum of abundance
+            var sumA = A.reduce(function (pv, cv) {
+                return pv + cv;
+            }, 0);
+
+            // Relative abundance
+            var RA = A.map(function (a) {
+                return a / sumA;
+            });
+
+            var E = 0; // ERROR value;
+            while (E < 0.95 || E > 1.05) {
+                // Species Count
+                var count = RA.map(function (ra) {
+                    return Math.round(ra * c);
+                });
+
+                var BM = count.map(function (cnt, i) {
+                    return Number(((cnt * mW[i]) / 1000).toFixed(1));
+                });
+                // Sun of biomass
+                var sumBM = BM.reduce(function (pv, cv) {
+                    return pv + cv;
+                }, 0);
+
+                // Adjustment of ERROR. Count is modified by the ERROR value.
+                E = B / sumBM;
+                c = E * c;
+            }
+            var fishData = fishList.data().map(function (f, i) {
+                if (searchCount > 0) {
+                    f.pop();
+                    f.pop();
+                }
+                f.push(BM[i]);
+                f.push(count[i]);
+                return f;
+            });
+            searchCount++;
+            populateCalcTable(fishData);
+        }
+
+        function startLoad() {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("loader_background").style.display = "block";
+        }
+
+        function endLoad() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("loader_background").style.display = "none";
+        }
 
     </script>
 </head>
 <body>
 <div class="panel-display panel-1col clearfix">
     <div class="panel-panel panel-col">
+        <div id="loader" style="display:none;"></div>
+        <div id="loader_background" style="display:none"></div>
 
         <!--- content div -->
         <div class="col-md-10">
@@ -1456,7 +3895,6 @@
                     <div id="basemaps-wrapper" class="leaflet-bar">
                         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
                             <option value="Imagery">Imagery</option>
-                            {#                            <option value="Topographic">Topographic</option>#}
                             <option value="Streets">Streets</option>
                             <option value="NationalGeographic">National Geographic</option>
                             <option value="ShadedRelief">Shaded Relief</option>
@@ -1464,45 +3902,42 @@
                     </div>
                 </div>
                 <br class="row" id="streamData">
-                <div id="fish_filters">
+                <div id="fish_filters" style="display:none;">
                     <button class="accordion">Fish Assemblage Filters</button>
                     <div class="panel" id="assemblage_filters" style="overflow: hidden;">
-
                         <div class="fish_filter">
                             <input id="rarity_filter" type="button" name="rarity_23" value="Rarity" class="filterButton"
                                    align="center" title="Filter fish by rarity.">
-                            {#                            <br>#}
-                            {#                            <label for="rarity_value"></label>#}
                             <input title="Rarity Range" type="text" id="rarity_value" readonly
                                    style="border:0; color:black; font-weight:bold; font-size: 10px; text-align: center; background-color: transparent;height: 10px;vertical-align: super;">
                             <div id="rarity_range" style="width: 75%; margin: -7px 0 3px 15%;"></div>
                         </div>
                         <div class="fish_filter">
-                            <input id="depth_filter" type="button" name="depth_6_7" value="Depth" class="filterButton"
+                            <input id="depth_filter" type="button" name="depth_7_8" value="Depth" class="filterButton"
                                    align="center" title="Filter fish by stream depth."><br>
                             <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"
                                    title="Enter a value in centimeters.">
                         </div>
                         <div class="fish_filter">
-                            <input id="width_filter" type="button" name="width_8_9" value="Width" class="filterButton"
+                            <input id="width_filter" type="button" name="width_9_10" value="Width" class="filterButton"
                                    align="center" title="Filter fish by stream width."><br>
                             <input type="text" id="filter_field" class="width_value" placeholder="(m)"
                                    title="Enter a value in meters.">
                         </div>
                         <div class="fish_filter">
-                            <input id="area_filter" type="button" name="area_10_11" value="Area" class="filterButton"
+                            <input id="area_filter" type="button" name="area_11_12" value="Area" class="filterButton"
                                    align="center" title="Filter fish by stream drainage area."><br>
                             <input type="text" id="filter_field" class="area_value" placeholder="(ha)"
                                    title="Enter a value in hectares.">
                         </div>
                         <div class="fish_filter">
-                            <input id="slope_filter" type="button" name="slope_14_15" value="Slope" class="filterButton"
+                            <input id="slope_filter" type="button" name="slope_15_16" value="Slope" class="filterButton"
                                    align="center" title="Filter fish by stream slope."><br>
                             <input type="text" id="filter_field" class="slope_value" placeholder="(%)"
                                    title="Enter a value as a percent grade.">
                         </div>
                         <div class="fish_filter">
-                            <input id="tss_filter" type="button" name="tss_12_13" value="TSS" class="filterButton"
+                            <input id="tss_filter" type="button" name="tss_13_14" value="TSS" class="filterButton"
                                    align="center" title="Filter fish by stream tss."><br>
                             <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"
                                    title="Enter a value in milligrams per liter.">
@@ -1529,16 +3964,17 @@
                     </div>
                 </div>
                 <br>
-                <div class="envelope_toggle detailed" id="envelope_toggle">
+                <div class="envelope_toggle detailed" id="envelope_toggle" style="display:none;">
                     <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"
                            id="myenvelope_toggle"
                            checked>
-                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type" style="display:none;">
+                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type"
+                           style="display:none;">
                         <span class="envelope_toggle-inner"></span>
                         {#                        <span class="envelope_toggle-switch"></span>#}
                     </label>
                 </div>
-                <div class="huc_calc_toggle huc_table" id="huc_calc_toggle">
+                <div class="huc_calc_toggle huc_table" id="huc_calc_toggle" style="display:none;">
                     <input type="checkbox" name="huc_calc_toggle" class="huc_calc_toggle-checkbox"
                            id="in_huc_calc_toggle"
                            checked>
@@ -1549,14 +3985,14 @@
                 </div>
                 <div class="col-md-12">
                     <div id="error_msg"></div>
-                    <div id="hucFish">
+                    <div id="hucFish" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
-                        <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
+                        <table id="fishTable" class="display compact hover" cellspacing="0" width="100%"
+                               style="table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th></th>
                                 <th>Scientific Name</th>
-                                {#                                <th>Species</th>#}
                                 <th>Genus</th>
                                 <th>Genus ID</th>
                                 <th>Species ID</th>
@@ -1582,24 +4018,26 @@
                             </thead>
                         </table>
                     </div>
-                    <div id="abundance_calc">
+                    <div id="abundance_calc" style="display:none;">
                         <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
                         <table id="calc_table" class="display compact hover" cellspacing="0"
-                               style="float: left;width:95%; margin: 0 3px;">
+                               style="float: left; margin: 0 3px; table-layout: auto;"
+                               title="Click on &beta; and W&#772; to modify values.">
                             <thead>
                             <tr>
-                                <td>&alpha;</td>
                                 <td>&beta;</td>
+                                <td>&Delta;</td>
+                                <td>W&#772;</td>
                                 <td>Count</td>
                                 <td>Biomass</td>
                             </tr>
                             </thead>
                         </table>
-                        <div style="float:right; width: 50%;">
+                        <div style="float:right; width: 30%;">
                             <div style="float:left; width: 55%;">
-                                <input type="text" id="biomass_field" class="biomass_value" placeholder="biomass in (g)"
+                                <input type="text" id="biomass_field" class="biomass_value" placeholder="biomass (kg)"
                                        style="float:left; width:90%; font-size: 12px;"
-                                       title="Enter a total biomass for the selected stream segment.">
+                                       title="Enter a total biomass (kg) for the selected stream segment.">
                             </div>
                             <div style="float:right; width: 45%;">
                                 <input type="radio" id="biomass_weight" class="biomass_weight_value" name="biomass"
@@ -1614,28 +4052,27 @@
                                     count</label>
                             </div>
                             <div style="float: left;">
-                                <input style="margin: 25px 10px 10px 10px;" type="button" id="biomass_submit"
+                                <input style="" type="button" id="biomass_submit"
                                        class="biomass_button"
                                        name="biomass_button"
                                        value="Calculate" title="Calculate fish assemblage biomass.">
-                                <input style="margin: 25px 10px 10px 10px;" type="button" id="biomass_reset"
+                                <input style="" type="button" id="biomass_reset"
                                        class="biomass_reset_button"
                                        name="biomass_reset_button"
-                                       value="Reset" title="Reset &alpha; and &beta; coefficients.">
+                                       value="Reset" title="Reset &beta; and W&#772; coefficients.">
 
                             </div>
                         </div>
                     </div>
                     <div id="fish_assemblage_estimator"
-                         style="width:45%; margin:0px 55px 0px 5px; display: inline-block; float: right;">
+                         style="width:45%; margin:0px 55px 0px 5px; display: none; float: right; left:0;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
-                               style="padding: 0 2px; margin: 0 2px;">
+                               style="padding: 0 2px; margin: 0 2px;table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th>Common Name</th>
                                 <th>Scientific Name</th>
-                                <th>Count</th>
                             </tr>
                             </thead>
                         </table>
