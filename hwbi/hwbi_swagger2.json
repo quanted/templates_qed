@@ -109,38 +109,10 @@
         }
       }
     },
-    "/calc/run": {
-      "post": {
-        "tags": [
-          "calc"
-        ],
-        "summary": "Calculate HWBI score based on estimated economic, social, and ecosystem service scores.",
-        "description": "The /calc endpoint uses 22 user-supplied economic, ecosystem, and social services values to calculate eight domains of well-being (Connection to Nature, Cultural Fulfillment, Education, Health, Leisure Time, Living Standards, Safety & Security, and Social Cohesion). These domains of well-being are then weighed based on 8 user-supplied “relative importance values” and are used to determine the overall HWBI score.",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "input scores",
-            "description": "HWBI service scores and relative important weights",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Input"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful return"
-          },
-          "default": {
-            "description": "Unexpected error"
-          }
-        }
-      }
-    },
     "/calc":  {
       "post": {
         "tags": [
-          "calc"
+          "locations"
         ],
         "summary": "Retrieve information for HWBI calc endpoint.",
         "description": "The /calc endpoint retrieves meta data and relative links.",
@@ -153,13 +125,13 @@
           }
         }
       }
-    },
+    },   
     "/calc/inputs":  {
       "post": {
         "tags": [
           "calc"
         ],
-        "summary": "Retrieve input information for HWBI locations endpoint.",
+        "summary": "Retrieve input information for HWBI calc endpoint.",
         "description": "The /calc/inputs endpoint retrieves meta data about inputs for /calc/run endpoint.",
         "responses": {
           "200": {
@@ -176,7 +148,7 @@
         "tags": [
         "calc"
       ],
-      "summary": "Retrieve input information for HWBI locations endpoint.",
+      "summary": "Retrieve input information for HWBI calc endpoint.",
       "description": "The /calc/outputs endpoint retrieves meta data about outputs for /calc/run endpoint.",
       "responses": {
         "200": {
@@ -188,6 +160,34 @@
       }
     }
   },
+  "/calc/run": {
+    "post": {
+      "tags": [
+        "calc"
+      ],
+      "summary": "Calculate HWBI score based on estimated economic, social, and ecosystem service scores.",
+      "description": "The /calc endpoint uses 22 user-supplied economic, ecosystem, and social services values to calculate eight domains of well-being (Connection to Nature, Cultural Fulfillment, Education, Health, Leisure Time, Living Standards, Safety & Security, and Social Cohesion). These domains of well-being are then weighed based on 8 user-supplied “relative importance values” and are used to determine the overall HWBI score.",
+      "parameters": [
+        {
+          "in": "body",
+          "name": "input scores",
+          "description": "HWBI service scores and relative important weights",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Input"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful return"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
+    }
+  }
   },
   "definitions": {
     "Location": {
