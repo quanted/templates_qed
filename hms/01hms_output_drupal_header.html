@@ -92,7 +92,7 @@
                 if (i === 0) {
                     var date = [];
                     c.map(function (e) {
-                        date.push(e.substring(0, 10));
+                        date.push(e.substring(0, 13));
                     });
                     date.unshift(columnNames[i]);
                     data.push(date);
@@ -105,10 +105,11 @@
             var chart;
             if (columnNames.length === 2) {
                 $("#chartContainerTop").show();
-                cart = c3.generate({
+                chart = c3.generate({
                     bindto: '#compareChart',
                     data: {
                         x: columnNames[0],
+                        xFormat: '%Y-%m-%d %H',
                         columns: [
                             data[0],
                             data[1],
@@ -120,13 +121,13 @@
                             tick: {
                                 fit: true,
                                 count: 8,
-                                format: '%Y-%m-%d'
+                                format: '%Y-%m-%d %H'
                             },
                             label: {
                                 text: '{{ LABEL }}',
                                 position: 'outer-center'
                             },
-                            margin: {right: 25}
+{#                            margin: {right: 25}#}
                         },
                         y: {
                             label: {
@@ -143,6 +144,10 @@
                     },
                     legend: {
                         show: false
+                    },
+                    zoom: {
+                        enabled: true,
+                        rescale: true
                     }
                 });
             }
@@ -182,6 +187,9 @@
                     },
                     point: {
                         show: false
+                    },
+                    zoom: {
+                        rescale: true
                     }
                 });
                 setTimeout(function () {
