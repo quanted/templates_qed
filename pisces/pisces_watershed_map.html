@@ -645,12 +645,12 @@
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
                     '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
-                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"] + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
-                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
-                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"] + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
                     '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
-                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>A (L=A*W<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                    '<tr><td>B (L=A*W<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
                     {#                    '<tr><td>C (W=C*L<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +#}
                     {#                    '<tr><td>D (W=C*L<sup>D</sup>)</td><td>' + details["l_w_d"] + ' </td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +#}
                     '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
@@ -670,8 +670,8 @@
             function calculateFishWeight() {
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
-                    var length = a * Math.pow(L, b);
-                    $('#fish_weight').val(length);
+                    var weight = Math.pow(L/a, 1/b).toFixed(1);
+                    $('#fish_weight').val(weight);
                 }
                 else {
                     $('#fish_weight').val("");
@@ -681,8 +681,8 @@
             function calculateFishLength() {
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
-                    var weight = Math.pow(W/a, 1/b);
-                    $('#fish_length').val(weight);
+                    var length = (a * Math.pow(W, b)).toFixed(1);
+                    $('#fish_length').val(length);
                 }
                 else {
                     $('#fish_length').val("");
