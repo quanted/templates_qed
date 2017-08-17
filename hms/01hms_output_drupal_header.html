@@ -215,7 +215,8 @@
                 d3.selectAll(".c3 text").style({'font-size': '8px'});
                 var bBox = chart.children()[0].getBBox();
                 var svgString = getSVGString(svg.node());
-                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);
+{#                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);#}
+                svgString2Image(svgString, chart[0].clientWidth, chart[0].clientHeight, 'png', save);
 
                 function save(dataBlob, filesize) {
                     saveAs(dataBlob, 'hms_timeseries_chart')
