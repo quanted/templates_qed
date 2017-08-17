@@ -194,9 +194,12 @@
                         rescale: true
                     }
                 });
-                setTimeout(function () {
-                    chart.load({columns: [data[2], data[3], data[4]]});
-                }, 1000);
+                setTimeout(data.forEach(function (d) {
+                    chart.load({columns: [d]});
+                    }), 1000);
+{#                setTimeout(function () {#}
+{#                    chart.load({columns: [data[2], data[3], data[4]]});#}
+{#                }, 1000);#}
             }
 
             $('#pane-content').focus();
