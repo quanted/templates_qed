@@ -140,11 +140,15 @@
             margin: 5px 0 !important;
             white-space: nowrap !important;
             padding: 0 !important;
-            box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 5px 5px #999 !important;
+            box-shadow: inset 0px 1px 0px #2ab7ec, 0px 1px 0px 0px #07526e, 0px 4px 4px #999 !important;
         }
 
         .filterButton:hover {
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .filterApplyButton {
+            padding: 1.5em 1.1765em !important;
         }
 
         .fish_filter {
@@ -152,7 +156,13 @@
             padding: 2px 4px 4px 4px;
             background-color: transparent;
         {#            width: 11%;#} width: 9%;
-            margin: 0 1px;
+            margin: 1px 1px;
+            display: inline-block;
+        }
+
+        .fish_filter_apply {
+            width: 8%;
+            margin: 1px 1px;
             display: inline-block;
         }
 
@@ -226,7 +236,7 @@
         }
 
         div.filtering {
-            background-color: #0099FF;
+            background-color: #86C1FF;
         }
 
         {# flipswitch css #}
@@ -450,7 +460,7 @@
 
         #loader_background {
             background-color: rgba(255, 255, 255, 0.5);
-            z-index: 995;
+            z-index: 998;
             position: absolute;
             height: 625px;
             width: 100%;
@@ -500,18 +510,22 @@
 
             $(document).on("click", ".filterButton", (function (event) {
                 var input = $(this).closest('div');
-                updateFilters(input);
-                var filteredData = $('#filteredFishTable').DataTable().data();
-                populateCalcTable(filteredData);
+                toggleFilter(input);
             }));
 
-            $(document).on('input', "#filter_field", function (event) {
-                var input = $(this.closest('div'));
-                if (input.hasClass("filtering")) {
-                    updateFilters(input);
-                    var filteredData = $('#filteredFishTable').DataTable().data();
-                    populateCalcTable(filteredData);
-                }
+{#            $(document).on('input', "#filter_field", function (event) {#}
+{#                var input = $(this.closest('div'));#}
+{#                if (input.hasClass("filtering")) {#}
+{#                    toggleFilter(input);#}
+{#                }#}
+{#            });#}
+
+            $(document).on('click', '#filter_apply', function (event) {
+                startLoad();
+                setTimeout(applyFilters(), 1000);
+                //var filteredData = $('#filteredFishTable').DataTable().data();
+                //startLoad();
+                //setTimeout(populateCalcTable(filteredData), 2000);
             });
 
             $('#fishTable').on('click', 'td.details-control', function () {
@@ -567,6 +581,7 @@
             $('#biomass_reset').on('click', function () {
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
+{#                searchCount = 0;#}
             });
 
             $('#calc_table').on('click', 'td', function (e) {
@@ -609,8 +624,57 @@
         }
 
         function resetFilters() {
-            $("#assemblage_filters");
-            // Iterate over each filter and if hasClass(filtering) remove it and revert all values back to ""
+                var filters = $("#assemblage_filters").find(".filtering");
+                filters.map(function(f){
+                    $(this).removeClass('filtering');
+                });
+        }
+
+        function toggleFilter(input) {
+            if (input.hasClass("filtering")) {
+                input.removeClass('filtering');
+            }
+            else {
+                input.addClass('filtering');
+            }
+        }
+
+        function applyFilters() {
+            var fishTable = $('#fishTable').DataTable();
+            var filters = $("#assemblage_filters").find(".filtering");
+            var resetData = fishTable.rows().data();
+            populateFilteredFishTable(resetData);
+            fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
+            if (filters.length !== 0) {
+                var filteredTable = $('#filteredFishTable').DataTable();
+                var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
+                filters.map(function (index) {
+                    var filterName = filters[index].firstElementChild.name.split('_');
+                    var notInTable;
+                    if (filterName[0] === "rarity") {
+                        notInTable = filterRarity(Number(filterName[1]));      // TODO: Update n to column value for rarity from request
+                    }
+                    else {
+                        notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
+                    }
+                    for (var i = 0; i < notInTable.length; i++) {
+                        var v = notInTable[i];
+                        if (inTable.indexOf(v) !== -1) {
+                            inTable.splice(inTable.indexOf(v), 1);
+                        }
+                    }
+                });
+                var filterData = filteredTable.rows(inTable).data();
+                var genusIDs = filteredTable.cells(inTable, 6).data().toArray();
+                fishTable.column(6, {order: 'index'}).data().filter(function (value, index) {
+                    if (genusIDs.indexOf(value) >= 0) {
+                        fishTable.row(index, {order: 'index'}).nodes().to$().addClass('filteredInFishTable');
+                    }
+                });
+                populateFilteredFishTable(filterData);
+                populateCalcTable(filterData);
+            }
+            endLoad();
         }
 
         function updateFilters(input) {
@@ -728,8 +792,8 @@
             $('#huc_calc_toggle').closest('div').show();
             setTimeout(getStreamData(e.latlng.lat, e.latlng.lng), 1);
             resetFilters();
-            getFishData();
-            //getTESTFishData();
+            //getFishData();
+            getTESTFishData();
         }
 
         function getStreamData(lat, lng) {
@@ -3449,7 +3513,7 @@
                     }
                 ],
                 searching: false,
-{#                "scrollY": 500,#}
+                {#                "scrollY": 500,#}
                 paging: false,
                 bInfo: false,
                 "order": [[1, 'asc']]
@@ -3616,7 +3680,7 @@
                 ],
                 sorting: false,
                 searching: false,
-{#                "scrollY": 500,#}
+                {#                "scrollY": 500,#}
                 paging: false,
                 bInfo: false
             };
@@ -3666,10 +3730,10 @@
                     }
                 ],
                 sorting: false,
-{#                regex: true,#}
+                {#                regex: true,#}
                 searching: false,
-{#                "scrollY": 500,#}
-{#                "scrollX": true,#}
+                {#                "scrollY": 500,#}
+                {#                "scrollX": true,#}
                 paging: false,
                 bInfo: false
             };
@@ -3710,6 +3774,7 @@
                 fillOpacity: 0.3
             }).addTo(map);
             map.fitBounds(selectedStream.getBounds());
+{#            searchCount = 0;#}
         }
 
         function getStreamHuc(hucID) {
@@ -3802,7 +3867,7 @@
             });
 
             var fishData = fishList.data().map(function (f, i) {
-                if (searchCount > 0) {
+                if (f.length == 28) {
                     f.pop();
                     f.pop();
                 }
@@ -3810,7 +3875,6 @@
                 f.push(count[i]);
                 return f;
             });
-            searchCount++;
             populateCalcTable(fishData);
         }
 
@@ -3856,7 +3920,7 @@
                 c = E * c;
             }
             var fishData = fishList.data().map(function (f, i) {
-                if (searchCount > 0) {
+                if (f.length == 28) {
                     f.pop();
                     f.pop();
                 }
@@ -3864,7 +3928,6 @@
                 f.push(count[i]);
                 return f;
             });
-            searchCount++;
             populateCalcTable(fishData);
         }
 
@@ -3963,26 +4026,20 @@
                             <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"
                                    title="Enter a value as percentage.">
                         </div>
+                        <div class="fish_filter_apply">
+                            <input id="filter_apply" type="button" name="filter_apply_button" value="Apply Filters"
+                                   class="filterApplyButton" align="center"
+                                   title="Apply filters that have been selected.">
+                        </div>
                     </div>
                 </div>
                 <br>
-                <div class="envelope_toggle detailed" id="envelope_toggle" style="display:none;">
-                    <input type="checkbox" name="envelope_toggle" class="envelope_toggle-checkbox"
-                           id="myenvelope_toggle"
-                           checked>
-                    <label class="envelope_toggle-label" for="myenvelope_toggle" title="Toggle Envelope Type"
-                           style="display:none;">
-                        <span class="envelope_toggle-inner"></span>
-                        {#                        <span class="envelope_toggle-switch"></span>#}
-                    </label>
-                </div>
                 <div class="huc_calc_toggle huc_table" id="huc_calc_toggle" style="display:none;">
                     <input type="checkbox" name="huc_calc_toggle" class="huc_calc_toggle-checkbox"
                            id="in_huc_calc_toggle"
                            checked>
                     <label class="huc_calc_toggle-label" for="in_huc_calc_toggle" title="Toggle Abundance Calculator">
                         <span class="huc_calc_toggle-inner"></span>
-                        {#                        <span class="envelope_toggle-switch"></span>#}
                     </label>
                 </div>
                 <div class="col-md-12">
@@ -4054,15 +4111,16 @@
                                     count</label>
                             </div>
                             <div style="float: left;">
-                                <input style="" type="button" id="biomass_submit"
+                                <input style="margin-top: 15px;" type="button" id="biomass_submit"
                                        class="biomass_button"
                                        name="biomass_button"
                                        value="Calculate" title="Calculate fish assemblage biomass.">
-                                <input style="" type="button" id="biomass_reset"
+                            </div>
+                            <div style="float: left;">
+                                <input style="margin: 5px; padding: 10px 20px;" type="button" id="biomass_reset"
                                        class="biomass_reset_button"
                                        name="biomass_reset_button"
-                                       value="Reset" title="Reset &beta; and W&#772; coefficients.">
-
+                                       value="Restore to Defaults" title="Reset thinning coefficient and mean weight.">
                             </div>
                         </div>
                     </div>
