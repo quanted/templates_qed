@@ -211,7 +211,7 @@
             max-height: 0;
             overflow: hidden;
             text-align: center;
-        {#        transition: max-height 0.2s ease-out;#}
+            transition: max-height 0.2s ease-out;
         }
 
         button.accordion:after {
@@ -240,79 +240,79 @@
         }
 
         {# flipswitch css #}
-        .envelope_toggle {
-            position: relative;
-            width: 50%;
-            height: 24px;
-        {#            margin: 0px 0px 10px 5%;#} float: left;
-        {#            display: block;#} -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .envelope_toggle-checkbox {
-            display: none;
-        }
-
-        .envelope_toggle-label {
-            display: block;
-            overflow: hidden;
-            cursor: pointer;
-        {#            border: 2px solid #75A6D9;#} border-radius: 6px;
-            width: 120px;
-            box-shadow: 0px 2px 2px black;
-            float: right;
-            margin-right: 10px;
-        }
-
-        .envelope_toggle-inner {
-            display: block;
-            width: 200%;
-            margin-left: -100%;
-            transition: margin 0.3s ease-in 0s;
-        }
-
-        .envelope_toggle-inner:before, .envelope_toggle-inner:after {
-            display: block;
-            float: left;
-            width: 50%;
-            height: 24px;
-            padding: 0;
-            line-height: 24px;
-            font-size: 12px;
-            color: white;
-            font-family: Trebuchet, Arial, sans-serif;
-            font-weight: bold;
-            box-sizing: border-box;
-        }
-
-        .envelope_toggle-inner:before {
-            content: "Detailed Envelope";
-            background-color: #86C1FF;
-            text-align: center;
-            color: #FFFFFF;
-        }
-
-        .envelope_toggle-inner:after {
-            content: "Rounded Envelope";
-        {#            padding-right: 10px;#} background-color: #EEEEEE;
-            text-align: center;
-            color: #999999;
-        }
-
-        .envelope_toggle-switch {
-            display: block;
-            width: 13px;
-            margin: 5.5px;
-            background: #FFFFFF;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 72px;
-            border: 2px solid #75A6D9;
-            border-radius: 6px;
-            transition: all 0.3s ease-in 0s;
-        }
+{#        .envelope_toggle {#}
+{#            position: relative;#}
+{#            width: 50%;#}
+{#            height: 24px;#}
+        {#            margin: 0px 0px 10px 5%;#}
+        {#            display: block;#}
+{#            -moz-user-select: none;#}
+{#            -ms-user-select: none;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-checkbox {#}
+{#            display: none;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-label {#}
+{#            display: block;#}
+{#            overflow: hidden;#}
+{#            cursor: pointer;#}
+        {#            border: 2px solid #75A6D9;#}
+{#            width: 120px;#}
+{#            box-shadow: 0px 2px 2px black;#}
+{#            float: right;#}
+{#            margin-right: 10px;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-inner {#}
+{#            display: block;#}
+{#            width: 200%;#}
+{#            margin-left: -100%;#}
+{#            transition: margin 0.3s ease-in 0s;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-inner:before, .envelope_toggle-inner:after {#}
+{#            display: block;#}
+{#            float: left;#}
+{#            width: 50%;#}
+{#            height: 24px;#}
+{#            padding: 0;#}
+{#            line-height: 24px;#}
+{#            font-size: 12px;#}
+{#            color: white;#}
+{#            font-family: Trebuchet, Arial, sans-serif;#}
+{#            font-weight: bold;#}
+{#            box-sizing: border-box;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-inner:before {#}
+{#            content: "Detailed Envelope";#}
+{#            background-color: #86C1FF;#}
+{#            text-align: center;#}
+{#            color: #FFFFFF;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-inner:after {#}
+{#            content: "Rounded Envelope";#}
+        {#            padding-right: 10px;#}
+{#            text-align: center;#}
+{#            color: #999999;#}
+{#        }#}
+{##}
+{#        .envelope_toggle-switch {#}
+{#            display: block;#}
+{#            width: 13px;#}
+{#            margin: 5.5px;#}
+{#            background: #FFFFFF;#}
+{#            position: absolute;#}
+{#            top: 0;#}
+{#            bottom: 0;#}
+{#            right: 72px;#}
+{#            border: 2px solid #75A6D9;#}
+{#            border-radius: 6px;#}
+{#            transition: all 0.3s ease-in 0s;#}
+{#        }#}
 
         .envelope_toggle-checkbox:checked + .envelope_toggle-label .envelope_toggle-inner {
             margin-left: 0;
@@ -455,7 +455,7 @@
             height: 100px;
             -webkit-animation: spin 1s linear infinite;
             animation: spin 1s linear infinite;
-            transition: ease-in-out;
+            transition: 0.5s ease-in-out;
         }
 
         #loader_background {
@@ -491,7 +491,6 @@
 
     <script>
 
-        var searchCount = 0;
         var selectedHuc;
         $(document).ready(function () {
 
@@ -513,19 +512,9 @@
                 toggleFilter(input);
             }));
 
-{#            $(document).on('input', "#filter_field", function (event) {#}
-{#                var input = $(this.closest('div'));#}
-{#                if (input.hasClass("filtering")) {#}
-{#                    toggleFilter(input);#}
-{#                }#}
-{#            });#}
-
             $(document).on('click', '#filter_apply', function (event) {
                 startLoad();
-                setTimeout(applyFilters(), 1000);
-                //var filteredData = $('#filteredFishTable').DataTable().data();
-                //startLoad();
-                //setTimeout(populateCalcTable(filteredData), 2000);
+                setTimeout(applyFilters(), 2000);
             });
 
             $('#fishTable').on('click', 'td.details-control', function () {
@@ -548,12 +537,10 @@
                 if (!button[0].classList.contains("detailed")) {
                     button.removeClass("rounded");
                     button.addClass("detailed");
-                    // either make new call to server for detailed values or change columns used to populate table.
                 }
                 else {
                     button.removeClass("detailed");
                     button.addClass("rounded");
-                    // either make new call to server for rounded values or change columns used to populate table.
                 }
             });
 
@@ -575,13 +562,12 @@
 
             $('#biomass_submit').on('click', function () {
                 startLoad();
-                setTimeout(startCalculation(), 1);
+                setTimeout(startCalculation(), 1000);
             });
 
             $('#biomass_reset').on('click', function () {
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
-{#                searchCount = 0;#}
             });
 
             $('#calc_table').on('click', 'td', function (e) {
@@ -596,7 +582,6 @@
                 var v = this.childNodes[0].value;
                 $('#calc_table').DataTable().cell(this).data(v).draw();
             });
-
         });
 
         function toggleCalculator(e) {
@@ -675,49 +660,6 @@
                 populateCalcTable(filterData);
             }
             endLoad();
-        }
-
-        function updateFilters(input) {
-            var fishTable = $('#fishTable').DataTable();
-            if (input.hasClass("filtering")) {
-                input.removeClass('filtering');
-            }
-            else {
-                input.addClass('filtering');
-            }
-            var filters = $("#assemblage_filters").find(".filtering");
-            var resetData = fishTable.rows().data();
-            populateFilteredFishTable(resetData);
-            fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
-            if (filters.length !== 0) {
-                var filteredTable = $('#filteredFishTable').DataTable();
-                var inTable = Array.apply(null, {length: fishTable.rows().count()}).map(Function.call, Number);
-                filters.map(function (index) {
-                    var filterName = filters[index].firstElementChild.name.split('_');
-                    var notInTable;
-                    if (filterName[0] === "rarity") {
-                        notInTable = filterRarity(Number(filterName[1]));      // TODO: Update n to column value for rarity from request
-                    }
-                    else {
-                        notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
-                    }
-                    for (var i = 0; i < notInTable.length; i++) {
-                        var v = notInTable[i];
-                        if (inTable.indexOf(v) !== -1) {
-                            inTable.splice(inTable.indexOf(v), 1);
-                        }
-                    }
-                });
-                var filterData = filteredTable.rows(inTable).data();
-                var genusIDs = filteredTable.cells(inTable, 6).data().toArray();
-                fishTable.column(6, {order: 'index'}).data().filter(function (value, index) {
-                    if (genusIDs.indexOf(value) >= 0) {
-                        fishTable.row(index, {order: 'index'}).nodes().to$().addClass('filteredInFishTable');
-                    }
-                });
-                populateFilteredFishTable(filterData);
-                populateCalcTable(filterData);
-            }
         }
 
         function filterRarity(columnN) {
@@ -3774,7 +3716,6 @@
                 fillOpacity: 0.3
             }).addTo(map);
             map.fitBounds(selectedStream.getBounds());
-{#            searchCount = 0;#}
         }
 
         function getStreamHuc(hucID) {
@@ -3826,7 +3767,6 @@
         }
 
         function startCalculation() {
-            var test = document.getElementById('biomass_weight');
             if (document.getElementById('biomass_weight').checked) {
                 calculateAbundanceFromBiomass(10000);
             }
@@ -3867,7 +3807,7 @@
             });
 
             var fishData = fishList.data().map(function (f, i) {
-                if (f.length == 28) {
+                if (f.length === 28) {
                     f.pop();
                     f.pop();
                 }
@@ -3920,7 +3860,7 @@
                 c = E * c;
             }
             var fishData = fishList.data().map(function (f, i) {
-                if (f.length == 28) {
+                if (f.length === 28) {
                     f.pop();
                     f.pop();
                 }
@@ -4117,7 +4057,7 @@
                                        value="Calculate" title="Calculate fish assemblage biomass.">
                             </div>
                             <div style="float: left;">
-                                <input style="margin: 5px; padding: 10px 20px;" type="button" id="biomass_reset"
+                                <input style="margin: 0 0 5px 0; padding: 10px 20px;" type="button" id="biomass_reset"
                                        class="biomass_reset_button"
                                        name="biomass_reset_button"
                                        value="Restore to Defaults" title="Reset thinning coefficient and mean weight.">
@@ -4226,7 +4166,7 @@ info.update = function (props) {
         '<tr><td>Latitude:</td> <td id="latVal"></td></tr>' +
         '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
         '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
-        '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +
+{#        '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +#}
         '<tr style="display:none;"><td>EcoRegion ID:</td><td id=ecoRegionId></td></tr>' +
         '<tr><td>WBD HUC8:</td><td id="huc8"></td></tr>';
 };
