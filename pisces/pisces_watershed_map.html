@@ -304,32 +304,28 @@
             var c = 0;
             var d = 0;
 
+            var fishTableClick;
+
             $(document).ready(function () {
                 // On click event for fish list
                 $('#fishTable').on('click', 'tr', function () {
                     startLoad();
                     $('#fish_weight').val("");
                     $('#fish_length').val("");
-                    var e = this;
-                    setTimeout(function () {
-                        setFishTable(e);
-                    }, 1);
+                    fishTableClick = this;
+                    setTimeout(setFishTable, 100);
                     return false;
                 });
                 // on click event for fish search button
                 $('.fishSearchButton').on('click', function () {
                     startLoad();
-                    setTimeout(function () {
-                        searchForFish()
-                    }, 1);
+                    setTimeout(searchForFish, 100);
                     return false;
                 });
                 // on submit event for fish search button
                 $('.searchForm').on('submit', function () {
                     startLoad();
-                    setTimeout(function () {
-                        searchForFish()
-                    }, 1);
+                    setTimeout(searchForFish, 100);
                     return false;
                 });
 
@@ -340,7 +336,8 @@
             $('#fish_weight_length').hide();
             $('.fishTable').closest('div').hide();
 
-            function setFishTable(e) {
+            function setFishTable() {
+                var e = fishTableClick;
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
                 var fish = $('#fishTable').DataTable().row(e).data();
                 getFishDetails(fish);
@@ -657,7 +654,7 @@
                     '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
                     '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
                     '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
-                    '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
+                    '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
             }
@@ -750,14 +747,18 @@
                 });
             }
 
+            var loadScreen;
+
             function startLoad() {
                 document.getElementById("loader").style.display = "block";
                 document.getElementById("loader_background").style.display = "block";
+                loadScreen = setTimeout(endLoad, 30000)
             }
 
             function endLoad() {
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("loader_background").style.display = "none";
+                clearTimeout(loadScreen);
             }
 
             // CSRF Handling

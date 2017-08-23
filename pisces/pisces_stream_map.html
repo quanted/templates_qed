@@ -155,7 +155,7 @@
             border-radius: 4px;
             padding: 2px 4px 4px 4px;
             background-color: transparent;
-        {#            width: 11%;#} width: 9%;
+            width: 9%;
             margin: 1px 1px;
             display: inline-block;
         }
@@ -194,7 +194,7 @@
             cursor: pointer;
             padding: 10px 18px;
             width: 100%;
-        {#            text-align: left;#} border: none;
+            border: none;
             outline: none;
             margin: 0 !important;
             text-align: center;
@@ -239,89 +239,6 @@
             background-color: #86C1FF;
         }
 
-        {# flipswitch css #}
-{#        .envelope_toggle {#}
-{#            position: relative;#}
-{#            width: 50%;#}
-{#            height: 24px;#}
-        {#            margin: 0px 0px 10px 5%;#}
-        {#            display: block;#}
-{#            -moz-user-select: none;#}
-{#            -ms-user-select: none;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-checkbox {#}
-{#            display: none;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-label {#}
-{#            display: block;#}
-{#            overflow: hidden;#}
-{#            cursor: pointer;#}
-        {#            border: 2px solid #75A6D9;#}
-{#            width: 120px;#}
-{#            box-shadow: 0px 2px 2px black;#}
-{#            float: right;#}
-{#            margin-right: 10px;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-inner {#}
-{#            display: block;#}
-{#            width: 200%;#}
-{#            margin-left: -100%;#}
-{#            transition: margin 0.3s ease-in 0s;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-inner:before, .envelope_toggle-inner:after {#}
-{#            display: block;#}
-{#            float: left;#}
-{#            width: 50%;#}
-{#            height: 24px;#}
-{#            padding: 0;#}
-{#            line-height: 24px;#}
-{#            font-size: 12px;#}
-{#            color: white;#}
-{#            font-family: Trebuchet, Arial, sans-serif;#}
-{#            font-weight: bold;#}
-{#            box-sizing: border-box;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-inner:before {#}
-{#            content: "Detailed Envelope";#}
-{#            background-color: #86C1FF;#}
-{#            text-align: center;#}
-{#            color: #FFFFFF;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-inner:after {#}
-{#            content: "Rounded Envelope";#}
-        {#            padding-right: 10px;#}
-{#            text-align: center;#}
-{#            color: #999999;#}
-{#        }#}
-{##}
-{#        .envelope_toggle-switch {#}
-{#            display: block;#}
-{#            width: 13px;#}
-{#            margin: 5.5px;#}
-{#            background: #FFFFFF;#}
-{#            position: absolute;#}
-{#            top: 0;#}
-{#            bottom: 0;#}
-{#            right: 72px;#}
-{#            border: 2px solid #75A6D9;#}
-{#            border-radius: 6px;#}
-{#            transition: all 0.3s ease-in 0s;#}
-{#        }#}
-
-        .envelope_toggle-checkbox:checked + .envelope_toggle-label .envelope_toggle-inner {
-            margin-left: 0;
-        }
-
-        .envelope_toggle-checkbox:checked + .envelope_toggle-label .envelope_toggle-switch {
-            right: 0px;
-        }
-
         input[type="checkbox"]:checked + label::before {
             display: none;
         }
@@ -331,12 +248,10 @@
         }
 
         .huc_calc_toggle {
-            position: relative;
-        {#            width: 50%;#} width: 100%;
-            left: 45%;
+            position: absolute;
+            left: 46%;
             height: 24px;
-        {#            margin: 0px 0px 10px 5%;#} float: left;
-            display: block;
+            float: left;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -443,9 +358,9 @@
 
         {#    Loader    #}
         #loader {
-            position: absolute;
-            left: 50%;
-            top: 85%;
+            position: sticky;
+            left: 47%;
+            top: 45%;
             z-index: 999;
             margin: -75px 0 0 -75px;
             border: 16px solid #f3f3f3;
@@ -454,6 +369,8 @@
             width: 100px;
             height: 100px;
             -webkit-animation: spin 1s linear infinite;
+            -moz-animation: spin 1s linear infinite;
+            -o-animation: spin 1s linear infinite;
             animation: spin 1s linear infinite;
             transition: 0.5s ease-in-out;
         }
@@ -462,8 +379,26 @@
             background-color: rgba(255, 255, 255, 0.5);
             z-index: 998;
             position: absolute;
-            height: 625px;
+            height: 95%;
             width: 100%;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         #calc_table input {
@@ -492,6 +427,8 @@
     <script>
 
         var selectedHuc;
+        var calc;
+
         $(document).ready(function () {
 
             $('#fishTable').closest('div').hide();
@@ -514,7 +451,7 @@
 
             $(document).on('click', '#filter_apply', function (event) {
                 startLoad();
-                setTimeout(applyFilters(), 2000);
+                setTimeout(applyFilters, 2000);
             });
 
             $('#fishTable').on('click', 'td.details-control', function () {
@@ -532,20 +469,9 @@
                 }
             });
 
-            $('#myenvelope_toggle').on('click', function () {
-                var button = $(this).closest('div');
-                if (!button[0].classList.contains("detailed")) {
-                    button.removeClass("rounded");
-                    button.addClass("detailed");
-                }
-                else {
-                    button.removeClass("detailed");
-                    button.addClass("rounded");
-                }
-            });
-
             $('#in_huc_calc_toggle').on('click', function () {
-                setTimeout(toggleCalculator(this), 1);
+                calc = this;
+                setTimeout(toggleCalculator, 1);
             });
 
             $('#biomass_weight').on('click', function () {
@@ -562,7 +488,7 @@
 
             $('#biomass_submit').on('click', function () {
                 startLoad();
-                setTimeout(startCalculation(), 1000);
+                setTimeout(startCalculation, 1000);
             });
 
             $('#biomass_reset').on('click', function () {
@@ -584,8 +510,8 @@
             });
         });
 
-        function toggleCalculator(e) {
-            var button = $(e).closest('div');
+        function toggleCalculator() {
+            var button = $(calc).closest('div');
             if (!button[0].classList.contains("calculator")) {
                 button.removeClass("fishHucTable");
                 button.addClass("calculator");
@@ -609,10 +535,10 @@
         }
 
         function resetFilters() {
-                var filters = $("#assemblage_filters").find(".filtering");
-                filters.map(function(f){
-                    $(this).removeClass('filtering');
-                });
+            var filters = $("#assemblage_filters").find(".filtering");
+            filters.map(function (f) {
+                $(this).removeClass('filtering');
+            });
         }
 
         function toggleFilter(input) {
@@ -732,19 +658,20 @@
             $('#fish_filters').closest('div').show();
             $('#envelope_toggle').closest('div').show();
             $('#huc_calc_toggle').closest('div').show();
-            setTimeout(getStreamData(e.latlng.lat, e.latlng.lng), 1);
+            $('#latVal').html(Number(e.latlng.lat).toFixed(6));
+            $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
+            setTimeout(getStreamData, 1);
             resetFilters();
-            getFishData();
-            //getTESTFishData();
+            //getFishData();
+            getTESTFishData();
         }
 
-        function getStreamData(lat, lng) {
+        function getStreamData() {
+            var lat = $('#latVal').html();
+            var lng = $('#lngVal').html();
             var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
             var latitude = lat.toString();
             var longitude = lng.toString();
-            $('#latVal').html(Number(latitude).toFixed(6));
-            $('#lngVal').html(Number(longitude).toFixed(6));
-
             ptIndexParams = {
                 'pGeometry': 'POINT(' + longitude + ' ' + latitude + ')'
                 , 'pGeometryMod': 'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84'
@@ -764,8 +691,9 @@
                 async: false,
                 success: function (data, status, jqXHR) {
                     var streamData = JSON.parse(data);
+                    var huc8ID = streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
-                    $('#huc8').html(streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8));
+                    $('#huc8').html(huc8ID);
                     addStreamSeg(streamData);
                     return data;
                 },
@@ -3871,23 +3799,28 @@
             populateCalcTable(fishData);
         }
 
+        var loadScreen;
+
         function startLoad() {
             document.getElementById("loader").style.display = "block";
             document.getElementById("loader_background").style.display = "block";
+            loadScreen = setTimeout(endLoad, 30000)
         }
 
         function endLoad() {
             document.getElementById("loader").style.display = "none";
             document.getElementById("loader_background").style.display = "none";
+            clearTimeout(loadScreen);
         }
 
     </script>
 </head>
 <body>
 <div class="panel-display panel-1col clearfix">
+    <div id="loader" style="display:none;"></div>
+    <div id="loader_background" style="display:none"></div>
     <div class="panel-panel panel-col">
-        <div id="loader" style="display:none;"></div>
-        <div id="loader_background" style="display:none"></div>
+
 
         <!--- content div -->
         <div class="col-md-10">
@@ -4065,7 +3998,7 @@
                         </div>
                     </div>
                     <div id="fish_assemblage_estimator"
-                          style="width:45%; margin:0px 55px 0px 5px; display: none; float: right; left:0;">
+                         style="width:45%; margin:0px 55px 0px 5px; display: none; float: right; left:0;">
                         <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
                         <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
                                style="padding: 0 2px; margin: 0 2px;table-layout: fixed;">
@@ -4166,7 +4099,7 @@ info.update = function (props) {
         '<tr><td>Latitude:</td> <td id="latVal"></td></tr>' +
         '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
         '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
-{#        '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +#}
+        {#        '<tr><td>EcoRegion Name:</td><td id="ecoRegionName"></td></tr>' +#}
         '<tr style="display:none;"><td>EcoRegion ID:</td><td id=ecoRegionId></td></tr>' +
         '<tr><td>WBD HUC8:</td><td id="huc8"></td></tr>';
 };
