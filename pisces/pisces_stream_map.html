@@ -662,7 +662,7 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 1000);
             resetFilters();
-            getFishData();
+            //setTimeout(getFishData, 2000);
             //getTESTFishData();
         }
 
@@ -695,6 +695,7 @@
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(huc8ID);
                     addStreamSeg(streamData);
+                    getFishData();
                     return data;
                 },
                 error: function (jqXHR, status) {
