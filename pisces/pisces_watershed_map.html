@@ -574,61 +574,62 @@
 
                 // gradient
                 var gradient = [];
-                if (details["lowlands_lgr"] === "A") gradient.push(" Lowlands");
-                if (details["upland_hgr"] === "A") gradient.push(" Uplands");
+                if (details["lowlands_lgr"] === "1") gradient.push(" Lowlands");
+                if (details["upland_hgr"] === "1") gradient.push(" Uplands");
 
                 // thermal
                 var thermal = [];
-                if (details["warmwater"] === "A") thermal.push(" Warmwater");
-                if (details["coolwater"] === "A") thermal.push(" Coolwater");
-                if (details["coldwater"] === "A") thermal.push(" Coldwater");
+                if (details["warmwater"] === "1") thermal.push(" Warmwater");
+                if (details["coolwater"] === "1") thermal.push(" Coolwater");
+                if (details["coldwater"] === "1") thermal.push(" Coldwater");
 
                 // clarity
                 var clarity = [];
-                if (details["clearwater"] === "A") clarity.push(" Clear");
-                if (details["turbidwater"] === "A") clarity.push(" Turbid");
+                if (details["clearwater"] === "1") clarity.push(" Clear");
+                if (details["turbidwater"] === "1") clarity.push(" Turbid");
 
                 // system
                 var system = [];
-                if (details["caves"] === "A") system.push(" Caves");
-                if (details["springs"] === "A") system.push(" Springs");
-                if (details["headwaters"] === "A") system.push(" Headwaters");
-                if (details["creeks"] === "A") system.push(" Creeks");
-                if (details["small_riv"] === "A") system.push(" Small Rivers");
-                if (details["med_riv"] === "A") system.push(" Medium Rivers");
-                if (details["lge_riv"] === "A") system.push(" Large Rivers");
-                if (details["lk_imp_pnd"] === "A") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
-                if (details["swp_msh_by"] === "A") system.push(" Swamps/Marshes/Bayou");
-                if (details["coast_ocea"] === "A") system.push(" Coastal/Ocean");
+                if (details["caves"] === "1") system.push(" Caves");
+                if (details["springs"] === "1") system.push(" Springs");
+                if (details["headwaters"] === "1") system.push(" Headwaters");
+                if (details["creeks"] === "1") system.push(" Creeks");
+                if (details["small_riv"] === "1") system.push(" Small Rivers");
+                if (details["med_riv"] === "1") system.push(" Medium Rivers");
+                if (details["lge_riv"] === "1") system.push(" Large Rivers");
+                if (details["lk_imp_pnd"] === "1") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
+                if (details["swp_msh_by"] === "1") system.push(" Swamps/Marshes/Bayou");
+                if (details["coast_ocea"] === "1") system.push(" Coastal/Ocean");
 
 
                 // lotic habitat
                 var lotic = [];
-                if (details["riffles"] === "A") lotic.push(" Riffles");
-                if (details["run_flopool"] === "A") lotic.push(" Runs/Flowing Pools");
-                if (details["pool_bckwtr"] === "A") lotic.push(" Pools/Backwaters");
+                if (details["riffles"] === "1") lotic.push(" Riffles");
+                if (details["run_flopool"] === "1") lotic.push(" Runs/Flowing Pools");
+                if (details["pool_bckwtr"] === "1") lotic.push(" Pools/Backwaters");
 
                 // water column
                 var column = [];
-                if (details["benthic"] === "A") column.push(" Benthic");
-                if (details["surface"] === "A") column.push(" Surface");
-                if (details["nrshre_litt"] === "A") column.push(" Nearshore/Littoral");
-                if (details["opnwtr_pelag"] === "A") column.push(" Open Water/Pelagic");
+                if (details["benthic"] === "1") column.push(" Benthic");
+                if (details["surface"] === "1") column.push(" Surface");
+                if (details["nrshre_litt"] === "1") column.push(" Nearshore/Littoral");
+                if (details["opnwtr_pelag"] === "1") column.push(" Open Water/Pelagic");
 
                 // substrate
                 var substrate = [];
-                if (details["mud_slt_det"] === "A") substrate.push(" Mud/Silt/Detritus");
-                if (details["sand"] === "A") substrate.push(" Sand");
-                if (details["gravel"] === "A") substrate.push(" Gravel");
-                if (details["rck_rub_bol"] === "A") substrate.push(" Rocks/Rubble/Boulders");
-                if (details["vegatation"] === "A") substrate.push(" Vegetation");
-                if (details["wdyd_brush"] === "A") substrate.push(" Woody Debris/Brush");
+                if (details["mud_slt_det"] === "1") substrate.push(" Mud/Silt/Detritus");
+                if (details["sand"] === "1") substrate.push(" Sand");
+                if (details["gravel"] === "1") substrate.push(" Gravel");
+                if (details["rck_rub_bol"] === "1") substrate.push(" Rocks/Rubble/Boulders");
+                if (details["vegatation"] === "1") substrate.push(" Vegetation");
+                if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
 
                 // tolerance
                 var tolerance = [];
                 if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
                 if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
                 if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
+                if (details["pollut_tol"] === "U") tolerance.push(" Unknown");
 
                 // use
                 var use = [];
