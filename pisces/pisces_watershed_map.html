@@ -385,7 +385,8 @@
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
                 }
                 else {
-                    document.getElementById('huc_table_title').innerHTML = "<strong>Selected HUC 8 watershed.</strong>";
+                    var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];
+                    document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" +  "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
                 //  properties of highlighted HUC
                 var layerGroup = [];
