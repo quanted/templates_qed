@@ -451,7 +451,7 @@
 
             $(document).on('click', '#filter_apply', function (event) {
                 startLoad();
-                setTimeout(applyFilters, 2000);
+                setTimeout(applyFilters, 1000);
             });
 
             $('#fishTable').on('click', 'td.details-control', function () {
@@ -471,7 +471,7 @@
 
             $('#in_huc_calc_toggle').on('click', function () {
                 calc = this;
-                setTimeout(toggleCalculator, 1);
+                setTimeout(toggleCalculator, 100);
             });
 
             $('#biomass_weight').on('click', function () {
@@ -488,7 +488,7 @@
 
             $('#biomass_submit').on('click', function () {
                 startLoad();
-                setTimeout(startCalculation, 1000);
+                setTimeout(startCalculation, 100);
             });
 
             $('#biomass_reset').on('click', function () {
@@ -563,7 +563,7 @@
                     var filterName = filters[index].firstElementChild.name.split('_');
                     var notInTable;
                     if (filterName[0] === "rarity") {
-                        notInTable = filterRarity(Number(filterName[1]));      // TODO: Update n to column value for rarity from request
+                        notInTable = filterRarity(Number(filterName[1]));
                     }
                     else {
                         notInTable = filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value');
