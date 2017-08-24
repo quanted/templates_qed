@@ -366,10 +366,10 @@
             function hucStyle(feature) {
                 return {
                     fillColor: getColor(feature.properties.NumbSpc),
-                    weight: .5,
+                    weight: .3,
                     opacity: 0.9,
                     color: 'black',
-                    fillOpacity: 0.5
+                    fillOpacity: 0.3
                 };
             }
 
@@ -390,7 +390,7 @@
                 huc8Layer.eachLayer(function (layer) {
                     $.each(hucs, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE) {
-                            layer.setStyle({color: 'black', weight: 1, fillColor: '#0979D9', fillOpacity: 0.6});
+                            layer.setStyle({color: 'black', weight: 0.7, fillColor: '#0979D9', fillOpacity: 0.4});
                             {#                            layer.setStyle({color: 'black', weight: 1, fillColor: '#02bfe7', fillOpacity: 0.6});#}
                         }
                         if (value === layer.feature.properties.HUC_CODE)
