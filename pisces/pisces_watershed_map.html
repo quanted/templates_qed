@@ -304,32 +304,28 @@
             var c = 0;
             var d = 0;
 
+            var fishTableClick;
+
             $(document).ready(function () {
                 // On click event for fish list
                 $('#fishTable').on('click', 'tr', function () {
                     startLoad();
                     $('#fish_weight').val("");
                     $('#fish_length').val("");
-                    var e = this;
-                    setTimeout(function () {
-                        setFishTable(e);
-                    }, 1);
+                    fishTableClick = this;
+                    setTimeout(setFishTable, 100);
                     return false;
                 });
                 // on click event for fish search button
                 $('.fishSearchButton').on('click', function () {
                     startLoad();
-                    setTimeout(function () {
-                        searchForFish()
-                    }, 1);
+                    setTimeout(searchForFish, 100);
                     return false;
                 });
                 // on submit event for fish search button
                 $('.searchForm').on('submit', function () {
                     startLoad();
-                    setTimeout(function () {
-                        searchForFish()
-                    }, 1);
+                    setTimeout(searchForFish, 100);
                     return false;
                 });
 
@@ -340,7 +336,8 @@
             $('#fish_weight_length').hide();
             $('.fishTable').closest('div').hide();
 
-            function setFishTable(e) {
+            function setFishTable() {
+                var e = fishTableClick;
                 $('#fishTable').DataTable().rows().nodes().to$().removeClass('selected_fish');
                 var fish = $('#fishTable').DataTable().row(e).data();
                 getFishDetails(fish);
@@ -369,10 +366,10 @@
             function hucStyle(feature) {
                 return {
                     fillColor: getColor(feature.properties.NumbSpc),
-                    weight: .5,
+                    weight: .3,
                     opacity: 0.9,
                     color: 'black',
-                    fillOpacity: 0.5
+                    fillOpacity: 0.3
                 };
             }
 
@@ -386,14 +383,14 @@
                 }
                 else {
                     var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];
-                    document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" +  "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
+                    document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" + "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
                 //  properties of highlighted HUC
                 var layerGroup = [];
                 huc8Layer.eachLayer(function (layer) {
                     $.each(hucs, function (index, value) {
                         if (value === layer.feature.properties.HUC_CODE) {
-                            layer.setStyle({color: 'black', weight: 1, fillColor: '#0979D9', fillOpacity: 0.6});
+                            layer.setStyle({color: 'black', weight: 0.7, fillColor: '#0979D9', fillOpacity: 0.4});
                             {#                            layer.setStyle({color: 'black', weight: 1, fillColor: '#02bfe7', fillOpacity: 0.6});#}
                         }
                         if (value === layer.feature.properties.HUC_CODE)
@@ -577,61 +574,62 @@
 
                 // gradient
                 var gradient = [];
-                if (details["lowlands_lgr"] === "A") gradient.push(" Lowlands");
-                if (details["upland_hgr"] === "A") gradient.push(" Uplands");
+                if (details["lowlands_lgr"] === "1") gradient.push(" Lowlands");
+                if (details["upland_hgr"] === "1") gradient.push(" Uplands");
 
                 // thermal
                 var thermal = [];
-                if (details["warmwater"] === "A") thermal.push(" Warmwater");
-                if (details["coolwater"] === "A") thermal.push(" Coolwater");
-                if (details["coldwater"] === "A") thermal.push(" Coldwater");
+                if (details["warmwater"] === "1") thermal.push(" Warmwater");
+                if (details["coolwater"] === "1") thermal.push(" Coolwater");
+                if (details["coldwater"] === "1") thermal.push(" Coldwater");
 
                 // clarity
                 var clarity = [];
-                if (details["clearwater"] === "A") clarity.push(" Clear");
-                if (details["turbidwater"] === "A") clarity.push(" Turbid");
+                if (details["clearwater"] === "1") clarity.push(" Clear");
+                if (details["turbidwater"] === "1") clarity.push(" Turbid");
 
                 // system
                 var system = [];
-                if (details["caves"] === "A") system.push(" Caves");
-                if (details["springs"] === "A") system.push(" Springs");
-                if (details["headwaters"] === "A") system.push(" Headwaters");
-                if (details["creeks"] === "A") system.push(" Creeks");
-                if (details["small_riv"] === "A") system.push(" Small Rivers");
-                if (details["med_riv"] === "A") system.push(" Medium Rivers");
-                if (details["lge_riv"] === "A") system.push(" Large Rivers");
-                if (details["lk_imp_pnd"] === "A") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
-                if (details["swp_msh_by"] === "A") system.push(" Swamps/Marshes/Bayou");
-                if (details["coast_ocea"] === "A") system.push(" Coastal/Ocean");
+                if (details["caves"] === "1") system.push(" Caves");
+                if (details["springs"] === "1") system.push(" Springs");
+                if (details["headwaters"] === "1") system.push(" Headwaters");
+                if (details["creeks"] === "1") system.push(" Creeks");
+                if (details["small_riv"] === "1") system.push(" Small Rivers");
+                if (details["med_riv"] === "1") system.push(" Medium Rivers");
+                if (details["lge_riv"] === "1") system.push(" Large Rivers");
+                if (details["lk_imp_pnd"] === "1") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
+                if (details["swp_msh_by"] === "1") system.push(" Swamps/Marshes/Bayou");
+                if (details["coast_ocea"] === "1") system.push(" Coastal/Ocean");
 
 
                 // lotic habitat
                 var lotic = [];
-                if (details["riffles"] === "A") lotic.push(" Riffles");
-                if (details["run_flopool"] === "A") lotic.push(" Runs/Flowing Pools");
-                if (details["pool_bckwtr"] === "A") lotic.push(" Pools/Backwaters");
+                if (details["riffles"] === "1") lotic.push(" Riffles");
+                if (details["run_flopool"] === "1") lotic.push(" Runs/Flowing Pools");
+                if (details["pool_bckwtr"] === "1") lotic.push(" Pools/Backwaters");
 
                 // water column
                 var column = [];
-                if (details["benthic"] === "A") column.push(" Benthic");
-                if (details["surface"] === "A") column.push(" Surface");
-                if (details["nrshre_litt"] === "A") column.push(" Nearshore/Littoral");
-                if (details["opnwtr_pelag"] === "A") column.push(" Open Water/Pelagic");
+                if (details["benthic"] === "1") column.push(" Benthic");
+                if (details["surface"] === "1") column.push(" Surface");
+                if (details["nrshre_litt"] === "1") column.push(" Nearshore/Littoral");
+                if (details["opnwtr_pelag"] === "1") column.push(" Open Water/Pelagic");
 
                 // substrate
                 var substrate = [];
-                if (details["mud_slt_det"] === "A") substrate.push(" Mud/Silt/Detritus");
-                if (details["sand"] === "A") substrate.push(" Sand");
-                if (details["gravel"] === "A") substrate.push(" Gravel");
-                if (details["rck_rub_bol"] === "A") substrate.push(" Rocks/Rubble/Boulders");
-                if (details["vegatation"] === "A") substrate.push(" Vegetation");
-                if (details["wdyd_brush"] === "A") substrate.push(" Woody Debris/Brush");
+                if (details["mud_slt_det"] === "1") substrate.push(" Mud/Silt/Detritus");
+                if (details["sand"] === "1") substrate.push(" Sand");
+                if (details["gravel"] === "1") substrate.push(" Gravel");
+                if (details["rck_rub_bol"] === "1") substrate.push(" Rocks/Rubble/Boulders");
+                if (details["vegatation"] === "1") substrate.push(" Vegetation");
+                if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
 
                 // tolerance
                 var tolerance = [];
                 if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
                 if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
                 if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
+                if (details["pollut_tol"] === "U") tolerance.push(" Unknown");
 
                 // use
                 var use = [];
@@ -650,14 +648,14 @@
                     '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
                     '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
                     '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
-                    '<tr><td>A (L=A*W<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                    '<tr><td>B (L=A*W<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
                     {#                    '<tr><td>C (W=C*L<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +#}
                     {#                    '<tr><td>D (W=C*L<sup>D</sup>)</td><td>' + details["l_w_d"] + ' </td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +#}
                     '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
                     '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
                     '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
-                    '<div class="fish_links">Links: <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
+                    '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
             }
@@ -671,7 +669,8 @@
             function calculateFishWeight() {
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
-                    var weight = Math.pow(L/a, 1/b).toFixed(1);
+                    var weight = (a * Math.pow(L, b)).toFixed(1);
+{#                    var weight = Math.pow(L / a, 1 / b).toFixed(1);#}
                     $('#fish_weight').val(weight);
                 }
                 else {
@@ -682,7 +681,8 @@
             function calculateFishLength() {
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
-                    var length = (a * Math.pow(W, b)).toFixed(1);
+                    var length = Math.pow(W / a, 1 / b).toFixed(1);
+{#                    var length = (a * Math.pow(W, b)).toFixed(1);#}
                     $('#fish_length').val(length);
                 }
                 else {
@@ -703,11 +703,7 @@
                     contentType: "application/json; charset=utf-8",
                     crossDomain: true,
                     beforeSend: function (xhr, settings) {
-                        console.log("Method Type: " + !csrfSafeMethod(settings.type));
-                        console.log("this.crossDomain");
-                        {# if (!csrfSafeMethod(settings.type) && !this.crossDomain) {#}
                         xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                        {# } #}
                     },
                     success: function (data) {
                         document.getElementById('fish_search_title').innerHTML = "Search results for: " + fish;
@@ -750,14 +746,18 @@
                 });
             }
 
+            var loadScreen;
+
             function startLoad() {
                 document.getElementById("loader").style.display = "block";
                 document.getElementById("loader_background").style.display = "block";
+                loadScreen = setTimeout(endLoad, 30000)
             }
 
             function endLoad() {
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("loader_background").style.display = "none";
+                clearTimeout(loadScreen);
             }
 
             // CSRF Handling
