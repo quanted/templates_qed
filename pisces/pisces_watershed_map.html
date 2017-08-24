@@ -301,8 +301,8 @@
             //Weight-length coefficients
             var a = 0;
             var b = 0;
-            var c = 0;
-            var d = 0;
+            {#            var c = 0;#}
+            {#            var d = 0;#}
 
             var fishTableClick;
 
@@ -352,15 +352,6 @@
             function getColor(d) {
                 return '#93D4BC'
             }
-
-            {#                return d > 110 ? '#084594' :#}
-            {#                    d > 86 ? '#2171b5' :#}
-            {#                        d > 63 ? '#4292c6' :#}
-            {#                            d > 41 ? '#6baed6' :#}
-            {#                                d > 20 ? '#9ecae1' :#}
-            {#                                    d > -1 ? '#c6dbef' :#}
-            {#                                        'red';#}
-            {#            }#}
 
             //style HUC 8 polygon cont.
             function hucStyle(feature) {
@@ -670,7 +661,7 @@
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
                     var weight = (a * Math.pow(L, b)).toFixed(1);
-{#                    var weight = Math.pow(L / a, 1 / b).toFixed(1);#}
+                    {#                    var weight = Math.pow(L / a, 1 / b).toFixed(1);#}
                     $('#fish_weight').val(weight);
                 }
                 else {
@@ -682,7 +673,7 @@
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
                     var length = Math.pow(W / a, 1 / b).toFixed(1);
-{#                    var length = (a * Math.pow(W, b)).toFixed(1);#}
+                    {#                    var length = (a * Math.pow(W, b)).toFixed(1);#}
                     $('#fish_length').val(length);
                 }
                 else {
@@ -730,20 +721,45 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
+
+{#                        var hucs = data["hucs"].map(function (h) {#}
+{#                            return h["huc"];#}
+{#                        });#}
+{#                        selectHUCs(hucs)#}
+
+                        resetHUCLayer();
+                        var layerGroup = [];
                         var hucs = data["hucs"].map(function (h) {
+                            var huc = h["huc"];
+                            huc8Layer.eachLayer(function (layer) {
+                                if (huc === layer.feature.properties.HUC_CODE) {
+                                    layer.setStyle({
+                                        color: 'black',
+                                        weight: 0.7,
+                                        fillColor: '#0979D9',
+                                        fillOpacity: 0.4
+                                    });
+                                    layerGroup.push(layer);
+                                }
+                                layer.bringToFront();
+                            });
                             return h["huc"];
                         });
-                        selectHUCs(hucs)
-                    },
+                        map.fitBounds(L.featureGroup(layerGroup).getBounds());
+                        document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
+                    }
+                    ,
                     error: function (jqXHR, status) {
                         console.log("ERROR: failed to get huc list for fish:" + speciesID);
                         $('#error_msg').html("Error: failed to get huc list for the specified fish.");
                         return null;
-                    },
+                    }
+                    ,
                     complete: function (jqXHR, status) {
                         endLoad();
                     }
-                });
+                })
+                ;
             }
 
             var loadScreen;
