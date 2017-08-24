@@ -663,7 +663,7 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 100);
             resetFilters();
-            //setTimeout(getFishData, 1000);
+            //setTimeout(getFishData, 1000);    // getFishData not executed from a success of getStreamData
             //setTimeout(getTESTFishData, 1000);
         }
 
