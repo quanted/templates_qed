@@ -56,8 +56,8 @@
             tooltip: {
                         formatter: function(){
                             return parseFloat(Math.round(this.x * 100) / 100).toFixed(2) +
-                                ' dose (mg/kg/annually)<br>' +
-                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' % population'
+                                '% population <br>' +
+                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' dose (mg/kg/annually)'
                         }
             },
             exporting: {
