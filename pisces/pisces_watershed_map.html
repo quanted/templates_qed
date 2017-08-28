@@ -400,7 +400,7 @@
 
             var currentHUC = null;
 
-            function onEachFeature(feature, layer) {
+            function onEachFeatureClick(feature, layer) {
                 layer.on('click', function (e) {
                     $('.fishSearchBox').val("");
                     if (this.currentHUC !== feature.properties.HUC_CODE || this.currentHUC === null) {
@@ -430,7 +430,7 @@
             // load huc watershed boundaries
             var huc8Layer = L.geoJson(huc8s, {
                 style: hucStyle,
-                onEachFeature: onEachFeature
+                onEachFeature: onEachFeatureClick
             }).addTo(map);
 
             //basemap selection toolbar
@@ -542,6 +542,7 @@
                         {#                        d = data["species"][0]["l_w_d"];#}
                         setFishDetails(data["species"][0]);
                         searchFishHuc(data["species"][0]["speciesid"]);
+
                         $('#fish_weight_length').show();
                         $('#selectedFishTable').show();
                     },
@@ -721,32 +722,10 @@
                     crossDomain: true,
                     async: false,
                     success: function (data) {
-
-{#                        var hucs = data["hucs"].map(function (h) {#}
-{#                            return h["huc"];#}
-{#                        });#}
-{#                        selectHUCs(hucs)#}
-
-                        resetHUCLayer();
-                        var layerGroup = [];
                         var hucs = data["hucs"].map(function (h) {
-                            var huc = h["huc"];
-                            huc8Layer.eachLayer(function (layer) {
-                                if (huc === layer.feature.properties.HUC_CODE) {
-                                    layer.setStyle({
-                                        color: 'black',
-                                        weight: 0.7,
-                                        fillColor: '#0979D9',
-                                        fillOpacity: 0.4
-                                    });
-                                    layerGroup.push(layer);
-                                }
-                                layer.bringToFront();
-                            });
                             return h["huc"];
                         });
-                        map.fitBounds(L.featureGroup(layerGroup).getBounds());
-                        document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
+                        selectHUCs(hucs)
                     }
                     ,
                     error: function (jqXHR, status) {
