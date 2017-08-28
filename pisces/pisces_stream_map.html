@@ -542,9 +542,10 @@
                 }
                 else {
                     $(this).parent().removeClass('removed_fish');
+
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
                 }
-                setTimeout(removeFromTable, 1);
+                setTimeout(removeFromTable, 10);
             })
 
         });
@@ -597,7 +598,7 @@
             fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
             if (filters.length !== 0) {
                 // Creates list of species_id for all fish in fishTable.
-                var inTable = $('#fishTable').DataTable().rows().data().map(function (i, r) {
+                var inTable = fishTable.rows().data().map(function (i, r) {
                     return i["species_id"];
                 });
                 var notInTable = [];
@@ -621,12 +622,11 @@
                     return index === self.indexOf(elem);
                 });
                 // Removes fish from inTable list if they are present in notInTable list
-                for (var i = 0; i < notInTable.length; i++) {
-                    var v = notInTable[i];
-                    if (inTable.indexOf(v) !== -1) {
-                        inTable.splice(inTable.indexOf(v), 1);
-                    }
-                }
+                notInTable.map(function(i){
+                   if(inTable.indexOf(i) !== -1){
+                       inTable.splice(inTable.indexOf(i),1);
+                   }
+                });
 
                 // Gets fishTable rows where the species_id matches from the list of filtered fish.
                 var filterData = fishTable.rows().data().filter(function (value, index) {
@@ -639,7 +639,12 @@
                 fishTable.rows({order: 'index'}).data().filter(function (value, index) {
                     var id = value["species_id"];
                     if (inTable.indexOf(id) >= 0) {
-                        fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
+                        if (removedFishList.indexOf(id) >= 0) {
+                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
+                        }
+                        else {
+                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
+                        }
                     }
                 });
 
@@ -654,18 +659,16 @@
             var notInTable = removedFishList;
             var filters = $("#assemblage_filters").find(".filtering");
             if (filters.length === 0) {
-                var fishTable = $('#fishTable').DataTable();
-                var inTable = $('#fishTable').DataTable().rows().data().map(function (i, r) {
+                var filteredTable = $('#filteredFishTable').DataTable();
+                var inTable = filteredTable.rows().data().map(function (i, r) {
                     return i["species_id"];
                 });
-                var filteredTable = $('#filteredFishTable').DataTable();
-                for (var i = 0; i < notInTable.length; i++) {
-                    var v = notInTable[i];
-                    if (inTable.indexOf(v) !== -1) {
-                        inTable.splice(inTable.indexOf(v), 1);
+                notInTable.map(function (i, e) {
+                    if (inTable.indexOf(i) !== -1) {
+                        inTable.splice(inTable.indexOf(i), 1);
                     }
-                }
-                var filterData = fishTable.rows().data().filter(function (value, index) {
+                });
+                var filterData = filteredTable.rows().data().filter(function (value, index) {
                     if (inTable.indexOf(value["species_id"]) !== -1) {
                         return value;
                     }
@@ -701,7 +704,6 @@
         }
 
         function filterDataTable(minColumn, maxColumn, compareValueName) {
-
             var fishTable = $('#fishTable').DataTable();
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
@@ -758,7 +760,7 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-            //setTimeout(getTESTFishData, 1000);
+            //setTimeout(getTESTFishData, 100);
         }
 
         function getStreamData() {
@@ -1737,7 +1739,7 @@
 
             };
             $('#fishTable').closest('div').show();
-            $('#fishTable').DataTable(config);
+            fishTable = $('#fishTable').DataTable(config);
         }
 
         function populateFilteredFishTable(data) {
@@ -1896,7 +1898,7 @@
                 bInfo: false
             };
             $('#filteredFishTable').closest('div').show();
-            $('#filteredFishTable').DataTable(config);
+            filteredTable = $('#filteredFishTable').DataTable(config);
         }
 
         function populateCalcTable(data) {
@@ -1945,7 +1947,7 @@
                 paging: false,
                 bInfo: false
             };
-            $('#calc_table').DataTable(config);
+            calcTable = $('#calc_table').DataTable(config);
         }
 
         function addStreamSeg(streamData) {
@@ -2043,7 +2045,8 @@
         }
 
         function calculateAbundanceFromCount(c) {
-            var fishList = $('#calc_table').DataTable();
+            //var fishList = $('#calc_table').DataTable();
+            var fishList = calcTable;
             var beta = fishList.column(0).data();
             var delta = fishList.column(1).data();
             var mW = fishList.column(2).data();
@@ -2084,7 +2087,8 @@
         function calculateAbundanceFromBiomass(c) {
             var B = Number($('#biomass_field').val());
 
-            var fishList = $('#calc_table').DataTable();
+            //var fishList = $('#calc_table').DataTable();
+            var fishList = calcTable;
             var beta = fishList.column(0).data();
             var delta = fishList.column(1).data();
             var mW = fishList.column(2).data();

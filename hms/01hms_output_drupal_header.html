@@ -51,6 +51,12 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+    <!-- Load DataTabels-->
+    <script src="/static_qed/hms/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static_qed/hms/js/dataTables.buttons.min.js" type="application/javascript"></script>
+    <script src="/static_qed/hms/js/buttons.flash.min.js" type="application/javascript"></script>
+    <script src="/static_qed/hms/js/buttons.html5.min.js" type="application/javascript"></script>
+
     <!-- Load D3.v3.js -->
     <script type="application/javascript" src="/static_qed/hms/js/d3.v3.min.js"></script>
 
@@ -108,7 +114,7 @@
                         xFormat: '%Y-%m-%d %H',
                         columns: [
                             data[0],
-                            data[1],
+                            data[1]
                         ]
                     },
                     axis: {
@@ -117,7 +123,7 @@
                             tick: {
                                 fit: true,
                                 count: 8,
-                                format: '%Y-%m-%d %H',
+                                format: '%Y-%m-%d %H'
                             },
                             label: {
                                 text: '{{ LABEL }}',
@@ -155,7 +161,7 @@
                         x: columnNames[0],
                         columns: [
                             data[0],
-                            data[1],
+                            data[1]
                         ]
                     },
                     axis: {
@@ -190,10 +196,10 @@
                 });
                 setTimeout(data.forEach(function (d) {
                     chart.load({columns: [d]});
-                    }), 1000);
-{#                setTimeout(function () {#}
-{#                    chart.load({columns: [data[2], data[3], data[4]]});#}
-{#                }, 1000);#}
+                }), 1000);
+                {#                setTimeout(function () {#}
+                {#                    chart.load({columns: [data[2], data[3], data[4]]});#}
+                {#                }, 1000);#}
             }
 
             $('#pane-content').focus();
@@ -209,7 +215,7 @@
                 d3.selectAll(".c3 text").style({'font-size': '8px'});
                 var bBox = chart.children()[0].getBBox();
                 var svgString = getSVGString(svg.node());
-{#                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);#}
+                {#                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);#}
                 svgString2Image(svgString, chart[0].clientWidth, chart[0].clientHeight, 'png', save);
 
                 function save(dataBlob, filesize) {
