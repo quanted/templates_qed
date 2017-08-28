@@ -9,6 +9,7 @@
 {#        <div class="node node-page clearfix view-mode-full">#}
           <div class="model_inputs">
           <form method="post" action="/ubertool/{{ MODEL }}/output" name="input_table">
+              {% csrf_token %}
             <table class="nostripe input_table">
               <thead>
                 <tr><th scope="col">Input</th><th scope="col">Value</th></tr>

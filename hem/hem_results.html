@@ -56,8 +56,8 @@
             tooltip: {
                         formatter: function(){
                             return parseFloat(Math.round(this.x * 100) / 100).toFixed(2) +
-                                ' dose (mg/kg/annually)<br>' +
-                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' % population'
+                                '% population <br>' +
+                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' dose (mg/kg/annually)'
                         }
             },
             exporting: {
@@ -78,7 +78,7 @@
             subtitle: {
                 text: '(dermal, ingestion, and inhalation)'
             },
-            xAxis: {
+            yAxis: {
                 title: {
                     enabled: true,
                     text: 'Annual Average Daily Dose (mg/kg body weight/day)'
@@ -88,7 +88,7 @@
                 showLastLabel: true,
                 type: 'logarithmic'
             },
-            yAxis: {
+            xAxis: {
                 title: {
                     text: 'Cumulative % of population'
                 },

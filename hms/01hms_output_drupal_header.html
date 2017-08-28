@@ -46,15 +46,9 @@
           href="https://blog.epa.gov/blog/feed/"/>
     <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/html5.js"></script><![endif]-->
 
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
-    <script src="/static_qed/hms/js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="/static_qed/hms/js/dataTables.buttons.min.js" type="application/javascript"></script>
-    <script src="/static_qed/hms/js/buttons.flash.min.js" type="application/javascript"></script>
-    <script src="/static_qed/hms/js/buttons.html5.min.js" type="application/javascript"></script>
-
     <!-- Load JQuery.UI -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Load D3.v3.js -->
@@ -88,11 +82,13 @@
             });
             var data = [];
 
+            var includeHr = (columnNames.length === 2) ? 13 : 10;
+
             table.columns().data().map(function (c, i) {
                 if (i === 0) {
                     var date = [];
                     c.map(function (e) {
-                        date.push(e.substring(0, 10));
+                        date.push(e.substring(0, includeHr));
                     });
                     date.unshift(columnNames[i]);
                     data.push(date);
@@ -105,10 +101,11 @@
             var chart;
             if (columnNames.length === 2) {
                 $("#chartContainerTop").show();
-                cart = c3.generate({
+                chart = c3.generate({
                     bindto: '#compareChart',
                     data: {
                         x: columnNames[0],
+                        xFormat: '%Y-%m-%d %H',
                         columns: [
                             data[0],
                             data[1],
@@ -120,7 +117,7 @@
                             tick: {
                                 fit: true,
                                 count: 8,
-                                format: '%Y-%m-%d'
+                                format: '%Y-%m-%d %H',
                             },
                             label: {
                                 text: '{{ LABEL }}',
@@ -143,6 +140,10 @@
                     },
                     legend: {
                         show: false
+                    },
+                    zoom: {
+                        enabled: true,
+                        rescale: true
                     }
                 });
             }
@@ -182,11 +183,17 @@
                     },
                     point: {
                         show: false
+                    },
+                    zoom: {
+                        rescale: true
                     }
                 });
-                setTimeout(function () {
-                    chart.load({columns: [data[2], data[3], data[4]]});
-                }, 1000);
+                setTimeout(data.forEach(function (d) {
+                    chart.load({columns: [d]});
+                    }), 1000);
+{#                setTimeout(function () {#}
+{#                    chart.load({columns: [data[2], data[3], data[4]]});#}
+{#                }, 1000);#}
             }
 
             $('#pane-content').focus();
@@ -202,7 +209,8 @@
                 d3.selectAll(".c3 text").style({'font-size': '8px'});
                 var bBox = chart.children()[0].getBBox();
                 var svgString = getSVGString(svg.node());
-                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);
+{#                svgString2Image(svgString, 2 * bBox.width, 2 * bBox.height, 'png', save);#}
+                svgString2Image(svgString, chart[0].clientWidth, chart[0].clientHeight, 'png', save);
 
                 function save(dataBlob, filesize) {
                     saveAs(dataBlob, 'hms_timeseries_chart')
