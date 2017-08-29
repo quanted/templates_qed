@@ -1,9 +1,11 @@
 <head>
 
     <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
+    <script src="/static_qed/pisces/scripts/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {#    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+    <script src="/static_qed/pisces/scripts/jquery-ui.js"></script>
 
     <!-- datatables import -->
     <link rel="stylesheet"
@@ -388,8 +390,7 @@
             box-shadow: 0px 2px 2px black !important;
             background-color: #EEEEEE !important;
             color: black !important;
-{#            margin: 0 0 5px 0 !important;#}
-            margin-bottom: 8em;
+        {#            margin: 0 0 5px 0 !important;#} margin-bottom: 8em;
         }
 
         input.save_to_csv_button {
@@ -475,6 +476,10 @@
             background-color: rgba(180, 180, 180, 0.7) !important;
         }
 
+        .cell-edited {
+            background-color: rgba(11, 144, 225, 0.5);
+        }
+
 
     </style>
 
@@ -545,12 +550,9 @@
             $('#biomass_reset').on('click', function () {
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
-                $('#biomass_count_field').val("");
-                $('#biomass__weight_field').val("");
-
             });
 
-            $('#save_to_csv').on('click', function(){
+            $('#save_to_csv').on('click', function () {
                 setTimeout(saveToCSV, 100);
             });
 
@@ -564,6 +566,20 @@
 
             $('#calc_table').on('blur', 'td', function (e) {
                 var v = this.childNodes[0].value;
+                var row = $('#calc_table').DataTable().row($(this).closest('tr')).data();
+                var orig;
+                $('#filteredFishTable').DataTable().rows().every(function (rI, tL, rL) {
+                    var r = this.data();
+                    if (row["species_id"] === r["species_id"]) {
+                        orig = r;
+                    }
+                });
+                if (orig["thinning"] === Number(v) || orig["mean_weight"] === Number(v)) {
+                    $(this).removeClass("cell-edited");
+                }
+                else {
+                    $(this).addClass("cell-edited");
+                }
                 $('#calc_table').DataTable().cell(this).data(v).draw();
             });
 
@@ -829,7 +845,7 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-            //setTimeout(getTESTFishData, 100);
+            setTimeout(getTESTFishData, 100);
         }
 
         function getStreamData() {
@@ -864,9 +880,9 @@
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(huc8ID);
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
-                        huc8ID + "' title='Get more information on this stream segment.' target='_blank'>" + huc8ID + "</a>");
+                        streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
-                    getFishData();
+                    //getFishData();
                     return data;
                 },
                 error: function (jqXHR, status) {
@@ -1973,6 +1989,8 @@
         }
 
         function populateCalcTable(data) {
+            $('#biomass_weight_field').val("");
+            $('#biomass_count_field').val("");
             var d2 = JSON.parse(JSON.stringify(data));
             $('#calc_table').DataTable().destroy();
             $('#calc_table').empty();
@@ -2154,7 +2172,7 @@
                 return sum + v;
             });
 
-            $('#biomass_weight_field').val(sumBM);
+            $('#biomass_weight_field').val(sumBM.toFixed(1));
             populateCalcTable(fishData);
         }
 
@@ -2235,7 +2253,8 @@
         <div class="col-md-10">
             <div class="box multi news">
                 <div class="pane-content" id="mapDiv">
-                    <p id="streamMapInfo"><strong>Zoom in and select a stream</strong> on the map to view a list of fish species associated
+                    <p id="streamMapInfo"><strong>Zoom in and select a stream</strong> on the map to view a list of fish
+                        species associated
                         with the stream segment.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
