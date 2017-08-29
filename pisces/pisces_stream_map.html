@@ -160,7 +160,14 @@
         }
 
         .filterApplyButton {
-            padding: 1.5em 1.1765em !important;
+            box-shadow: 0px 2px 2px black !important;
+            background-color: #EEEEEE !important;
+            color: black !important;
+            vertical-align: middle !important;
+        }
+
+        .filterApplyButton:hover {
+            background-color: #D6D6D6 !important;
         }
 
         .fish_filter {
@@ -363,9 +370,34 @@
             float: right;
         }
 
+        input.biomass_button {
+            margin-top: 45px !important;
+            font-size: 14px;
+            box-shadow: 0px 2px 2px black !important;
+            background-color: #EEEEEE !important;
+            color: black !important;
+        }
+
+        input.biomass_button:hover, input.biomass_reset_button:hover, input.save_to_csv_button:hover {
+            background-color: #D6D6D6 !important;
+        }
+
         input.biomass_reset_button {
             padding: 8px 16px !important;
             font-size: 14px;
+            box-shadow: 0px 2px 2px black !important;
+            background-color: #EEEEEE !important;
+            color: black !important;
+{#            margin: 0 0 5px 0 !important;#}
+            margin-bottom: 8em;
+        }
+
+        input.save_to_csv_button {
+            font-size: 12px;
+            box-shadow: 0px 2px 2px black !important;
+            background-color: #EEEEEE !important;
+            color: black;
+            margin: 15px 0;
         }
 
         {#    Loader    #}
@@ -440,7 +472,7 @@
         }
 
         .removed_fish * {
-            background-color: rgba(189, 26, 0, 0.7) !important;
+            background-color: rgba(180, 180, 180, 0.7) !important;
         }
 
 
@@ -497,16 +529,12 @@
                 setTimeout(toggleCalculator, 100);
             });
 
-            $('#biomass_weight').on('click', function () {
-                document.getElementById('biomass_field').placeholder = "biomass in (kg)";
-                document.getElementById('biomass_field').value = "";
-                document.getElementById('biomass_field').title = "Enter a total biomass (kg) for the selected stream segment.";
+            $('#biomass_weight_field').keyup(function () {
+                $('#biomass_count_field').val("");
             });
 
-            $('#biomass_count').on('click', function () {
-                document.getElementById('biomass_field').placeholder = "fish count";
-                document.getElementById('biomass_field').value = "";
-                document.getElementById('biomass_field').title = "Enter a total biomass (count) for the selected stream segment.";
+            $('#biomass_count_field').keyup(function () {
+                $('#biomass_weight_field').val("");
             });
 
             $('#biomass_submit').on('click', function () {
@@ -517,6 +545,13 @@
             $('#biomass_reset').on('click', function () {
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
+                $('#biomass_count_field').val("");
+                $('#biomass__weight_field').val("");
+
+            });
+
+            $('#save_to_csv').on('click', function(){
+                setTimeout(saveToCSV, 100);
             });
 
             $('#calc_table').on('click', 'td', function (e) {
@@ -549,6 +584,40 @@
             })
 
         });
+
+        function saveToCSV() {
+            var calc_table = $('#calc_table').DataTable().rows({order: 'index'}).data();
+
+            var csv_data = "";
+            calc_table.map(function (r, i) {
+                csv_data += r["genus"] + " " + r["species"] + ", " + r["common_name"] + ", " + r["thinning"] + ", " + r["thin_adj"] +
+                    ", " + r["mean_weight"] + ", " + r["biomass"] + ", " + r["count"] + "\n";
+            });
+            var header = "scientific name, common name, thinning coefficient, thinning adjustment, mean weight(g), biomass(kg), count\n";
+
+            var d = new Date();
+            var metadata_header = "\nmetadata\nsource, com id, huc id, rarity, stream depth (cm), stream width (m), drainage area (ha)," +
+                " slope (%), tss (mg/l), pH (SU), conductivity (uS/cm^2), dissolved oxygen (%), total biomass (kg), total count, date retrieved\n";
+            var metadata = "EPA Pisces Fish Assemblage Calculator, " + $('#comid').html() + ", " + $('#huc8').html() +
+                ", " + $('#rarity_value').val() + ", " + $('.depth_value').val() + ", " + $('.width_value').val() +
+                ", " + $('.area_value').val() + ", " + $('.slope_value').val() + ", " + $('.tss_value').val() +
+                ", " + $('.ph_value').val() + ", " + $('.cond_value').val() + ", " + $('.do_value').val() +
+                ", " + $('#biomass_weight_field').val() + ", " + $('#biomass_count_field').val() + ", " + d.toISOString() + "\n";
+
+            var file_name = $('#comid').html() + "_epa_fish_assemblage";
+
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(header + csv_data + metadata_header + metadata));
+            pom.setAttribute('download', file_name + '.csv');
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+        }
 
         function toggleCalculator() {
             var button = $(calc).closest('div');
@@ -622,10 +691,10 @@
                     return index === self.indexOf(elem);
                 });
                 // Removes fish from inTable list if they are present in notInTable list
-                notInTable.map(function(i){
-                   if(inTable.indexOf(i) !== -1){
-                       inTable.splice(inTable.indexOf(i),1);
-                   }
+                notInTable.map(function (i) {
+                    if (inTable.indexOf(i) !== -1) {
+                        inTable.splice(inTable.indexOf(i), 1);
+                    }
                 });
 
                 // Gets fishTable rows where the species_id matches from the list of filtered fish.
@@ -659,7 +728,7 @@
             var notInTable = removedFishList;
             var filters = $("#assemblage_filters").find(".filtering");
             if (filters.length === 0) {
-                var filteredTable = $('#filteredFishTable').DataTable();
+                var filteredTable = $('#fishTable').DataTable();
                 var inTable = filteredTable.rows().data().map(function (i, r) {
                     return i["species_id"];
                 });
@@ -794,6 +863,8 @@
                     var huc8ID = streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(huc8ID);
+                    $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
+                        huc8ID + "' title='Get more information on this stream segment.' target='_blank'>" + huc8ID + "</a>");
                     addStreamSeg(streamData);
                     getFishData();
                     return data;
@@ -1739,7 +1810,7 @@
 
             };
             $('#fishTable').closest('div').show();
-            fishTable = $('#fishTable').DataTable(config);
+            $('#fishTable').DataTable(config);
         }
 
         function populateFilteredFishTable(data) {
@@ -1898,7 +1969,7 @@
                 bInfo: false
             };
             $('#filteredFishTable').closest('div').show();
-            filteredTable = $('#filteredFishTable').DataTable(config);
+            $('#filteredFishTable').DataTable(config);
         }
 
         function populateCalcTable(data) {
@@ -1947,7 +2018,7 @@
                 paging: false,
                 bInfo: false
             };
-            calcTable = $('#calc_table').DataTable(config);
+            $('#calc_table').DataTable(config);
         }
 
         function addStreamSeg(streamData) {
@@ -2035,23 +2106,21 @@
         }
 
         function startCalculation() {
-            if (document.getElementById('biomass_weight').checked) {
+            if ($('#biomass_weight_field').val() !== "") {
                 calculateAbundanceFromBiomass(10000);
             }
-            else {
-                calculateAbundanceFromCount(Number($('#biomass_field').val()));
+            else if ($('#biomass_count_field').val() !== "") {
+                calculateAbundanceFromCount(Number($('#biomass_count_field').val()));
             }
             endLoad();
         }
 
         function calculateAbundanceFromCount(c) {
-            //var fishList = $('#calc_table').DataTable();
-            var fishList = calcTable;
+            var fishList = $('#calc_table').DataTable();
             var beta = fishList.column(0).data();
             var delta = fishList.column(1).data();
             var mW = fishList.column(2).data();
 
-            var test = fishList.columns().data();
             // Calculating abundance for each fish.
             var A = mW.map(function (W, i) {
                 return Math.pow(W, -(beta[i] - delta[i]));
@@ -2081,19 +2150,22 @@
                 f["count"] = count[i];
                 return f;
             });
+            var sumBM = BM.reduce(function (sum, v) {
+                return sum + v;
+            });
+
+            $('#biomass_weight_field').val(sumBM);
             populateCalcTable(fishData);
         }
 
         function calculateAbundanceFromBiomass(c) {
-            var B = Number($('#biomass_field').val());
+            var B = Number($('#biomass_weight_field').val());
 
-            //var fishList = $('#calc_table').DataTable();
-            var fishList = calcTable;
+            var fishList = $('#calc_table').DataTable();
             var beta = fishList.column(0).data();
             var delta = fishList.column(1).data();
             var mW = fishList.column(2).data();
 
-            var test = fishList.columns().data();
             // Calculating abundance for each fish.
             var A = mW.map(function (W, i) {
                 return Math.pow(W, -(beta[i] - delta[i]));
@@ -2132,6 +2204,7 @@
                 f["count"] = count[i];
                 return f;
             });
+            $('#biomass_count_field').val(Math.round(c));
             populateCalcTable(fishData);
         }
 
@@ -2162,7 +2235,7 @@
         <div class="col-md-10">
             <div class="box multi news">
                 <div class="pane-content" id="mapDiv">
-                    <p><strong>Zoom in and select a stream</strong> on the map to view a list of fish species associated
+                    <p id="streamMapInfo"><strong>Zoom in and select a stream</strong> on the map to view a list of fish species associated
                         with the stream segment.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
@@ -2302,34 +2375,51 @@
                             </thead>
                         </table>
                         <div style="float:right; width: 30%;">
-                            <div style="float:left; width: 55%;">
-                                <input type="text" id="biomass_field" class="biomass_value" placeholder="biomass (kg)"
-                                       style="float:left; width:90%; font-size: 12px;"
+                            <div style="float:left;">
+                                <label for="biomass_weight_field" style="font-size: 14px;display: inline;">Biomass
+                                    (kg):</label>
+                                <input type="text" id="biomass_weight_field" class="biomass_value"
+                                       placeholder="biomass (kg)"
+                                       style="font-size: 12px; margin-bottom: 5px; margin-left: 10px;"
                                        title="Enter a total biomass (kg) for the selected stream segment.">
                             </div>
-                            <div style="float:right; width: 45%;">
-                                <input type="radio" id="biomass_weight" class="biomass_weight_value" name="biomass"
-                                       value="weight" checked>
-                                <label for="biomass_weight"
-                                       style="display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By
-                                    weight</label>
-                                <input type="radio" id="biomass_count" class="biomass_count_value" name="biomass"
-                                       value="count">
-                                <label for="biomass_count"
-                                       style=" display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By
-                                    count</label>
+                            <div style="float:left;">
+                                <label for="biomass_count_field" style="font-size: 14px;display: inline;">Fish
+                                    Count:</label>
+                                <input type="text" id="biomass_count_field" class="biomass_value"
+                                       placeholder="fish count"
+                                       style="font-size: 12px; margin-left: 24px;"
+                                       title="Enter a total biomass (count) for the selected stream segment.">
                             </div>
-                            <div style="float: left;">
-                                <input style="margin-top: 15px;" type="button" id="biomass_submit"
+                            {#                            <div style="float:right; width: 45%;">#}
+                            {#                                <input type="radio" id="biomass_weight" class="biomass_weight_value" name="biomass"#}
+                            {#                                       value="weight" checked>#}
+                            {#                                <label for="biomass_weight"#}
+                            {#                                       style="display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By#}
+                            {#                                    weight</label>#}
+                            {#                                <input type="radio" id="biomass_count" class="biomass_count_value" name="biomass"#}
+                            {#                                       value="count">#}
+                            {#                                <label for="biomass_count"#}
+                            {#                                       style=" display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By#}
+                            {#                                    count</label>#}
+                            {#                            </div>#}
+                            <div>
+                                <input type="button" id="biomass_submit"
                                        class="biomass_button"
                                        name="biomass_button"
                                        value="Calculate" title="Calculate fish assemblage biomass.">
                             </div>
-                            <div style="float: left;">
-                                <input style="margin: 0 0 5px 0; padding: 10px 20px;" type="button" id="biomass_reset"
+                            <div>
+                                <input type="button" id="biomass_reset"
                                        class="biomass_reset_button"
                                        name="biomass_reset_button"
-                                       value="Restore to Defaults" title="Reset thinning coefficient and mean weight.">
+                                       value="Restore Defaults" title="Reset thinning coefficient and mean weight.">
+                            </div>
+                            <div>
+                                <input type="button" id="save_to_csv"
+                                       class="save_to_csv_button"
+                                       name="save_to_csv_button"
+                                       value="Save to CSV" title="Export results of Abundance Calculator to CSV.">
                             </div>
                         </div>
                     </div>
@@ -2439,6 +2529,7 @@ info.update = function (props) {
         '<tr style="display:none;"><td>EcoRegion ID:</td><td id=ecoRegionId></td></tr>' +
         '<tr><td>WBD HUC8:</td><td id="huc8"></td></tr>';
 };
+
 
 info.addTo(map);
 
