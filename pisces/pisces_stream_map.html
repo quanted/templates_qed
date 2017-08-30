@@ -548,6 +548,8 @@
             });
 
             $('#biomass_reset').on('click', function () {
+                $('#biomass_weight_field').val("");
+                $('#biomass_count_field').val("");
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
             });
@@ -596,7 +598,8 @@
 
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
                 }
-                setTimeout(removeFromTable, 10);
+                {#                setTimeout(removeFromTable, 10);#}
+                setTimeout(applyFilters, 10);
             })
 
         });
@@ -676,95 +679,67 @@
         }
 
         function applyFilters() {
+            $('#biomass_weight_field').val("");
+            $('#biomass_count_field').val("");
             var fishTable = $('#fishTable').DataTable();
             var filters = $("#assemblage_filters").find(".filtering");
-            var resetData = fishTable.rows().data();
-            populateFilteredFishTable(resetData);
             fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
-            if (filters.length !== 0) {
-                // Creates list of species_id for all fish in fishTable.
-                var inTable = fishTable.rows().data().map(function (i, r) {
-                    return i["species_id"];
-                });
-                var notInTable = [];
-                filters.map(function (index) {
-                    // In the html input tag for each filter the name includes two numbers, or one for rarity, which indicate the index of the column in fishTable.
-                    var filterName = filters[index].firstElementChild.name.split('_');
+            // Creates list of species_id for all fish in fishTable.
+            var inTable = fishTable.rows().data().map(function (i, r) {
+                return i["species_id"];
+            });
+            var notInTable = [];
+            filters.map(function (index) {
+                // In the html input tag for each filter the name includes two numbers, or one for rarity, which indicate the index of the column in fishTable.
+                var filterName = filters[index].firstElementChild.name.split('_');
 
-                    if (filterName[0] === "rarity") {
-                        notInTable = notInTable.concat(filterRarity(Number(filterName[1])));
+                if (filterName[0] === "rarity") {
+                    notInTable = notInTable.concat(filterRarity(Number(filterName[1])));
+                }
+                else {
+                    notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
+                }
+            });
+            // Merges array of indexes from fish removed from assemblage by the filter and manual removal. Sorts numerically ascending.
+            notInTable = notInTable.concat(removedFishList).sort(function (a, b) {
+                return a - b
+            });
+            // Removes duplicates from merged table.
+            notInTable = notInTable.filter(function (elem, index, self) {
+                return index === self.indexOf(elem);
+            });
+
+            // Removes fish from inTable list if they are present in notInTable list
+            notInTable.map(function (i) {
+                if (inTable.indexOf(i) !== -1) {
+                    inTable.splice(inTable.indexOf(i), 1);
+                }
+            });
+
+            $('#filteredFishTable').DataTable().clear().draw();
+            $('#calc_table').DataTable().clear().draw();
+            fishTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var fRow = JSON.parse(JSON.stringify(this.data()));
+                var cRow = JSON.parse(JSON.stringify(this.data()));
+                if (inTable.indexOf(fRow["species_id"]) >= 0) {
+                    $('#filteredFishTable').DataTable().row.add(fRow).draw();
+                    $('#calc_table').DataTable().row.add(cRow).draw();
+                }
+            });
+
+            // Iterates through rows of fishTable and adds highlighting class to each row in assemblage.
+            fishTable.rows({order: 'index'}).data().filter(function (value, index) {
+                var id = value["species_id"];
+                if (inTable.indexOf(id) >= 0) {
+                    if (removedFishList.indexOf(id) >= 0) {
+                        fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
                     }
                     else {
-                        notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
+                        fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
                     }
-                });
-                // Merges array of indexes from fish removed from assemblage by the filter and manual removal. Sorts numerically ascending.
-                notInTable = notInTable.concat(removedFishList).sort(function (a, b) {
-                    return a - b
-                });
-                // Removes duplicates from merged table.
-                notInTable = notInTable.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
-                });
-                // Removes fish from inTable list if they are present in notInTable list
-                notInTable.map(function (i) {
-                    if (inTable.indexOf(i) !== -1) {
-                        inTable.splice(inTable.indexOf(i), 1);
-                    }
-                });
-
-                // Gets fishTable rows where the species_id matches from the list of filtered fish.
-                var filterData = fishTable.rows().data().filter(function (value, index) {
-                    if (inTable.indexOf(value["species_id"]) !== -1) {
-                        return value;
-                    }
-                });
-
-                // Iterates through rows of fishTable and adds highlighting class to each row in assemblage.
-                fishTable.rows({order: 'index'}).data().filter(function (value, index) {
-                    var id = value["species_id"];
-                    if (inTable.indexOf(id) >= 0) {
-                        if (removedFishList.indexOf(id) >= 0) {
-                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
-                        }
-                        else {
-                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
-                        }
-                    }
-                });
-
-                // Populates filtered assemblage and calculator table with filtered data.
-                populateFilteredFishTable(filterData);
-                populateCalcTable(filterData);
-            }
+                }
+            });
             endLoad();
-        }
-
-        function removeFromTable() {
-            var notInTable = removedFishList;
-            var filters = $("#assemblage_filters").find(".filtering");
-            if (filters.length === 0) {
-                var filteredTable = $('#fishTable').DataTable();
-                var inTable = filteredTable.rows().data().map(function (i, r) {
-                    return i["species_id"];
-                });
-                notInTable.map(function (i, e) {
-                    if (inTable.indexOf(i) !== -1) {
-                        inTable.splice(inTable.indexOf(i), 1);
-                    }
-                });
-                var filterData = filteredTable.rows().data().filter(function (value, index) {
-                    if (inTable.indexOf(value["species_id"]) !== -1) {
-                        return value;
-                    }
-                });
-                populateFilteredFishTable(filterData);
-                populateCalcTable(filterData);
-                endLoad();
-            }
-            else {
-                applyFilters();
-            }
         }
 
         function filterRarity(columnN) {
@@ -845,7 +820,7 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-            setTimeout(getTESTFishData, 100);
+            //setTimeout(getTESTFishData, 100);
         }
 
         function getStreamData() {
@@ -882,7 +857,7 @@
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
                         streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
-                    //getFishData();
+                    getFishData();
                     return data;
                 },
                 error: function (jqXHR, status) {
@@ -1989,8 +1964,6 @@
         }
 
         function populateCalcTable(data) {
-            $('#biomass_weight_field').val("");
-            $('#biomass_count_field').val("");
             var d2 = JSON.parse(JSON.stringify(data));
             $('#calc_table').DataTable().destroy();
             $('#calc_table').empty();
@@ -2163,17 +2136,19 @@
                 return Number(((cnt * mW[i]) / 1000).toFixed(1));
             });
 
-            var fishData = fishList.data().map(function (f, i) {
-                f["biomass"] = BM[i];
-                f["count"] = count[i];
-                return f;
-            });
             var sumBM = BM.reduce(function (sum, v) {
                 return sum + v;
             });
 
             $('#biomass_weight_field').val(sumBM.toFixed(1));
-            populateCalcTable(fishData);
+
+            $("#calc_table").DataTable().rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var rowData = this.data();
+                rowData["biomass"] = BM[rowIdx];
+                rowData["count"] = count[rowIdx];
+                $('#calc_table').DataTable().row(this).data(rowData).draw();
+            });
+            $("#calc_table").DataTable().draw();
         }
 
         function calculateAbundanceFromBiomass(c) {
@@ -2217,13 +2192,15 @@
                 E = B / sumBM;
                 c = E * c;
             }
-            var fishData = fishList.data().map(function (f, i) {
-                f["biomass"] = BM[i];
-                f["count"] = count[i];
-                return f;
-            });
+
             $('#biomass_count_field').val(Math.round(c));
-            populateCalcTable(fishData);
+            $("#calc_table").DataTable().rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var rowData = this.data();
+                rowData["biomass"] = BM[rowIdx];
+                rowData["count"] = count[rowIdx];
+                $('#calc_table').DataTable().row(this).data(rowData).draw();
+            });
+            $("#calc_table").DataTable().draw();
         }
 
         var loadScreen;
