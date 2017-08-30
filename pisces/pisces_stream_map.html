@@ -548,6 +548,8 @@
             });
 
             $('#biomass_reset').on('click', function () {
+                $('#biomass_weight_field').val("");
+                $('#biomass_count_field').val("");
                 var filteredData = $('#filteredFishTable').DataTable().data();
                 populateCalcTable(filteredData);
             });
@@ -717,10 +719,11 @@
             $('#filteredFishTable').DataTable().clear().draw();
             $('#calc_table').DataTable().clear().draw();
             fishTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                var row = this.data();
-                if (inTable.indexOf(row["species_id"]) >= 0) {
-                    $('#filteredFishTable').DataTable().row.add(row).draw();
-                    $('#calc_table').DataTable().row.add(row).draw();
+                var fRow = JSON.parse(JSON.stringify(this.data()));
+                var cRow = JSON.parse(JSON.stringify(this.data()));
+                if (inTable.indexOf(fRow["species_id"]) >= 0) {
+                    $('#filteredFishTable').DataTable().row.add(fRow).draw();
+                    $('#calc_table').DataTable().row.add(cRow).draw();
                 }
             });
 
