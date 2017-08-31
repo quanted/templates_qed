@@ -504,16 +504,34 @@
 
             $('#accordion').on('click', expandFilter());
 
+            // Applies filter on click.
             $(document).on("click", ".filterButton", (function (event) {
                 var input = $(this).closest('div');
                 toggleFilter(input);
+                setTimeout(applyFilters, 10);
             }));
 
+            // Applies filters using filter_apply button. NOT IN USE
             $(document).on('click', '#filter_apply', function (event) {
                 startLoad();
                 setTimeout(applyFilters, 10);
             });
 
+            // Deselects filter on change
+            $('#filter_field').keyup(function (event) {
+                var input = $(this).closest('div');
+                $(input).removeClass('filtering');
+                setTimeout(applyFilters, 10);
+            });
+
+            // Deselects range filter if change to range.
+            $('#rarity_range').on("click", function (event) {
+                var input = this.parentNode;
+                $(input).removeClass('filtering');
+                setTimeout(applyFilters, 10);
+            });
+
+            // Displays fish details on fishTable.
             $('#fishTable').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr);
@@ -529,24 +547,29 @@
                 }
             });
 
+            // Toggle calculator butotn
             $('#in_huc_calc_toggle').on('click', function () {
                 calc = this;
                 setTimeout(toggleCalculator, 100);
             });
 
+            // Entering value in biomass weight field.
             $('#biomass_weight_field').keyup(function () {
                 $('#biomass_count_field').val("");
             });
 
+            // Entering value in biomass count field.
             $('#biomass_count_field').keyup(function () {
                 $('#biomass_weight_field').val("");
             });
 
+            // Calculate abundance for assemblage
             $('#biomass_submit').on('click', function () {
                 startLoad();
                 setTimeout(startCalculation, 1000);
             });
 
+            // Reset calc_table values.
             $('#biomass_reset').on('click', function () {
                 $('#biomass_weight_field').val("");
                 $('#biomass_count_field').val("");
@@ -554,10 +577,12 @@
                 populateCalcTable(filteredData);
             });
 
+            // Save abundance calculation and assemblage to csv.
             $('#save_to_csv').on('click', function () {
                 setTimeout(saveToCSV, 100);
             });
 
+            // Click on calc_table to enable editing.
             $('#calc_table').on('click', 'td', function (e) {
                 var v = this.innerHTML;
                 if (!v.includes('<input') && ($(this).index() === 0 || $(this).index() === 2)) {
@@ -566,6 +591,7 @@
                 document.getElementById('tblCell').focus();
             });
 
+            // Stopped editing editable calc_table values.
             $('#calc_table').on('blur', 'td', function (e) {
                 var v = this.childNodes[0].value;
                 var row = $('#calc_table').DataTable().row($(this).closest('tr')).data();
@@ -585,8 +611,9 @@
                 $('#calc_table').DataTable().cell(this).data(v).draw();
             });
 
+            // Add/remove fish from assemblage.
             $('#fishTable').on('click', 'td.select-checkbox', function () {
-                startLoad();
+                //startLoad();
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr).data();
                 if (this.children[0].checked) {
@@ -598,7 +625,6 @@
 
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
                 }
-                {#                setTimeout(removeFromTable, 10);#}
                 setTimeout(applyFilters, 10);
             })
 
@@ -684,6 +710,7 @@
             var fishTable = $('#fishTable').DataTable();
             var filters = $("#assemblage_filters").find(".filtering");
             fishTable.rows().nodes().to$().removeClass('filteredInFishTable');
+
             // Creates list of species_id for all fish in fishTable.
             var inTable = fishTable.rows().data().map(function (i, r) {
                 return i["species_id"];
@@ -728,17 +755,19 @@
             });
 
             // Iterates through rows of fishTable and adds highlighting class to each row in assemblage.
-            fishTable.rows({order: 'index'}).data().filter(function (value, index) {
-                var id = value["species_id"];
-                if (inTable.indexOf(id) >= 0) {
-                    if (removedFishList.indexOf(id) >= 0) {
-                        fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
+            if (filters.length !== 0) {
+                fishTable.rows({order: 'index'}).data().filter(function (value, index) {
+                    var id = value["species_id"];
+                    if (inTable.indexOf(id) >= 0) {
+                        if (removedFishList.indexOf(id) >= 0) {
+                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
+                        }
+                        else {
+                            fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
+                        }
                     }
-                    else {
-                        fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
-                    }
-                }
-            });
+                });
+            }
             endLoad();
         }
 
@@ -2304,11 +2333,11 @@
                             <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"
                                    title="Enter a value as percentage.">
                         </div>
-                        <div class="fish_filter_apply">
-                            <input id="filter_apply" type="button" name="filter_apply_button" value="Apply Filters"
-                                   class="filterApplyButton" align="center"
-                                   title="Apply filters that have been selected.">
-                        </div>
+                        {#                        <div class="fish_filter_apply">#}
+                        {#                            <input id="filter_apply" type="button" name="filter_apply_button" value="Apply Filters"#}
+                        {#                                   class="filterApplyButton" align="center"#}
+                        {#                                   title="Apply filters that have been selected.">#}
+                        {#                        </div>#}
                     </div>
                 </div>
                 <br>

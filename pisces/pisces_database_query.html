@@ -14,16 +14,31 @@
     }
 
     table {
-        border: 1px solid black;
+        border: 0px solid black;
+        border-spacing: 5px;
+        border-collapse: separate;
     }
 
     table > tbody > tr > td {
         text-align: center;
-        border: none;
+        radius: 5px;
+    {#        border: 1px solid black;#} border: none;
+        border-radius: 5px;
+        box-shadow: 0px 1px 3px black;
     }
 
     option {
         text-align: center;
+    }
+
+    option:hover {
+        background: rgba(206, 213, 222, 0.6);
+        cursor: pointer;
+    }
+
+    select {
+        border: none;
+    {#        border-radius: 5px;#}{#        box-shadow: 0px 2px 2px black;#}
     }
 
 </style>
@@ -75,13 +90,11 @@
 
 <div class="panel-display panel-1col clearfix">
     <div class="panel-panel panel-col">
-
         <!--- content div -->
         <div class="col-md-6">
             <div class="pane-content">
-
-                <p>Query the database by searching for fish species of interest. Select species properties,
-                    habitat characteristics, or other features to get a list of species that meet the criteria.</p>
+                <p>Query the database by searching for species of interest. Select species properties, habitat
+                    characteristics, or other features to find fish that meet your criteria.</p>
 
                 <!--- section line -->
                 <hr/>
@@ -89,29 +102,20 @@
 
                     <!-- DROP-DOWN ACCORDIONS-->
                     <ul class="accordion">
-
-
                         <!-- taxonomy table -->
                         <li>
                             <a class="accordion-title" href="#pane-3" title="Click to expand description">Taxonomy</a>
                             <div class="accordion-pane" id="pane-3">
-                                <p>Select <strong>fish by taxonomy</strong> to query the PiSCES database....</p>
-
                                 <table id="taxonomyTable" style="width:100%">
                                     <tbody>
                                     <tr>
-                                        <td>Scientific/Common Name</td>
-                                        <td>
+                                        <td style="width:50%;"><strong>Scientific/Common Name</strong>
                                             <input id="scicomName" name="scicomName" type="text"
                                                    title="Scientific/Common Name" style="width:100%">
                                             <label for="scicomName"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group</td>
-                                        <td>
+                                        <td><strong>Group</strong>
                                             <label for="fishGroup"></label>
-                                            <select multiple id="fishGroup" style="width: 100%">
+                                            <select multiple id="fishGroup" style="width: 100%;overflow: overlay;">
                                                 <option value="Anchovy">Anchovy</option>
                                                 <option value="Black Bass">Black Bass</option>
                                                 <option value="Bowfin">Bowfin</option>
@@ -175,65 +179,38 @@
                             <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish
                                 Properties</a>
                             <div class="accordion-pane" id="pane-1">
-                                <p>Fish properties include characteristics related to species morphology, beneficial
-                                    use,
-                                    biogeography, and physiology.</p>
-
                                 <!--- fish properties tables -->
                                 <table id="fishPropertiesTable" style="width:100%">
                                     <tbody>
                                     <tr>
-                                        <td style="width:33%; text-align: center;">Native to U.S.
-                                            <input id="native_y" name="native" type="radio" value="Y"/>
-                                            <label for="native_y" style="padding: 1px;">Yes</label>
-                                            <input id="native_n" name="native" type="radio" value="N"/>
-                                            <label for="native_n" style="padding: 1px;">No</label>
-                                        </td>
-                                        <td style="width:34%; text-align: center;">Fish Use
-                                            <select multiple id="fishuse" title="" size="2"
+                                        <td style="width:33%; text-align: center;"><strong>Biogeography</strong>
+                                            <select multiple id="native" title="" size="4"
                                                     style="margin: 1px; width:100%;overflow: auto;">
+                                                <option value="native_y" title="Intolerant">Native</option>
+                                                <option value="native_n" title="Mid-Tolerant">Introduced</option>
+                                            </select>
+                                        </td>
+                                        <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
+                                            <select multiple id="fishuse" title="" size="4"
+                                                    style="margin: 1px; width:100%;overflow: auto;">
+                                                <option value="subsistence">Subsistence</option>
                                                 <option value="sportfishing">SportFish</option>
                                                 <option value="nongame">Non-Game</option>
                                             </select>
                                         </td>
-                                        <td style="width:33%; text-align: center;">Subsistence?
-                                            <input id="subsistence_y" name="subsistence" type="radio" value="1"/>
-                                            <label for="subsistence_y" style="padding: 1px;"> Yes </label>
-                                            <input id="subsistence_n" name="subsistence" type="radio" value="0"/>
-                                            <label for="subsistence_n" style="padding: 1px;"> No</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:33%; text-align: center;">Tolerance to Disturbance/Siltation
-                                            <select multiple name="tolerance" title="" size="2"
-                                                    style="margin: 1px; width:100%">
+                                        <td style="width:33%; text-align: center;"><strong>Tolerance to
+                                            Disturbance/Siltation</strong>
+                                            <select multiple id="tolerance" title="" size="4"
+                                                    style="margin: 1px; width:100%; overflow: auto;">
                                                 <option value="I" title="Intolerant">Intolerant</option>
                                                 <option value="M" title="Mid-Tolerant">Mid-Tolerant</option>
                                                 <option value="T" title="Tolerant">Tolerant</option>
-                                                {#                                                <option value="T">No Designation</option>#}
+                                                <option value="U" title="Unspecified">Unspecified</option>
                                             </select>
                                         </td>
-                                        <td style="width:34%; text-align: center;">Max Total Length (cm)
-                                            <input type="text" id="maxLengthValue" readonly
-                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
-                                            <script>
-                                                $(function () {
-                                                    $("#maxLengthSlider").slider({
-                                                        range: true,
-                                                        min: 1,
-                                                        max: 610,
-                                                        values: [1, 610],
-                                                        slide: function (event, ui) {
-                                                            $("#maxLengthValue").val(ui.values[0] + " - " + ui.values[1]);
-                                                        }
-                                                    });
-                                                    $("#maxLengthValue").val($("#maxLengthSlider").slider("values", 0) +
-                                                        " - " + $("#maxLengthSlider").slider("values", 1));
-                                                });
-                                            </script>
-                                            <div id="maxLengthSlider" style="margin: 0 20px;"></div>
-                                        </td>
-                                        <td style="width:33%; text-align: center;">Rarity
+                                    </tr>
+                                    <tr>
+                                        <td style="width:33%; text-align: center;"><strong>Rarity</strong>
                                             <input type="text" id="rarityValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -253,49 +230,7 @@
                                             </script>
                                             <div id="raritySlider" style="margin: 0 20px;"></div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:33%; text-align: center;">Mean Weight (g)
-                                            <input type="text" id="meanWeightValue" readonly
-                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
-                                            <script>
-                                                $(function () {
-                                                    $("#meanWeightSlider").slider({
-                                                        range: true,
-                                                        min: 0,
-                                                        max: 700,
-                                                        values: [0, 700],
-                                                        slide: function (event, ui) {
-                                                            $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);
-                                                        }
-                                                    });
-                                                    $('#meanWeightValue').val($("#meanWeightSlider").slider("values", 0) +
-                                                        " - " + $("#meanWeightSlider").slider("values", 1));
-                                                })
-                                            </script>
-                                            <div id="meanWeightSlider" style="margin: 0 20px;"></div>
-                                        </td>
-                                        <td style="width:34%; text-align: center;">Mean Length (cm)
-                                            <input type="text" id="meanLengthValue" readonly
-                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
-                                            <script>
-                                                $(function () {
-                                                    $("#meanLengthSlider").slider({
-                                                        range: true,
-                                                        min: 1,
-                                                        max: 79,
-                                                        values: [1, 79],
-                                                        slide: function (event, ui) {
-                                                            $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);
-                                                        }
-                                                    });
-                                                    $('#meanLengthValue').val($("#meanLengthSlider").slider("values", 0) +
-                                                        " - " + $("#meanLengthSlider").slider("values", 1));
-                                                })
-                                            </script>
-                                            <div id="meanLengthSlider" style="margin: 0 20px;"></div>
-                                        </td>
-                                        <td style="width:33%; text-align: center;">Max Age (yr)
+                                        <td style="width:33%; text-align: center;"><strong>Max Age (yr)</strong>
                                             <input type="text" id="maxAgeValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -315,6 +250,71 @@
                                             </script>
                                             <div id="maxAgeSlider" style="margin: 0 20px;"></div>
                                         </td>
+{#                                        <td style="width:33%; text-align: center;">#}
+{#                                        </td>#}
+                                    </tr>
+                                    <tr>
+                                        <td style="width:33%; text-align: center;"><strong>Mean Weight (g)</strong>
+                                            <input type="text" id="meanWeightValue" readonly
+                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#meanWeightSlider").slider({
+                                                        range: true,
+                                                        min: 0,
+                                                        max: 700,
+                                                        values: [0, 700],
+                                                        slide: function (event, ui) {
+                                                            $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $('#meanWeightValue').val($("#meanWeightSlider").slider("values", 0) +
+                                                        " - " + $("#meanWeightSlider").slider("values", 1));
+                                                })
+                                            </script>
+                                            <div id="meanWeightSlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                        <td style="width:34%; text-align: center;"><strong>Mean Length (cm)</strong>
+                                            <input type="text" id="meanLengthValue" readonly
+                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#meanLengthSlider").slider({
+                                                        range: true,
+                                                        min: 1,
+                                                        max: 79,
+                                                        values: [1, 79],
+                                                        slide: function (event, ui) {
+                                                            $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $('#meanLengthValue').val($("#meanLengthSlider").slider("values", 0) +
+                                                        " - " + $("#meanLengthSlider").slider("values", 1));
+                                                })
+                                            </script>
+                                            <div id="meanLengthSlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                        <td style="width:34%; text-align: center;"><strong>Max Total Length
+                                            (cm)</strong>
+                                            <input type="text" id="maxLengthValue" readonly
+                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#maxLengthSlider").slider({
+                                                        range: true,
+                                                        min: 1,
+                                                        max: 610,
+                                                        values: [1, 610],
+                                                        slide: function (event, ui) {
+                                                            $("#maxLengthValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $("#maxLengthValue").val($("#maxLengthSlider").slider("values", 0) +
+                                                        " - " + $("#maxLengthSlider").slider("values", 1));
+                                                });
+                                            </script>
+                                            <div id="maxLengthSlider" style="margin: 0 20px;"></div>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -326,13 +326,12 @@
                             <a class="accordion-title" href="#pane-2" title="Click to expand description">Habitat
                                 Preferences</a>
                             <div class="accordion-pane" id="pane-2">
-                                <p>Select <strong>habitat characteristics</strong>...</p>
                                 <!--- habitat preferences tables -->
                                 <table id="habitat" style="width:100%">
                                     <tbody>
                                     <tr>
-                                        <td style="width:25%; text-align: center;">Preferred System
-                                            <select multiple id="preferedSystem" title="" style="width:100%;">
+                                        <td style="width:25%; text-align: center;"><strong>System</strong>
+                                            <select multiple id="preferedSystem" title="" style="width:100%;overflow:overlay;" size="6">
                                                 <option value="caves" title="Caves">Caves</option>
                                                 <option value="springs" title="Springs">Springs</option>
                                                 <option value="headwaters" title="Headwaters">Headwaters</option>
@@ -347,18 +346,9 @@
                                                 <option value="coast_ocea" title="Coastal/Ocean">Coastal/Ocean</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;">Preferred System Habitat
-                                            <select multiple id="preferedSystemHabitat" title=""
-                                                    style="overflow: auto;width:100%;">
-                                                <option value="riffles" title="Riffles">Riffles</option>
-                                                <option value="run_flopool" title="Runs/Flowing Pools">Runs</option>
-                                                <option value="pool_bckwtr" title="Pools/Backwater">Pools/Backwater
-                                                </option>
-                                            </select>
-                                        </td>
-                                        <td style="width:25%; text-align: center;">Water Position
+                                        <td style="width:25%; text-align: center;"><strong>Water Position</strong>
                                             <select multiple id="waterPosition" title=""
-                                                    style="overflow: auto;width:100%;">
+                                                    style="overflow: auto;width:100%;" size="6">
                                                 <option value="benthic" title="Benthic">Benthic</option>
                                                 <option value="surface" title="Surface">Surface</option>
                                                 <option value="nrshre_litt" title="OpenWater/Pelagic">Open
@@ -369,8 +359,10 @@
                                                 </option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;">Substrate Preference
-                                            <select multiple id="substratePreference" title="" style="width:100%;">
+                                        <td style="width:25%; text-align: center;"><strong>Substrate</strong>
+                                            <select multiple id="substratePreference" title=""
+                                                    style="width:100%;overflow: auto;"
+                                                    size="6">
                                                 <option value="mud_slt_det" title="Mud/Silt/Detritus">Mud/Silt</option>
                                                 <option value="sand" title="Sand">Sand</option>
                                                 <option value="gravel" title="Gravel">Gravel</option>
@@ -380,45 +372,53 @@
                                                 <option value="wdyd_brush" title="Woody Debris">Woody Debris</option>
                                             </select>
                                         </td>
+{#                                        <td style="width:25%; text-align: center;">#}
+{#                                        </td>#}
                                     </tr>
                                     <tr>
-                                        <td style="width:25%; text-align: center;">Water Type
-                                            <select multiple id="waterType" title="" style="overflow: auto;width:100%;">
+                                        <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
+                                            <select multiple id="preferedSystemHabitat" title=""
+                                                    style="overflow: auto;width:100%;" size="3">
+                                                <option value="riffles" title="Riffles">Riffles</option>
+                                                <option value="run_flopool" title="Runs/Flowing Pools">Runs</option>
+                                                <option value="pool_bckwtr" title="Pools/Backwater">Pools/Backwater
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>
+                                            <select multiple id="waterType" title="" style="overflow: auto;width:100%;"
+                                                    size="3">
                                                 <option value="clearwater" title="Clear water">Clear</option>
                                                 <option value="turbidwater" title="Turbid water">Turbid</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;">Thermal Preference
+                                        <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
                                             <select multiple id="thermalPreference" title=""
-                                                    style="overflow: auto;width:100%;">
+                                                    style="overflow: auto;width:100%;" size="3">
                                                 <option value="coldwater" title="Cold water">Cold</option>
                                                 <option value="coolwater" title="Cool water">Cool</option>
                                                 <option value="warmwater" title="Warm water">Warm</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;">Topographic Preference
+                                        <td style="width:25%; text-align: center;"><strong>Topography</strong>
                                             <select multiple id="topographicPreference" title=""
-                                                    style="overflow: auto;width:100%;">
+                                                    style="overflow: auto;width:100%;" size="3">
                                                 <option value="lowlands_lgr" title="Lowlands">Lowlands</option>
                                                 <option value="upland_hgr" title="Uplands">Uplands</option>
 
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;">
-                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                         </li>
-
-
                     </ul><!-- END ACCORDIONS -->
-
                 </form>
+                <p style="font-size:12px;">*Note: Use cntr + click to make multiple selections/deselections.</p>
                 <!--- line -->
                 <hr/>
-
                 <!--- submit query -->
                 <tr>
                     <!--- reset -->
