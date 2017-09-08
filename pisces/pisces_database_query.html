@@ -77,10 +77,86 @@
                 $('#meanWeightValue').val($("#meanWeightSlider").slider("values", 0) + " - " + $("#meanWeightSlider").slider("values", 1));
                 $('#meanLengthValue').val($("#meanLengthSlider").slider("values", 0) + " - " + $("#meanLengthSlider").slider("values", 1));
                 $('#maxAgeValue').val($("#maxAgeSlider").slider("values", 0) + " - " + $("#maxAgeSlider").slider("values", 1));
-
                 return false;
             });
+
+            $('#submitQuery').on("click", function() {
+                setTimeout(generateQuery, 200);
+            });
+
         });
+
+        function generateQuery(){
+
+            // Collecting variables
+            var scicomname = "sciconname=" + $('#scicomName').val().trim().split(" ").join("_") + "&";
+            var group = "group=" + $('#fishGroup').val().toString() + "&";
+
+            var biogeo = $('#native').val().map(function(i){
+                if (i === "native_y"){
+                    return "native=Y&";
+                }
+                else if(i === "native_n"){
+                    return "native=N&"
+                }
+            }).toString().replace(',','');
+            var benefit = $('#fishuse').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");;
+            var tolerance = "tolerance=" + $('#tolerance').val().map(function(i){
+                return i;
+            }).toString() + "&";
+            var rarity = $('#rarityValue').val().split(' - ');
+            rarity = "rarity=" + rarity[0] + "_" + rarity[1] + "&";
+            var maxage = $('#maxAgeValue').val().split(' - ');
+            maxage = "max_age=" + maxage[0] + "_" + maxage[1] + "&";
+            var meanw = $('#meanWeightValue').val().split(' - ');
+            meanw = "mean_weight=" + meanw[0] + "_" + meanw[1] + "&";
+            var meanl = $('#meanLengthValue').val().split(' - ');
+            meanl = "mean_length=" + meanl[0] + "_" + meanl[1] + "&";
+            var maxl = $('#maxLengthValue').val().split(' - ');
+            maxl = "max_length=" + maxl[0] + "_" + maxl[1] + "&";
+
+            var sys = $('#preferedSystem').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var position = $('#waterPosition').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var substrate = $('#substrate').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var habitat = $('#habitatType').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var waterType = $('#waterType').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var thermal = $('#thermal').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+            var topo = $('#topography').val().map(function(i){
+                return i + "=1&";
+            }).toString().split(",").join("");
+
+            var queryString = scicomname + group + biogeo + benefit + rarity + maxage + meanw + meanl + maxl +
+                sys + position + substrate + habitat + waterType + thermal + topo;
+            if(queryString[queryString.length - 1] === '&'){
+                queryString = queryString.substring(0, queryString.length - 1 );
+            }
+            console.log('/pisces/rest/api/v1/fish/properties?' + queryString);
+            $.ajax({
+                type: "GET",
+                url: "/pisces/rest/api/v1/fish/properties? " + queryString,
+                success: function(d){
+
+                },
+                error: function(d){
+
+                }
+            })
+        }
+
     </script>
 
 </head>
@@ -360,7 +436,7 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Substrate</strong>
-                                            <select multiple id="substratePreference" title=""
+                                            <select multiple id="substrate" title=""
                                                     style="width:100%;overflow: auto;"
                                                     size="6">
                                                 <option value="mud_slt_det" title="Mud/Silt/Detritus">Mud/Silt</option>
@@ -377,7 +453,7 @@
                                     </tr>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
-                                            <select multiple id="preferedSystemHabitat" title=""
+                                            <select multiple id="habitatType" title=""
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="riffles" title="Riffles">Riffles</option>
                                                 <option value="run_flopool" title="Runs/Flowing Pools">Runs</option>
@@ -393,7 +469,7 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
-                                            <select multiple id="thermalPreference" title=""
+                                            <select multiple id="thermal" title=""
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="coldwater" title="Cold water">Cold</option>
                                                 <option value="coolwater" title="Cool water">Cool</option>
@@ -401,7 +477,7 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Topography</strong>
-                                            <select multiple id="topographicPreference" title=""
+                                            <select multiple id="topography" title=""
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="lowlands_lgr" title="Lowlands">Lowlands</option>
                                                 <option value="upland_hgr" title="Uplands">Uplands</option>
@@ -423,7 +499,7 @@
                 <tr>
                     <!--- reset -->
                     <div>
-                        <input name="submit" type="submit" value="Submit Query"/>
+                        <input id="submitQuery" name="submit" type="submit" value="Submit Query" onsubmit="return false;"/>
                         <input id="resetQuery" name="reset" type="reset" value="Reset Query"/>
                     </div>
 
