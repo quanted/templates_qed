@@ -10,6 +10,10 @@
         height: 450px;
     }
 
+    #mapDiv {
+{#        border-radius: 10px;#}
+    }
+
     #basemaps-wrapper {
         background: white;
         padding: 10px;
@@ -44,6 +48,7 @@
         margin: 1px 1px;
         max-height: 620px;
         padding: 1.3529em 1em;
+        border-radius: 10px;
     }
 
     input.fishSearchBox {
@@ -570,8 +575,6 @@
                     success: function (data) {
                         a = data["species"][0]["w_l_a"];
                         b = data["species"][0]["w_l_b"];
-                        {#                        c = data["species"][0]["l_w_c"];#}
-                        {#                        d = data["species"][0]["l_w_d"];#}
                         setFishDetails(data["species"][0]);
                         searchFishHuc(data["species"][0]["speciesid"]);
 
@@ -674,8 +677,6 @@
                     '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
                     '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
                     '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
-                    {#                    '<tr><td>C (W=C*L<sup>D</sup>)</td><td>' + details["l_w_c"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +#}
-                    {#                    '<tr><td>D (W=C*L<sup>D</sup>)</td><td>' + details["l_w_d"] + ' </td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +#}
                     '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
                     '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
                     '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
@@ -694,7 +695,6 @@
                 var L = $('#fish_length').val();
                 if ($.isNumeric(L) && L !== "") {
                     var weight = (a * Math.pow(L, b)).toFixed(1);
-                    {#                    var weight = Math.pow(L / a, 1 / b).toFixed(1);#}
                     $('#fish_weight').val(weight);
                 }
                 else {
@@ -706,7 +706,6 @@
                 var W = $('#fish_weight').val();
                 if ($.isNumeric(W) && W !== "") {
                     var length = Math.pow(W / a, 1 / b).toFixed(1);
-                    {#                    var length = (a * Math.pow(W, b)).toFixed(1);#}
                     $('#fish_length').val(length);
                 }
                 else {
