@@ -3,6 +3,8 @@
 	<div class="articles_input">
 
 		<form method="post" id="form1" action="/cts/{{model}}/batchoutput">
+
+		{% csrf_token %}
 	
 		<h2 class="model_header">{{ model_attributes }}</h2>
 		<ul class="nobullet">

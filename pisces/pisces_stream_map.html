@@ -1058,9 +1058,9 @@
             $('#huc_calc_toggle').closest('div').show();
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
-            //setTimeout(getStreamData, 10);
+            setTimeout(getStreamData, 10);
             resetFilters();
-            setTimeout(getTESTFishData, 100);
+            //setTimeout(getTESTFishData, 100);
         }
 
         function getStreamData() {
@@ -1097,7 +1097,7 @@
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
                         streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
-                    //getFishData();
+                    getFishData();
                     return data;
                 },
                 error: function (jqXHR, status) {

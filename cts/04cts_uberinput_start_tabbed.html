@@ -15,4 +15,5 @@
 		<!-- added parsley validation info -->
 		<!-- <form id="{{model}}-form" method="post" action="/cts/{{model}}/output" data-parsley-validate> -->
 		<form id="form" method="post" action="/cts/{{model}}/output" data-parsley-validate>
+		{% csrf_token %}
 <!--end 04uberinput_start-->
