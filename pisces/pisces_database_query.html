@@ -22,7 +22,7 @@
     table > tbody > tr > td {
         text-align: center;
         radius: 5px;
-    {#        border: 1px solid black;#} border: none;
+        border: none;
         border-radius: 5px;
         box-shadow: 0px 1px 3px black;
     }
@@ -38,8 +38,133 @@
 
     select {
         border: none;
-    {#        border-radius: 5px;#}{#        box-shadow: 0px 2px 2px black;#}
     }
+
+    #parameterTable {
+        border-bottom: 0px solid #111;
+    {#        float: left;#}{#        margin: 0 0 0 -15%;#}
+    }
+
+    #parameterTable > thead > tr > th {
+        border: 0px solid black;
+        font-size: 10px;
+        text-align: center;
+    {#        width: 6.25%;#} background-color: transparent;
+        padding: 10px 0;
+    }
+
+    #parameterTable > tbody > tr > td {
+        box-shadow: none;
+    {#        width: 6.25%;#} font-size: 10px;
+        padding: 10px 0;
+    }
+
+    #queryParameters {
+        display: none;
+        box-shadow: 0px 1px 3px 0px black;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px -100px;
+    }
+
+    #queryResults {
+        box-shadow: 0px 1px 3px 0px black;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px -100px;
+        display: none;
+    }
+
+    #queryResultsTable {
+        float: left;
+        width: 40%;
+    }
+
+    #fishDetailsTable {
+        float: right;
+        width: 60%;
+    }
+
+    #resultsTable {
+        font-size: 12px;
+        border: none;
+        margin-right: 10px;
+    }
+
+    #resultsTable > thead > tr > th {
+        border: none;
+        text-align: center;
+
+    }
+
+    #resultsTable > tbody > tr > td {
+        box-shadow: none;
+        border: none;
+        text-align: center;
+        border-radius: 0;
+    }
+
+    #resultsTable > tbody > tr:hover {
+        background: lightgrey;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    tr.selectedFish td {
+        background-color: #86C1FF !important;
+    }
+
+    .fishDetails > tbody > tr > td {
+        border: none;
+        box-shadow: none;
+        font-size: 12px;
+        border-radius: 0;
+    }
+
+    .fish_links {
+        display: flex;
+        padding: 5px;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .link_image {
+        max-width: 25px;
+        width: 100%;
+        margin: 5px 5px;
+    }
+
+    table.fishDetails {
+        line-height: 12px;
+        width: 99%;
+        border-color: black;
+        border-style: solid;
+        border-width: 0px;
+    {#        background-color: #DBF1FF;#} margin: 0 10px;
+        box-shadow: 0px 1px 3px black;
+        border-radius: 3px;
+        border-spacing: 0px;
+    }
+
+    table.fishDetails col:nth-child(even) {
+        background-color: white !important;
+        width: 15%;
+        min-width: 50px;
+    }
+
+    table.fishDetails col:last-child {
+        width: 45%;
+    }
+
+    table.fishDetails > tbody > tr > td:nth-child(odd):hover, table.fishDetails > tbody > tr > td:nth-child(odd):hover + td {
+        background: #BFD2DE;
+    }
+
+    .fishCName, .fishSName {
+        font-size: 14px;
+        text-align: center;
+    }
+
 
 </style>
 
@@ -63,6 +188,9 @@
         $(document).ready(function () {
             $('#resetQuery').on("click", function () {
                 $('#databaseQuery')[0].reset();
+                document.getElementById('fishDetailsTable').innerHTML = "";
+                $('#queryParameters').hide();
+                document.getElementById('queryResults').style.display = "none";
 
                 // reset slider values
                 $("#maxLengthSlider").slider("values", [1, 610]);
@@ -80,30 +208,50 @@
                 return false;
             });
 
-            $('#submitQuery').on("click", function() {
+            $('#submitQuery').on("click", function () {
                 setTimeout(generateQuery, 200);
+                var parameters = collectParameters();
+                populateParameterTable(parameters);
+                $('#queryParameters').show();
+                document.getElementById('queryResults').style.display = "flow-root";
             });
 
+            $('#resultsTable').on("click", "td", function () {
+                if ($(this).parent().hasClass('selectedFish')) {
+                    $(this).parent().removeClass('selectedFish');
+                    document.getElementById('fishDetailsTable').innerHTML = "";
+                }
+                else {
+                    $("#resultsTable").find(".selectedFish").map(function (f) {
+                        $(this).removeClass('selectedFish');
+                    });
+                    $(this).parent().addClass('selectedFish');
+                    var tr = $(this).closest('tr');
+                    var row = $('#resultsTable').DataTable().row(tr).data();
+                    document.getElementById('fishDetailsTable').innerHTML = setFishDetails(row);
+                }
+            });
         });
 
-        function generateQuery(){
+
+        function generateQuery() {
 
             // Collecting variables
-            var scicomname = "sciconname=" + $('#scicomName').val().trim().split(" ").join("_") + "&";
+            var scicomname = "scicomname=" + $('#scicomName').val().trim().split(" ").join("_") + "&";
             var group = "group=" + $('#fishGroup').val().toString() + "&";
 
-            var biogeo = $('#native').val().map(function(i){
-                if (i === "native_y"){
+            var biogeo = $('#native').val().map(function (i) {
+                if (i === "native_y") {
                     return "native=Y&";
                 }
-                else if(i === "native_n"){
+                else if (i === "native_n") {
                     return "native=N&"
                 }
-            }).toString().replace(',','');
-            var benefit = $('#fishuse').val().map(function(i){
+            }).toString().replace(',', '');
+            var benefit = $('#fishuse').val().map(function (i) {
                 return i + "=1&";
-            }).toString().split(",").join("");;
-            var tolerance = "tolerance=" + $('#tolerance').val().map(function(i){
+            }).toString().split(",").join("");
+            var tolerance = "tolerance=" + $('#tolerance').val().map(function (i) {
                 return i;
             }).toString() + "&";
             var rarity = $('#rarityValue').val().split(' - ');
@@ -117,44 +265,914 @@
             var maxl = $('#maxLengthValue').val().split(' - ');
             maxl = "max_length=" + maxl[0] + "_" + maxl[1] + "&";
 
-            var sys = $('#preferedSystem').val().map(function(i){
+            var sys = $('#preferedSystem').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var position = $('#waterPosition').val().map(function(i){
+            var position = $('#waterPosition').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var substrate = $('#substrate').val().map(function(i){
+            var substrate = $('#substrate').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var habitat = $('#habitatType').val().map(function(i){
+            var habitat = $('#habitatType').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var waterType = $('#waterType').val().map(function(i){
+            var waterType = $('#waterType').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var thermal = $('#thermal').val().map(function(i){
+            var thermal = $('#thermal').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var topo = $('#topography').val().map(function(i){
+            var topo = $('#topography').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
 
-            var queryString = scicomname + group + biogeo + benefit + rarity + maxage + meanw + meanl + maxl +
-                sys + position + substrate + habitat + waterType + thermal + topo;
-            if(queryString[queryString.length - 1] === '&'){
-                queryString = queryString.substring(0, queryString.length - 1 );
+            var queryString = "";
+            if ($('#scicomName').val().length > 0) {
+                queryString = queryString + scicomname;
             }
-            console.log('/pisces/rest/api/v1/fish/properties?' + queryString);
+            if ($('#fishGroup').val().length > 0) {
+                queryString = queryString + group;
+            }
+            if ($('#native').val().length > 0) {
+                queryString = queryString + biogeo;
+            }
+            if ($('#fishuse').val().length > 0) {
+                queryString = queryString + benefit;
+            }
+            if ($('#tolerance').val().length > 0) {
+                queryString = queryString + tolerance;
+            }
+            if ($('#preferedSystem').val().length > 0) {
+                queryString = queryString + sys;
+            }
+            if ($('#waterPosition').val().length > 0) {
+                queryString = queryString + position;
+            }
+            if ($('#substrate').val().length > 0) {
+                queryString = queryString + substrate;
+            }
+            if ($('#habitatType').val().length > 0) {
+                queryString = queryString + habitat;
+            }
+            if ($('#waterType').val().length > 0) {
+                queryString = queryString + waterType;
+            }
+            if ($('#thermal').val().length > 0) {
+                queryString = queryString + thermal;
+            }
+            if ($('#topography').val().length > 0) {
+                queryString = queryString + topo;
+            }
+
+            queryString = queryString + rarity + maxage + meanw + meanl + maxl;
+
+            if (queryString[queryString.length - 1] === '&') {
+                queryString = queryString.substring(0, queryString.length - 1);
+            }
+            console.log('https://qedinternal.epa.gov/pisces/rest/api/v1/fish/properties/?' + queryString);
+            var url = "https://qedinternal.epa.gov/pisces/rest/api/v1/fish/properties/?" + queryString;
             $.ajax({
                 type: "GET",
-                url: "/pisces/rest/api/v1/fish/properties? " + queryString,
-                success: function(d){
-
+                url: url,
+                success: function (d) {
+                    populateFishTable(d['species'])
                 },
-                error: function(d){
-
+                error: function (d) {
                 }
-            })
+            });
+{#            populateFishTableTemp();#}
+        }
+
+        function collectParameters() {
+            var parameters = {};
+
+            parameters["scicomname"] = $('#scicomName').val().trim();
+            parameters["groups"] = $('#fishGroup').val().toString().split(",").join(", ");
+            $('#native').val().map(function (i) {
+                if (i === "native_y") {
+                    parameters["native"] = "Yes";
+                }
+                else if (i === "native_n") {
+                    parameters["native"] = "No";
+                }
+            });
+
+            parameters["fishuse"] = jQuery.makeArray($($('#fishuse')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+
+            parameters["tolerance"] = $('#tolerance').val().map(function (i) {
+                if (i === "I") {
+                    return "Intolerant";
+                }
+                else if (i === "M") {
+                    return "Mid-Tolerant";
+                }
+                else if (i === "T") {
+                    return "Tolerant";
+                }
+                else if (i === "U") {
+                    return "Unspecified";
+                }
+            }).toString().split(",").join(", ");
+
+            parameters["rarity"] = $('#rarityValue').val();
+            parameters["maxage"] = $('#maxAgeValue').val();
+            parameters["meanw"] = $('#meanWeightValue').val();
+            parameters["meanl"] = $('#meanLengthValue').val();
+            parameters["maxl"] = $('#maxLengthValue').val();
+
+            parameters["system"] = jQuery.makeArray($($('#preferedSystem')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["wposition"] = jQuery.makeArray($($('#waterPosition')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["substrate"] = jQuery.makeArray($($('#substrate')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["habitat"] = jQuery.makeArray($($('#habitatType')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["wclarity"] = jQuery.makeArray($($('#waterType')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["thermal"] = jQuery.makeArray($($('#thermal')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            parameters["topography"] = jQuery.makeArray($($('#topography')[0]["selectedOptions"]).map(function (i) {
+                return this.title;
+            })).toString().split(",").join(", ");
+            return parameters;
+        }
+
+        function populateParameterTable(parameters) {
+            parameters = [parameters];
+            $('#parameterTable').DataTable().destroy();
+            $('#parameterTable').empty();
+            var config = {
+                data: parameters,
+                "columns": [
+                    {
+                        title: "Name",
+                        data: "scicomname"
+                    },
+                    {
+                        title: "Groups",
+                        data: "groups"
+                    },
+                    {
+                        title: "Beneficial Use",
+                        data: "fishuse"
+                    },
+                    {
+                        title: "Tolerance",
+                        data: "tolerance"
+                    },
+                    {
+                        title: "Rarity",
+                        data: "rarity"
+                    },
+                    {
+                        title: "Max Age (yr)",
+                        data: "maxage"
+                    },
+                    {
+                        title: "Mean Weight (g)",
+                        data: "meanw"
+                    },
+                    {
+                        title: "Mean Length (cm)",
+                        data: "meanl"
+                    },
+                    {
+                        title: "Max Length (cm)",
+                        data: "maxl"
+                    },
+                    {
+                        title: "System",
+                        data: "system"
+                    },
+                    {
+                        title: "Water Position",
+                        data: "wposition"
+                    },
+                    {
+                        title: "Substrate",
+                        data: "substrate"
+                    },
+                    {
+                        title: "Habitat",
+                        data: "habitat"
+                    },
+                    {
+                        title: "Water Clarity",
+                        data: "wclarity"
+                    },
+                    {
+                        title: "Thermal Regime",
+                        data: "thermal"
+                    },
+                    {
+                        title: "Topography",
+                        data: "topography"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "bSortable": false,
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                    }, {
+                        width: 75, targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                    }
+                ],
+                sorting: false,
+                searching: false,
+                paging: false,
+                bInfo: false
+            };
+            $('#parameterTable').DataTable(config);
+        }
+
+        function setFishDetails(details) {
+            var cName = details["commonname"];
+            var sName = details["genus"] + " " + details["species"];
+
+            // biogeography
+            var native = (details["native"] === "Y") ? "Native" : " Non-Native";
+
+            // gradient
+            var gradient = [];
+            if (details["lowlands_lgr"] === "1") gradient.push(" Lowlands");
+            if (details["upland_hgr"] === "1") gradient.push(" Uplands");
+
+            // thermal
+            var thermal = [];
+            if (details["warmwater"] === "1") thermal.push(" Warmwater");
+            if (details["coolwater"] === "1") thermal.push(" Coolwater");
+            if (details["coldwater"] === "1") thermal.push(" Coldwater");
+
+            // clarity
+            var clarity = [];
+            if (details["clearwater"] === "1") clarity.push(" Clear");
+            if (details["turbidwater"] === "1") clarity.push(" Turbid");
+
+            // system
+            var system = [];
+            if (details["caves"] === "1") system.push(" Caves");
+            if (details["springs"] === "1") system.push(" Springs");
+            if (details["headwaters"] === "1") system.push(" Headwaters");
+            if (details["creeks"] === "1") system.push(" Creeks");
+            if (details["small_riv"] === "1") system.push(" Small Rivers");
+            if (details["med_riv"] === "1") system.push(" Medium Rivers");
+            if (details["lge_riv"] === "1") system.push(" Large Rivers");
+            if (details["lk_imp_pnd"] === "1") system.push(" Lakes/Impoundments/Ponds/Canals/Ditches");
+            if (details["swp_msh_by"] === "1") system.push(" Swamps/Marshes/Bayou");
+            if (details["coast_ocea"] === "1") system.push(" Coastal/Ocean");
+
+
+            // lotic habitat
+            var lotic = [];
+            if (details["riffles"] === "1") lotic.push(" Riffles");
+            if (details["run_flopool"] === "1") lotic.push(" Runs/Flowing Pools");
+            if (details["pool_bckwtr"] === "1") lotic.push(" Pools/Backwaters");
+
+            // water column
+            var column = [];
+            if (details["benthic"] === "1") column.push(" Benthic");
+            if (details["surface"] === "1") column.push(" Surface");
+            if (details["nrshre_litt"] === "1") column.push(" Nearshore/Littoral");
+            if (details["opnwtr_pelag"] === "1") column.push(" Open Water/Pelagic");
+
+            // substrate
+            var substrate = [];
+            if (details["mud_slt_det"] === "1") substrate.push(" Mud/Silt/Detritus");
+            if (details["sand"] === "1") substrate.push(" Sand");
+            if (details["gravel"] === "1") substrate.push(" Gravel");
+            if (details["rck_rub_bol"] === "1") substrate.push(" Rocks/Rubble/Boulders");
+            if (details["vegetation"] === "1") substrate.push(" Vegetation");
+            if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
+
+            // tolerance
+            var tolerance = [];
+            if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
+            if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
+            if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
+            if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");
+
+            // use
+            var use = [];
+            if (details["sportfishing"] === "1") use.push(" Sportfishing");
+            if (details["nongame"] === "1") use.push(" Nongame");
+            if (details["subsis_fish"] === "1") use.push(" Subsistence");
+
+            // links
+            var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
+            var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + cName.replace(" ", "_");
+
+            return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
+                '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
+                '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
+                '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
+                '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
+                '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
+                ;
+        }
+
+        function populateFishTable(data) {
+            $('#resultsTable').DataTable().destroy();
+            $('#resultsTable').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        data: "commonname",
+                        title: "Common Name",
+                        name: "commonname"
+                    },
+                    {
+                        data: "species",
+                        title: "Scientific Name",
+                        name: "scientific_name"
+
+                    },
+                    {
+                        data: "genus",
+                        title: "Genus",
+                        name: "genus"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [2],
+                        "visible": false
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return row["genus"] + " " + data;
+                        },
+                        "targets": 1
+                    }
+                ],
+                searching: false,
+                paging: false,
+                bInfo: false,
+                "order": [[0, 'asc']]
+
+            };
+            $('#resultsTable').closest('div').show();
+            $('#resultsTable').DataTable(config);
+        }
+
+        function populateFishTableTemp() {
+            var testData = {
+                "species": [{
+                    "speciesid": 18,
+                    "genusid": 7,
+                    "genus": "ambloplites",
+                    "species": "constellatus",
+                    "commonname": "ozark bass",
+                    "family": "Centrarchidae",
+                    "group": "Black Bass",
+                    "native": "Y",
+                    "pfg_page": "489",
+                    "sportfishing": "1",
+                    "nongame": "0",
+                    "subsis_fish": "0",
+                    "pollut_tol": "U",
+                    "max_length": 19.0,
+                    "mean_length": 10.0,
+                    "mean_weight": 17.4,
+                    "thinning": 0.59,
+                    "thin_adj": 0.0,
+                    "max_age": 8,
+                    "w_l_a": 0.0154,
+                    "w_l_b": 3.05,
+                    "l_w_c": 0.0154,
+                    "l_w_d": 3.05,
+                    "regress": "0",
+                    "rarity": 3,
+                    "caves": "",
+                    "springs": "",
+                    "headwaters": "",
+                    "creeks": "1",
+                    "small_riv": "1",
+                    "med_riv": "1",
+                    "lge_riv": "",
+                    "lk_imp_pnd": "",
+                    "swp_msh_by": "",
+                    "coast_ocea": "",
+                    "riffles": "",
+                    "run_flopool": "",
+                    "pool_bckwtr": "1",
+                    "benthic": "",
+                    "surface": "",
+                    "nrshre_litt": "1",
+                    "opnwtr_pelag": "",
+                    "mud_slt_det": "",
+                    "sand": "",
+                    "gravel": "",
+                    "rck_rub_bol": "1",
+                    "vegetation": "",
+                    "wdyd_brush": "1",
+                    "clearwater": "1",
+                    "turbidwater": "",
+                    "warmwater": "1",
+                    "coolwater": "",
+                    "coldwater": "",
+                    "lowlands_lgr": "",
+                    "uplands_hgr": "",
+                    "locat_notes": "",
+                    "habit_notes": ""
+                },
+                    {
+                        "speciesid": 19,
+                        "genusid": 7,
+                        "genus": "ambloplites",
+                        "species": "rupestris",
+                        "commonname": "rock bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "489",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "M",
+                        "max_length": 42.5,
+                        "mean_length": 16.1,
+                        "mean_weight": 83.9,
+                        "thinning": 0.65,
+                        "thin_adj": 0.0142,
+                        "max_age": 9,
+                        "w_l_a": 0.0206,
+                        "w_l_b": 2.99,
+                        "l_w_c": 0.0206,
+                        "l_w_d": 2.99,
+                        "regress": "0",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "",
+                        "lk_imp_pnd": "1",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "1",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "",
+                        "rck_rub_bol": "1",
+                        "vegetation": "1",
+                        "wdyd_brush": "",
+                        "clearwater": "1",
+                        "turbidwater": "",
+                        "warmwater": "",
+                        "coolwater": "1",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 611,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "cataractae",
+                        "commonname": "shoal bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "497",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "U",
+                        "max_length": 65.0,
+                        "mean_length": 15.9,
+                        "mean_weight": 55.6,
+                        "thinning": 0.64,
+                        "thin_adj": 0.0,
+                        "max_age": 8,
+                        "w_l_a": 0.0114,
+                        "w_l_b": 3.07,
+                        "l_w_c": 0.01135,
+                        "l_w_d": 3.07,
+                        "regress": "1",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "1",
+                        "lk_imp_pnd": "",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "1",
+                        "run_flopool": "1",
+                        "pool_bckwtr": "",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "",
+                        "rck_rub_bol": "1",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "",
+                        "turbidwater": "",
+                        "warmwater": "1",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 612,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "coosae",
+                        "commonname": "redeye bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "496",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "U",
+                        "max_length": 47.5,
+                        "mean_length": 12.8,
+                        "mean_weight": 28.2,
+                        "thinning": 0.61,
+                        "thin_adj": 0.0,
+                        "max_age": 7,
+                        "w_l_a": 0.0114,
+                        "w_l_b": 3.07,
+                        "l_w_c": 0.01135,
+                        "l_w_d": 3.07,
+                        "regress": "1",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "",
+                        "lk_imp_pnd": "",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "1",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "",
+                        "rck_rub_bol": "1",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "",
+                        "turbidwater": "",
+                        "warmwater": "1",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 613,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "dolomieu",
+                        "commonname": "smallmouth bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "497",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "M",
+                        "max_length": 70.0,
+                        "mean_length": 21.2,
+                        "mean_weight": 122.0,
+                        "thinning": 0.67,
+                        "thin_adj": 0.006,
+                        "max_age": 9,
+                        "w_l_a": 0.0113,
+                        "w_l_b": 3.04,
+                        "l_w_c": 0.0113,
+                        "l_w_d": 3.04,
+                        "regress": "0",
+                        "rarity": 4,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "1",
+                        "lk_imp_pnd": "1",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "1",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "1",
+                        "rck_rub_bol": "1",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "1",
+                        "turbidwater": "",
+                        "warmwater": "",
+                        "coolwater": "1",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 615,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "notius",
+                        "commonname": "suwannee bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "494",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "U",
+                        "max_length": 35.0,
+                        "mean_length": 10.3,
+                        "mean_weight": 14.5,
+                        "thinning": 0.59,
+                        "thin_adj": 0.0,
+                        "max_age": 6,
+                        "w_l_a": 0.0114,
+                        "w_l_b": 3.07,
+                        "l_w_c": 0.01135,
+                        "l_w_d": 3.07,
+                        "regress": "1",
+                        "rarity": 4,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "",
+                        "lk_imp_pnd": "",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "1",
+                        "run_flopool": "1",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "",
+                        "rck_rub_bol": "1",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "",
+                        "turbidwater": "",
+                        "warmwater": "1",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 616,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "punctulatus",
+                        "commonname": "spotted bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "494",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "M",
+                        "max_length": 60.0,
+                        "mean_length": 17.9,
+                        "mean_weight": 66.4,
+                        "thinning": 0.64,
+                        "thin_adj": -0.0145,
+                        "max_age": 5,
+                        "w_l_a": 0.011,
+                        "w_l_b": 3.02,
+                        "l_w_c": 0.011,
+                        "l_w_d": 3.02,
+                        "regress": "0",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "",
+                        "lk_imp_pnd": "1",
+                        "swp_msh_by": "",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "1",
+                        "pool_bckwtr": "",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "",
+                        "sand": "",
+                        "gravel": "1",
+                        "rck_rub_bol": "",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "1",
+                        "turbidwater": "",
+                        "warmwater": "",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 618,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "salmoides",
+                        "commonname": "largemouth bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "493",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "M",
+                        "max_length": 95.0,
+                        "mean_length": 29.6,
+                        "mean_weight": 191.0,
+                        "thinning": 0.69,
+                        "thin_adj": -0.0051,
+                        "max_age": 10,
+                        "w_l_a": 0.0036,
+                        "w_l_b": 3.21,
+                        "l_w_c": 0.00362,
+                        "l_w_d": 3.21,
+                        "regress": "0",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "1",
+                        "lk_imp_pnd": "1",
+                        "swp_msh_by": "1",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "1",
+                        "sand": "1",
+                        "gravel": "",
+                        "rck_rub_bol": "",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "",
+                        "turbidwater": "",
+                        "warmwater": "",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    },
+                    {
+                        "speciesid": 620,
+                        "genusid": 119,
+                        "genus": "micropterus",
+                        "species": "salmoides salmoides",
+                        "commonname": "northern largemouth bass",
+                        "family": "Centrarchidae",
+                        "group": "Black Bass",
+                        "native": "Y",
+                        "pfg_page": "494",
+                        "sportfishing": "1",
+                        "nongame": "0",
+                        "subsis_fish": "0",
+                        "pollut_tol": "U",
+                        "max_length": 95.0,
+                        "mean_length": 29.6,
+                        "mean_weight": 191.0,
+                        "thinning": 0.69,
+                        "thin_adj": 0.0,
+                        "max_age": 10,
+                        "w_l_a": 0.0036,
+                        "w_l_b": 3.21,
+                        "l_w_c": 0.00362,
+                        "l_w_d": 3.21,
+                        "regress": "0",
+                        "rarity": 3,
+                        "caves": "",
+                        "springs": "",
+                        "headwaters": "",
+                        "creeks": "1",
+                        "small_riv": "1",
+                        "med_riv": "1",
+                        "lge_riv": "1",
+                        "lk_imp_pnd": "1",
+                        "swp_msh_by": "1",
+                        "coast_ocea": "",
+                        "riffles": "",
+                        "run_flopool": "",
+                        "pool_bckwtr": "1",
+                        "benthic": "",
+                        "surface": "",
+                        "nrshre_litt": "",
+                        "opnwtr_pelag": "",
+                        "mud_slt_det": "1",
+                        "sand": "1",
+                        "gravel": "",
+                        "rck_rub_bol": "",
+                        "vegetation": "",
+                        "wdyd_brush": "",
+                        "clearwater": "",
+                        "turbidwater": "",
+                        "warmwater": "",
+                        "coolwater": "",
+                        "coldwater": "",
+                        "lowlands_lgr": "",
+                        "uplands_hgr": "",
+                        "locat_notes": "",
+                        "habit_notes": ""
+                    }]
+            };
+            populateFishTable(testData['species']);
+        }
+
+        function capitalize_Words(str) {
+            return str.replace(/\w\S*/g, function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
         }
 
     </script>
@@ -177,7 +1195,7 @@
                 <form id="databaseQuery">
 
                     <!-- DROP-DOWN ACCORDIONS-->
-                    <ul class="accordion">
+                    <ul class="accordion" id="accordionGroup">
                         <!-- taxonomy table -->
                         <li>
                             <a class="accordion-title" href="#pane-3" title="Click to expand description">Taxonomy</a>
@@ -326,8 +1344,8 @@
                                             </script>
                                             <div id="maxAgeSlider" style="margin: 0 20px;"></div>
                                         </td>
-{#                                        <td style="width:33%; text-align: center;">#}
-{#                                        </td>#}
+                                        {#                                        <td style="width:33%; text-align: center;">#}
+                                        {#                                        </td>#}
                                     </tr>
                                     <tr>
                                         <td style="width:33%; text-align: center;"><strong>Mean Weight (g)</strong>
@@ -407,7 +1425,8 @@
                                     <tbody>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>System</strong>
-                                            <select multiple id="preferedSystem" title="" style="width:100%;overflow:overlay;" size="6">
+                                            <select multiple id="preferedSystem" title=""
+                                                    style="width:100%;overflow:overlay;" size="6">
                                                 <option value="caves" title="Caves">Caves</option>
                                                 <option value="springs" title="Springs">Springs</option>
                                                 <option value="headwaters" title="Headwaters">Headwaters</option>
@@ -448,8 +1467,8 @@
                                                 <option value="wdyd_brush" title="Woody Debris">Woody Debris</option>
                                             </select>
                                         </td>
-{#                                        <td style="width:25%; text-align: center;">#}
-{#                                        </td>#}
+                                        {#                                        <td style="width:25%; text-align: center;">#}
+                                        {#                                        </td>#}
                                     </tr>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
@@ -499,11 +1518,51 @@
                 <tr>
                     <!--- reset -->
                     <div>
-                        <input id="submitQuery" name="submit" type="submit" value="Submit Query" onsubmit="return false;"/>
+                        <input id="submitQuery" name="submit" type="submit" value="Submit Query"
+                               onsubmit="return false;"/>
                         <input id="resetQuery" name="reset" type="reset" value="Reset Query"/>
                     </div>
 
                 </tr>
+                <div id="queryParameters">
+                    <h4 style="text-align:center;">Submitted Query Parameters</h4>
+                    <table id="parameterTable" class="display" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Scientific/Common Name</th>
+                            <th>Groups</th>
+                            <th>Beneficial Use</th>
+                            <th>Tolerance</th>
+                            <th>Rarity</th>
+                            <th>Max Age (yr)</th>
+                            <th>Mean Weight (g)</th>
+                            <th>Mean Length (cm)</th>
+                            <th>Max Length (cm)</th>
+                            <th>System</th>
+                            <th>Water Position</th>
+                            <th>Substrate</th>
+                            <th>Habitat</th>
+                            <th>Water Clarity</th>
+                            <th>Thermal Regime</th>
+                            <th>Topography</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="queryResults">
+                    <h4 style="text-align:center;">Database Query Results</h4>
+                    <div id="queryResultsTable">
+                        <table id="resultsTable" width="100%" class="hover">
+                            <thead>
+                            <tr>
+                                <th>Common Name</th>
+                                <th>Scientific Name</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="fishDetailsTable"></div>
+                </div>
             </div>
         </div>
     </div>
