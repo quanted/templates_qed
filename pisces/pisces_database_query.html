@@ -42,6 +42,8 @@
 
     #parameterTable {
         border-bottom: 0px solid #111;
+        line-height: 1;
+
     {#        float: left;#}{#        margin: 0 0 0 -15%;#}
     }
 
@@ -54,8 +56,8 @@
     }
 
     #parameterTable > tbody > tr {
-    background-color: white;
-}
+        background-color: white;
+    }
 
     #parameterTable > tbody > tr > td {
         box-shadow: none;
@@ -162,6 +164,11 @@
 
     table.fishDetails > tbody > tr > td:nth-child(odd):hover, table.fishDetails > tbody > tr > td:nth-child(odd):hover + td {
         background: gray !important;
+{#        cursor: default;#}
+    }
+
+    table.fishDetails > tbody > tr > td:hover{
+        cursor: default;
     }
 
     .fishCName, .fishSName {
@@ -174,9 +181,16 @@
     }
 
     #alternating {
-        background: rgba(134,193,244,0.3);
+        background: rgba(134, 193, 244, 0.3);
     }
 
+    .accordion-pane {
+        padding: 25px;
+    }
+
+    #taxonomyTable, #fishPropertiesTable, #habitat {
+        margin-bottom: 0;
+    }
 
 </style>
 
@@ -353,7 +367,7 @@
                 error: function (d) {
                 }
             });
-{#            populateFishTableTemp();#}
+            populateFishTableTemp();
         }
 
         function collectParameters() {
@@ -1221,7 +1235,8 @@
                                             <label for="scicomName"></label>
                                         <td><strong>Group</strong>
                                             <label for="fishGroup"></label>
-                                            <select multiple id="fishGroup" title="Select one or multiple groups" style="width: 100%;overflow: overlay;">
+                                            <select multiple id="fishGroup" title="Select one or multiple groups"
+                                                    style="width: 100%;overflow: overlay;">
                                                 <option value="Anchovy">Anchovy</option>
                                                 <option value="Black Bass">Black Bass</option>
                                                 <option value="Bowfin">Bowfin</option>
@@ -1290,14 +1305,16 @@
                                     <tbody>
                                     <tr>
                                         <td style="width:33%; text-align: center;"><strong>Biogeography</strong>
-                                            <select multiple id="native" title="Select any options to apply to query" size="4"
-                                                    style="margin: 1px; width:100%;overflow: auto;" >
+                                            <select multiple id="native" title="Select any options to apply to query"
+                                                    size="4"
+                                                    style="margin: 1px; width:100%;overflow: auto;">
                                                 <option value="native_y">Native</option>
                                                 <option value="native_n">Introduced</option>
                                             </select>
                                         </td>
                                         <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
-                                            <select multiple id="fishuse" title="Select any options to apply to query" size="4"
+                                            <select multiple id="fishuse" title="Select any options to apply to query"
+                                                    size="4"
                                                     style="margin: 1px; width:100%;overflow: auto;">
                                                 <option value="subsistence">Subsistence</option>
                                                 <option value="sportfishing">SportFish</option>
@@ -1306,7 +1323,8 @@
                                         </td>
                                         <td style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance" title="Select any options to apply to query" size="4"
+                                            <select multiple id="tolerance" title="Select any options to apply to query"
+                                                    size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
                                                 <option value="I">Intolerant</option>
                                                 <option value="M">Mid-Tolerant</option>
@@ -1336,7 +1354,8 @@
                                             </script>
                                             <div id="raritySlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:33%; text-align: center;" title="Select max age range"><strong>Max Age (yr)</strong>
+                                        <td style="width:33%; text-align: center;" title="Select max age range"><strong>Max
+                                            Age (yr)</strong>
                                             <input type="text" id="maxAgeValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1358,7 +1377,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width:33%; text-align: center;" title="Select mean weight range"><strong>Mean Weight (g)</strong>
+                                        <td style="width:33%; text-align: center;" title="Select mean weight range">
+                                            <strong>Mean Weight (g)</strong>
                                             <input type="text" id="meanWeightValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1378,7 +1398,8 @@
                                             </script>
                                             <div id="meanWeightSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:34%; text-align: center;" title="Select mean length range"><strong>Mean Length (cm)</strong>
+                                        <td style="width:34%; text-align: center;" title="Select mean length range">
+                                            <strong>Mean Length (cm)</strong>
                                             <input type="text" id="meanLengthValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1398,8 +1419,9 @@
                                             </script>
                                             <div id="meanLengthSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:34%; text-align: center;" title="Select max length range"><strong>Max Total Length
-                                            (cm)</strong>
+                                        <td style="width:34%; text-align: center;" title="Select max length range">
+                                            <strong>Max Total Length
+                                                (cm)</strong>
                                             <input type="text" id="maxLengthValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1427,7 +1449,8 @@
 
                         <!-- Habitat Preferences (aka watershed characteristics)-->
                         <li>
-                            <a class="accordion-title" href="#pane-2" title="Click to expand habitat preference parameters">Habitat
+                            <a class="accordion-title" href="#pane-2"
+                               title="Click to expand habitat preference parameters">Habitat
                                 Preferences</a>
                             <div class="accordion-pane" id="pane-2">
                                 <!--- habitat preferences tables -->
@@ -1435,7 +1458,8 @@
                                     <tbody>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>System</strong>
-                                            <select multiple id="preferedSystem" title="Select any options to apply to query"
+                                            <select multiple id="preferedSystem"
+                                                    title="Select any options to apply to query"
                                                     style="width:100%;overflow:overlay;" size="6">
                                                 <option value="caves">Caves</option>
                                                 <option value="springs">Springs</option>
@@ -1452,7 +1476,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Position</strong>
-                                            <select multiple id="waterPosition" title="Select any options to apply to query"
+                                            <select multiple id="waterPosition"
+                                                    title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="6">
                                                 <option value="benthic">Benthic</option>
                                                 <option value="surface">Surface</option>
@@ -1480,7 +1505,8 @@
                                     </tr>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
-                                            <select multiple id="habitatType" title="Select any options to apply to query"
+                                            <select multiple id="habitatType"
+                                                    title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="riffles" title="Riffles">Riffles</option>
                                                 <option value="run_flopool">Runs</option>
@@ -1489,7 +1515,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>
-                                            <select multiple id="waterType" title="Select any options to apply to query" style="overflow: auto;width:100%;"
+                                            <select multiple id="waterType" title="Select any options to apply to query"
+                                                    style="overflow: auto;width:100%;"
                                                     size="3">
                                                 <option value="clearwater">Clear</option>
                                                 <option value="turbidwater">Turbid</option>
@@ -1504,7 +1531,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Topography</strong>
-                                            <select multiple id="topography" title="Select any options to apply to query"
+                                            <select multiple id="topography"
+                                                    title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="lowlands_lgr">Lowlands</option>
                                                 <option value="upland_hgr">Uplands</option>
@@ -1528,7 +1556,8 @@
                     <div>
                         <input id="submitQuery" name="submit" type="submit" value="Submit Query"
                                onsubmit="return false;"/>
-                        <input id="resetQuery" name="reset" type="reset" value="Reset Query" title="Reset all query parameter fields"/>
+                        <input id="resetQuery" name="reset" type="reset" value="Reset Query"
+                               title="Reset all query parameter fields"/>
                     </div>
 
                 </tr>
