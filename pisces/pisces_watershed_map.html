@@ -7,11 +7,13 @@
 
     #map {
         width: 100%;
-        height: 450px;
+    {#        height: 450px;#} height: 85%;
     }
 
     #mapDiv {
-{#        border-radius: 10px;#}
+        border-radius: 10px;
+        border-color: black;
+        border-bottom-width: 1px;
     }
 
     #basemaps-wrapper {
@@ -202,6 +204,13 @@
         }
     }
 
+    .leaflet-bar {
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65) !important;
+        border-radius: 0px !important;
+        border-bottom-left-radius: 5px !important;
+        border-bottom-right-radius: 5px !important;
+    }
+
 </style>
 
 <head>
@@ -215,8 +224,9 @@
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
     <!-- local js -->
-    {#        <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>#}
-    <script src="/static_qed/pisces/scripts/huc250k_4326_sp_sorted.js"></script>
+    {#            <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>#}
+    {#        <script src="/static_qed/pisces/scripts/huc250k_4326_sp_sorted.js"></script>#}
+    <script src="/static_qed/pisces/scripts/huc8_simplified_sorted.js"></script>
     <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
 
 </head>
@@ -372,7 +382,7 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-                //hucs = ["02010004", "02010006", "04010101", "04010102", "04010201", "04010301", "04010302", "04020101", "04020102", "04020103", "04020104", "04020105", "04020201", "04020202", "04020203", "04020300", "04030101", "04030102", "04030103", "04030104", "04030105", "04030106", "04030107", "04030108", "04030109", "04030110", "04030111", "04030112", "04030201", "04030202", "04030203", "04040001", "04040002", "04040003", "04050001", "04050002", "04050003", "04050005", "04050006", "04050007", "04060101", "04060102", "04060103", "04060104", "04060105", "04060106", "04060107", "04070002", "04070004", "04070005", "04070006", "04070007", "04080101", "04080102", "04080103", "04080104", "04080201", "04080202", "04080204", "04080205", "04080300", "04090001", "04090002", "04090003", "04090004", "04090005", "04100001", "04100002", "04100003", "04100006", "04100007", "04100010", "04100011", "04110002", "04110003", "04120101", "04120102", "04120103", "04120104", "04120200", "04130001", "04130003", "04140101", "04140102", "04140201", "04140202", "04150102", "04150301", "04150302", "04150306", "05010001", "05010002", "05010004", "05030103", "05040001", "05040002", "05040006", "05080001", "05120104", "05120105"];
+                hucs = ["02010004", "02010006", "04010101", "04010102", "04010201", "04010301", "04010302", "04020101", "04020102", "04020103", "04020104", "04020105", "04020201", "04020202", "04020203", "04020300", "04030101", "04030102", "04030103", "04030104", "04030105", "04030106", "04030107", "04030108", "04030109", "04030110", "04030111", "04030112", "04030201", "04030202", "04030203", "04040001", "04040002", "04040003", "04050001", "04050002", "04050003", "04050005", "04050006", "04050007", "04060101", "04060102", "04060103", "04060104", "04060105", "04060106", "04060107", "04070002", "04070004", "04070005", "04070006", "04070007", "04080101", "04080102", "04080103", "04080104", "04080201", "04080202", "04080204", "04080205", "04080300", "04090001", "04090002", "04090003", "04090004", "04090005", "04100001", "04100002", "04100003", "04100006", "04100007", "04100010", "04100011", "04110002", "04110003", "04120101", "04120102", "04120103", "04120104", "04120200", "04130001", "04130003", "04140101", "04140102", "04140201", "04140202", "04150102", "04150301", "04150302", "04150306", "05010001", "05010002", "05010004", "05030103", "05040001", "05040002", "05040006", "05080001", "05120104", "05120105"];
                 $('#fish_weight_length').hide();
                 $('#selectedFishTable').hide();
                 resetHUCLayer();
@@ -384,15 +394,15 @@
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" + "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
                 //  properties of highlighted HUC
-                var layerGroup = [];
-{#                huc8Layer.eachLayer(function (layer) {#}
-{#                    $.each(hucs, function (index, value) {#}
-{#                        if (value === layer.feature.properties.HUC_CODE) {#}
-{#                            layer.setStyle({color: 'black', weight: 0.7, fillColor: '#0979D9', fillOpacity: 0.4});#}
-{#                            layerGroup.push(layer);#}
-{#                        }#}
-{#                    });#}
-{#                });#}
+                {#                var layerGroup = [];#}
+                {#                huc8Layer.eachLayer(function (layer) {#}
+                {#                    $.each(hucs, function (index, value) {#}
+                {#                        if (value === layer.feature.properties.HUC8) {#}
+                {#                            layer.setStyle({color: 'red', weight: 0.7, fillColor: '#red', fillOpacity: 0.8});#}
+                {#                            layerGroup.push(layer);#}
+                {#                        }#}
+                {#                    });#}
+                {#                });#}
 
                 var hucObject = huc8Layer.getLayers();
                 var l = 40; // layers start at layerID = 40
@@ -421,11 +431,11 @@
             function binarySearch(left, right, value) {
                 while (left <= right) {
                     var mid = Math.floor((left + right) / 2);
-                    var midValue = Number(huc8Layer.getLayer(mid).feature.properties.HUC_CODE);
-                    if (midValue === Number(value)) {
+                    var midValue = Number(huc8Layer.getLayer(mid).feature.properties.HUC8);
+                    if (Number(midValue) === Number(value)) {
                         return mid;
                     }
-                    else if (midValue > Number(value)) {
+                    else if (Number(midValue) > Number(value)) {
                         right = mid - 1;
                     }
                     else {
@@ -440,12 +450,12 @@
             function onEachFeatureClick(feature, layer) {
                 layer.on('click', function (e) {
                     $('.fishSearchBox').val("");
-                    if (this.currentHUC !== feature.properties.HUC_CODE || this.currentHUC === null) {
-                        this.currentHUC = feature.properties.HUC_CODE;
+                    if (this.currentHUC !== feature.properties.HUC8 || this.currentHUC === null) {
+                        this.currentHUC = feature.properties.HUC8;
                         var hucs = [];
-                        hucs.push(feature.properties.HUC_CODE);
+                        hucs.push(feature.properties.HUC8);
                         selectHUCs(hucs);
-                        getFishDataonMapClick(feature.properties.HUC_CODE);
+                        getFishDataonMapClick(feature.properties.HUC8);
                     }
                     else {
                         $('.fishTable').closest('div').hide();
@@ -465,6 +475,7 @@
                 .addTo(map);
 
             // load huc watershed boundaries
+
             var huc8Layer = L.geoJson(huc8s, {
                 style: hucStyle,
                 onEachFeature: onEachFeatureClick

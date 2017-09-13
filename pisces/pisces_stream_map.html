@@ -84,10 +84,9 @@
             background-color: lightgray;
         }
 
-        table.dataTable.display tbody tr.odd>.sorting_1 {
+        table.dataTable.display tbody tr.odd > .sorting_1 {
             background-color: lightgray;
         }
-
 
         #filteredFishTable th * {
             border: 0 !important;
@@ -373,7 +372,7 @@
 
         div #hucFish {
             width: 45%;
-            margin:0 0px 0 5%;
+            margin: 0 0px 0 5%;
             display: inline-block;
             float: left;
         }
@@ -622,6 +621,17 @@
             padding: 0 0 0 150px;
         }
 
+        .leaflet-bar {
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65) !important;
+            border-radius: 0px !important;
+            border-bottom-left-radius: 5px !important;
+            border-bottom-right-radius: 5px !important;
+        }
+
+        .box > .pane-content > :last-child {
+            padding: 5px;
+        }
+
     </style>
 
     <script>
@@ -636,7 +646,7 @@
             $('#filteredFishTable').closest('div').hide();
             $('#abundance_calc').closest('div').hide();
             $('#fish_filters').closest('div').hide();
-{#            $('#envelope_toggle').closest('div').hide();#}
+            {#            $('#envelope_toggle').closest('div').hide();#}
             $('#huc_calc_toggle').closest('div').hide();
 
             $('#selectHUC').on('change', function () {
@@ -775,12 +785,14 @@
                     $('#streamSearchSwitch').removeClass('coordSearch');
                     document.getElementById('streamSearchValue').placeholder = 'HUC 8 ID';
                     document.getElementById('streamSearchValue').value = "";
+                    document.getElementById('streamSearchValue').title = "Search for specific HUC8 by HUC ID";
                 }
                 else {
                     $('#streamSearchSwitch').removeClass('hucSearch');
                     $('#streamSearchSwitch').addClass('coordSearch');
                     document.getElementById('streamSearchValue').placeholder = 'Lat, Lon';
                     document.getElementById('streamSearchValue').value = "";
+                    document.getElementById('streamSearchValue').title = "Search for specific stream segment by lat,lon values";
                 }
             });
 
@@ -2470,13 +2482,13 @@
     <div class="panel-panel panel-col">
         <div class="streamSearch">
             <input type="checkbox" name="streamSearch" class="streamSearch-checkbox hucSearch" id="streamSearchSwitch"
-                   checked>
-            <label class="streamSearch-label" for="streamSearchSwitch">
+                   checked >
+            <label class="streamSearch-label" for="streamSearchSwitch" title="Toggle HUC ID/Stream Lat, Lon Search">
                 <span class="streamSearch-inner"></span>
                 <span class="streamSearch-switch"></span>
             </label>
             <form class="streamSearchForm" onsubmit="return false;">
-                <input type="text" id="streamSearchValue" class="streamSearchValue" placeholder="HUC 8 ID">
+                <input type="text" id="streamSearchValue" class="streamSearchValue" placeholder="HUC 8 ID" title="Search for specific HUC8 by HUC ID">
                 <input class="fishSearchButton" type="button" title="Search">
             </form>
             <div id="searchError"></div>

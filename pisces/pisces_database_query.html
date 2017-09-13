@@ -32,7 +32,7 @@
     }
 
     option:hover {
-        background: rgba(206, 213, 222, 0.6);
+        background: rgba(206, 213, 222, 0.6) !important;
         cursor: pointer;
     }
 
@@ -52,6 +52,10 @@
     {#        width: 6.25%;#} background-color: transparent;
         padding: 10px 0;
     }
+
+    #parameterTable > tbody > tr {
+    background-color: white;
+}
 
     #parameterTable > tbody > tr > td {
         box-shadow: none;
@@ -157,12 +161,20 @@
     }
 
     table.fishDetails > tbody > tr > td:nth-child(odd):hover, table.fishDetails > tbody > tr > td:nth-child(odd):hover + td {
-        background: #BFD2DE;
+        background: gray !important;
     }
 
     .fishCName, .fishSName {
         font-size: 14px;
         text-align: center;
+    }
+
+    span.ui-slider-handle:hover {
+        cursor: pointer;
+    }
+
+    #alternating {
+        background: rgba(134,193,244,0.3);
     }
 
 
@@ -572,16 +584,16 @@
             var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + cName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
-                '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
-                '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
-                '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
-                '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
-                '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
-                '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
-                '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
-                '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
-                '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
+                '<table class="fishDetails"><col><col><col><col><tr><td>Group</td><td>' + details["group"] + '</td><td id="alternating">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
+                '<tr><td id="alternating">Max Length (cm)</td><td id="alternating"> ' + details["max_length"].toFixed(1) + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td id="alternating">Lotic Habitat</td><td id="alternating">' + lotic.toString() + '</td></tr>' +
+                '<tr><td id="alternating">Mean Length (cm)</td><td id="alternating">' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td id="alternating">Substrate</td><td id="alternating">' + substrate.toString() + '</td></tr>' +
+                '<tr><td id="alternating">A (W=A*L<sup>B</sup>)</td><td id="alternating">' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td id="alternating">Thermal</td><td id="alternating">' + thermal.toString() + '</td></tr>' +
+                '<tr><td id="alternating">Rarity</td><td id="alternating">' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td id="alternating">Location Notes</td><td id="alternating">' + details["locat_notes"] + '</td></tr>' +
+                '<tr><td id="alternating">Human Use</td><td id="alternating">' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
                 '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                 '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
@@ -1198,7 +1210,7 @@
                     <ul class="accordion" id="accordionGroup">
                         <!-- taxonomy table -->
                         <li>
-                            <a class="accordion-title" href="#pane-3" title="Click to expand description">Taxonomy</a>
+                            <a class="accordion-title" href="#pane-3" title="Click to expand taxonomy parameters">Taxonomy</a>
                             <div class="accordion-pane" id="pane-3">
                                 <table id="taxonomyTable" style="width:100%">
                                     <tbody>
@@ -1209,7 +1221,7 @@
                                             <label for="scicomName"></label>
                                         <td><strong>Group</strong>
                                             <label for="fishGroup"></label>
-                                            <select multiple id="fishGroup" style="width: 100%;overflow: overlay;">
+                                            <select multiple id="fishGroup" title="Select one or multiple groups" style="width: 100%;overflow: overlay;">
                                                 <option value="Anchovy">Anchovy</option>
                                                 <option value="Black Bass">Black Bass</option>
                                                 <option value="Bowfin">Bowfin</option>
@@ -1270,7 +1282,7 @@
 
                         <!-- fish properties-->
                         <li>
-                            <a class="accordion-title" href="#pane-1" title="Click to expand description">Fish
+                            <a class="accordion-title" href="#pane-1" title="Click to expand fish property parameters">Fish
                                 Properties</a>
                             <div class="accordion-pane" id="pane-1">
                                 <!--- fish properties tables -->
@@ -1278,14 +1290,14 @@
                                     <tbody>
                                     <tr>
                                         <td style="width:33%; text-align: center;"><strong>Biogeography</strong>
-                                            <select multiple id="native" title="" size="4"
-                                                    style="margin: 1px; width:100%;overflow: auto;">
-                                                <option value="native_y" title="Intolerant">Native</option>
-                                                <option value="native_n" title="Mid-Tolerant">Introduced</option>
+                                            <select multiple id="native" title="Select any options to apply to query" size="4"
+                                                    style="margin: 1px; width:100%;overflow: auto;" >
+                                                <option value="native_y">Native</option>
+                                                <option value="native_n">Introduced</option>
                                             </select>
                                         </td>
                                         <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
-                                            <select multiple id="fishuse" title="" size="4"
+                                            <select multiple id="fishuse" title="Select any options to apply to query" size="4"
                                                     style="margin: 1px; width:100%;overflow: auto;">
                                                 <option value="subsistence">Subsistence</option>
                                                 <option value="sportfishing">SportFish</option>
@@ -1294,17 +1306,17 @@
                                         </td>
                                         <td style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance" title="" size="4"
+                                            <select multiple id="tolerance" title="Select any options to apply to query" size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
-                                                <option value="I" title="Intolerant">Intolerant</option>
-                                                <option value="M" title="Mid-Tolerant">Mid-Tolerant</option>
-                                                <option value="T" title="Tolerant">Tolerant</option>
-                                                <option value="U" title="Unspecified">Unspecified</option>
+                                                <option value="I">Intolerant</option>
+                                                <option value="M">Mid-Tolerant</option>
+                                                <option value="T">Tolerant</option>
+                                                <option value="U">Unspecified</option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width:33%; text-align: center;"><strong>Rarity</strong>
+                                        <td style="width:33%; text-align: center;" title="Select rarity range"><strong>Rarity</strong>
                                             <input type="text" id="rarityValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1324,7 +1336,7 @@
                                             </script>
                                             <div id="raritySlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:33%; text-align: center;"><strong>Max Age (yr)</strong>
+                                        <td style="width:33%; text-align: center;" title="Select max age range"><strong>Max Age (yr)</strong>
                                             <input type="text" id="maxAgeValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1344,11 +1356,9 @@
                                             </script>
                                             <div id="maxAgeSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        {#                                        <td style="width:33%; text-align: center;">#}
-                                        {#                                        </td>#}
                                     </tr>
                                     <tr>
-                                        <td style="width:33%; text-align: center;"><strong>Mean Weight (g)</strong>
+                                        <td style="width:33%; text-align: center;" title="Select mean weight range"><strong>Mean Weight (g)</strong>
                                             <input type="text" id="meanWeightValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1368,7 +1378,7 @@
                                             </script>
                                             <div id="meanWeightSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:34%; text-align: center;"><strong>Mean Length (cm)</strong>
+                                        <td style="width:34%; text-align: center;" title="Select mean length range"><strong>Mean Length (cm)</strong>
                                             <input type="text" id="meanLengthValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1388,7 +1398,7 @@
                                             </script>
                                             <div id="meanLengthSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                        <td style="width:34%; text-align: center;"><strong>Max Total Length
+                                        <td style="width:34%; text-align: center;" title="Select max length range"><strong>Max Total Length
                                             (cm)</strong>
                                             <input type="text" id="maxLengthValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
@@ -1417,7 +1427,7 @@
 
                         <!-- Habitat Preferences (aka watershed characteristics)-->
                         <li>
-                            <a class="accordion-title" href="#pane-2" title="Click to expand description">Habitat
+                            <a class="accordion-title" href="#pane-2" title="Click to expand habitat preference parameters">Habitat
                                 Preferences</a>
                             <div class="accordion-pane" id="pane-2">
                                 <!--- habitat preferences tables -->
@@ -1425,81 +1435,79 @@
                                     <tbody>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>System</strong>
-                                            <select multiple id="preferedSystem" title=""
+                                            <select multiple id="preferedSystem" title="Select any options to apply to query"
                                                     style="width:100%;overflow:overlay;" size="6">
-                                                <option value="caves" title="Caves">Caves</option>
-                                                <option value="springs" title="Springs">Springs</option>
-                                                <option value="headwaters" title="Headwaters">Headwaters</option>
-                                                <option value="creeks" title="Creeks">Creeks</option>
-                                                <option value="small_riv" title="Small Rivers">Small Rivers</option>
-                                                <option value="med_riv" title="Medium Rivers">Medium Rivers</option>
-                                                <option value="lge_riv" title="Large Rivers">Large Rivers</option>
-                                                <option value="lk_imp_pnd" title="Lakes/Impoundments/Ponds">
+                                                <option value="caves">Caves</option>
+                                                <option value="springs">Springs</option>
+                                                <option value="headwaters">Headwaters</option>
+                                                <option value="creeks">Creeks</option>
+                                                <option value="small_riv">Small Rivers</option>
+                                                <option value="med_riv">Medium Rivers</option>
+                                                <option value="lge_riv">Large Rivers</option>
+                                                <option value="lk_imp_pnd">
                                                     Lakes/Impoundments
                                                 </option>
-                                                <option value="swp_msh_by" title="Swamp/Marsh">Swamp/Marsh</option>
-                                                <option value="coast_ocea" title="Coastal/Ocean">Coastal/Ocean</option>
+                                                <option value="swp_msh_by">Swamp/Marsh</option>
+                                                <option value="coast_ocea">Coastal/Ocean</option>
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Position</strong>
-                                            <select multiple id="waterPosition" title=""
+                                            <select multiple id="waterPosition" title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="6">
-                                                <option value="benthic" title="Benthic">Benthic</option>
-                                                <option value="surface" title="Surface">Surface</option>
-                                                <option value="nrshre_litt" title="OpenWater/Pelagic">Open
+                                                <option value="benthic">Benthic</option>
+                                                <option value="surface">Surface</option>
+                                                <option value="nrshre_litt">Open
                                                     Water/Pelagic
                                                 </option>
-                                                <option value="opnwtr_pelag" title="Nearshore/Littoral">
+                                                <option value="opnwtr_pelag">
                                                     Nearshore/Littoral
                                                 </option>
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Substrate</strong>
-                                            <select multiple id="substrate" title=""
+                                            <select multiple id="substrate" title="Select any options to apply to query"
                                                     style="width:100%;overflow: auto;"
                                                     size="6">
-                                                <option value="mud_slt_det" title="Mud/Silt/Detritus">Mud/Silt</option>
-                                                <option value="sand" title="Sand">Sand</option>
-                                                <option value="gravel" title="Gravel">Gravel</option>
-                                                <option value="rck_rub_bol" title="Rocks/Rubble/Boulders">Rocks/Rubble
+                                                <option value="mud_slt_det">Mud/Silt</option>
+                                                <option value="sand">Sand</option>
+                                                <option value="gravel">Gravel</option>
+                                                <option value="rck_rub_bol">Rocks/Rubble
                                                 </option>
-                                                <option value="vegetation" title="Vegetation">Vegetation</option>
-                                                <option value="wdyd_brush" title="Woody Debris">Woody Debris</option>
+                                                <option value="vegetation">Vegetation</option>
+                                                <option value="wdyd_brush">Woody Debris</option>
                                             </select>
                                         </td>
-                                        {#                                        <td style="width:25%; text-align: center;">#}
-                                        {#                                        </td>#}
                                     </tr>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
-                                            <select multiple id="habitatType" title=""
+                                            <select multiple id="habitatType" title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="riffles" title="Riffles">Riffles</option>
-                                                <option value="run_flopool" title="Runs/Flowing Pools">Runs</option>
-                                                <option value="pool_bckwtr" title="Pools/Backwater">Pools/Backwater
+                                                <option value="run_flopool">Runs</option>
+                                                <option value="pool_bckwtr">Pools/Backwater
                                                 </option>
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>
-                                            <select multiple id="waterType" title="" style="overflow: auto;width:100%;"
+                                            <select multiple id="waterType" title="Select any options to apply to query" style="overflow: auto;width:100%;"
                                                     size="3">
-                                                <option value="clearwater" title="Clear water">Clear</option>
-                                                <option value="turbidwater" title="Turbid water">Turbid</option>
+                                                <option value="clearwater">Clear</option>
+                                                <option value="turbidwater">Turbid</option>
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
-                                            <select multiple id="thermal" title=""
+                                            <select multiple id="thermal" title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
-                                                <option value="coldwater" title="Cold water">Cold</option>
-                                                <option value="coolwater" title="Cool water">Cool</option>
-                                                <option value="warmwater" title="Warm water">Warm</option>
+                                                <option value="coldwater">Cold</option>
+                                                <option value="coolwater">Cool</option>
+                                                <option value="warmwater">Warm</option>
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Topography</strong>
-                                            <select multiple id="topography" title=""
+                                            <select multiple id="topography" title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
-                                                <option value="lowlands_lgr" title="Lowlands">Lowlands</option>
-                                                <option value="upland_hgr" title="Uplands">Uplands</option>
+                                                <option value="lowlands_lgr">Lowlands</option>
+                                                <option value="upland_hgr">Uplands</option>
 
                                             </select>
                                         </td>
@@ -1520,13 +1528,13 @@
                     <div>
                         <input id="submitQuery" name="submit" type="submit" value="Submit Query"
                                onsubmit="return false;"/>
-                        <input id="resetQuery" name="reset" type="reset" value="Reset Query"/>
+                        <input id="resetQuery" name="reset" type="reset" value="Reset Query" title="Reset all query parameter fields"/>
                     </div>
 
                 </tr>
                 <div id="queryParameters">
                     <h4 style="text-align:center;">Submitted Query Parameters</h4>
-                    <table id="parameterTable" class="display" width="100%">
+                    <table id="parameterTable" class="display" width="100%" title="Parameters used to generate query">
                         <thead>
                         <tr>
                             <th>Scientific/Common Name</th>
@@ -1552,7 +1560,7 @@
                 <div id="queryResults">
                     <h4 style="text-align:center;">Database Query Results</h4>
                     <div id="queryResultsTable">
-                        <table id="resultsTable" width="100%" class="hover">
+                        <table id="resultsTable" width="100%" class="hover" title="Select fish for additional details">
                             <thead>
                             <tr>
                                 <th>Common Name</th>
