@@ -1,10 +1,8 @@
 <head>
 
     <!-- jquery -->
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
     <script src="/static_qed/pisces/scripts/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    {#    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
     <script src="/static_qed/pisces/scripts/jquery-ui.js"></script>
 
     <!-- datatables import -->
@@ -57,6 +55,18 @@
             margin: 0 0 0 0 !important;
         }
 
+        table.dataTable.display tbody tr.odd {
+            background-color: lightgray;
+        }
+
+        table.dataTable.display tbody tr.odd > .sorting_1 {
+            background-color: lightgray;
+        }
+
+        #fishTable {
+            table-layout: fixed;
+        }
+
         #fishTable tr *, td * {
             border: 0 !important;
             height: 15px !important;
@@ -72,6 +82,20 @@
             border-bottom-width: 1px;
         }
 
+        #fishTable > tbody > tr:hover {
+            cursor: default;
+            background-color: rgba(160, 160, 160, 1.0) !important;
+        }
+
+{#        #fishTable > tbody > tr:hover > .sorting_1 {#}
+{#            cursor: default;#}
+{#            background-color: rgba(160, 160, 160, 1.0) !important;#}
+{#        }#}
+
+         #fishTable > tbody > tr:hover > td {
+            background-color: rgba(160, 160, 160, 1.0) !important;
+        }
+
         #filteredFishTable tr *, td * {
             border: 0 !important;
             height: 15px !important;
@@ -81,18 +105,27 @@
             line-height: 0px !important;
         }
 
-        table.dataTable.display tbody tr.odd {
-            background-color: lightgray;
-        }
-
-        table.dataTable.display tbody tr.odd > .sorting_1 {
-            background-color: lightgray;
-        }
-
         #filteredFishTable th * {
             border: 0 !important;
             border-bottom: solid;
             border-bottom-width: 1px;
+        }
+
+        #filteredFishTable > tbody > tr:hover {
+            cursor: default;
+            background-color: rgba(160, 160, 160, 1.0) !important;
+        }
+
+        {#        #calc_table > tbody > tr:hover {#}
+        {#            cursor: default;#}
+        {#            background-color: rgba(160, 160, 160, 1.0) !important;#}
+        {#        }#}
+
+        #calc_table {
+            float: left;
+            margin: 0 3px;
+            table-layout: auto;
+            width: 100%;
         }
 
         #calc_table tr *, td * {
@@ -232,7 +265,6 @@
             outline: none;
             margin: 0 !important;
             text-align: center;
-
         }
 
         button.accordion.active, button.accordion:hover {
@@ -482,7 +514,6 @@
         .select-checkbox > input {
             left: 0 !important;
             position: relative !important;
-        {#            margin: 2px !important;#}
         }
 
         .removed_fish * {
@@ -496,7 +527,6 @@
         {#        HUC/Stream search toggle        #}
         .streamSearch {
             position: relative;
-        {#            width: 152px;#}
             float: right;
             margin: 10px 10px 0 10px;
             display: inline-flex;
@@ -634,6 +664,47 @@
             padding: 5px;
         }
 
+        #rarity_value {
+            border: 0;
+            color: black;
+            font-weight: bold;
+            font-size: 10px;
+            text-align: center;
+            background-color: transparent;
+            height: 10px;
+            vertical-align: super;
+        }
+
+        #rarity_range {
+            width: 75%;
+            margin: -7px 0 3px 15%;
+        }
+
+        #biomass_weight_field {
+            font-size: 12px;
+            margin-bottom: 5px;
+            margin-left: 10px;
+        }
+
+        #biomass_count_field {
+            font-size: 12px;
+            margin-left: 24px;
+        }
+
+        #fish_assemblage_estimator {
+            width: 45%;
+            margin: 0px 5% 0px 0px;
+            display: none;
+            float: right;
+            left: 0;
+        }
+
+        #filteredFishTable {
+            padding: 0 2px;
+            margin: 0 2px;
+            table-layout: fixed;
+        }
+
     </style>
 
     <script>
@@ -648,7 +719,6 @@
             $('#filteredFishTable').closest('div').hide();
             $('#abundance_calc').closest('div').hide();
             $('#fish_filters').closest('div').hide();
-            {#            $('#envelope_toggle').closest('div').hide();#}
             $('#huc_calc_toggle').closest('div').hide();
 
             $('#selectHUC').on('change', function () {
@@ -775,7 +845,6 @@
                 }
                 else {
                     $(this).parent().removeClass('removed_fish');
-
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
                 }
                 setTimeout(applyFilters, 10);
@@ -846,6 +915,21 @@
                 }
             });
 
+            $('#filteredFishTable').on("mouseenter", "tr", function () {
+                var index = this.rowIndex;
+                $('#calc_table tr:nth-child(' + index + ')').css("background-color", "rgba(160, 160, 160, 1.0)");
+            });
+            $('#filteredFishTable').on("mouseleave", "tr", function () {
+                var index = this.rowIndex;
+                var background;
+
+                if (index % 2 === 0)
+                    background = "white";
+                else {
+                    background = "lightgray";
+                }
+                $('#calc_table tr:nth-child(' + index + ')').css("background-color", background);
+            });
         });
 
         function saveToCSV() {
@@ -892,7 +976,6 @@
 
                 $('#hucFish').closest('div').hide();
                 $('#abundance_calc').closest('div').show();
-                // either make new call to server for detailed values or change columns used to populate table.
             }
             else {
                 button.removeClass("calculator");
@@ -902,7 +985,6 @@
 
                 $('#abundance_calc').closest('div').hide();
                 $('#hucFish').closest('div').show();
-                // either make new call to server for rounded values or change columns used to populate table.
             }
         }
 
@@ -1015,7 +1097,6 @@
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
             var filterTable = fishTable.column(minColumn, {order: 'index'}).data().filter(function (value, index) {
-                var test = fishTable.data();
                 if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {
                     return true;
                 }
@@ -1060,9 +1141,6 @@
 
         function selectStreamFromCoord(lat, lon) {
             document.getElementById('table-focus').focus();
-            $('#fish_filters').closest('div').show();
-            $('#envelope_toggle').closest('div').show();
-            $('#huc_calc_toggle').closest('div').show();
             $('#latVal').html(lat);
             $('#lngVal').html(lon);
             setTimeout(getStreamData, 10);
@@ -1071,14 +1149,11 @@
 
         function onStreamMapClick(e) {
             document.getElementById('table-focus').focus();
-            $('#fish_filters').closest('div').show();
-            $('#envelope_toggle').closest('div').show();
-            $('#huc_calc_toggle').closest('div').show();
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-            //setTimeout(getTESTFishData, 100);
+{#            setTimeout(getTESTFishData, 100);#}
         }
 
         function getStreamData() {
@@ -1115,7 +1190,7 @@
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
                         streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
-                    getFishData();
+                                        getFishData();
                     return data;
                 },
                 error: function (jqXHR, status) {
@@ -1151,6 +1226,9 @@
                 url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
                 crossDomain: true,
                 success: function (data) {
+                    $('#fish_filters').closest('div').show();
+                    $('#envelope_toggle').closest('div').show();
+                    $('#huc_calc_toggle').closest('div').show();
                     populateFishTable(data["species"]);
                     var fishTableData = $('#fishTable').DataTable().rows().data();
                     populateFilteredFishTable(fishTableData);
@@ -1168,7 +1246,9 @@
             var ecoData = {"region": "Coastal Plains", "gid": 9};
             $('#ecoRegionId').html(ecoData.gid);
             $('#ecoRegionName').html(ecoData.region);
-
+            $('#fish_filters').closest('div').show();
+            $('#envelope_toggle').closest('div').show();
+            $('#huc_calc_toggle').closest('div').show();
             var testFishData = {
                 "huc": "04030101",
                 "species": [
@@ -2484,13 +2564,14 @@
     <div class="panel-panel panel-col">
         <div class="streamSearch">
             <input type="checkbox" name="streamSearch" class="streamSearch-checkbox hucSearch" id="streamSearchSwitch"
-                   checked >
+                   checked>
             <label class="streamSearch-label" for="streamSearchSwitch" title="Toggle HUC ID/Stream Lat, Lon Search">
                 <span class="streamSearch-inner"></span>
                 <span class="streamSearch-switch"></span>
             </label>
             <form class="streamSearchForm" onsubmit="return false;">
-                <input type="text" id="streamSearchValue" class="streamSearchValue" placeholder="HUC 8 ID" title="Search for specific HUC8 by HUC ID">
+                <input type="text" id="streamSearchValue" class="streamSearchValue" placeholder="HUC 8 ID"
+                       title="Search for specific HUC8 by HUC ID">
                 <input class="fishSearchButton" type="button" title="Search">
             </form>
             <div id="searchError"></div>
@@ -2521,9 +2602,8 @@
                     <div class="fish_filter">
                         <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton"
                                align="center" title="Filter fish by rarity.">
-                        <input title="Rarity Range" type="text" id="rarity_value" readonly
-                               style="border:0; color:black; font-weight:bold; font-size: 10px; text-align: center; background-color: transparent;height: 10px;vertical-align: super;">
-                        <div id="rarity_range" style="width: 75%; margin: -7px 0 3px 15%;"></div>
+                        <input title="Rarity Range" type="text" id="rarity_value" readonly>
+                        <div id="rarity_range"></div>
                     </div>
                     <div class="fish_filter">
                         <input id="depth_filter" type="button" name="depth_8_9" value="Depth" class="filterButton"
@@ -2594,8 +2674,7 @@
                 <div id="error_msg"></div>
                 <div id="hucFish" style="display:none;">
                     <h4 style="text-align: center; width: 100%">Fish in Selected HUC</h4>
-                    <table id="fishTable" class="display compact hover" cellspacing="0" width="100%"
-                           style="table-layout: fixed;">
+                    <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th></th>
@@ -2627,8 +2706,7 @@
                 </div>
                 <div id="abundance_calc" style="display:none;">
                     <h4 style="text-align: center; width: 100%">Abundance Calculator</h4>
-                    <table id="calc_table" class="display compact hover" cellspacing="0"
-                           style="float: left; margin: 0 3px; table-layout: auto; width: 100%;"
+                    <table id="calc_table" class="display compact hover" cellspacing="0" width="100%"
                            title="Click on Thinning Coefficient and/or Mean Weight to modify values.">
                         <thead>
                         <tr>
@@ -2646,7 +2724,6 @@
                                 (kg):</label>
                             <input type="text" id="biomass_weight_field" class="biomass_value"
                                    placeholder="biomass (kg)"
-                                   style="font-size: 12px; margin-bottom: 5px; margin-left: 10px;"
                                    title="Enter a total biomass (kg) for the selected stream segment.">
                         </div>
                         <div style="float:left;">
@@ -2654,21 +2731,8 @@
                                 Count:</label>
                             <input type="text" id="biomass_count_field" class="biomass_value"
                                    placeholder="fish count"
-                                   style="font-size: 12px; margin-left: 24px;"
                                    title="Enter a total biomass (count) for the selected stream segment.">
                         </div>
-                        {#                            <div style="float:right; width: 45%;">#}
-                        {#                                <input type="radio" id="biomass_weight" class="biomass_weight_value" name="biomass"#}
-                        {#                                       value="weight" checked>#}
-                        {#                                <label for="biomass_weight"#}
-                        {#                                       style="display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By#}
-                        {#                                    weight</label>#}
-                        {#                                <input type="radio" id="biomass_count" class="biomass_count_value" name="biomass"#}
-                        {#                                       value="count">#}
-                        {#                                <label for="biomass_count"#}
-                        {#                                       style=" display: inline-block; font-size: 12px; margin: 2px 10px; float: left;">By#}
-                        {#                                    count</label>#}
-                        {#                            </div>#}
                         <div>
                             <input type="button" id="biomass_submit"
                                    class="biomass_button"
@@ -2689,11 +2753,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="fish_assemblage_estimator"
-                     style="width:45%; margin:0px 5% 0px 0px; display: none; float: right; left:0;">
+                <div id="fish_assemblage_estimator">
                     <h4 style="text-align: center; width: 100%">Filtered Fish Assemblage</h4>
-                    <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%"
-                           style="padding: 0 2px; margin: 0 2px;table-layout: fixed;">
+                    <table id="filteredFishTable" class="display compact hover" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Common Name</th>
@@ -2724,7 +2786,6 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: ['a', 'b', 'c']
 }).addTo(map);
-
 
 // -------------- BASE MAP code -------------- //
 

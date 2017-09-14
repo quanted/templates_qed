@@ -7,10 +7,14 @@
 
     #map {
         width: 100%;
-    {#        height: 450px;#} height: 88%;
+        height: 88%;
     }
 
     #mapDiv {
+        display: inline-block;
+        float:left;
+        width: 65%;
+        height: 625px;
         border-radius: 10px;
         border-color: black;
         border-bottom-width: 1px;
@@ -59,7 +63,7 @@
         display: inline-block;
         width: 75%;
         height: 22px;
-    {#        border-radius: 3px 0 0 3px !important;#} padding-left: 5px;
+        padding-left: 5px;
     }
 
     input.fishSearchButton {
@@ -156,6 +160,38 @@
         padding: 5px;
     }
 
+    #fish_search_title {
+        font-size: 14px;
+        float:left;
+        position:relative
+    }
+
+    #fish_weight {
+        margin: 0 10px;
+        width:65%;
+        padding-left: 3px;
+        float: right;
+    }
+
+    #fish_length {
+        margin: 3px 10px 0 10px;
+        width:65%;
+        padding-left: 3px;
+        float: right;
+    }
+
+    #fish_weight_length  div {
+        float:right;
+        width:33%;
+        font-size:12px;
+        margin-top:55px;
+        border-color: black;
+        border-width: 1px;
+        border-style: solid;
+        padding: 5px 5px 5px 5px;
+        display: none;
+    }
+
     #fish_weight_length * label {
         float: left !important;
         display: inline-block !important;
@@ -232,8 +268,6 @@
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
     <!-- local js -->
-    {#            <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>#}
-    {#        <script src="/static_qed/pisces/scripts/huc250k_4326_sp_sorted.js"></script>#}
     <script src="/static_qed/pisces/scripts/huc8_simplified_sorted.js"></script>
     <script src="/static_qed/pisces/scripts/pisces_datatable.js"></script>
 
@@ -250,14 +284,12 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.css">
         <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.js"></script>
 
-
         <!--- content div -->
         <div class="col-md-10">
             <div id="loader" style="display:none;"></div>
             <div id="loader_background" style="display:none"></div>
             <div class="box multi news">
-                <div class="pane-content" id="mapDiv"
-                     style="display: inline-block; float:left; width: 65%; height: 625px;">
+                <div class="pane-content" id="mapDiv">
                     <p id="huc_table_title"><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish
                         species associated
                         with the area.</p>
@@ -284,9 +316,7 @@
                         </form>
                     </div>
                     <div class="fishTable" style="display:none;">
-                        <h5 style="font-size: 14px; float:left; position:relative" align="center"
-                            id="fish_search_title">Fish in selected
-                            HUC</h5>
+                        <h5 align="center" id="fish_search_title">Fish in selected HUC</h5>
                         <table id="fishTable" class="display compact hover" cellspacing="0" width="100%">
                             <thead>
                             <tr>
@@ -297,25 +327,15 @@
                         </table>
                     </div>
                 </div>
-                {#                <div id="focusDetails" tabindex="-1"></div>#}
                 <div id="selectedFishTable" class="fishDetails"></div>
-                <div id="fish_weight_length"
-                     style="float:right; width:33%; font-size:12px; margin-top:55px; border-color: black; border-width: 1px; border-style: solid; padding: 5px 5px 5px 5px; display: none;">
+                <div id="fish_weight_length" style="display: none;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
-
                     <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
-                        (g): </label><input style="margin: 0 10px; width:65%; padding-left: 3px; float: right;"
-                                            type="text"
-                                            id="fish_weight"
-                                            title="Fish Weight" placeholder="Fish weight..."></div>
-                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"
-                                                                               style="margin-top: 3px;">Length
-                        (cm): </label><input
-                            style="margin: 3px 10px 0 10px; width:65%; padding-left: 3px; float: right;"
-                            type="text"
-                            id="fish_length"
-                            title="Fish Length" placeholder="Fish length..."></div>
-
+                        (g): </label><input type="text" id="fish_weight" title="Fish Weight" placeholder="Fish weight...">
+                    </div>
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"  style="margin-top: 3px;">Length
+                        (cm): </label><input type="text" id="fish_length" title="Fish Length" placeholder="Fish length...">
+                    </div>
                 </div>
             </div>
         </div>
@@ -325,8 +345,6 @@
             //Weight-length coefficients
             var a = 0;
             var b = 0;
-            {#            var c = 0;#}
-            {#            var d = 0;#}
 
             var fishTableClick;
 
@@ -401,16 +419,6 @@
                     var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" + "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
-                //  properties of highlighted HUC
-                {#                var layerGroup = [];#}
-                {#                huc8Layer.eachLayer(function (layer) {#}
-                {#                    $.each(hucs, function (index, value) {#}
-                {#                        if (value === layer.feature.properties.HUC8) {#}
-                {#                            layer.setStyle({color: 'red', weight: 0.7, fillColor: '#red', fillOpacity: 0.8});#}
-                {#                            layerGroup.push(layer);#}
-                {#                        }#}
-                {#                    });#}
-                {#                });#}
                 var layerGroup = [];
                 var hucObject = huc8Layer.getLayers();
                 var l = 40; // layers start at layerID = 40
