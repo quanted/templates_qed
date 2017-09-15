@@ -385,6 +385,7 @@
 
             parameters["scicomname"] = $('#scicomName').val().trim();
             parameters["groups"] = $('#fishGroup').val().toString().split(",").join(", ");
+            parameters["native"] = "";
             $('#native').val().map(function (i) {
                 if (i === "native_y") {
                     parameters["native"] = "Yes";
@@ -420,25 +421,25 @@
             parameters["maxl"] = $('#maxLengthValue').val();
 
             parameters["system"] = jQuery.makeArray($($('#preferedSystem')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["wposition"] = jQuery.makeArray($($('#waterPosition')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["substrate"] = jQuery.makeArray($($('#substrate')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["habitat"] = jQuery.makeArray($($('#habitatType')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["wclarity"] = jQuery.makeArray($($('#waterType')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["thermal"] = jQuery.makeArray($($('#thermal')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             parameters["topography"] = jQuery.makeArray($($('#topography')[0]["selectedOptions"]).map(function (i) {
-                return this.title;
+                return this.text;
             })).toString().split(",").join(", ");
             return parameters;
         }
@@ -457,6 +458,10 @@
                     {
                         title: "Groups",
                         data: "groups"
+                    },
+                    {
+                        title: "Biogeography",
+                        data: "native"
                     },
                     {
                         title: "Beneficial Use",
@@ -518,9 +523,9 @@
                 "columnDefs": [
                     {
                         "bSortable": false,
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                     }, {
-                        width: 75, targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                        width: 75, targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                     }
                 ],
                 sorting: false,
@@ -1576,6 +1581,7 @@
                         <tr>
                             <th>Scientific/Common Name</th>
                             <th>Groups</th>
+                            <th>Biogeography</th>
                             <th>Beneficial Use</th>
                             <th>Tolerance</th>
                             <th>Rarity</th>
