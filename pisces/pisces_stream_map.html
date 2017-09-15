@@ -1210,7 +1210,7 @@
             var comid = $('#comid').html();
             $.ajax({
                 type: "GET",
-                url: "/pisces/rest/api/v1/stream/properties?comid" + comid + "&latitude=" + lat + "&longitude=" + lng,
+                url: "/pisces/rest/api/v1/stream/properties?comid=" + comid + "&latitude=" + lat + "&longitude=" + lng,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
                     $(".width_value").val(data["attributes"]["width"]);
@@ -1220,14 +1220,7 @@
                 error: function (jqXHR, status, errorThrown) {
                     console.log(errorThrown);
                 }
-            })
-            var data = {
-                "comid": "7316546",
-                "attributes": {"width": 5.952748193972692, "area": 2.9592, "slope": 0.00724715}
-            };
-            $(".width_value").val(data["attributes"]["width"]);
-            $(".area_value").val(data["attributes"]["area"]);
-            $(".slope_value").val(data["attributes"]["slope"]);
+            });
         }
 
         function getFishData() {

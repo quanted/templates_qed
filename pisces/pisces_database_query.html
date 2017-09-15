@@ -176,10 +176,6 @@
         cursor: pointer;
     }
 
-    #alternating {
-        background: rgba(134, 193, 244, 0.3);
-    }
-
     .accordion-pane {
         padding: 25px;
     }
@@ -191,6 +187,8 @@
 
     .detailTitle {
         font-style: italic;
+        background: #DBF1FF;
+
     }
 
     #queryResultMes {
@@ -612,16 +610,16 @@
             var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + cName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
-                '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Group</td><td>' + details["group"] + '</td><td class="detailTitle" id="alternating">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
-                '<tr><td class="detailTitle" id="alternating">Max Length (cm)</td><td id="alternating"> ' + details["max_length"].toFixed(1) + ' </td><td class="detailTitle">System</td><td>' + system.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td class="detailTitle" id="alternating">Lotic Habitat</td><td id="alternating">' + lotic.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle" id="alternating">Mean Length (cm)</td><td id="alternating">' + details["mean_length"].toFixed(1) + '</td><td class="detailTitle">Water Column</td><td>' + column.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Max Age (yr)</td><td>' + details["max_age"] + '</td><td class="detailTitle" id="alternating">Substrate</td><td id="alternating">' + substrate.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle" id="alternating">A (W=A*L<sup>B</sup>)</td><td id="alternating">' + details["w_l_a"] + '</td><td class="detailTitle">Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td class="detailTitle" id="alternating">Thermal</td><td id="alternating">' + thermal.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle" id="alternating">Rarity</td><td id="alternating">' + details["rarity"] + '</td><td class="detailTitle">Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
-                '<tr><td class="detailTitle">Gradient</td><td>' + gradient.toString() + '</td><td class="detailTitle" id="alternating">Location Notes</td><td id="alternating">' + details["locat_notes"] + '</td></tr>' +
-                '<tr><td class="detailTitle" id="alternating">Human Use</td><td id="alternating">' + use.toString() + '</td><td class="detailTitle">Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
+                '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Group</td><td>' + details["group"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
+                '<tr><td class="detailTitle">Max Length (cm)</td><td id="alternating"> ' + details["max_length"].toFixed(1) + ' </td><td class="detailTitle">System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td class="detailTitle">Lotic Habitat</td><td id="alternating">' + lotic.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">Mean Length (cm)</td><td id="alternating">' + details["mean_length"].toFixed(1) + '</td><td class="detailTitle">Water Column</td><td>' + column.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">Max Age (yr)</td><td>' + details["max_age"] + '</td><td class="detailTitle">Substrate</td><td id="alternating">' + substrate.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">A (W=A*L<sup>B</sup>)</td><td id="alternating">' + details["w_l_a"] + '</td><td class="detailTitle">Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td class="detailTitle">Thermal</td><td id="alternating">' + thermal.toString() + '</td></tr>' +
+                '<tr><td class="detailTitle">Rarity</td><td id="alternating">' + details["rarity"] + '</td><td class="detailTitle">Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                '<tr><td class="detailTitle">Gradient</td><td>' + gradient.toString() + '</td><td class="detailTitle">Location Notes</td><td id="alternating">' + details["locat_notes"] + '</td></tr>' +
+                '<tr><td class="detailTitle">Human Use</td><td id="alternating">' + use.toString() + '</td><td class="detailTitle">Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
                 '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                 '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
