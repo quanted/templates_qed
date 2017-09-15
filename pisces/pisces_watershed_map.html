@@ -12,7 +12,7 @@
 
     #mapDiv {
         display: inline-block;
-        float:left;
+        float: left;
         width: 65%;
         height: 625px;
         border-radius: 10px;
@@ -127,7 +127,8 @@
         width: 100%;
         border-color: black;
         border-style: solid;
-        border-width: 1px;
+        border-width: 0px;
+        border-radius: 5px;
         background-color: #DBF1FF;
     }
 
@@ -162,33 +163,35 @@
 
     #fish_search_title {
         font-size: 14px;
-        float:left;
-        position:relative
+        float: left;
+        position: relative
     }
 
     #fish_weight {
         margin: 0 10px;
-        width:65%;
+        width: 65%;
         padding-left: 3px;
         float: right;
     }
 
     #fish_length {
         margin: 3px 10px 0 10px;
-        width:65%;
+        width: 65%;
         padding-left: 3px;
         float: right;
     }
 
-    #fish_weight_length  div {
-        float:right;
-        width:33%;
-        font-size:12px;
-        margin-top:55px;
+    div #fish_weight_length {
+        float: right;
+        width: 33%;
+        font-size: 12px;
+        margin-top: 55px;
         border-color: black;
-        border-width: 1px;
+        border-width: 0px;
         border-style: solid;
-        padding: 5px 5px 5px 5px;
+        border-radius: 5px;
+        background: #DBF1FF;
+        padding: 15px 10px 15px 10px;
         display: none;
     }
 
@@ -205,8 +208,8 @@
     #loader {
         position: absolute;
         left: 50%;
-        top: 85%;
-        z-index: 999;
+        top: 50%;
+        z-index: 9999;
         margin: -75px 0 0 -75px;
         border: 16px solid #f3f3f3;
         border-radius: 50%;
@@ -331,10 +334,13 @@
                 <div id="fish_weight_length" style="display: none;">
                     <h4 style="padding-left: 4px">Weight - Length Calculator</h4>
                     <div style="padding: 10px 10px;margin-bottom: 10px;"><label for="fish_weight">Weight
-                        (g): </label><input type="text" id="fish_weight" title="Fish Weight" placeholder="Fish weight...">
+                        (g): </label><input type="text" id="fish_weight" title="Fish Weight"
+                                            placeholder="Fish weight...">
                     </div>
-                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"  style="margin-top: 3px;">Length
-                        (cm): </label><input type="text" id="fish_length" title="Fish Length" placeholder="Fish length...">
+                    <div style="padding: 0px 10px;margin-bottom: 10px;"><label for="fish_length"
+                                                                               style="margin-top: 3px;">Length
+                        (cm): </label><input type="text" id="fish_length" title="Fish Length"
+                                             placeholder="Fish length...">
                     </div>
                 </div>
             </div>
@@ -408,7 +414,7 @@
 
             //style selected HUC 8 polygon
             function selectHUCs(hucs) {
-{#                hucs = ["02010004", "02010006", "04010101", "04010102", "04010201", "04010301", "04010302", "04020101", "04020102", "04020103", "04020104", "04020105", "04020201", "04020202", "04020203", "04020300", "04030101", "04030102", "04030103", "04030104", "04030105", "04030106", "04030107", "04030108", "04030109", "04030110", "04030111", "04030112", "04030201", "04030202", "04030203", "04040001", "04040002", "04040003", "04050001", "04050002", "04050003", "04050005", "04050006", "04050007", "04060101", "04060102", "04060103", "04060104", "04060105", "04060106", "04060107", "04070002", "04070004", "04070005", "04070006", "04070007", "04080101", "04080102", "04080103", "04080104", "04080201", "04080202", "04080204", "04080205", "04080300", "04090001", "04090002", "04090003", "04090004", "04090005", "04100001", "04100002", "04100003", "04100006", "04100007", "04100010", "04100011", "04110002", "04110003", "04120101", "04120102", "04120103", "04120104", "04120200", "04130001", "04130003", "04140101", "04140102", "04140201", "04140202", "04150102", "04150301", "04150302", "04150306", "05010001", "05010002", "05010004", "05030103", "05040001", "05040002", "05040006", "05080001", "05120104", "05120105"];#}
+                {#                hucs = ["02010004", "02010006", "04010101", "04010102", "04010201", "04010301", "04010302", "04020101", "04020102", "04020103", "04020104", "04020105", "04020201", "04020202", "04020203", "04020300", "04030101", "04030102", "04030103", "04030104", "04030105", "04030106", "04030107", "04030108", "04030109", "04030110", "04030111", "04030112", "04030201", "04030202", "04030203", "04040001", "04040002", "04040003", "04050001", "04050002", "04050003", "04050005", "04050006", "04050007", "04060101", "04060102", "04060103", "04060104", "04060105", "04060106", "04060107", "04070002", "04070004", "04070005", "04070006", "04070007", "04080101", "04080102", "04080103", "04080104", "04080201", "04080202", "04080204", "04080205", "04080300", "04090001", "04090002", "04090003", "04090004", "04090005", "04100001", "04100002", "04100003", "04100006", "04100007", "04100010", "04100011", "04110002", "04110003", "04120101", "04120102", "04120103", "04120104", "04120200", "04130001", "04130003", "04140101", "04140102", "04140201", "04140202", "04150102", "04150301", "04150302", "04150306", "05010001", "05010002", "05010004", "05030103", "05040001", "05040002", "05040006", "05080001", "05120104", "05120105"];#}
                 $('#fish_weight_length').hide();
                 $('#selectedFishTable').hide();
                 resetHUCLayer();

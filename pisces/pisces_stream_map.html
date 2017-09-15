@@ -449,9 +449,9 @@
         {#    Loader    #}
         #loader {
             position: sticky;
-            left: 47%;
-            top: 45%;
-            z-index: 999;
+            left: 50%;
+            top: 50%;
+            z-index: 9999;
             margin: -75px 0 0 -75px;
             border: 16px solid #f3f3f3;
             border-radius: 50%;
@@ -467,7 +467,7 @@
 
         #loader_background {
             background-color: rgba(255, 255, 255, 0.5);
-            z-index: 998;
+            z-index: 9998;
             position: absolute;
             height: 90%;
             width: 100%;
@@ -1148,6 +1148,7 @@
         }
 
         function onStreamMapClick(e) {
+            startLoad();
             document.getElementById('table-focus').focus();
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
@@ -1190,11 +1191,13 @@
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
                         streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
-                                        getFishData();
+                    getFishData();
+                    endLoad();
                     return data;
                 },
                 error: function (jqXHR, status) {
                     $('#comId').html("Error attempting to get river data.");
+                    endLoad();
                     return null;
                 }
             });
@@ -1225,7 +1228,7 @@
                 type: "GET",
                 url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
                 crossDomain: true,
-                success: function (data) {
+                success: function (data, status, jqXHR) {
                     $('#fish_filters').closest('div').show();
                     $('#envelope_toggle').closest('div').show();
                     $('#huc_calc_toggle').closest('div').show();
@@ -1234,7 +1237,7 @@
                     populateFilteredFishTable(fishTableData);
                     populateCalcTable(fishTableData);
                 },
-                error: function (jqXHR, status) {
+                error: function (jqXHR, status, errorThrown) {
                     console.log("ERROR: ajax call failed. " + status);
                     $('#error_msg').html("Error: failed to get fish data for the selected huc.");
                     return null;
