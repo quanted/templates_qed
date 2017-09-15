@@ -87,12 +87,12 @@
             background-color: rgba(160, 160, 160, 1.0) !important;
         }
 
-{#        #fishTable > tbody > tr:hover > .sorting_1 {#}
-{#            cursor: default;#}
-{#            background-color: rgba(160, 160, 160, 1.0) !important;#}
-{#        }#}
+        {#        #fishTable > tbody > tr:hover > .sorting_1 {#}
+        {#            cursor: default;#}
+        {#            background-color: rgba(160, 160, 160, 1.0) !important;#}
+        {#        }#}
 
-         #fishTable > tbody > tr:hover > td {
+        #fishTable > tbody > tr:hover > td {
             background-color: rgba(160, 160, 160, 1.0) !important;
         }
 
@@ -469,7 +469,7 @@
             background-color: rgba(255, 255, 255, 0.5);
             z-index: 9998;
             position: absolute;
-            height: 90%;
+            height: 88%;
             width: 100%;
         }
 
@@ -1149,12 +1149,12 @@
 
         function onStreamMapClick(e) {
             startLoad();
-            document.getElementById('table-focus').focus();
+{#            document.getElementById('table-focus').focus();#}
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-{#            setTimeout(getTESTFishData, 100);#}
+            {#            setTimeout(getTESTFishData, 100);#}
         }
 
         function getStreamData() {
@@ -1191,6 +1191,7 @@
                     $('#streamMapInfo').html("<strong>Stream Segment Selected: </strong><a href='https://watersgeo.epa.gov/watershedreport/?comid=" +
                         streamData.output.ary_flowlines[0].comid + "' title='Get more information on this stream segment.' target='_blank'>" + streamData.output.ary_flowlines[0].comid + "</a>");
                     addStreamSeg(streamData);
+                    getStreamProperties();
                     getFishData();
                     endLoad();
                     return data;
@@ -1203,26 +1204,33 @@
             });
         }
 
+        function getStreamProperties() {
+            var lat = $('#latVal').html();
+            var lng = $('#lngVal').html();
+            var comid = $('#comid').html();
+            $.ajax({
+                type: "GET",
+                url: "/pisces/rest/api/v1/stream/properties?comid" + comid + "&latitude=" + lat + "&longitude=" + lng,
+                crossDomain: true,
+                success: function (data, status, jqXHR) {
+                    $(".width_value").val(data["attributes"]["width"]);
+                    $(".area_value").val(data["attributes"]["area"]);
+                    $(".slope_value").val(data["attributes"]["slope"]);
+                },
+                error: function (jqXHR, status, errorThrown) {
+                    console.log(errorThrown);
+                }
+            })
+            var data = {
+                "comid": "7316546",
+                "attributes": {"width": 5.952748193972692, "area": 2.9592, "slope": 0.00724715}
+            };
+            $(".width_value").val(data["attributes"]["width"]);
+            $(".area_value").val(data["attributes"]["area"]);
+            $(".slope_value").val(data["attributes"]["slope"]);
+        }
+
         function getFishData() {
-            {#            var latitude = $('#latVal').html(Number(latitude));#}
-            {#            var longitude = $('#lngVal').html(Number(longitude));#}
-            {#            var ecoAJAX = JSON.stringify({"latitude": latitude, "longitude": longitude});#}
-            {#            var ecoURL = "/pisces/rest/ecoregion";#}
-            {#            $.ajax({#}
-            {#                type: "POST",#}
-            {#                url: ecoURL,#}
-            {#                data: ecoAJAX,#}
-            {#                crossDomain: true,#}
-            {#                success: function (data) {#}
-            {#                    var ecoData = JSON.parse(data);#}
-            {#                    $('#ecoRegionId').html(ecoData.gid);#}
-            {#                    $('#ecoRegionName').html(ecoData.region);#}
-            {#                },#}
-            {#                error: function (jqXHR, status) {#}
-            {#                    $('#error_msg').html("Error attempting to get fish data.");#}
-            {#                    return null;#}
-            {#                }#}
-            {#            });#}
             var huc8 = selectedHuc;
             $.ajax({
                 type: "GET",

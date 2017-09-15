@@ -360,8 +360,8 @@
             if (queryString[queryString.length - 1] === '&') {
                 queryString = queryString.substring(0, queryString.length - 1);
             }
-            console.log('/pisces/rest/api/v1/fish/properties/?' + queryString);
-            var url = "/pisces/rest/api/v1/fish/properties/?" + queryString;
+            console.log('/pisces/rest/api/v1/fish/properties?' + queryString);
+            var url = "/pisces/rest/api/v1/fish/properties?" + queryString;
             $('#fishDetailsTable').innerHTML = "";
             $.ajax({
                 type: "GET",
