@@ -1149,7 +1149,14 @@
 
         function onStreamMapClick(e) {
             startLoad();
-{#            document.getElementById('table-focus').focus();#}
+            $(".depth_value").val('');
+            $(".width_value").val('');
+            $(".area_value").val('');
+            $(".slope_value").val('');
+            $(".tss_value").val('');
+            $(".pH_value").val('');
+            $(".cond_value").val('');
+            $(".do_value").val('');
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);

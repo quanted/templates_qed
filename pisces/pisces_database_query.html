@@ -360,7 +360,7 @@
             }
             console.log('/pisces/rest/api/v1/fish/properties?' + queryString);
             var url = "/pisces/rest/api/v1/fish/properties?" + queryString;
-            $('#fishDetailsTable').innerHTML = "";
+            document.getElementById('fishDetailsTable').innerHTML = "";
             $.ajax({
                 type: "GET",
                 url: url,
