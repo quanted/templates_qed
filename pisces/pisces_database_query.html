@@ -193,6 +193,11 @@
         font-style: italic;
     }
 
+    #queryResultMes {
+        text-align: center;
+        color: red;
+    }
+
 </style>
 
 
@@ -355,15 +360,21 @@
             if (queryString[queryString.length - 1] === '&') {
                 queryString = queryString.substring(0, queryString.length - 1);
             }
-            console.log('https://qedinternal.epa.gov/pisces/rest/api/v1/fish/properties/?' + queryString);
-            var url = "https://qedinternal.epa.gov/pisces/rest/api/v1/fish/properties/?" + queryString;
+            console.log('/pisces/rest/api/v1/fish/properties/?' + queryString);
+            var url = "/pisces/rest/api/v1/fish/properties/?" + queryString;
+            $('#fishDetailsTable').innerHTML = "";
             $.ajax({
                 type: "GET",
                 url: url,
-                success: function (d) {
-                    populateFishTable(d['species'])
+                success: function (data, status, jqXHR) {
+                    populateFishTable(data['species']);
+                    if(data['species'].length() === 0){
+                        document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>No entries found that satisfy the provided query.</p>";
+                    }
                 },
-                error: function (d) {
+                error: function (jqXHR, status, errorThrown) {
+                    console.log("Query Error: " + url + " " + errorThrown);
+                    document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>Query submission unsuccessful.</p>";
                 }
             });
             {#            populateFishTableTemp();#}
