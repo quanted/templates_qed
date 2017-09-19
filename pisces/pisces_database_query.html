@@ -163,7 +163,7 @@
         background: gray !important;
     }
 
-    table.fishDetails > tbody > tr > td:hover{
+    table.fishDetails > tbody > tr > td:hover {
         cursor: default;
     }
 
@@ -261,7 +261,47 @@
                     document.getElementById('fishDetailsTable').innerHTML = setFishDetails(row);
                 }
             });
+
+            $('#saveQuery').on("click", function () {
+                setTimeout(saveToCSV, 300);
+            });
         });
+
+        function saveToCSV() {
+            var mainHeader = "Pisces Database Query Results\nquery parameters\n";
+
+            var metaDataHeader = "";
+            var parameters = "";
+            $('#parameterTable').DataTable().rows().data().map(function (r, i) {
+                metaDataHeader = Object.keys(r).toString() + "\n";
+                parameters += r["scicomname"] + "," + r["groups"] + "," + r["native"] + "," + r["fishuse"] + "," +
+                    r["tolerance"] + ",'" + r["rarity"] + "','" + r["maxage"] + "','" + r["meanw"] + "','" +
+                    r["meanl"] + "','" + r["maxl"] + "'," + r["system"] + "," + r["wposition"] + "," +
+                    r["substrate"] + "," + r["habitat"] + "," + r["wclarity"] + "," + r["thermal"] + ","
+                    + r["topography"] + "\n";
+            });
+
+            var resultsHeader = "";
+            var resultsData = "";
+            $('#resultsTable').DataTable().rows().data().map(function (r, i) {
+                resultsHeader = Object.keys(r).toString() + "\n";
+                resultsData += Object.values(r).toString() + "\n";
+            });
+
+            var file_name = "pisces_database_query_results";
+
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(mainHeader + metaDataHeader + parameters + "\n" + resultsHeader + resultsData));
+            pom.setAttribute('download', file_name + '.csv');
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+        }
 
         function generateQuery() {
             // Collecting variables
@@ -316,9 +356,9 @@
             }).toString().split(",").join("");
 
             var queryString = "";
-{#            if ($('#scicomName').val().length > 0) {#}
+            {#            if ($('#scicomName').val().length > 0) {#}
             queryString = queryString + scicomname;
-{#            }#}
+            {#            }#}
             if ($('#fishGroup').val().length > 0) {
                 queryString = queryString + group;
             }
@@ -366,7 +406,7 @@
                 url: url,
                 success: function (data, status, jqXHR) {
                     populateFishTable(data['species']);
-                    if(data['species'].length === 0){
+                    if (data['species'].length === 0) {
                         document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>No entries found that satisfy the provided query.</p>";
                     }
                 },
@@ -1570,7 +1610,6 @@
                         <input id="resetQuery" name="reset" type="reset" value="Reset Query"
                                title="Reset all query parameter fields"/>
                     </div>
-
                 </tr>
                 <div id="queryParameters">
                     <h4 style="text-align:center;">Submitted Query Parameters</h4>
@@ -1610,7 +1649,12 @@
                             </thead>
                         </table>
                     </div>
-                    <div id="fishDetailsTable"></div>
+                    <div id="fishDetailsTable">
+                    </div>
+                    <div style="float: right;width: 60%;">
+                        <input id="saveQuery" name="save" type="submit" value="Save to CSV"
+                               onsubmit="return false;" style="margin:0 25px 10px 50px;float: right;"/>
+                    </div>
                 </div>
             </div>
         </div>
