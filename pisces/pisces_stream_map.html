@@ -288,8 +288,7 @@
             padding: 0 18px;
             background-color: white;
             max-height: 0;
-{#            overflow: hidden;#}
-            text-align: center;
+        {#            overflow: hidden;#} text-align: center;
             transition: max-height 0.2s ease-out;
             margin-bottom: 75px;
         }
@@ -433,6 +432,7 @@
 
         input.biomass_button {
             margin-top: 45px !important;
+            padding: 8px 16px !important;
             font-size: 14px;
             box-shadow: 0px 2px 2px black !important;
             background-color: #EEEEEE !important;
@@ -717,6 +717,12 @@
             padding: 0 2px;
             margin: 0 2px;
             table-layout: fixed;
+        }
+
+        #error_msg {
+            margin-left: 50px;
+            font-weight: bold;
+            color: red;
         }
 
     </style>
@@ -1175,7 +1181,6 @@
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
             resetFilters();
-            {#            setTimeout(getTESTFishData, 100);#}
         }
 
         function getStreamData() {
@@ -1265,7 +1270,7 @@
                     return null;
                 }
             });
-{#                        getTESTFishData();#}
+{#            getTESTFishData();#}
         }
 
         function getTESTFishData() {
