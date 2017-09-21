@@ -227,13 +227,8 @@
         font-size: 14px;
     }
 
-{#    .noscroll::-webkit-scrollbar {#}
-{#        width: 1px;#}
-{#        background-color: transparent#}
-{#    }#}
-
-    .noscroll {
-        overflow: hidden !important;
+    .noscroll select {
+        overflow:hidden;
     }
 
     .noshow {
@@ -363,8 +358,8 @@
 
         function generateQuery() {
             // Collecting variables
-            var comname = "comname=" + $('#comName').val().trim().split(" ").join("_") + "&";
-            var sciname = "sciname=" + $('#sciName').val().trim().split(" ").join("_") + "&";
+            var comname = "common_name=" + $('#comName').val().trim().split(" ").join("_") + "&";
+            var sciname = "scientific_name=" + $('#sciName').val().trim().split(" ").join("_") + "&";
             var group = "group=" + $('#fishGroup').val().toString() + "&";
 
             var biogeo = $('#native').val().map(function (i) {
@@ -1358,7 +1353,7 @@
                         <li>
                             <a class="accordion-title" href="#pane-3" title="Advanced search parameters">Advanced
                                 Search</a>
-                            <div class="accordion-pane" id="pane-3">
+                            <div class="accordion-pane" id="pane-3" style="display:inline-block;overflow:hidden">
                                 <h4 class="sectionTitle">Taxonomy</h4>
                                 <table id="taxonomyTable" style="width:100%">
                                     <tbody>
@@ -1427,17 +1422,17 @@
                                 <table id="fishPropertiesTable" style="width:100%">
                                     <tbody>
                                     <tr>
-                                        <td style="width:33%; text-align: center;"><strong>Biogeography</strong>
-                                            <select multiple id="native" class="noscroll"
+                                        <td class="noscroll" style="width:33%; text-align: center;"><strong>Biogeography</strong>
+                                            <select multiple id="native"
                                                     title="Select any options to apply to query"
                                                     size="4"
-                                                    style="margin: 1px; width:100%;overflow: auto;">
+                                                    style="margin: 1px; width:100%;">
                                                 <option value="native_y">Native</option>
                                                 <option value="native_n">Introduced</option>
                                             </select>
                                         </td>
-                                        <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
-                                            <select multiple id="fishuse" class="noscroll"
+                                        <td class="noscroll" style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
+                                            <select multiple id="fishuse"
                                                     title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%;overflow: auto;">
@@ -1446,9 +1441,9 @@
                                                 <option value="nongame">Non-Game</option>
                                             </select>
                                         </td>
-                                        <td style="width:33%; text-align: center;"><strong>Tolerance to
+                                        <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance" class="noscroll"
+                                            <select multiple id="tolerance"
                                                     title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">

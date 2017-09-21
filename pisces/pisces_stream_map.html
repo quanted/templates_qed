@@ -271,6 +271,20 @@
             background-color: #86C1FF;
         }
 
+        div.filterTitle {
+            background-color: #86C1FF;
+            color: black;
+            font-weight: bold;
+        {#            cursor: pointer;#}
+            padding: 7px;
+            width: 100%;
+            border: none;
+            outline: none;
+            margin: 0 !important;
+            text-align: center;
+            height: 35px;
+        }
+
         div.panel {
             padding: 0 18px;
             background-color: white;
@@ -725,7 +739,7 @@
                 selectHUCs(this.value);
             });
 
-            $('#accordion').on('click', expandFilter());
+            {#            $('#accordion').on('click', expandFilter());#}
 
             // Applies filter on click.
             $(document).on("click", ".filterButton", (function (event) {
@@ -1251,6 +1265,7 @@
                     return null;
                 }
             });
+{#            getTESTFishData();#}
         }
 
         function getTESTFishData() {
@@ -2608,8 +2623,10 @@
             </div>
             <br class="row" id="streamData">
             <div id="fish_filters" style="display:none;">
-                <button class="accordion">Fish Assemblage Filters</button>
-                <div class="panel" id="assemblage_filters" style="overflow: hidden;">
+                {#                <button class="accordion">Fish Assemblage Filters</button>#}
+                <div class="filterTitle">Fish Assemblage Filters</div>
+                <div style="text-align:center;">
+{#                <div class="panel" id="assemblage_filters" style="overflow: hidden;">#}
                     <div class="fish_filter">
                         <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton"
                                align="center" title="Filter fish by rarity.">
@@ -2641,8 +2658,9 @@
                                title="Enter a value as a percent grade.">
                     </div>
                     <div class="fish_filter">
-                        <input id="tss_filter" type="button" name="tss_14_15" value="TSS" class="filterButton"
-                               align="center" title="Filter fish by stream tss."><br>
+                        <input id="tss_filter" type="button" name="tss_14_15" value="Suspended Solids"
+                               class="filterButton"
+                               align="center" title="Filter fish by stream suspended solids."><br>
                         <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"
                                title="Enter a value in milligrams per liter.">
                     </div>
