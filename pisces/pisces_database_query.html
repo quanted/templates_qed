@@ -360,7 +360,7 @@
             // Collecting variables
             var comname = "common_name=" + $('#comName').val().trim().split(" ").join("_") + "&";
             var sciname = "scientific_name=" + $('#sciName').val().trim().split(" ").join("_") + "&";
-            var group = "group=" + $('#fishGroup').val().toString() + "&";
+            var group = "group=" + $('#fishGroup').val().toString().trim().split(" ").join("_") + "&";
 
             var biogeo = $('#native').val().map(function (i) {
                 if (i === "native_y") {
