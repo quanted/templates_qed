@@ -239,9 +239,17 @@
         width: 33%;
     }
 
-    .dataTables_wrapper .dataTables_length .dataTables_info{
-        margin-bottom: 3px !important;
-        font-size: 14px;
+    #resultsTable_length {
+        margin-bottom: 5px !important;
+        font-size: 12px !important;
+    }
+
+    #resultsTable_info {
+        font-size: 12px !important;
+    }
+
+    #resultsTable_paginate {
+        font-size: 10px !important;
     }
 
 </style>
@@ -302,7 +310,7 @@
                 var parameters = collectParameters();
                 populateParameterTable(parameters);
                 $('#queryParameters').show();
-                document.getElementById('queryResults').style.display = "flow-root";
+{#                document.getElementById('queryResults').style.display = "flow-root";#}
                 return false;
             });
 
@@ -470,6 +478,7 @@
                 url: url,
                 success: function (data, status, jqXHR) {
                     populateFishTable(data['species']);
+                    document.getElementById('queryResults').style.display = "flow-root";
                     if (data['species'].length === 0) {
                         document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>No entries found that satisfy the provided query.</p>";
                     }
@@ -1370,30 +1379,30 @@
                                             <label for="fishGroup"></label>
                                             <select multiple id="fishGroup" title="Select one or multiple groups"
                                                     style="width: 100%;overflow: overlay;">
-                                                <option value="Anchovy">Anchovy</option>
+                                                <option value="Anchovies">Anchovies</option>
                                                 <option value="Black Bass">Black Bass</option>
                                                 <option value="Bowfin">Bowfin</option>
                                                 <option value="Burbot">Burbot</option>
                                                 <option value="Catfish">Catfish</option>
                                                 <option value="Cavefish">Cavefish</option>
-                                                <option value="Characin">Characin</option>
-                                                <option value="Cichlid">Cichlid</option>
-                                                <option value="Clupeid">Clupeid</option>
+                                                <option value="Characins">Characins</option>
+                                                <option value="Cichlids">Cichlids</option>
+                                                <option value="Clupeids">Clupeids</option>
                                                 <option value="Cod">Cod</option>
-                                                <option value="Darter">Darter</option>
+                                                <option value="Darters">Darters</option>
                                                 <option value="Drum">Drum</option>
                                                 <option value="Eel">Eel</option>
-                                                <option value="Flounder">Flounder</option>
+                                                <option value="Flounders">Flounders</option>
                                                 <option value="Gar">Gar</option>
-                                                <option value="Goby">Goby</option>
+                                                <option value="Gobies">Gobies</option>
                                                 <option value="Knifefish">Knifefish</option>
                                                 <option value="Lamprey">Lamprey</option>
-                                                <option value="Livebearer">Livebearer</option>
+                                                <option value="Livebearers">Livebearers</option>
                                                 <option value="Loach">Loach</option>
-                                                <option value="Madtom">Madtom</option>
-                                                <option value="Minnow">Minnow</option>
+                                                <option value="Madtoms">Madtoms</option>
+                                                <option value="Minnows">Minnows</option>
                                                 <option value="Mooneye">Mooneye</option>
-                                                <option value="Mudminnow">Mudminnow</option>
+                                                <option value="Mudminnows">Mudminnows</option>
                                                 <option value="Mullet">Mullet</option>
                                                 <option value="Needlefish">Needlefish</option>
                                                 <option value="Paddlefish">Paddlefish</option>
@@ -1403,19 +1412,19 @@
                                                 <option value="Pirate Perch">Pirate Perch</option>
                                                 <option value="Pupfish">Pupfish</option>
                                                 <option value="Pygmy Sunfish">Pygmy Sunfish</option>
-                                                <option value="Salmonid">Salmonid</option>
-                                                <option value="Sculpin">Sculpin</option>
-                                                <option value="Silverside">Silverside</option>
+                                                <option value="Salmonids">Salmonids</option>
+                                                <option value="Sculpins">Sculpins</option>
+                                                <option value="Silversides">Silversides</option>
                                                 <option value="Smelt">Smelt</option>
-                                                <option value="Snakehead">Snakehead</option>
-                                                <option value="Splitfin">Splitfin</option>
-                                                <option value="Stickleback">Stickleback</option>
-                                                <option value="Stingray">Stingray</option>
+                                                <option value="Snakeheads">Snakeheads</option>
+                                                <option value="Splitfins">Splitfins</option>
+                                                <option value="Sticklebacks">Sticklebacks</option>
+                                                <option value="Stingrays">Stingrays</option>
                                                 <option value="Sturgeon">Sturgeon</option>
                                                 <option value="Suckers">Suckers</option>
                                                 <option value="Sunfish">Sunfish</option>
                                                 <option value="Surfperch">Surfperch</option>
-                                                <option value="Topminnow">Topminnow</option>
+                                                <option value="Topminnows">Topminnows</option>
                                                 <option value="Trout-Perch">Trout-Perch</option>
                                                 <option value="White Bass">White Bass</option>
                                                 <option value="Whitefish">Whitefish</option>
