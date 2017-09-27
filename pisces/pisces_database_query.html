@@ -206,16 +206,17 @@
         background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB2aWV3Qm94PSIwIDAgMjg5LjEyMjIyIDI4OC4yOTYwOCIgaGVpZ2h0PSIxMnB4IiB3aWR0aD0iMTJweCI+DQo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjYzLjQzMTIsLTM4OS42MzEyNCkiPg0KPHBhdGggc3Ryb2tlLXdpZHRoPSI5Ljc1NjE3MzEzIiBmaWxsPSIjRkZGIiBkPSJNMjk1LjkzODk5LDQyMi4wODZjLTQzLjI3Mjk5LDQzLjI3Mi00My4zNzg5OSwxMTQuMTU5LTAuMTA1OTgsMTU3LjQzMjAxLDM2LjY2Mjk5LDM2LjY2MzAyLDkzLjIwMTk5LDQyLjI1LDEzNS45MjA5OSwxNi43NjU5OWw3Ni4zNDM5OSw3NC4yMzQ5OGMxMC41MDY5OSwxMC4xOTgsMjcuMDg0OTksOS44MjEwNSwzNy4xMTY5Ny0wLjg0Mzk5LDEwLjAzMzAyLTEwLjY2NDk4LDkuNzcwMDItMjcuNDQ1OTktMC43Mzc5Ny0zNy42NDM5OGwtNzUuMTgyOTgtNzIuODY0MDJjMjYuMzYwOTktNDIuODQ2OTgsMjEuMDA3OTktMTAwLjA0NDk4LTE2LjAyODAyLTEzNy4wODA5OS00My4yNzI5OC00My4yNzMwMS0xMTQuMDU0OTktNDMuMjczMDEtMTU3LjMyNywwem0zMS43Mzg5OSwzMS43MzkwMWMyNi4xMDIwMi0yNi4xMDIwMiw2Ny43NDYwMy0yNi4xMDIwMiw5My44NDgwMiwwLDI2LjEwMTk5LDI2LjEwMTk5LDI2LjEwMTk5LDY3Ljc0NTk4LDAsOTMuODQ3OTYtMjYuMTAxOTksMjYuMTAyMDYtNjcuNzQ2LDI2LjEwMjA2LTkzLjg0ODAyLDAtMjYuMTAxOTktMjYuMTAxOTktMjYuMTAxOTktNjcuNzQ1OTcsMC05My44NDc5NnoiLz4NCjwvZz4NCjwvc3ZnPg==") !important;
         background-color: #02bfe7 !important;
         background-repeat: no-repeat;
-        background-size: 12px 12px;
+        background-size: 15px 15px;
         background-position: 50% !important;
         border-color: #02bfe7;
         display: inline-block;
-        width: 10px;
-        margin-left: 0 !important;
-        border-radius: 0 3px 3px 0 !important;
+        width: 20px;
+        border-radius: 5px !important;
         position: absolute;
         float: right;
-        height: 28px;
+        height: 40px;
+        margin: 15px 0px 0px 25px !important;
+        padding: 15px 25px !important;
     }
 
     .searchButton:hover {
@@ -225,6 +226,30 @@
     .sectionTitle {
         text-align: center;
         font-size: 14px;
+    }
+
+    .noscroll select {
+        overflow: hidden;
+    }
+
+    .noshow {
+        border-color: transparent;
+        border-width: 0px;
+        box-shadow: none;
+        width: 33%;
+    }
+
+    #resultsTable_length {
+        margin-bottom: 5px !important;
+        font-size: 12px !important;
+    }
+
+    #resultsTable_info {
+        font-size: 12px !important;
+    }
+
+    #resultsTable_paginate {
+        font-size: 10px !important;
     }
 
 </style>
@@ -256,8 +281,8 @@
                 // reset slider values
                 $("#maxLengthSlider").slider("values", [1, 610]);
                 $("#raritySlider").slider("values", [1, 10]);
-                $("#meanWeightSlider").slider("values", [0, 700]);
-                $("#meanLengthSlider").slider("values", [1, 79]);
+                $("#meanWeightSlider").slider("values", [0, 7125]);
+                $("#meanLengthSlider").slider("values", [1, 78]);
                 $("#maxAgeSlider").slider("values", [1, 25]);
 
                 // reset slider displayed values
@@ -270,21 +295,22 @@
             });
 
             $('#sciNameSubmit').on("click", function () {
-                $('#submitQuery').trigger("click");
-                return false;
-            });
-
-            $('#comNameSubmit').on("click", function () {
+                if ($('#sciName').val() === "" && $('#comName').val() === "") {
+                    return false;
+                }
                 $('#submitQuery').trigger("click");
                 return false;
             });
 
             $('#submitQuery').on("click", function () {
+                $('#queryParameters').hide();
+                document.getElementById('fishDetailsTable').innerHTML = "";
+                document.getElementById('queryResults').style.display = "none";
                 setTimeout(generateQuery, 200);
                 var parameters = collectParameters();
                 populateParameterTable(parameters);
                 $('#queryParameters').show();
-                document.getElementById('queryResults').style.display = "flow-root";
+{#                document.getElementById('queryResults').style.display = "flow-root";#}
                 return false;
             });
 
@@ -347,9 +373,9 @@
 
         function generateQuery() {
             // Collecting variables
-            var comname = "comname=" + $('#comName').val().trim().split(" ").join("_") + "&";
-            var sciname = "sciname=" + $('#sciName').val().trim().split(" ").join("_") + "&";
-            var group = "group=" + $('#fishGroup').val().toString() + "&";
+            var comname = "common_name=" + $('#comName').val().trim().split(" ").join("_") + "&";
+            var sciname = "scientific_name=" + $('#sciName').val().trim().split(" ").join("_") + "&";
+            var group = "group=" + $('#fishGroup').val().toString().trim().split(" ").join("_") + "&";
 
             var biogeo = $('#native').val().map(function (i) {
                 if (i === "native_y") {
@@ -452,6 +478,7 @@
                 url: url,
                 success: function (data, status, jqXHR) {
                     populateFishTable(data['species']);
+                    document.getElementById('queryResults').style.display = "flow-root";
                     if (data['species'].length === 0) {
                         document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>No entries found that satisfy the provided query.</p>";
                     }
@@ -461,7 +488,7 @@
                     document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>Query submission unsuccessful.</p>";
                 }
             });
-            {#                        populateFishTableTemp();#}
+{#            populateFishTableTemp();#}
         }
 
         function collectParameters() {
@@ -635,7 +662,7 @@
             // gradient
             var gradient = [];
             if (details["lowlands_lgr"] === "1") gradient.push(" Lowlands");
-            if (details["upland_hgr"] === "1") gradient.push(" Uplands");
+            if (details["uplands_hgr"] === "1") gradient.push(" Uplands");
 
             // thermal
             var thermal = [];
@@ -752,8 +779,8 @@
                     }
                 ],
                 searching: false,
-                paging: false,
-                bInfo: false,
+                paging: true,
+                bInfo: true,
                 "order": [[0, 'asc']]
 
             };
@@ -1323,17 +1350,18 @@
                 <hr/>
                 <form id="databaseQuery">
                     <div id="scicomFields" style="margin-bottom: 25px;">
-                        <div style="margin-bottom: 10px">
-                            <label for="sciName" style="float:left;margin-right:15px;">Scientific Name</label>
+                        <div style="display: block;text-align: center;margin: auto;">
+                            <label for="sciName" style="margin-right:15px; display:unset;">Scientific Name</label>
                             <input id="sciName" name="sciName" type="text"
-                                   title="Scientific Name" style="width:75%;padding-left: 5px;">
+                                   title="Scientific Name" style="width:350px;padding-left: 5px; height: 28px;">
                             <input class="searchButton" id="sciNameSubmit" type="button" title="Search Scientific Name">
                         </div>
-                        <div style="margin-bottom: 10px">
-                            <label for="comName" style="float:left;margin-right:15px;">Common Name</label>
+                        <div style="margin-bottom: 10px;"></div>
+                        <div style="display: block;text-align: center;margin: auto;">
+                            <label for="comName" style="margin-right:15px;display:unset;">Common Name</label>
                             <input id="comName" name="comName" type="text"
-                                   title="Common Name" style="width:75%;padding-left: 5px;">
-                            <input class="searchButton" id="comNameSubmit" type="button" title="Search Common Name">
+                                   title="Common Name" style="width:350px;padding-left: 5px; height: 28px;">
+                            {#                            <input class="searchButton" id="comNameSubmit" type="button" title="Search Common Name">#}
                         </div>
 
                     </div>
@@ -1341,39 +1369,40 @@
                         <li>
                             <a class="accordion-title" href="#pane-3" title="Advanced search parameters">Advanced
                                 Search</a>
-                            <div class="accordion-pane" id="pane-3">
+                            <div class="accordion-pane" id="pane-3" style="display:inline-block;overflow:hidden">
                                 <h4 class="sectionTitle">Taxonomy</h4>
                                 <table id="taxonomyTable" style="width:100%">
                                     <tbody>
                                     <tr>
+                                        <td class="noshow"></td>
                                         <td><strong>Group</strong>
                                             <label for="fishGroup"></label>
                                             <select multiple id="fishGroup" title="Select one or multiple groups"
                                                     style="width: 100%;overflow: overlay;">
-                                                <option value="Anchovy">Anchovy</option>
+                                                <option value="Anchovies">Anchovies</option>
                                                 <option value="Black Bass">Black Bass</option>
                                                 <option value="Bowfin">Bowfin</option>
                                                 <option value="Burbot">Burbot</option>
                                                 <option value="Catfish">Catfish</option>
                                                 <option value="Cavefish">Cavefish</option>
-                                                <option value="Characin">Characin</option>
-                                                <option value="Cichlid">Cichlid</option>
-                                                <option value="Clupeid">Clupeid</option>
+                                                <option value="Characins">Characins</option>
+                                                <option value="Cichlids">Cichlids</option>
+                                                <option value="Clupeids">Clupeids</option>
                                                 <option value="Cod">Cod</option>
-                                                <option value="Darter">Darter</option>
+                                                <option value="Darters">Darters</option>
                                                 <option value="Drum">Drum</option>
                                                 <option value="Eel">Eel</option>
-                                                <option value="Flounder">Flounder</option>
+                                                <option value="Flounders">Flounders</option>
                                                 <option value="Gar">Gar</option>
-                                                <option value="Goby">Goby</option>
+                                                <option value="Gobies">Gobies</option>
                                                 <option value="Knifefish">Knifefish</option>
                                                 <option value="Lamprey">Lamprey</option>
-                                                <option value="Livebearer">Livebearer</option>
+                                                <option value="Livebearers">Livebearers</option>
                                                 <option value="Loach">Loach</option>
-                                                <option value="Madtom">Madtom</option>
-                                                <option value="Minnow">Minnow</option>
+                                                <option value="Madtoms">Madtoms</option>
+                                                <option value="Minnows">Minnows</option>
                                                 <option value="Mooneye">Mooneye</option>
-                                                <option value="Mudminnow">Mudminnow</option>
+                                                <option value="Mudminnows">Mudminnows</option>
                                                 <option value="Mullet">Mullet</option>
                                                 <option value="Needlefish">Needlefish</option>
                                                 <option value="Paddlefish">Paddlefish</option>
@@ -1383,24 +1412,25 @@
                                                 <option value="Pirate Perch">Pirate Perch</option>
                                                 <option value="Pupfish">Pupfish</option>
                                                 <option value="Pygmy Sunfish">Pygmy Sunfish</option>
-                                                <option value="Salmonid">Salmonid</option>
-                                                <option value="Sculpin">Sculpin</option>
-                                                <option value="Silverside">Silverside</option>
+                                                <option value="Salmonids">Salmonids</option>
+                                                <option value="Sculpins">Sculpins</option>
+                                                <option value="Silversides">Silversides</option>
                                                 <option value="Smelt">Smelt</option>
-                                                <option value="Snakehead">Snakehead</option>
-                                                <option value="Splitfin">Splitfin</option>
-                                                <option value="Stickleback">Stickleback</option>
-                                                <option value="Stingray">Stingray</option>
+                                                <option value="Snakeheads">Snakeheads</option>
+                                                <option value="Splitfins">Splitfins</option>
+                                                <option value="Sticklebacks">Sticklebacks</option>
+                                                <option value="Stingrays">Stingrays</option>
                                                 <option value="Sturgeon">Sturgeon</option>
                                                 <option value="Suckers">Suckers</option>
                                                 <option value="Sunfish">Sunfish</option>
                                                 <option value="Surfperch">Surfperch</option>
-                                                <option value="Topminnow">Topminnow</option>
+                                                <option value="Topminnows">Topminnows</option>
                                                 <option value="Trout-Perch">Trout-Perch</option>
                                                 <option value="White Bass">White Bass</option>
                                                 <option value="Whitefish">Whitefish</option>
                                             </select>
                                         </td>
+                                        <td class="noshow"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -1408,16 +1438,20 @@
                                 <table id="fishPropertiesTable" style="width:100%">
                                     <tbody>
                                     <tr>
-                                        <td style="width:33%; text-align: center;"><strong>Biogeography</strong>
-                                            <select multiple id="native" title="Select any options to apply to query"
+                                        <td class="noscroll" style="width:33%; text-align: center;">
+                                            <strong>Biogeography</strong>
+                                            <select multiple id="native"
+                                                    title="Select any options to apply to query"
                                                     size="4"
-                                                    style="margin: 1px; width:100%;overflow: auto;">
+                                                    style="margin: 1px; width:100%;">
                                                 <option value="native_y">Native</option>
                                                 <option value="native_n">Introduced</option>
                                             </select>
                                         </td>
-                                        <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>
-                                            <select multiple id="fishuse" title="Select any options to apply to query"
+                                        <td class="noscroll" style="width:34%; text-align: center;"><strong>Beneficial
+                                            Use</strong>
+                                            <select multiple id="fishuse"
+                                                    title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%;overflow: auto;">
                                                 <option value="subsistence">Subsistence</option>
@@ -1425,9 +1459,10 @@
                                                 <option value="nongame">Non-Game</option>
                                             </select>
                                         </td>
-                                        <td style="width:33%; text-align: center;"><strong>Tolerance to
+                                        <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance" title="Select any options to apply to query"
+                                            <select multiple id="tolerance"
+                                                    title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
                                                 <option value="I">Intolerant</option>
@@ -1490,8 +1525,8 @@
                                                     $("#meanWeightSlider").slider({
                                                         range: true,
                                                         min: 0,
-                                                        max: 700,
-                                                        values: [0, 700],
+                                                        max: 7125,
+                                                        values: [0, 7125],
                                                         slide: function (event, ui) {
                                                             $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1511,8 +1546,8 @@
                                                     $("#meanLengthSlider").slider({
                                                         range: true,
                                                         min: 1,
-                                                        max: 79,
-                                                        values: [1, 79],
+                                                        max: 78,
+                                                        values: [1, 78],
                                                         slide: function (event, ui) {
                                                             $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1571,7 +1606,7 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Position</strong>
-                                            <select multiple id="waterPosition"
+                                            <select multiple id="waterPosition" class="noscroll"
                                                     title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="6">
                                                 <option value="benthic">Benthic</option>
@@ -1585,7 +1620,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Substrate</strong>
-                                            <select multiple id="substrate" title="Select any options to apply to query"
+                                            <select multiple id="substrate" class="noscroll"
+                                                    title="Select any options to apply to query"
                                                     style="width:100%;overflow: auto;"
                                                     size="6">
                                                 <option value="mud_slt_det">Mud/Silt</option>
@@ -1600,7 +1636,7 @@
                                     </tr>
                                     <tr>
                                         <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
-                                            <select multiple id="habitatType"
+                                            <select multiple id="habitatType" class="noscroll"
                                                     title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="riffles" title="Riffles">Riffles</option>
@@ -1610,7 +1646,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>
-                                            <select multiple id="waterType" title="Select any options to apply to query"
+                                            <select multiple id="waterType" class="noscroll"
+                                                    title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;"
                                                     size="3">
                                                 <option value="clearwater">Clear</option>
@@ -1618,7 +1655,8 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
-                                            <select multiple id="thermal" title="Select any options to apply to query"
+                                            <select multiple id="thermal" class="noscroll"
+                                                    title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="coldwater">Cold</option>
                                                 <option value="coolwater">Cool</option>
@@ -1626,11 +1664,11 @@
                                             </select>
                                         </td>
                                         <td style="width:25%; text-align: center;"><strong>Topography</strong>
-                                            <select multiple id="topography"
+                                            <select multiple id="topography" class="noscroll"
                                                     title="Select any options to apply to query"
                                                     style="overflow: auto;width:100%;" size="3">
                                                 <option value="lowlands_lgr">Lowlands</option>
-                                                <option value="upland_hgr">Uplands</option>
+                                                <option value="uplands_hgr">Uplands</option>
 
                                             </select>
                                         </td>
@@ -1640,351 +1678,22 @@
                                 <div>
                                     <input id="submitQuery" name="submit" type="submit" value="Submit Query"
                                            onsubmit="return false;"/>
-                                    <input id="resetQuery" name="reset" type="reset" value="Reset Query"
+                                    <input id="resetQuery" name="resetQuery" type="reset" value="Reset Query"
                                            title="Reset all query parameter fields"/>
                                 </div>
+                                <p style="font-size:12px;">*Note: Use cntr + click to make multiple
+                                    selections/deselections.</p>
                             </div>
-
                         </li>
                     </ul>
-                    <!-- DROP-DOWN ACCORDIONS-->
-                    {#                    <ul class="accordion" id="accordionGroup">#}
-                    {#                        <!-- taxonomy table -->#}
-                    {#                        <li>#}
-                    {#                            <a class="accordion-title" href="#pane-3" title="Click to expand taxonomy parameters">Taxonomy</a>#}
-                    {#                            <div class="accordion-pane" id="pane-3">#}
-                    {#                                <table id="taxonomyTable" style="width:100%">#}
-                    {#                                    <tbody>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:50%;"><strong>Scientific/Common Name</strong>#}
-                    {#                                            <input id="scicomName" name="scicomName" type="text"#}
-                    {#                                                   title="Scientific/Common Name" style="width:100%">#}
-                    {#                                            <label for="scicomName"></label>#}
-                    {#                                        <td><strong>Group</strong>#}
-                    {#                                            <label for="fishGroup"></label>#}
-                    {#                                            <select multiple id="fishGroup" title="Select one or multiple groups"#}
-                    {#                                                    style="width: 100%;overflow: overlay;">#}
-                    {#                                                <option value="Anchovy">Anchovy</option>#}
-                    {#                                                <option value="Black Bass">Black Bass</option>#}
-                    {#                                                <option value="Bowfin">Bowfin</option>#}
-                    {#                                                <option value="Burbot">Burbot</option>#}
-                    {#                                                <option value="Catfish">Catfish</option>#}
-                    {#                                                <option value="Cavefish">Cavefish</option>#}
-                    {#                                                <option value="Characin">Characin</option>#}
-                    {#                                                <option value="Cichlid">Cichlid</option>#}
-                    {#                                                <option value="Clupeid">Clupeid</option>#}
-                    {#                                                <option value="Cod">Cod</option>#}
-                    {#                                                <option value="Darter">Darter</option>#}
-                    {#                                                <option value="Drum">Drum</option>#}
-                    {#                                                <option value="Eel">Eel</option>#}
-                    {#                                                <option value="Flounder">Flounder</option>#}
-                    {#                                                <option value="Gar">Gar</option>#}
-                    {#                                                <option value="Goby">Goby</option>#}
-                    {#                                                <option value="Knifefish">Knifefish</option>#}
-                    {#                                                <option value="Lamprey">Lamprey</option>#}
-                    {#                                                <option value="Livebearer">Livebearer</option>#}
-                    {#                                                <option value="Loach">Loach</option>#}
-                    {#                                                <option value="Madtom">Madtom</option>#}
-                    {#                                                <option value="Minnow">Minnow</option>#}
-                    {#                                                <option value="Mooneye">Mooneye</option>#}
-                    {#                                                <option value="Mudminnow">Mudminnow</option>#}
-                    {#                                                <option value="Mullet">Mullet</option>#}
-                    {#                                                <option value="Needlefish">Needlefish</option>#}
-                    {#                                                <option value="Paddlefish">Paddlefish</option>#}
-                    {#                                                <option value="Perch">Perch</option>#}
-                    {#                                                <option value="Pike">Pike</option>#}
-                    {#                                                <option value="Pipefish">Pipefish</option>#}
-                    {#                                                <option value="Pirate Perch">Pirate Perch</option>#}
-                    {#                                                <option value="Pupfish">Pupfish</option>#}
-                    {#                                                <option value="Pygmy Sunfish">Pygmy Sunfish</option>#}
-                    {#                                                <option value="Salmonid">Salmonid</option>#}
-                    {#                                                <option value="Sculpin">Sculpin</option>#}
-                    {#                                                <option value="Silverside">Silverside</option>#}
-                    {#                                                <option value="Smelt">Smelt</option>#}
-                    {#                                                <option value="Snakehead">Snakehead</option>#}
-                    {#                                                <option value="Splitfin">Splitfin</option>#}
-                    {#                                                <option value="Stickleback">Stickleback</option>#}
-                    {#                                                <option value="Stingray">Stingray</option>#}
-                    {#                                                <option value="Sturgeon">Sturgeon</option>#}
-                    {#                                                <option value="Suckers">Suckers</option>#}
-                    {#                                                <option value="Sunfish">Sunfish</option>#}
-                    {#                                                <option value="Surfperch">Surfperch</option>#}
-                    {#                                                <option value="Topminnow">Topminnow</option>#}
-                    {#                                                <option value="Trout-Perch">Trout-Perch</option>#}
-                    {#                                                <option value="White Bass">White Bass</option>#}
-                    {#                                                <option value="Whitefish">Whitefish</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    </tbody>#}
-                    {#                                </table>#}
-                    {#                            </div>#}
-                    {#                        </li>#}
-                    {##}
-                    {#                        <!-- fish properties-->#}
-                    {#                        <li>#}
-                    {#                            <a class="accordion-title" href="#pane-1" title="Click to expand fish property parameters">Fish#}
-                    {#                                Properties</a>#}
-                    {#                            <div class="accordion-pane" id="pane-1">#}
-                    {#                                <!--- fish properties tables -->#}
-                    {#                                <table id="fishPropertiesTable" style="width:100%">#}
-                    {#                                    <tbody>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:33%; text-align: center;"><strong>Biogeography</strong>#}
-                    {#                                            <select multiple id="native" title="Select any options to apply to query"#}
-                    {#                                                    size="4"#}
-                    {#                                                    style="margin: 1px; width:100%;overflow: auto;">#}
-                    {#                                                <option value="native_y">Native</option>#}
-                    {#                                                <option value="native_n">Introduced</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:34%; text-align: center;"><strong>Beneficial Use</strong>#}
-                    {#                                            <select multiple id="fishuse" title="Select any options to apply to query"#}
-                    {#                                                    size="4"#}
-                    {#                                                    style="margin: 1px; width:100%;overflow: auto;">#}
-                    {#                                                <option value="subsistence">Subsistence</option>#}
-                    {#                                                <option value="sportfishing">SportFish</option>#}
-                    {#                                                <option value="nongame">Non-Game</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:33%; text-align: center;"><strong>Tolerance to#}
-                    {#                                            Disturbance/Siltation</strong>#}
-                    {#                                            <select multiple id="tolerance" title="Select any options to apply to query"#}
-                    {#                                                    size="4"#}
-                    {#                                                    style="margin: 1px; width:100%; overflow: auto;">#}
-                    {#                                                <option value="I">Intolerant</option>#}
-                    {#                                                <option value="M">Mid-Tolerant</option>#}
-                    {#                                                <option value="T">Tolerant</option>#}
-                    {#                                                <option value="U">Unspecified</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:33%; text-align: center;" title="Select rarity range"><strong>Rarity</strong>#}
-                    {#                                            <input type="text" id="rarityValue" readonly#}
-                    {#                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">#}
-                    {#                                            <script>#}
-                    {#                                                $(function () {#}
-                    {#                                                    $("#raritySlider").slider({#}
-                    {#                                                        range: true,#}
-                    {#                                                        min: 1,#}
-                    {#                                                        max: 10,#}
-                    {#                                                        values: [1, 10],#}
-                    {#                                                        slide: function (event, ui) {#}
-                    {#                                                            $("#rarityValue").val(ui.values[0] + " - " + ui.values[1]);#}
-                    {#                                                        }#}
-                    {#                                                    });#}
-                    {#                                                    $("#rarityValue").val($("#raritySlider").slider("values", 0) +#}
-                    {#                                                        " - " + $("#raritySlider").slider("values", 1));#}
-                    {#                                                });#}
-                    {#                                            </script>#}
-                    {#                                            <div id="raritySlider" style="margin: 0 20px;"></div>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:33%; text-align: center;" title="Select max age range"><strong>Max#}
-                    {#                                            Age (yr)</strong>#}
-                    {#                                            <input type="text" id="maxAgeValue" readonly#}
-                    {#                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">#}
-                    {#                                            <script>#}
-                    {#                                                $(function () {#}
-                    {#                                                    $("#maxAgeSlider").slider({#}
-                    {#                                                        range: true,#}
-                    {#                                                        min: 1,#}
-                    {#                                                        max: 25,#}
-                    {#                                                        values: [1, 25],#}
-                    {#                                                        slide: function (event, ui) {#}
-                    {#                                                            $("#maxAgeValue").val(ui.values[0] + " - " + ui.values[1]);#}
-                    {#                                                        }#}
-                    {#                                                    });#}
-                    {#                                                    $('#maxAgeValue').val($("#maxAgeSlider").slider("values", 0) +#}
-                    {#                                                        " - " + $("#maxAgeSlider").slider("values", 1));#}
-                    {#                                                })#}
-                    {#                                            </script>#}
-                    {#                                            <div id="maxAgeSlider" style="margin: 0 20px;"></div>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:33%; text-align: center;" title="Select mean weight range">#}
-                    {#                                            <strong>Mean Weight (g)</strong>#}
-                    {#                                            <input type="text" id="meanWeightValue" readonly#}
-                    {#                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">#}
-                    {#                                            <script>#}
-                    {#                                                $(function () {#}
-                    {#                                                    $("#meanWeightSlider").slider({#}
-                    {#                                                        range: true,#}
-                    {#                                                        min: 0,#}
-                    {#                                                        max: 700,#}
-                    {#                                                        values: [0, 700],#}
-                    {#                                                        slide: function (event, ui) {#}
-                    {#                                                            $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);#}
-                    {#                                                        }#}
-                    {#                                                    });#}
-                    {#                                                    $('#meanWeightValue').val($("#meanWeightSlider").slider("values", 0) +#}
-                    {#                                                        " - " + $("#meanWeightSlider").slider("values", 1));#}
-                    {#                                                })#}
-                    {#                                            </script>#}
-                    {#                                            <div id="meanWeightSlider" style="margin: 0 20px;"></div>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:34%; text-align: center;" title="Select mean length range">#}
-                    {#                                            <strong>Mean Length (cm)</strong>#}
-                    {#                                            <input type="text" id="meanLengthValue" readonly#}
-                    {#                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">#}
-                    {#                                            <script>#}
-                    {#                                                $(function () {#}
-                    {#                                                    $("#meanLengthSlider").slider({#}
-                    {#                                                        range: true,#}
-                    {#                                                        min: 1,#}
-                    {#                                                        max: 79,#}
-                    {#                                                        values: [1, 79],#}
-                    {#                                                        slide: function (event, ui) {#}
-                    {#                                                            $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);#}
-                    {#                                                        }#}
-                    {#                                                    });#}
-                    {#                                                    $('#meanLengthValue').val($("#meanLengthSlider").slider("values", 0) +#}
-                    {#                                                        " - " + $("#meanLengthSlider").slider("values", 1));#}
-                    {#                                                })#}
-                    {#                                            </script>#}
-                    {#                                            <div id="meanLengthSlider" style="margin: 0 20px;"></div>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:34%; text-align: center;" title="Select max length range">#}
-                    {#                                            <strong>Max Total Length#}
-                    {#                                                (cm)</strong>#}
-                    {#                                            <input type="text" id="maxLengthValue" readonly#}
-                    {#                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">#}
-                    {#                                            <script>#}
-                    {#                                                $(function () {#}
-                    {#                                                    $("#maxLengthSlider").slider({#}
-                    {#                                                        range: true,#}
-                    {#                                                        min: 1,#}
-                    {#                                                        max: 610,#}
-                    {#                                                        values: [1, 610],#}
-                    {#                                                        slide: function (event, ui) {#}
-                    {#                                                            $("#maxLengthValue").val(ui.values[0] + " - " + ui.values[1]);#}
-                    {#                                                        }#}
-                    {#                                                    });#}
-                    {#                                                    $("#maxLengthValue").val($("#maxLengthSlider").slider("values", 0) +#}
-                    {#                                                        " - " + $("#maxLengthSlider").slider("values", 1));#}
-                    {#                                                });#}
-                    {#                                            </script>#}
-                    {#                                            <div id="maxLengthSlider" style="margin: 0 20px;"></div>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    </tbody>#}
-                    {#                                </table>#}
-                    {#                            </div>#}
-                    {#                        </li>#}
-                    {##}
-                    {#                        <!-- Habitat Preferences (aka watershed characteristics)-->#}
-                    {#                        <li>#}
-                    {#                            <a class="accordion-title" href="#pane-2"#}
-                    {#                               title="Click to expand habitat preference parameters">Habitat#}
-                    {#                                Preferences</a>#}
-                    {#                            <div class="accordion-pane" id="pane-2">#}
-                    {#                                <!--- habitat preferences tables -->#}
-                    {#                                <table id="habitat" style="width:100%">#}
-                    {#                                    <tbody>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>System</strong>#}
-                    {#                                            <select multiple id="preferedSystem"#}
-                    {#                                                    title="Select any options to apply to query"#}
-                    {#                                                    style="width:100%;overflow:overlay;" size="6">#}
-                    {#                                                <option value="caves">Caves</option>#}
-                    {#                                                <option value="springs">Springs</option>#}
-                    {#                                                <option value="headwaters">Headwaters</option>#}
-                    {#                                                <option value="creeks">Creeks</option>#}
-                    {#                                                <option value="small_riv">Small Rivers</option>#}
-                    {#                                                <option value="med_riv">Medium Rivers</option>#}
-                    {#                                                <option value="lge_riv">Large Rivers</option>#}
-                    {#                                                <option value="lk_imp_pnd">#}
-                    {#                                                    Lakes/Impoundments#}
-                    {#                                                </option>#}
-                    {#                                                <option value="swp_msh_by">Swamp/Marsh</option>#}
-                    {#                                                <option value="coast_ocea">Coastal/Ocean</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Water Position</strong>#}
-                    {#                                            <select multiple id="waterPosition"#}
-                    {#                                                    title="Select any options to apply to query"#}
-                    {#                                                    style="overflow: auto;width:100%;" size="6">#}
-                    {#                                                <option value="benthic">Benthic</option>#}
-                    {#                                                <option value="surface">Surface</option>#}
-                    {#                                                <option value="nrshre_litt">Open#}
-                    {#                                                    Water/Pelagic#}
-                    {#                                                </option>#}
-                    {#                                                <option value="opnwtr_pelag">#}
-                    {#                                                    Nearshore/Littoral#}
-                    {#                                                </option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Substrate</strong>#}
-                    {#                                            <select multiple id="substrate" title="Select any options to apply to query"#}
-                    {#                                                    style="width:100%;overflow: auto;"#}
-                    {#                                                    size="6">#}
-                    {#                                                <option value="mud_slt_det">Mud/Silt</option>#}
-                    {#                                                <option value="sand">Sand</option>#}
-                    {#                                                <option value="gravel">Gravel</option>#}
-                    {#                                                <option value="rck_rub_bol">Rocks/Rubble#}
-                    {#                                                </option>#}
-                    {#                                                <option value="vegetation">Vegetation</option>#}
-                    {#                                                <option value="wdyd_brush">Woody Debris</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    <tr>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>#}
-                    {#                                            <select multiple id="habitatType"#}
-                    {#                                                    title="Select any options to apply to query"#}
-                    {#                                                    style="overflow: auto;width:100%;" size="3">#}
-                    {#                                                <option value="riffles" title="Riffles">Riffles</option>#}
-                    {#                                                <option value="run_flopool">Runs</option>#}
-                    {#                                                <option value="pool_bckwtr">Pools/Backwater#}
-                    {#                                                </option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>#}
-                    {#                                            <select multiple id="waterType" title="Select any options to apply to query"#}
-                    {#                                                    style="overflow: auto;width:100%;"#}
-                    {#                                                    size="3">#}
-                    {#                                                <option value="clearwater">Clear</option>#}
-                    {#                                                <option value="turbidwater">Turbid</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>#}
-                    {#                                            <select multiple id="thermal" title="Select any options to apply to query"#}
-                    {#                                                    style="overflow: auto;width:100%;" size="3">#}
-                    {#                                                <option value="coldwater">Cold</option>#}
-                    {#                                                <option value="coolwater">Cool</option>#}
-                    {#                                                <option value="warmwater">Warm</option>#}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                        <td style="width:25%; text-align: center;"><strong>Topography</strong>#}
-                    {#                                            <select multiple id="topography"#}
-                    {#                                                    title="Select any options to apply to query"#}
-                    {#                                                    style="overflow: auto;width:100%;" size="3">#}
-                    {#                                                <option value="lowlands_lgr">Lowlands</option>#}
-                    {#                                                <option value="upland_hgr">Uplands</option>#}
-                    {##}
-                    {#                                            </select>#}
-                    {#                                        </td>#}
-                    {#                                    </tr>#}
-                    {#                                    </tbody>#}
-                    {#                                </table>#}
-                    {##}
-                    {#                            </div>#}
-                    {#                        </li>#}
+
                     {#                    </ul><!-- END ACCORDIONS -->#}
                 </form>
-                <p style="font-size:12px;">*Note: Use cntr + click to make multiple selections/deselections.</p>
                 <!--- line -->
                 <hr/>
                 <!--- submit query -->
                 <tr>
                     <!--- reset -->
-                    {#                    <div>#}
-                    {#                        <input id="submitQuery" name="submit" type="submit" value="Submit Query"#}
-                    {#                               onsubmit="return false;"/>#}
-                    {#                        <input id="resetQuery" name="reset" type="reset" value="Reset Query"#}
-                    {#                               title="Reset all query parameter fields"/>#}
-                    {#                    </div>#}
                 </tr>
                 <div id="queryParameters">
                     <h4 style="text-align:center;">Submitted Query Parameters</h4>
