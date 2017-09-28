@@ -712,10 +712,10 @@
 
             // tolerance
             var tolerance = [];
-            if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
-            if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
-            if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
-            if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");
+            if (details["pollut_tol"] === "I"){tolerance.push(" Intolerant");}
+            else if (details["pollut_tol"] === "T") {tolerance.push(" Tolerant");}
+            else if (details["pollut_tol"] === "M") {tolerance.push(" Mid-Tolerant");}
+            else if (details["pollut_tol"] === "U") {tolerance.push(" Unspecified");}
 
             // use
             var use = [];
@@ -1461,7 +1461,7 @@
                                         </td>
                                         <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance"
+                                            <select id="tolerance"
                                                     title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
