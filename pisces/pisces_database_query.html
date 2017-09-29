@@ -724,8 +724,8 @@
             if (details["subsis_fish"] === "1") use.push(" Subsistence");
 
             // links
-            var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
-            var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + cName.replace(" ", "_");
+            var google_link = "https://www.google.com/search?tbm=isch&q=" + sName.replace(" ", "+");
+            var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + sName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
                 '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Group</td><td>' + details["group"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
