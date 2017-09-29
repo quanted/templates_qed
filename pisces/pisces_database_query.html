@@ -712,10 +712,10 @@
 
             // tolerance
             var tolerance = [];
-            if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
-            if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
-            if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
-            if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");
+            if (details["pollut_tol"] === "I"){tolerance.push(" Intolerant");}
+            else if (details["pollut_tol"] === "T") {tolerance.push(" Tolerant");}
+            else if (details["pollut_tol"] === "M") {tolerance.push(" Mid-Tolerant");}
+            else if (details["pollut_tol"] === "U") {tolerance.push(" Unspecified");}
 
             // use
             var use = [];
@@ -724,8 +724,8 @@
             if (details["subsis_fish"] === "1") use.push(" Subsistence");
 
             // links
-            var google_link = "https://www.google.com/search?tbm=isch&q=" + cName.replace(" ", "+");
-            var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + cName.replace(" ", "_");
+            var google_link = "https://www.google.com/search?tbm=isch&q=" + sName.replace(" ", "+");
+            var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + sName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
                 '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Group</td><td>' + details["group"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
@@ -1461,7 +1461,7 @@
                                         </td>
                                         <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance"
+                                            <select id="tolerance"
                                                     title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
