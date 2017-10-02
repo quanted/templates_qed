@@ -389,7 +389,7 @@
             var benefit = $('#fishuse').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var tolerance = "tolerance=" + $('#tolerance').val().map(function (i) {
+            var tolerance = "tolerance=" + jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {
                 return i;
             }).toString() + "&";
             var rarity = $('#rarityValue').val().split(' - ');
