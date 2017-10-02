@@ -441,7 +441,7 @@
             if ($('#fishuse').val().length > 0) {
                 queryString = queryString + benefit;
             }
-            if ($('#tolerance').val().length > 0) {
+            if (jQuery.makeArray($($('#tolerance')[0]["selectedOptions"])).length > 0) {
                 queryString = queryString + tolerance;
             }
             if ($('#preferedSystem').val().length > 0) {
