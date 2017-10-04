@@ -1252,12 +1252,16 @@
                     $(".width_value").val(data["attributes"]["width"]);
                     $(".area_value").val(data["attributes"]["area"]);
                     $(".slope_value").val(data["attributes"]["slope"]);
-                    $('#width_filter').trigger("click");
+                    setTimeout(applyWidthFilter, 300);
                 },
                 error: function (jqXHR, status, errorThrown) {
                     console.log(errorThrown);
                 }
             });
+        }
+
+        function applyWidthFilter(){
+            $('#width_filter').trigger("click");
         }
 
         function getFishData() {
