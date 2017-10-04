@@ -389,9 +389,10 @@
             var benefit = $('#fishuse').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var tolerance = "tolerance=" + jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {
-                return i;
-            }).toString() + "&";
+            var tolerance = "tolerance=" + $('#tolerance').val().toString().trim().split(" ").join("_") + "&";
+{#            var tolerance = "tolerance=" + jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {#}
+{#                return i;#}
+{#            }).toString() + "&";#}
             var rarity = $('#rarityValue').val().split(' - ');
             rarity = "rarity=" + rarity[0] + "_" + rarity[1] + "&";
             var maxage = $('#maxAgeValue').val().split(' - ');
@@ -441,9 +442,12 @@
             if ($('#fishuse').val().length > 0) {
                 queryString = queryString + benefit;
             }
-            if (jQuery.makeArray($($('#tolerance')[0]["selectedOptions"])).length > 0) {
+            if ($('#tolerance').val().length > 0){
                 queryString = queryString + tolerance;
             }
+{#            if (jQuery.makeArray($($('#tolerance')[0]["selectedOptions"])).length > 0) {#}
+{#                queryString = queryString + tolerance;#}
+{#            }#}
             if ($('#preferedSystem').val().length > 0) {
                 queryString = queryString + sys;
             }
@@ -512,20 +516,21 @@
                 return this.text;
             })).toString().split(",").join(", ");
 
-            parameters["tolerance"] = jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {
-                if (i === "I") {
-                    return "Intolerant";
-                }
-                else if (i === "M") {
-                    return "Mid-Tolerant";
-                }
-                else if (i === "T") {
-                    return "Tolerant";
-                }
-                else if (i === "U") {
-                    return "Unspecified";
-                }
-            }).toString().split(",").join(", ");
+            parameters["tolerance"] = $('#tolerance').val().toString().split(",").join(", ");
+{#            parameters["tolerance"] = jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {#}
+{#                if (i === "I") {#}
+{#                    return "Intolerant";#}
+{#                }#}
+{#                else if (i === "M") {#}
+{#                    return "Mid-Tolerant";#}
+{#                }#}
+{#                else if (i === "T") {#}
+{#                    return "Tolerant";#}
+{#                }#}
+{#                else if (i === "U") {#}
+{#                    return "Unspecified";#}
+{#                }#}
+{#            }).toString().split(",").join(", ");#}
 
             parameters["rarity"] = $('#rarityValue').val();
             parameters["maxage"] = $('#maxAgeValue').val();
@@ -1462,7 +1467,7 @@
                                         </td>
                                         <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
                                             Disturbance/Siltation</strong>
-                                            <select id="tolerance"
+                                            <select multiple id="tolerance"
                                                     title="Select any options to apply to query"
                                                     size="4"
                                                     style="margin: 1px; width:100%; overflow: auto;">
