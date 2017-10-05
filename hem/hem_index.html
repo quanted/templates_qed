@@ -2,10 +2,9 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 
-{% block title %}HEM Inputs{% endblock %}
+{% block title %}HEMISPHERE Home{% endblock %}
 
 {% block content %}
-
     <div class="row">
         <div class="col-md-5">
             <form method="POST" class="post-form">
@@ -51,9 +50,24 @@
                 {% csrf_token %}
             </form>
         </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <h3>Documentation</h3>
+                <a href="{% static 'hem/files/UserGuide_S2D.docx' %}">
+                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span> HEM User Guide</a><br>
+            <hr>
+            <p>
+                The Human Exposure Model (HEM) is being developed to assess near-field exposures to chemicals that occur
+                in various populations over the life cycle of a consumer product. The model produces estimates of
+                population distributions of chemical exposure by route, and releases to the environment, for over 300
+                categories of consumer products over one year. To see aggregate exposure to a chemical from the use of
+                all consumer product categories within the scope of HEM, select 'Chemicals.' To see exposure to all
+                chemicals in a particular product category, from the use of that product category, select 'Products.'
+            </p>
+        </div>
     </div>  <!-- row div -->
-
-
 
 {% endblock %}
 

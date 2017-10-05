@@ -7,9 +7,11 @@
         <h3 class="headerbar">{{ key|safe }}</h3>
         {% for valueKey, valueValue in value.items %}<li class="menu-item{% if forloop.last %} menu-item-last{% endif %}"><a href="/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
           {% if MODEL == valueValue %}<ul class="menu">
-            <li class="menu-item"><a href="/{{ MODEL }}/map" title="{{ valueKey|safe }} Map" class="menu-link{% if PAGE == "map" %} active-trail active{% endif %}">Map</a></li>
+            <li class="menu-item"><a href="/{{ MODEL }}/map" title="{{ valueKey|safe }} Real Time Map" class="menu-link{% if PAGE == "map" %} active-trail active{% endif %}">Real Time Map</a></li>
+            <li class="menu-item"><a href="/{{ MODEL }}/freqMap" title="{{ valueKey|safe }} Frequency Map" class="menu-link{% if PAGE == "freqMap" %} active-trail active{% endif %}">Frequency Map</a></li>
             <li class="menu-item"><a href="/{{ MODEL }}/dashboard" title="{{ valueKey|safe }} Dashboard" class="menu-link{% if PAGE == "dashboard" %} active-trail active{% endif %}">Dashboard</a></li>
-            <li class="menu-item"><a href="/{{ MODEL }}/lakecomparison" title="{{ valueKey|safe }} Lake Comparison" class="menu-link{% if PAGE == "lakecomparison" %} active-trail active{% endif %}">Lake Comparison</a></li>
+            <li class="menu-item"><a href="/{{ MODEL }}/dot_map" title="{{ valueKey|safe }} Monthly Max Map" class="menu-link{% if PAGE == "dotmap" %} active-trail active{% endif %}">Monthly Max Map</a></li>
+            <li class="menu-item"><a href="/{{ MODEL }}/lakecomparison" title="{{ valueKey|safe }} Compare Lakes" class="menu-link{% if PAGE == "lakecomparison" %} active-trail active{% endif %}">Compare Lakes</a></li>
             <li class="menu-item"><a href="/{{ MODEL }}/algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">Algorithms</a></li>
             <li class="menu-item"><a href="/{{ MODEL }}/references" title="{{ valueKey|safe }} References" class="menu-link{% if PAGE == "references" %} active-trail active{% endif %}">References</a></li>
           </ul>{% endif %}

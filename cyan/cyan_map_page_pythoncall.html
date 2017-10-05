@@ -47,7 +47,7 @@
         <div class="col-md-10">
           <div class="box multi news">
             <div class="pane-content" id="mapDiv">
-              <p><strong>Click the map</strong> to get recent cyanobacteria concentration estimates for each pixel location</p>
+              <p><strong>Click the map</strong> to view the most recent weekly cyanobacteria concentration estimate.</p>
                 <!-- leaflet map div -->
                 <div id="map"></div>
                 <!-- basemap wrapper -->
@@ -99,11 +99,11 @@
             //generate map "pop-up" box
             var popup = L.popup();
 
-
-            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.2012094.0403.1551C.L3.EF3.v670.CIcyano2.png',
+            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/M20110012011007.L3m_7D_CYAN_CI_cyano_CYAN_CONUS_300m_7_5.png',
+{#            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.2012094.0403.1551C.L3.EF3.v670.CIcyano2.png',#}
 {#           var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.'+yyyy+'097.'+mm+dd+'.1541C.L3.EF3.v670.CIcyano1.png',#}
-                imageBounds = [[26.387, -82.445], [30.614, -79.852]];
-
+{#                imageBounds = [[26.387, -82.445], [30.614, -79.852]]; <--- lower left then upper right#}
+                imageBounds = [[25.1, -85.2], [30.38, -79.47]];
 
 
 

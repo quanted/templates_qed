@@ -10,6 +10,10 @@ $(document).ready(function() {
 	});
 
 	var nodes = [];  // array of batch chems with modecular info
+	var socket;
+	var batch_chems = [];  // list of chemicals in batch file
+
+	$('#dialog').dialog();
 
 	// Do this stuff once file is uploaded:
 	$('#upfile1').change(function () {
@@ -43,13 +47,60 @@ $(document).ready(function() {
 	});
 
 
+	$('.testws-submit').on('click', function () {
+
+		console.log(nodes);
+
+		checkedCalcsAndProps = buildCheckedCalcsAndProps();
+		calls_tracker = calculateTotalCalls([nodes.length], checkedCalcsAndProps);
+        total_calls = calls_tracker;
+        sessionStorage.setItem('calls_tracker', calls_tracker);
+        sessionStorage.setItem('total_calls', total_calls);
+
+        blockInterface(true);
+
+		startPchemPropDataCollection("", checkedCalcsAndProps, kowPH, null, null, nodes);
+
+	});
+
+
+	$('#csvTESTWSExport').click(function () {
+
+        // var jsonData = parseOutputForCSV();
+        var jsonData = {
+        	'batch_data': batch_data,  // batch_data from cts_pchemprop_requests.html
+        	'workflow': "testws",
+        	'checkedCalcsAndProps': checkedCalcsAndProps,
+        	'batch_chems': batch_chems
+        };
+
+        var cache = [];
+		var json_string = JSON.stringify(jsonData, function(key, value) {
+		    if (typeof value === 'object' && value !== null) {
+		        if (cache.indexOf(value) !== -1) {
+		            return;  // Circular reference found, discard key
+		        }
+		        cache.push(value);
+		    }
+		    return value;
+		});
+		cache = null;  // Enable garbage collection
+
+		$('table.getpdf').html("");
+		$('<tr style="display:none"><td><input type="hidden" name="csv_data"></td></tr>')
+				.appendTo('.getpdf')
+				.find('input')
+				.val(json_string);
+
+		$('form.post_form').attr({'action': '/cts/testing/testws/csv', 'method': 'POST'}).submit();
+
+	});
+
+
 	function displayBatchFileChemicals(file_content) {
 
-		// TODO: Get SMILES, and if already a part of the same call, get chem deats:
 
-		var batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
-		// getMolecularInfoForBatchChemicals(batch_chems);
-
+		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
 
 		// only allow ten max for now:
 		if (batch_chems.length > 10) {
@@ -57,12 +108,6 @@ $(document).ready(function() {
 			return;
 		}
 
-
-		// $('#fileDisplayArea').html(file_content);
-		// $('#batchfilewrap').show();
-
-		// // display p-chem table and submit button once file uploaded/displayed:
-		// // $('#pchem_batch_wrap, #pchemprop_table').show();
 		var batch_inputs = $('#pchem_batch_wrap');
 		$(batch_inputs).show();
 		$(batch_inputs).children().show();
@@ -114,13 +159,26 @@ $(document).ready(function() {
 
 	}
 
+	function getCookie(name) {
+	  var cookieValue = null;
+	  if (document.cookie && document.cookie !== '') {
+	    var cookies = document.cookie.split(';');
+	    for (var i = 0; i < cookies.length; i++) {
+	      var cookie = jQuery.trim(cookies[i]);
+	      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+	        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	        break;
+	      }
+	    }
+	  }
+	  return cookieValue;
+	}     
+
+	var csrftoken = getCookie('csrftoken');
+
 
 	function getMolecularInfoForBatchChemicals(chem, callback) {
 		
-		// for (chem in batch_chems) {
-
-		// 	var chemical = batch_chems[chem];
-
 		$.ajax({
 		    url: '/cts/rest/molecule',
 		    // url: '/rest/cts/molecule',
@@ -128,18 +186,16 @@ $(document).ready(function() {
 		    data: {'chemical': chem},
 		    dataType: 'json',
 		    timeout: 10000,
+		    beforeSend: function(xhr, settings) {
+		      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		    },
 		    success: function(data) {
 				console.log(data);
 
 				if (data.status) {
 					nodes.push(data.data);  // if valid, add to list of chems for processing
 				}
-				// else {
-				// 	// something bad occurred...
-				// 	// highlight chemical and add error message next to it on page...
-				// }
 
-				// return data;
 				callback(data);
 
 		    },
@@ -149,16 +205,7 @@ $(document).ready(function() {
 		    }
 		});
 
-		// }
-
 	}
-
-
-	// include batch-dependent script for enabling submit after
-	// a reaction library AND pchem prop(s) are selected in 
-	// gentrans batch input.
-
-
 
 });
 
