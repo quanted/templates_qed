@@ -1,11 +1,9 @@
 {% extends "hem_base.html" %}
 {% load staticfiles %}
 
-{% block title %}HEM Results{% endblock %}
+{% block title %}HEMISPHERE Results{% endblock %}
 
 {% block content %}
-
-    <!-- </div> -->
 
     <div>
         <div class="row">
@@ -36,6 +34,16 @@
     <hr>
     <div class="well well-sm" id="my_chart" style="width:100%; height:500px;">
     </div>
+
+    <div class="col-md-12">
+        <p class="text-center text-muted">
+            Total systemic dose is defined as the total absorbed dose from the dermal, ingestion, and inhalation routes
+            , from both direct and indirect exposures.
+        </p>
+    </div>
+
+
+
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
@@ -48,8 +56,8 @@
             tooltip: {
                         formatter: function(){
                             return parseFloat(Math.round(this.x * 100) / 100).toFixed(2) +
-                                ' dose (mg/kg/annually)<br>' +
-                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' % population'
+                                '% population <br>' +
+                                parseFloat(Math.round(this.y * 100) / 100).toFixed(2) + ' dose (mg/kg/annually)'
                         }
             },
             exporting: {
@@ -70,7 +78,7 @@
             subtitle: {
                 text: '(dermal, ingestion, and inhalation)'
             },
-            xAxis: {
+            yAxis: {
                 title: {
                     enabled: true,
                     text: 'Annual Average Daily Dose (mg/kg body weight/day)'
@@ -80,7 +88,7 @@
                 showLastLabel: true,
                 type: 'logarithmic'
             },
-            yAxis: {
+            xAxis: {
                 title: {
                     text: 'Cumulative % of population'
                 },

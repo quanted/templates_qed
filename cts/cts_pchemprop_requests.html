@@ -162,7 +162,7 @@ function connectToSocket() {
         console.log("calls tracker: " + calls_tracker);
 
 
-        if (window.location.href.indexOf('batch') > -1) {
+        if (window.location.href.indexOf('batch') > -1 || window.location.href.indexOf('testws') > -1) {
 
             calls_tracker = parseInt(sessionStorage.getItem('calls_tracker'));
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
@@ -364,6 +364,14 @@ function connectToSocket() {
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
             }
 
+            // TESTWS Test Page - Initially print JSON to textarea!
+            // TODO: CSV download using current csv code in CTS
+            if(window.location.href.indexOf('testws') > -1) {
+                // all calls complete, display batch_data as formatted json:
+                // var output_data = JSON.stringify()
+                $('#testws-response').val(JSON.stringify(batch_data, undefined, 4));
+            }
+
 
         }
         else {
@@ -490,6 +498,13 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
     if (workflow == 'pchemprop' && run_type == 'single') {
         pchem_data['mass'] = mass;
     }
+
+    if (window.location.href.indexOf('testws') > -1) {
+        // todo: does this match with just test?
+        pchem_data['calc'] = "testws";
+        pchem_data['service'] = "pchemprops";
+    }
+
     // var is_one_chemical = !('nodes' in pchem_data);
     // // var has_mass_key = 'mass' in Object.keys(pchem_data['node']);
     // if (workflow == 'gentrans' && is_one_chemical) {

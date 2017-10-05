@@ -137,11 +137,30 @@ $(document).ready(function () {
 
         appendToRequestTable(jq_html, n_plot, imgData_json, jsonData); // append elements to request table
 
+        return jq_html;
+
 	}
 
 	$('#pdfExport').click(function () {
-		parseOutput('pdf');
-		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		// parseOutput('pdf');
+		// $('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		// var html = $('form.post_form');
+
+		// var html_string = $('form.post_form')[0];
+		// var html_string = parseOutput('pdf');
+
+  		// This method may need to have all svgs removed, and use
+  		// the "popup" png images instead.
+  		var objects_for_pdf = $('.articles_output').css({'backgroundColor': 'white'});  // fix background from defaulting to black
+
+  		var pdf = new jsPDF();
+		var options = {
+			pagesplit: true
+		};
+		pdf.addHTML(objects_for_pdf, 0, 0, options, function(){
+		    pdf.save("test.pdf");
+		});
+
 	});
 
 	$('#htmlExport').click(function () {
@@ -160,6 +179,7 @@ $(document).ready(function () {
 				.val(jsonData);
 
 		$('form.post_form').attr({'action': 'csv', 'method': 'POST'}).submit();
+		// $('form.post_form').submit();
 
 	});
 
@@ -319,6 +339,5 @@ function pickOutPka(html_string) {
 	});
 	return pka_obj;
 }
-
 
 </script>

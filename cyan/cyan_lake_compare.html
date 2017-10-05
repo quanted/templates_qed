@@ -34,7 +34,7 @@
         <h1 class="page-title">BETA CyAN Lake Comparison</h1>
 		<!--header showing location of website for navigation "You are here:"-->
 		<h2 class="breadcrumb-title">You are here:</h2>
-		<p class="breadcrumb"><a href="//www.epa.gov/">EPA Home</a> >>  <a href="//qed.epa.gov/">QED</a> >>  <a href="//qed.epa.gov/cyan">QED CyAN</a> >> <a href="//qed.epa.gov/cyan/lakecomparison">CyAN Lake Comparison Explorer</a></p>
+		<p class="breadcrumb"><a href="//www.epa.gov/">EPA Home</a> >>  <a href="//qed.epa.gov/">QED</a> >>  <a href="//qed.epa.gov/cyan">QED CyAN</a> >> <a href="//qed.epa.gov/cyan/lakecomparison">Lake Comparison</a></p>
         <br>
 	</div>
 
@@ -49,25 +49,25 @@
 	            <!---d3.js Cyano Bloom Properties-->
 	            <div class="col size-1of2">
 	                <div class="box multi news">
-	                	<h3 class="pane-title">Cyano Bloom Properties</h3>
+	                	<h3 class="pane-title">Lake Bloom Properties</h3>
         	            <div class="pane-content" id="sizeDiv">
         	            <p>
-                            Explore multivarite data for >1800 lakes. Hover on a line to highlight.
-                            Click and drag along axises to search for lakes within a range of values.
+                            Explore cyanobacteria data for more than 1,400 lakes.
+                              Click and drag along axises to select lakes within a range of values.
                         </p>
-	                    <div id="divParcoords" class="parcoords" style="height:340px">
+	                    <div id="divParcoords" class="parcoords" style="height:540px">
 
 	                      <script>
    						function drawParcoords() {
 	                      // load csv file and create the chart
 	                      d3.csv('/static_qed/cyan/data/bloom_properties.csv', function(data) {
-	                        // var colorgen = d3.scale.ordinal()
-	                        //   .range(["#a6cee3","#1f78b4","#b2df8a","#33a02c",
-	                        //   "#fb9a99","#e31a1c","#fdbf6f","#ff7f00",
-	                        //   "#cab2d6","#6a3d9a","#ffff99","#b15928"
-	                        //   ]);
+	                         var colorgen = d3.scale.ordinal()
+	                           .range(["#a6cee3","#1f78b4","#b2df8a","#33a02c",
+	                           "#fb9a99","#e31a1c","#fdbf6f","#ff7f00",
+	                           "#cab2d6","#6a3d9a","#ffff99","#b15928"
+	                           ]);
 
-	                        var color = function(d) { return colors(d.watershed); };
+	                        var color = function(d) { return colors(d.state); };
 
 	                        //map width and height
 							  var w = parseInt(d3.select("#sizeDiv").style("width"));
@@ -75,7 +75,7 @@
 	                        var parcoords = d3.parcoords()("#divParcoords")
 	                          .data(data)
 	                          .width(w)
-	                          .height(350)
+	                          .height(540)
 	                          .hideAxis(["name"])
 	                          .color(color)
 	                          .alpha(0.25)
