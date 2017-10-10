@@ -94,6 +94,18 @@
         padding: 2px 3px !important;
     }
 
+    #pestTable table > tbody > tr > td {
+        border-style: none;
+    }
+
+    #pestTable table {
+        border: black 1px solid;
+    }
+
+    #tbl_col {
+        background-color: lightgray;
+    }
+
 </style>
 
 <head>
@@ -103,10 +115,10 @@
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
     <!-- datatables import -->
-    <link rel="stylesheet"
-          href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
+{#    <link rel="stylesheet"#}
+{#          href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">#}
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
-    
+
     <!-- leaflet import -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
@@ -118,20 +130,19 @@
     <script src="/static_qed/pisces/scripts/huc250k_4326_sp.js"></script>
 
 
-
-
     <script>
 
-    //  create placeholder global comid variable
-    var comid = 5641438;
-    console.log(comid);
-
+        //  create placeholder global comid variable
+        var comid = 5641438;
+        console.log(comid);
+        $(document).ready(function () {
+{#            $('#samWatershedTable').DataTable();#}
+            $('#csvSave').on("click", saveTableAsCSV);
+        });
 
         function onStreamMapClick(e) {
             getStreamData(e.latlng.lat, e.latlng.lng);
-            getTESTExposureData();
         }
-
 
         //ajax call using lat long for stream data
         function getStreamData(lat, lng) {
@@ -141,7 +152,7 @@
             $('#latVal').html(Number(latitude).toFixed(6));
             $('#lngVal').html(Number(longitude).toFixed(6));
 
-            ptIndexParams = {
+            var ptIndexParams = {
                 'pGeometry': 'POINT(' + longitude + ' ' + latitude + ')'
                 , 'pGeometryMod': 'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84'
                 , 'pPointIndexingMethod': 'DISTANCE'
@@ -162,16 +173,34 @@
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8));
                     addStreamSeg(streamData);
-                    return data;
+                    setTimeout(getDynamicFile, 300);
+                    return false;
                 },
                 error: function (jqXHR, status) {
                     $('#comId').html("Error attempting to get river data.");
-                    return null;
+                    return false;
                 }
             });
         }
 
-
+        function getDynamicFile() {
+            // TODO: Need to collect key from cookies and set to var key
+            var key = "somerandomstring";
+            var url = "/sam/bin/results/" + key;
+            console.log("Dynamic File Path: " + url.toString());
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data, status, jqXHR) {
+                    populateFilteredTable(data);
+                    return false;
+                },
+                error: function (jqXHR, status) {
+                    console.log("Dynamic File Load Error: " + status.toString());
+                    getTESTExposureData();
+                }
+            });
+        }
 
         <!--- add stream to map -->
         function addStreamSeg(streamData) {
@@ -190,12 +219,10 @@
             else {
                 huc8geom = huc8;
             }
-
             if (map.hasLayer(selectedStream)) {
                 map.removeLayer(selectedStream);
                 map.removeLayer(streamHuc);
             }
-
             selectedStream = L.polyline(latlon, {
                 color: '#02bfe7',
                 weight: 8,
@@ -210,71 +237,41 @@
                 fillOpacity: 0.3
             }).addTo(map);
             map.fitBounds(selectedStream.getBounds());
-
         }
 
-
         function populateFilteredTable(data) {
-            $('#acuteFilteredTable').DataTable().destroy();
-            $('#chronicFilteredTable').DataTable().destroy();
-            $('#overallFilteredTable').DataTable().destroy();
-            console.log(comid);
             data = data[comid];
             //convert object into an array of objects
-            dataAsArray = [];
-            data = JSON.stringify(data, function(key, value) {
-                 dataAsArray.push(value);
-                })
-            console.log(dataAsArray);
-            $('#acuteFilteredTable').DataTable({
-                data: dataAsArray,
-                "columns": [
-                    { "data": "acute_em_fish" },
-                    { "data": "acute_em_inv" },
-                    { "data": "acute_fw_fish" },
-                    { "data": "acute_fw_inv" },
-                    { "data": "acute_human" },
-                    { "data": "acute_nonvasc_plant" },
-                    { "data": "acute_vasc_plant" }
-                ],
-            searching: false,
-            paging: false,
-            bInfo: false,
-            bSort: false
-            });
-            $('#chronicFilteredTable').DataTable({
-                data: dataAsArray,
-                "columns": [
-                    { "data": "chronic_em_fish" },
-                    { "data": "chronic_em_inv" },
-                    { "data": "chronic_fw_fish" },
-                    { "data": "chronic_fw_inv" },
-                    { "data": "chronic_human" },
-                    { "data": "chronic_nonvasc_plant" },
-                    { "data": "chronic_vasc_plant" }
-                ],
-            searching: false,
-            paging: false,
-            bInfo: false,
-            bSort: false
-            });
-            $('#overallFilteredTable').DataTable({
-                data: dataAsArray,
-                "columns": [
-                    { "data": "overall_em_fish" },
-                    { "data": "overall_em_inv" },
-                    { "data": "overall_fw_fish" },
-                    { "data": "overall_fw_inv" },
-                    { "data": "overall_human" },
-                    { "data": "overall_nonvasc_plant" },
-                    { "data": "overall_vasc_plant" }
-                ],
-            searching: false,
-            paging: false,
-            bInfo: false,
-            bSort: false
-            });
-    }
+            var dataHtml = "<h4 style=\"text-align: center; width: 100%\">Probability of Pesticide Concentration Exceedance</h4>" +
+                "<table id='samWatershedTable'>" +
+                "<thead style='display:none;'><th></th><th></th><th></th><th></th><th></th><th></th></thead>" +
+                "<tbody>" +
+                "<tr><td id='tbl_col'>Acute Em Fish</td><td>" + data["acute_em_fish"] + "</td>" +
+                "<td id='tbl_col'>Chronic Em Fish</td><td>" + data["chronic_em_fish"] + "</td>" +
+                "<td id='tbl_col'>Overall Em Fish</td><td>" + data["overall_em_fish"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Em Inv</td><td>" + data["acute_em_inv"] + "</td>" +
+                "<td id='tbl_col'>Chronic Em Inv</td><td>" + data["chronic_em_inv"] + "</td>" +
+                "<td id='tbl_col'>Overall Em Inv</td><td>" + data["overall_em_inv"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Fw Fish</td><td>" + data["acute_fw_fish"] + "</td>" +
+                "<td id='tbl_col'>Chronic Fw Fish</td><td>" + data["chronic_fw_fish"] + "</td>" +
+                "<td id='tbl_col'>Overall Fw Fish</td><td>" + data["overall_fw_fish"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Fw Inv</td><td>" + data["acute_fw_inv"] + "</td>" +
+                "<td id='tbl_col'>Chronic Fw Inv</td><td>" + data["chronic_fw_inv"] + "</td>" +
+                "<td id='tbl_col'>Overall Fw Inv</td><td>" + data["overall_fw_inv"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Human</td><td>" + data["acute_human"] + "</td>" +
+                "<td id='tbl_col'>Chronic Human</td><td>" + data["chronic_human"] + "</td>" +
+                "<td id='tbl_col'>Overall Human</td><td>" + data["overall_human"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Nonvasc Plant</td><td>" + data["acute_nonvasc_plant"] + "</td>" +
+                "<td id='tbl_col'>Chronic Nonvasc Plant</td><td>" + data["chronic_nonvasc_plant"] + "</td>" +
+                "<td id='tbl_col'>Overall Nonvasc Plant</td><td>" + data["overall_nonvasc_plant"] + "</td></tr>" +
+                "<tr><td id='tbl_col'>Acute Vasc Plant</td><td>" + data["acute_vasc_plant"] + "</td>" +
+                "<td id='tbl_col'>Chronic Vasc Plant</td><td>" + data["chronic_vasc_plant"] + "</td>" +
+                "<td id='tbl_col'>Overall Vasc Plant</td><td>" + data["overall_vasc_plant"] + "</td></tr>" +
+                "</tbody>" +
+                "</table>";
+            $('#pestTable').html(dataHtml);
+            $('#saveTable').show();
+        }
 
         <!--- get HUC -->
         function getStreamHuc(hucID) {
@@ -288,10 +285,41 @@
             });
             return huc8;
         }
+
+        function saveTableAsCSV() {
+            var data = "";
+{#            var td = $('#samWatershedTable').DataTable();#}
+            var config = {
+                sorting: false,
+                searching: false,
+                paging: false,
+                bInfo: false
+            };
+            $('#samWatershedTable').DataTable(config).rows().data().map(function (r) {
+                data += r.toString() + "\n";
+            });
+
+            var mainHeader = "SAM Pesticide Probabilities \n";
+            var metaHeader = "COMID, HUCID, Latitude, Longitude \n";
+            var metadata = $('#comid').html() + ", " + $('#huc8').html() + ", " +
+                $('#latVal').html() + ", " + $('#lngVal').html() + "\n";
+            var fileName = "SAM_pesticide_" + comid;
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(mainHeader + "\n" + metaHeader + metadata + "\n" + data));
+            pom.setAttribute('download', fileName + '.csv');
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+        }
+
     </script>
 
 </head>
-
 
 
 <body>
@@ -303,7 +331,8 @@
 
                 <!--- map and info -->
                 <div class="pane-content" id="mapDiv">
-                    <p><strong>Select a stream</strong> on the map to view the local probability of pesticide exceedance for various populations.</p>
+                    <p><strong>Select a stream</strong> on the map to view the local probability of pesticide exceedance
+                        for various populations.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
                     <div id="basemaps-wrapper" class="leaflet-bar">
@@ -318,67 +347,15 @@
                 </div>
 
                 <br>
-
-                <!--- acute datable -->
-                <div class="col-md-12">
-                    <div style="width:100%; margin: auto; display: inline-block; float: left;">
-                        <h4 style="text-align: center; width: 100%">Probability of Pesticide Concentration Exceedance</h4>
-                        <table id="acuteFilteredTable" class="display compact hover" cellspacing="0" width="50%"
-                               style="padding: 0 2px; margin: 0 2px;">
-                            <thead>
-                            <tr>
-                                <th>acute_em_fish</th>
-                                <th>acute_em_inv</th>
-                                <th>acute_fw_fish</th>
-                                <th>acute_fw_inv</th>
-                                <th>acute_human</th>
-                                <th>acute_nonvasc_plant</th>
-                                <th>acute_vasc_plant</th>
-                            </tr>
-                            </thead>
-                        </table>
+                <div id="pest">
+                    <div id="pestTable">
+                        <table id="samWatershedTable"></table>
                     </div>
-
-                    <!--- chronic datable -->
-                    <div class="col-md-12">
-                        <div style="width:100%; margin: auto; display: inline-block; float: left;">
-                            <table id="chronicFilteredTable" class="display compact hover" cellspacing="0" width="50%"
-                                   style="padding: 0 2px; margin: 0 2px;">
-                                <thead>
-                                <tr>
-                                    <th>chronic_em_fish</th>
-                                    <th>chronic_em_inv</th>
-                                    <th>chronic_fw_fish</th>
-                                    <th>chronic_fw_inv</th>
-                                    <th>chronic_human</th>
-                                    <th>chronic_nonvasc_plant</th>
-                                    <th>chronic_vasc_plant</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!--- overall datable -->
-                    <div class="col-md-12">
-                        <div style="width:100%; margin: auto; display: inline-block; float: left;">
-                            <table id="overallFilteredTable" class="display compact hover" cellspacing="0" width="50%"
-                                   style="padding: 0 2px; margin: 0 2px;">
-                                <thead>
-                                <tr>
-                                    <th>overall_em_fish</th>
-                                    <th>overall_em_inv</th>
-                                    <th>overall_fw_fish</th>
-                                    <th>overall_fw_inv</th>
-                                    <th>overall_human</th>
-                                    <th>overall_nonvasc_plant</th>
-                                    <th>overall_vasc_plant</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-
+                </div>
+                <div id="saveTable" style="display:none;">
+                    <input id="csvSave" name="save" type="submit" value="Save to CSV"
+                           onsubmit="return false;" style="margin:0 25px 10px 50px;float: right;"/>
+                </div>
             </div>
         </div>
     </div>
@@ -388,108 +365,104 @@
 <script>
 
 
-
-//stream style
-function streamStyle(feature) {
-    return {
-        weight: .5,
-        opacity: 0.9,
-        color: 'blue',
-    };
-}
-
-
-// initialize the map
-var map = L.map('map').setView([39.609280, -92.100678], 8);
-// sets variable for selected stream
-var selectedStream;
-// sets the Huc for the selected stream
-var streamHuc;
-
-// load huc watershed boundaries
-var markTwainStreams = L.geoJson(markTwainStreams, {
-    style: streamStyle,
-}).addTo(map);
-
-// load a tile layer
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    subdomains: ['a', 'b', 'c']
-}).addTo(map);
-
-
-// -------------- BASE MAP code -------------- //
-
-var layer = L.esri.basemapLayer('NationalGeographic').addTo(map);
-var layerLabels;
-
-function setBasemap(basemap) {
-    if (layer) {
-        map.removeLayer(layer);
+    //stream style
+    function streamStyle(feature) {
+        return {
+            weight: .5,
+            opacity: 0.9,
+            color: 'blue',
+        };
     }
 
-    layer = L.esri.basemapLayer(basemap);
 
-    map.addLayer(layer);
+    // initialize the map
+    var map = L.map('map').setView([39.609280, -92.100678], 8);
+    // sets variable for selected stream
+    var selectedStream;
+    // sets the Huc for the selected stream
+    var streamHuc;
 
-    if (layerLabels) {
-        map.removeLayer(layerLabels);
-    }
-
-    if (basemap === 'ShadedRelief'
-        || basemap === 'Imagery'
-        || basemap === 'Terrain'
-        || basemap === 'Topographic'
-    ) {
-        layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-        map.addLayer(layerLabels);
-    }
-}
-
-function changeBasemap(basemaps) {
-    var basemap = basemaps.value;
-    setBasemap(basemap);
-    addStreams();
-}
-
-// ------------ STREAM NETWORK code ------------- //
-
-//L.control.layers(streamNetwork).addTo(map);
-function addStreams() {
-    L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
-        layers: 4,
-        format: 'image/png',
-        minZoom: 0,
-        maxZoom: 18,
-        transparent: true
+    // load huc watershed boundaries
+    var markTwainStreams = L.geoJson(markTwainStreams, {
+        style: streamStyle,
     }).addTo(map);
-}
 
-map.on('click', onStreamMapClick);
-addStreams();
-// --------------- INFO WINDOW code -------------- //
-
-var info = L.control();
-
-info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'stream_info');
-    this.update();
-    return this._div;
-};
-
-info.update = function (props) {
-    this._div.innerHTML = '<h5>Stream Segment Info</h5>' +
-        '<table id="stream_info_table" style="margin-bottom: 0px !important; background: none !important;"> ' +
-        '<tr><td>Latitude:</td> <td id="latVal"></td></tr>' +
-        '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
-        '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
-        '<td>WBD HUC8:</td><td id="huc8"></td>';
-};
-
-info.addTo(map);
+    // load a tile layer
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ['a', 'b', 'c']
+    }).addTo(map);
 
 
+    // -------------- BASE MAP code -------------- //
 
+    var layer = L.esri.basemapLayer('NationalGeographic').addTo(map);
+    var layerLabels;
+
+    function setBasemap(basemap) {
+        if (layer) {
+            map.removeLayer(layer);
+        }
+
+        layer = L.esri.basemapLayer(basemap);
+
+        map.addLayer(layer);
+
+        if (layerLabels) {
+            map.removeLayer(layerLabels);
+        }
+
+        if (basemap === 'ShadedRelief'
+            || basemap === 'Imagery'
+            || basemap === 'Terrain'
+            || basemap === 'Topographic'
+        ) {
+            layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+            map.addLayer(layerLabels);
+        }
+    }
+
+    function changeBasemap(basemaps) {
+        var basemap = basemaps.value;
+        setBasemap(basemap);
+        addStreams();
+    }
+
+    // ------------ STREAM NETWORK code ------------- //
+
+    //L.control.layers(streamNetwork).addTo(map);
+    function addStreams() {
+        L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
+            layers: 4,
+            format: 'image/png',
+            minZoom: 0,
+            maxZoom: 18,
+            transparent: true
+        }).addTo(map);
+    }
+
+    map.on('click', onStreamMapClick);
+    addStreams();
+    // --------------- INFO WINDOW code -------------- //
+
+    var info = L.control();
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'stream_info');
+        this.update();
+        return this._div;
+    };
+
+    info.update = function (props) {
+        this._div.innerHTML = '<h5>Stream Segment Info</h5>' +
+            '<table id="stream_info_table" style="margin-bottom: 0px !important; background: none !important;"> ' +
+            '<tr><td>Latitude:</td> <td id="latVal"></td></tr>' +
+            '<tr><td>Longitude:</td><td id="lngVal"></td></tr>' +
+            '<tr><td>Com ID:</td><td id="comid"></td></tr>' +
+            '<td>WBD HUC8:</td><td id="huc8"></td>';
+    };
+
+    info.addTo(map);
 
 </script>
 </body>
