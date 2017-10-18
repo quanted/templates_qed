@@ -11,7 +11,7 @@ $(document).ready(function() {
     <ul><li><h4>Select (right click) a product in the tree below to view its properties.</h4></li>
     <!-- <li><h4>Metabolites can be viewed by generation using the "Display up to" selection below,
     or view a metabolite's progeny by left-clicking the metabolite of interest.</h4></li> -->
-    <li><h4>Left click a product in the tree below to view its progeny.</h4></li>
+    <li><h4>Left click a product in the tree below to view its transformation product and formation pathway.</h4></li>
     <li><h4>Pan reaction pathways tree by holding down the left click button anywhere in the blue area and moving the mouse.</h4></li>
     <li><h4>Zoom in and out with the mouse wheel.</h4></li></ul>
 </div>
@@ -41,9 +41,9 @@ $(document).ready(function() {
 
     <br>
 
-    <h3 class="collapsible out_1"><span></span>Get P-Chem Data</h3>
+    <h3 class="collapsible out_1"><span></span>Calculate Physical-Chemical Data</h3>
     <div id="pchemprop-wrapper">
-        Get p-chem properties for:
+        Calculate p-chem properties for:
         <select id="gen-select-pchem">
         <option value=0 />selected metabolite </option>
         <option value=1 />up to 1st generation </option>
@@ -52,10 +52,10 @@ $(document).ready(function() {
         <option value=4 />all metabolites </option>
         </select>
         <br><br>
-        <p>Select p-chem properties to gather for selected metabolite, then click "Get data" below..</p>
+        <p>Select p-chem properties to gather for selected metabolite, then click "Calculate data" below..</p>
         {% autoescape off %}{{pchemHtml}}{% endautoescape %}
         <br>
-        <input type="button" value="Get data" class="submit input_button btn-pchem" id="btn-pchem-getdata">
+        <input type="button" value="Calculate data" class="submit input_button btn-pchem" id="btn-pchem-getdata">
         <input type="button" value="Clear data" class="input_button btn-pchem" id="btn-pchem-cleardata">
         <br>
         <p class="gentransError">Must right-click a metabolite first</p>
