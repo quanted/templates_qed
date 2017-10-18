@@ -836,26 +836,33 @@ function updateProgressBar(calls_tracker, total_calls) {
 }
 
 
-function blockInterface(block) {
-    if (block) {
-        $.blockUI({
-            css: {
-                "top": "" + wintop + "",
-                "left": "" + winleft + "",
-                "padding": "30px 20px",
-                "width": "450px",
-                "height": "300px",
-                "border": "0 none",
-                "border-radius": "4px",
-                "-webkit-border-radius": "4px",
-                "-moz-border-radius": "4px",
-                "box-shadow": "3px 3px 15px #333",
-                "-webkit-box-shadow": "3px 3px 15px #333",
-                "-moz-box-shadow": "3px 3px 15px #333"
-            },
-            message: '<div id="pchem_wait"><h2 class="popup_header">Retrieving data...</h2><br><img src="/static_qed/cts/images/loader.gif" style="margin-top:-16px" id="load_wheel"><br><br><div id="progressbar"></div><br><input onclick="cancelRequest()" type="button" value="Cancel" id="btn-pchem-cancel"><br></div>',
-            fadeIn: 500
-        });
+function blockInterface(block, custom_message) {
+    var blockui_obj = {
+        css: {
+            "top": "" + wintop + "",
+            "left": "" + winleft + "",
+            "padding": "30px 20px",
+            "width": "450px",
+            "height": "300px",
+            "border": "0 none",
+            "border-radius": "4px",
+            "-webkit-border-radius": "4px",
+            "-moz-border-radius": "4px",
+            "box-shadow": "3px 3px 15px #333",
+            "-webkit-box-shadow": "3px 3px 15px #333",
+            "-moz-box-shadow": "3px 3px 15px #333"
+        },
+        message: '<div id="pchem_wait"><h2 class="popup_header">Retrieving data...</h2><br><img src="/static_qed/cts/images/loader.gif" style="margin-top:-16px" id="load_wheel"><br><br><div id="progressbar"></div><br><input onclick="cancelRequest()" type="button" value="Cancel" id="btn-pchem-cancel"><br></div>',
+        fadeIn: 500
+    }
+
+    var has_custom_message = custom_message != null && custom_message.length > 0;
+    if (block && !(has_custom_message)) {
+        $.blockUI(blockui_obj);
+    }
+    else if (block && has_custom_message) {
+        blockui_obj.message = custom_message;
+        $.blockUI(blockui_obj);
     }
     else { $.unblockUI(); }
 }
@@ -882,6 +889,8 @@ function cancelRequest() {
     socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
     $.unblockUI();
 }
+
+
 
 
 function jsonRepack(jsonobj) {
