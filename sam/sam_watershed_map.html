@@ -115,8 +115,8 @@
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
     <!-- datatables import -->
-{#    <link rel="stylesheet"#}
-{#          href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">#}
+    {#    <link rel="stylesheet"#}
+    {#          href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">#}
     <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
     <!-- leaflet import -->
@@ -136,7 +136,7 @@
         var comid = 5641438;
         console.log(comid);
         $(document).ready(function () {
-{#            $('#samWatershedTable').DataTable();#}
+            {#            $('#samWatershedTable').DataTable();#}
             $('#csvSave').on("click", saveTableAsCSV);
         });
 
@@ -184,9 +184,8 @@
         }
 
         function getDynamicFile() {
-            // TODO: Need to collect key from cookies and set to var key
-            var key = "somerandomstring";
-            var url = "/sam/bin/results/" + key;
+            var key = getCookie('csrftoken');
+            var url = "/sam/bin/results/" + key + "/results.json";
             console.log("Dynamic File Path: " + url.toString());
             $.ajax({
                 type: "GET",
@@ -288,7 +287,7 @@
 
         function saveTableAsCSV() {
             var data = "";
-{#            var td = $('#samWatershedTable').DataTable();#}
+            {#            var td = $('#samWatershedTable').DataTable();#}
             var config = {
                 sorting: false,
                 searching: false,
@@ -315,6 +314,21 @@
             else {
                 pom.click();
             }
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
 
     </script>

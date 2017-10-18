@@ -333,12 +333,15 @@ function connectToSocket() {
             blockInterface(false);
 
             var pchemprop_option = $('#gen-select-pchem').val();
+            var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
             if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
                 displayProductData();  // cts_gentrans_tree function
             }
 
-            if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
+            // For molecular info data for metabolites:
+            // if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
+            if (is_gentrans_single && data['prop'] == 'products') {
                 // initiate space tree with incoming socket data:
                 nodeHeight = 114
                 nodeWidth = 100
@@ -349,7 +352,8 @@ function connectToSocket() {
                 $('#total-products').html(total_products_html);
 
             }
-            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            var is_cheminfo = 'service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo';
+            if (is_cheminfo) {
                 var new_json = st.toJSON();
                 st.loadJSON(new_json);
                 st.compute();
@@ -357,6 +361,18 @@ function connectToSocket() {
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
             }
 
+            // Notify user that p-chem data is available for download for
+            // gentrans single mode p-chem requests for products:
+            var is_gentrans_pchem = data['prop'] != 'products' && !(is_cheminfo);
+            if (is_gentrans_pchem) {
+
+                var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">P-chem data successfully retrieved!<br><br>The data can be downloaded at the top-right of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+
+                blockInterface(true, blockui_message);
+
+                // var user_message = 'P-chem data successfully retrieved! \nThe data can be downloaded at the top-right of the page.';
+                // alert(user_message);
+            }
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
