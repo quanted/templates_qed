@@ -213,11 +213,11 @@
 
     // set token to the key for the guid token for the specific process.
     var guid = "";
-    var timeout = 3000; // Timeout length in milliseconds (1000 = 1 second)
+    var timeout = 5000; // Timeout length in milliseconds (1000 = 1 second)
     var attemptCount = 0;
 
     $(document).ready(function () {
-        guid = getCookie('csrftoken');
+        guid = getCookie('task_id');
         $('#processID').html(guid);
         setTimeout(checkProcessStatus, timeout);
     });
@@ -238,31 +238,40 @@
     }
 
     function checkProcessStatus() {
-        var statusUrl = "/sam/output/status/" + guid;     // Configure status url endpoint using guid.
+        // TODO: set base url.
+        var statusUrl = "http://localhost:7777/rest/ubertool/sam/status/" + guid;     // Configure status url endpoint using guid.
         attemptCount += 1;
-
-        if(attemptCount >= 3){      // TESTING
-            $('#processStatus').html("<div id='processCompleted'><a href='/ubertool/sam/watershed'>Completed</a></div>");
-            return false;
-        }
+        var pendingCount = 0;
+{#        if(attemptCount >= 3){      // TESTING#}
+{#            $('#processStatus').html("<div id='processCompleted'><a href='/ubertool/sam/watershed'>Completed</a></div>");#}
+{#            return false;#}
+{#        }#}
         console.log("Process check #: " + attemptCount);
         $.ajax({
             url: statusUrl,
             type: "GET",
             success: function (data, status, jqXHR) {
-                var dKeys = Object.keys(data);
-                if ('status' in dKeys) {
+                if ('task_status' in data) {
 
-                    if (data['status'] === "processing") {
-                        setTimeout(checkProcessStatus, timeout);
+                    if (data['task_status'] === "PENDING") {
+                        pendingCount += 1;
+                        if(pendingCount >= 10){
+                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding task.</div>");
+                        }else {
+                            setTimeout(checkProcessStatus, timeout);
+                        }
                     }
-                    else if (data['status'] === "completed") {
+                    else if (data['task_status'] === "STARTED"){
+                        setTimeout(checkProcessStatus, timeout)
+                    }
+                    else if (data['task_status'] === "SUCCESS") {
                         // Set processStatus to 'Completed' with a clickable link to sam/watershed page
-                        $('#processStatus').html("<div id='completedProcess'>Completed</div>");
+                        var watershed_url = "/ubertool/sam/watershed/" + guid;
+                        $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Completed</a></div>");
                     }
-                    else if (data['status'] === "invalid") {
+                    else if (data['task_status'] === "FAILURE") {
                         // No process found for the provided guid
-                        $('#processStatus').html("<div id='invalidProcess'>No valid process found for this ID.</div>");
+                        $('#processStatus').html("<div id='invalidProcess'>Task failed to complete.</div>");
                     }
                     else {
                         setTimeout(checkProcessStatus, timeout);
