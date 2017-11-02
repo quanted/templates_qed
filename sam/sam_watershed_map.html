@@ -184,14 +184,15 @@
         }
 
         function getDynamicFile() {
-            var key = getCookie('csrftoken');
-            var url = "/sam/bin/results/" + key + "/results.json";
+            var key = getCookie('task_id');
+            // TODO: change to correct base url
+            var url = "http://localhost:7777/rest/ubertool/sam/data/" + key;
             console.log("Dynamic File Path: " + url.toString());
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function (data, status, jqXHR) {
-                    populateFilteredTable(data);
+                    populateFilteredTable(data['COMID']);
                     return false;
                 },
                 error: function (jqXHR, status) {
