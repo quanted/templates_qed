@@ -43,7 +43,7 @@ $(document).ready(function() {
 
     <h3 class="collapsible out_1"><span></span>Calculate Physicochemical Data</h3>
     <div id="pchemprop-wrapper">
-        Calculate p-chem properties for:
+        Calculate physicochemical properties for:
         <select id="gen-select-pchem">
         <option value=0 />selected metabolite </option>
         <option value=1 />up to 1st generation </option>
@@ -52,7 +52,7 @@ $(document).ready(function() {
         <option value=4 />all metabolites </option>
         </select>
         <br><br>
-        <p>Select p-chem properties to gather for selected metabolite, then click "Calculate data" below..</p>
+        <p>Select physicochemical properties to gather for selected metabolite, then click "Calculate data" below..</p>
         {% autoescape off %}{{pchemHtml}}{% endautoescape %}
         <br>
         <input type="button" value="Calculate data" class="submit input_button btn-pchem" id="btn-pchem-getdata">
