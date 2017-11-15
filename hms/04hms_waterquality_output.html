@@ -7,7 +7,12 @@
                 {#                <h4 class="sectionTitle">{{ SUBMODEL }} Data Inputs</h4>#}
                 <pre id="inputData_P">{{ INPUT_DATA }}</pre>
             </div>
-            <h4 class="sectionTitle">{{ TITLE }} DT Day Data</h4>
+            {% if SUBMODEL == "Photolysis" %}
+                <h4 class="sectionTitle">{{ SUBMODEL }} Data Graphs</h4>
+                <div id="graphDiv">
+            {% endif %}
+            </div>
+            <h4 class="sectionTitle">{{ SUBMODEL }} DT Day Data</h4>
             <div id="tablesDiv">
                 {#                <h4 class="sectionTitle">{{ TITLE }} DT Day Data</h4>#}
                 <div id="dayTableDivInner">
@@ -36,7 +41,7 @@
                     </table>
                 </div>
             </div>
-            <h4>{{ TITLE }} DT KL Data </h4>
+            <h4 class="sectionTitle">{{ SUBMODEL }} DT KL Data </h4>
             <div id="klTableDiv">
                 {#                <h4>{{ TITLE }} DT KL Data </h4>#}
                 <div>
@@ -72,5 +77,3 @@
 {#                    </button>#}
                 </div>
             </div>
-
-
