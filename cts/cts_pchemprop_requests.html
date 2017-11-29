@@ -723,10 +723,10 @@ function organizeData(calc, prop, data) {
     for (item in data) {
         if (data.hasOwnProperty(item) && data[item] != null) {
             var itemVals = data[item];
-            if (itemVals.length == 0) {
-                parsedData += '<div class="pka-wrapper">' + item + ': none</div>';
-            }
-            else {
+            // if (itemVals.length == 0) {
+            //     parsedData += '<div class="pka-wrapper">' + item + ': none</div>';
+            // }
+            // else {
                 for (var i = 0; i < itemVals.length; i++) {
                     var label = item + String(i + 1).sub() +  ': ';
                     try {
@@ -739,7 +739,7 @@ function organizeData(calc, prop, data) {
                     }
                     
                 }
-            }
+            // }
         }
     }
     return parsedData;
