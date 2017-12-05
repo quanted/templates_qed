@@ -238,8 +238,7 @@
     }
 
     function checkProcessStatus() {
-        // TODO: set base url.
-        var statusUrl = "http://localhost:7777/rest/ubertool/sam/status/" + guid;     // Configure status url endpoint using guid.
+        var statusUrl = "/rest/ubertool/sam/status/" + guid;     // Configure status url endpoint using guid.
         attemptCount += 1;
         var pendingCount = 0;
 {#        if(attemptCount >= 3){      // TESTING#}
