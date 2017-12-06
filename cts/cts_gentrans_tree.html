@@ -204,10 +204,11 @@ function addGenKey(jsonObj, json) {
     jsonObj.eachLevel(json, 0, genMax, function(node, depth) {
         depthList[depth] += 1;
         numNodesPerDepth[depth] += 1;  // tracking total nodes/depth
-        var key = "";
-        if (depth == 0) { key = "1"; }
+        // var key = "";
+        var key = "molecule ";
+        if (depth == 0) { key += "1"; }
         else {
-            key = "1.";
+            key += "1.";
             for (var i = 1; i <= depth; i++) {
                 key += depthList[i] + ".";
             }
