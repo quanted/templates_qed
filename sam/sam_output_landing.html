@@ -218,8 +218,14 @@
 
     $(document).ready(function () {
         guid = getCookie('task_id');
-        $('#processID').html(guid);
-        setTimeout(checkProcessStatus, timeout);
+        if(guid === "1234567890"){
+            $('#processID').html("");
+            $('#processStatus').html("<div id='completedProcess'>The task failed to start.</div>");
+        }
+        else {
+            $('#processID').html(guid);
+            setTimeout(checkProcessStatus, timeout);
+        }
     });
 
     function getCookie(name) {
@@ -255,7 +261,7 @@
                     if (data['task_status'] === "PENDING") {
                         pendingCount += 1;
                         if(pendingCount >= 10){
-                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding task.</div>");
+                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding the task.</div>");
                         }else {
                             setTimeout(checkProcessStatus, timeout);
                         }
@@ -273,7 +279,12 @@
                         $('#processStatus').html("<div id='invalidProcess'>Task failed to complete.</div>");
                     }
                     else {
-                        setTimeout(checkProcessStatus, timeout);
+                        pendingCount += 1;
+                        if(pendingCount >= 10){
+                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding the task.</div>");
+                        }else {
+                            setTimeout(checkProcessStatus, timeout);
+                        }
                     }
                 }
                 else{
