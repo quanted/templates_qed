@@ -763,6 +763,9 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                     }
                     else { num_props += 1; }
                 }
+                else if (calc == "epi" && prop == "water_sol") {
+                    num_props += 2;  // epi's water_sol has 2 methods now..
+                }
                 else { num_props += 1; }
             }
         }
