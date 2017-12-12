@@ -725,7 +725,13 @@ function organizeData(calc, prop, data) {
         if (data.hasOwnProperty(item) && data[item] != null) {
             var itemVals = data[item];
             for (var i = 0; i < itemVals.length; i++) {
-                var label = item + String(i + 1).sub() +  ': ';
+                var label = '';
+                if (itemVals == 'none') {
+                    label = "none";
+                }
+                else {
+                    label = item + String(i + 1).sub() +  ': ';
+                }
                 try {
                     parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
                 }
