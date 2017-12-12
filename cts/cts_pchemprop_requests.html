@@ -720,28 +720,25 @@ function organizeData(calc, prop, data) {
     }
 
     // For multiple pKa values in a cell..
+
+    if (data == null ) {
+        return "none";  // return "none" to pchem table cell
+    }
+
     var parsedData = "";
     for (item in data) {
-        if (data.hasOwnProperty(item) && data[item] != null) {
-            var itemVals = data[item];
-            for (var i = 0; i < itemVals.length; i++) {
-                var label = '';
-                if (itemVals == 'none') {
-                    label = "none";
-                }
-                else {
-                    label = item + String(i + 1).sub() +  ': ';
-                }
-                try {
-                    parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
-                }
-                catch (e) {
-                    if (e instanceof TypeError) {
-                        parsedData += '<div class="pka-wrapper">' + label + itemVals[i] + '</div>';  // probably a message instead of Number   
-                    } 
-                }
-                
+        var itemVals = data[item];
+        for (var i = 0; i < itemVals.length; i++) {
+            var label = item + String(i + 1).sub() +  ': ';
+            try {
+                parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
             }
+            catch (e) {
+                if (e instanceof TypeError) {
+                    parsedData += '<div class="pka-wrapper">' + label + itemVals[i] + '</div>';  // probably a message instead of Number   
+                } 
+            }
+            
         }
     }
     return parsedData;
