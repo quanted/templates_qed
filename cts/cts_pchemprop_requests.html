@@ -168,7 +168,7 @@ function connectToSocket() {
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
 
             // if (workflow == 'gentrans') {
-            if (data['workflow'] == 'gentrans') {
+            if (data['workflow'] == 'gentrans' || data['request_post']['workflow'] == 'gentrans') {
                 // workflow global var was getting set to false during
                 // gentrans batch, oddly enough...
 
@@ -192,8 +192,24 @@ function connectToSocket() {
 
                     batch_data.push(product_data);
 
-                    // TODO: Refactor this section
-                    // If p-chem data requested, make requests for products
+
+                }
+                else if (data.request_post.service == 'getChemInfo') {
+                    // add chem info data to correct product
+                    for (var parent_index in batch_data) {
+                        var parents_data_array = batch_data[parent_index];  // array of objects
+                        for (var product_index in parents_data_array) {
+                            var product_data_object = parents_data_array[product_index];
+                            if (data.request_post.chemical == product_data_object.smiles) {
+                                // add chem info to this product object:
+                                // batch_data[parent_index][product_index]
+                                $.extend(batch_data[parent_index][product_index], data.data);
+                            }
+                        }
+                    }
+
+
+                    // Make pchem request after cheminfo single chemical is collected...
                     if (Object.keys(checkedCalcsAndProps).length > 0) {
 
                         // getting pchem data for a batch chem's trans products..
@@ -202,19 +218,21 @@ function connectToSocket() {
 
                         // need to increase total_calls with batch chem's
                         // products and p-chem requests:
-                        total_calls = calls_tracker + calculateTotalCalls([product_data.length], checkedCalcsAndProps);
-                        // calls_tracker = total_calls - 1;
+                        // total_calls = calls_tracker + calculateTotalCalls([product_data.length], checkedCalcsAndProps);
+                        total_calls = calls_tracker + calculateTotalCalls([1], checkedCalcsAndProps);
                         calls_tracker = total_calls
                         sessionStorage.setItem('calls_tracker', calls_tracker);
                         sessionStorage.setItem('total_calls', total_calls);
 
                         var pchem_data = {
-                            'chemical': structure,
+                            'chemical': data.data['chemical'],
                             'ph': kowPH,
-                            'nodes': product_data,
+                            // 'nodes': product_data,
                             'pchem_request': checkedCalcsAndProps,
                             'run_type': run_type,
-                            'workflow': 'gentrans'
+                            'workflow': 'gentrans',
+                            'genKey': data.request_post['genKey'],
+                            'mass': data.data['mass']
                         };
 
                         var cache = [];
@@ -235,6 +253,8 @@ function connectToSocket() {
 
                     }
 
+
+
                 }
                 else {
 
@@ -242,8 +262,11 @@ function connectToSocket() {
                     // todo: prop keys for checking, refactor to js obj
 
                     // get genKey of incoming data object:
-                    var data_obj_genkey = data['node']['genKey'];
-                    var data_obj_smiles = data['node']['smiles'];  // this or data['chemical']?
+                    // var data_obj_genkey = data['node']['genKey'];
+                    // var data_obj_smiles = data['node']['smiles'];  // this or data['chemical']?
+
+                    var data_obj_genkey = data['genKey'];
+                    var data_obj_smiles = data['chemical'];
 
                     // add p-chem data to the right metabolite in batch_data array
                     for (var index in batch_data) {
