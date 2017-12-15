@@ -64,6 +64,7 @@ $(document).ready(function() {
         blockInterface(true);
 
         $('#pdfExport, #htmlExport').hide();
+        $('#export_menu').hide();
 
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
 
@@ -386,10 +387,10 @@ function connectToSocket() {
 
             // Notify user that p-chem data is available for download for
             // gentrans single mode p-chem requests for products:
-            var is_gentrans_pchem = data['prop'] != 'products' && !(is_cheminfo);
+            var is_gentrans_pchem = data['prop'] != 'products' && !(is_cheminfo) && workflow == 'gentrans' && run_type == 'single';
             if (is_gentrans_pchem) {
 
-                var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Physicochemical data successfully retrieved!<br><br>The data can be downloaded at the top of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+                var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Physicochemical data successfully retrieved!<br><br>The data can be downloaded at the top-right of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
 
                 blockInterface(true, blockui_message);
 
@@ -397,7 +398,7 @@ function connectToSocket() {
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
-                $('#export_menu').css('position', 'relative');
+                $('#export_menu').css('position', 'relative').show();
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
             }
 
