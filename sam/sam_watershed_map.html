@@ -348,7 +348,7 @@
 
         var key = getCookie('task_id');
         // TODO: change to correct base url
-        var url = baseUrl.toString() + "/rest/ubertool/sam/data/" + key.toString();
+        var url = "/ubertool/rest/ubertool/sam/data/" + key.toString();
         var samOutput = null;
         $.ajax({
             type: "GET",
