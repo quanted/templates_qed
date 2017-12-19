@@ -348,7 +348,7 @@
 
         var key = getCookie('task_id');
         // TODO: change to correct base url
-        var url = baseUrl.toString() + "/rest/ubertool/sam/data/" + key.toString();
+        var url = "/rest/ubertool/sam/data/" + key.toString();
         var samOutput = null;
         console.log("Read output JSON from file: " + url.toString());
         $.ajax({
@@ -362,6 +362,7 @@
                 return false;
             },
             error: function (jqXHR, status) {
+                console.log("Failed to retrieve output json data.");
                 $('#boxid').html("Error attempting to get river data.");
                 return false;
             }
