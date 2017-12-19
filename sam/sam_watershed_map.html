@@ -346,7 +346,7 @@
     function readOutputJSON() {
         var key = getCookie('task_id');
         // TODO: change to correct base url
-        var url = "http://localhost:7777/rest/ubertool/sam/data/" + key;
+        var url = "/rest/ubertool/sam/data/" + key.toString();
         var samOutput = null;
         console.log("Read output JSON from file: " + url.toString());
         $.ajax({
