@@ -186,7 +186,7 @@
         function getDynamicFile() {
             var key = getCookie('task_id');
             // TODO: change to correct base url
-            var url = "/rest/ubertool/sam/data/" + key;
+            var url = "/rest/ubertool/sam/data/" + key.toString();
             console.log("Dynamic File Path: " + url.toString());
             $.ajax({
                 type: "GET",
