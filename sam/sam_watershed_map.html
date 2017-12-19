@@ -352,7 +352,7 @@
         $.ajax({
             type: "GET",
             url: url,
-            async: false,
+            {#async: false,#}
             success: function (data) {
                 samOutput = data;
                 return false;
