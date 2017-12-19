@@ -344,9 +344,12 @@
 
     // function to read SAM output
     function readOutputJSON() {
+        var getUrl = window.location;
+        var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+        
         var key = getCookie('task_id');
         // TODO: change to correct base url
-        var url = "/rest/ubertool/sam/data/" + key.toString();
+        var url = baseUrl.toString() + "/rest/ubertool/sam/data/" + key.toString();
         var samOutput = null;
         console.log("Read output JSON from file: " + url.toString());
         $.ajax({
@@ -362,9 +365,7 @@
                 return false;
             }
         });
-
         return samOutput
-
     }
 
     // Determine if output is points or lines
@@ -426,10 +427,10 @@
     var outputData = readOutputJSON();
 
     // get feature output mode
-    var mode = getMode(outputData)
+    var mode = getMode(outputData);
 
     // specify field (placeholder)
-    var field = "chronic_em_inv"
+    var field = "chronic_em_inv";
 
     // add out data
     var info_box_title = null;
