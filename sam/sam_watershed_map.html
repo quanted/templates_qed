@@ -343,9 +343,6 @@
 
     // function to read SAM output
     function readOutputJSON() {
-        var getUrl = window.location;
-        var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
         var key = getCookie('task_id');
         // TODO: change to correct base url
         var url = "/ubertool/rest/ubertool/sam/data/" + key.toString();
@@ -353,7 +350,7 @@
         $.ajax({
             type: "GET",
             url: url,
-            {#async: false,#}
+            async: false,
             success: function (data) {
                 console.log("Read output JSON from file: " + url.toString());
                 console.log("Output JSON data contents...");
