@@ -224,14 +224,14 @@
         }
         else {
             $('#processID').html(guid);
-            {#setTimeout(checkProcessStatus, timeout);#}
+            setTimeout(checkProcessStatus, timeout);
 
             // Directly show results link, used when celery not being given task
-            var watershed_url = "/ubertool/sam/watershed/" + guid;
-            var json_url = "/ubertool/rest/ubertool/sam/data/" + guid;
-            $('#processStatus').html(
-                "<div id='completedProcess'><a href=" + watershed_url + ">Watershe Results Page</a><br><a href=" + json_url + ">JSON Results</a></div>"
-            );
+            {#var watershed_url = "/ubertool/sam/watershed/" + guid;#}
+            {#var json_url = "/ubertool/rest/ubertool/sam/data/" + guid;#}
+            {#$('#processStatus').html(#}
+            {#    "<div id='completedProcess'><a href=" + watershed_url + ">Watershe Results Page</a><br><a href=" + json_url + ">JSON Results</a></div>"#}
+            {#);#}
         }
     });
 
@@ -280,6 +280,8 @@
                         // Set processStatus to 'Completed' with a clickable link to sam/watershed page
                         var watershed_url = "/ubertool/sam/watershed/" + guid;
                         $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Completed</a></div>");
+                        var json_url = "/ubertool/rest/ubertool/sam/data/" + guid;
+                        $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Watershe Results Page</a><br><a href=" + json_url + ">JSON Results</a></div>");
                     }
                     else if (data['task_status'] === "FAILURE") {
                         // No process found for the provided guid
