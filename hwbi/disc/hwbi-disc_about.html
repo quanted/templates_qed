@@ -1,8 +1,8 @@
 <div id="community_search">
-    <form id="community_search_form" action="/hwbi/disc/community-snapshot" method="post">
+    <form id="community_search_form" action="/hwbi/disc/community-snapshot" method="POST">
         <label for="community_search_form" id="community_search_label">What is the <b>well-being</b> in your <b>community?</b></label>
-        <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code">
-        <input type="text" id="location_value" hidden>
+        <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code" name="location_input">
+        <input type="text" id="location_value" name="location_value" hidden>
         <button id="community_search_button" class="search_button epa-search-button" type="submit">Search</button>
     </form>
 </div>
