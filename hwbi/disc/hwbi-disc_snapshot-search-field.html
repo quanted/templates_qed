@@ -3,7 +3,7 @@
         <label for="community_search_form" id="community_search_label">What is the well-being in your community?</label>
         <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code" name="location_input">
         <input type="text" id="location_value" name="location_value" hidden value="{{ LOCATION }}">
-        <button id="community_search_button" class="search_button epa-search-button" type="button" onclick="getScoreData(); return false;">Search</button>
+        <button id="community_search_button" class="search_button epa-search-button" type="submit" onclick="getScoreData(); return false;">Search</button>
     </form>
     <button id="community_pdf" type="button">PDF Report</button>
 </div>
