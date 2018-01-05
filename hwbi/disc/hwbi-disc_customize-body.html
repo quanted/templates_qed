@@ -1,0 +1,34 @@
+<div id="community_search">
+    <form id="community_search_form" action="" method="POST">
+        <label for="community_search_form" id="community_search_label">What is the well-being in your community?</label>
+        <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code" name="location_input">
+        <input type="text" id="location_value" name="location_value" value="{{ LOCATION }}" hidden>
+        <button id="community_search_button" class="search_button epa-search-button" type="submit" onclick="setTimeout(getScoreData, 300); return false;">Search</button>
+    </form>
+    <button id="community_pdf" type="button">PDF Report</button>
+</div>
+<div id="customize_body">
+    <div id="customize_top">
+        <div id="customize_title">
+            <h4>Customizing the Human Well-Being Index for <span id="customize_location">your community</span></h4>
+        </div>
+        <div id="customize_intro">
+            Briefly and simply describe<br>
+            Click on circle reveals details about the indicators of the domain
+        </div>
+    </div>
+    <div id="customize_bottom">
+        <div id="customize_domains">
+            <span id="Connection" class="domain-icon">Nature</span>
+            <span id="Culture" class="domain-icon">Cultural Fulfillment</span>
+            <span id="Education" class="domain-icon">Education</span>
+            <span id="Health" class="domain-icon">Health</span>
+            <span id="Leisure" class="domain-icon">Leisure Time</span>
+            <span id="Living" class="domain-icon">Living Standards</span>
+            <span id="Safety" class="domain-icon">Safety and Security</span>
+            <span id="Social" class="domain-icon">Social Cohesion</span>
+        </div>
+        <div id="customize_domain_details"></div>
+        <div id="customize_domain_indicators"></div>
+    </div>
+</div>
