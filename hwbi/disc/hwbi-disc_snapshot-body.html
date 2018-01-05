@@ -66,6 +66,23 @@
                     </p>
                 </div>
             </div>
+            {#            Health Block           #}
+            <div id="health-block">
+                <button class="accordion domain-expand"></button>
+                <div id="health_title" class="domain-title">Health:</div>
+                <div id="health_score" class="domain-score">0.0</div>
+                <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                    <div class="score-bar health-bar" id="health-score-bar"></div>
+                </div>
+                <div id="health_details" class="domain-description">
+                    <p>
+                        Describes health.
+                        <br><br>
+                        Research suggests that...
+                    </p>
+                </div>
+            </div>
             {#            Leisure Time Block           #}
             <div id="leisure-block">
                 <button class="accordion domain-expand"></button>
@@ -164,6 +181,12 @@
                 <div class="slider-title">Education</div>
                 <div class="slider-container">
                     <div id="education-slider-bar" class="rank-slider education-slider"></div>
+                </div>
+            </div>
+            <div class="slider-block">
+                <div class="slider-title">Health</div>
+                <div class="slider-container">
+                    <div id="health-slider-bar" class="rank-slider health-slider"></div>
                 </div>
             </div>
             <div class="slider-block">
