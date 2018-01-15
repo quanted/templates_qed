@@ -1,9 +1,12 @@
 <div id="community_search">
     <form id="community_search_form" action="" method="POST">
         <label for="community_search_form" id="community_search_label">What is the well-being in your community?</label>
-        <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code" name="location_input">
+        <input type="text" id="community_search_field" placeholder="Enter your address, city, state, or zip code"
+               name="location_input">
         <input type="text" id="location_value" name="location_value" value="{{ LOCATION }}" hidden>
-        <button id="community_search_button" class="search_button epa-search-button" type="submit" onclick="setTimeout(getScoreData, 300); return false;">Search</button>
+        <button id="community_search_button" class="search_button epa-search-button" type="submit"
+                onclick="setTimeout(getScoreData, 300); return false;">Search
+        </button>
     </form>
     <button id="community_pdf" type="button">PDF Report</button>
 </div>
@@ -28,7 +31,105 @@
             <span id="Safety" class="domain-icon">Safety and Security</span>
             <span id="Social" class="domain-icon">Social Cohesion</span>
         </div>
+        <div id="customize_domain_score">
+            <div id="customize_domain_arrow">
+                <span id="arrow_initial"></span>
+                <span id="arrow_adjusted"></span>
+                <span id="score_initial">0.0</span>
+                <span id="score_adjusted">0.0</span>
+            </div>
+            <div id="customize_domain_bar"></div>
+        </div>
         <div id="customize_domain_details"></div>
-        <div id="customize_domain_indicators"></div>
+        <div id="customize_domain_indicators">
+            <div id="capital_indicator_block" class="indicator Living Social">
+                <p>Capital Investment</p>
+                <span id="capital_indicator" title="Capital Investment"></span>
+            </div>
+            <div id="consumption_indicator_block" class="indicator Connection Education Leisure Social">
+                <p>Consumption</p>
+                <span id="consumption_indicator" title="Consumption"></span>
+            </div>
+            <div id="employment_indicator_block" class="indicator Leisure Living Social">
+                <p>Employment</p>
+                <span id="employment_indicator" title="Employment"></span>
+            </div>
+            <div id="finance_indicator_block" class="indicator Leisure Living Safety">
+                <p>Finance</p>
+                <span id="finance_indicator" title="Finance"></span>
+            </div>
+            <div id="innovation_indicator_block" class="indicator Culture Health Leisure">
+                <p>Innovation</p>
+                <span id="innovation_indicator" title="Innovation"></span>
+            </div>
+            <div id="production_indicator_block" class="indicator Culture Education Safety Social">
+                <p>Production</p>
+                <span id="production_indicator" title="Production"></span>
+            </div>
+            <div id="redistribution_indicator_block" class="indicator Connection Education Social">
+                <p>Redistribution</p>
+                <span id="redistribution_indicator" title="Redistribution"></span>
+            </div>
+            <div id="airquality_indicator_block" class="indicator Culture Social">
+                <p>Air Quality</p>
+                <span id="airquality_indicator" title="Air Quality"></span>
+            </div>
+            <div id="foodfiberandfuel_indicator_block" class="indicator Leisure Living Safety">
+                <p>Food, Fiber And Fuel Provisioning</p>
+                <span id="foodfiberandfuel_indicator" title="Food, Fiber And Fuel Provisioning"></span>
+            </div>
+            <div id="greenspace_indicator_block" class="indicator Connection Education Leisure Safety Social">
+                <p>Greenspace</p>
+                <span id="greenspace_indicator" title="Greenspace"></span>
+            </div>
+            <div id="waterquantity_indicator_block" class="indicator Culture Health Leisure Living Safety">
+                <p>Water Quantity</p>
+                <span id="waterquantity_indicator" title="Water Quantity"></span>
+            </div>
+            <div id="waterquality_indicator_block" class="indicator Connection Leisure Living Safety Social">
+                <p>Water Quality</p>
+                <span id="waterquality_indicator" title="Water Quality"></span>
+            </div>
+            <div id="activism_indicator_block" class="indicator Connection Education Health Leisure Living Safety">
+                <p>Activism</p>
+                <span id="activism_indicator" title="Activism"></span>
+            </div>
+            <div id="communication_indicator_block" class="indicator Culture Health Leisure Living">
+                <p>Communication</p>
+                <span id="communication_indicator" title="Communication"></span>
+            </div>
+            <div id="communityandfaith_indicator_block" class="indicator Connection Culture Education Health Leisure Safety Social">
+                <p>Community and Faith</p>
+                <span id="community_indicator" title="Community and Faith"></span>
+            </div>
+            <div id="education_indicator_block" class="indicator Connection Culture Health Leisure">
+                <p>Education</p>
+                <span id="education_indicator" title="Education"></span>
+            </div>
+            <div id="emergencypreparedness_indicator_block" class="indicator Connection Culture Health Safety">
+                <p>Emergency Preparedness</p>
+                <span id="emergencypreparedness_indicator" title="Emergency Preparedness"></span>
+            </div>
+            <div id="familyservices_indicator_block" class="indicator Education Health Social">
+                <p>Family Services</p>
+                <span id="familyservices_indicator" title="Family Services"></span>
+            </div>
+            <div id="healthcare_indicator_block" class="indicator Connection Safety">
+                <p>Healthcare</p>
+                <span id="healthcare_indicator" title="Healthcare"></span>
+            </div>
+            <div id="justice_indicator_block" class="indicator Education Health Living Safety Social">
+                <p>Justice</p>
+                <span id="justice_indicator" title="Justice"></span>
+            </div>
+            <div id="labor_indicator_block" class="indicator Connection Health Living Safety Social">
+                <p>Labor</p>
+                <span id="labor_indicator" title="Labor"></span>
+            </div>
+            <div id="publicworks_indicator_block" class="indicator Education Leisure Living Safety SOcial">
+                <p>Public Works</p>
+                <span id="publicworks_indicator" title="Public Works"></span>
+            </div>
+        </div>
     </div>
 </div>

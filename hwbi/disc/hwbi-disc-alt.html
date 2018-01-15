@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7]><html class="iem7 no-js" lang="en" dir="ltr"><![endif]-->
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7 no-js" lang="en" dir="ltr"><![endif]-->
+<!--[if (IE 7)&(!IEMobile)]><html class="lt-ie9 lt-ie8 no-js" lang="en" dir="ltr"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9 no-js" lang="en" dir="ltr"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)]><!--> <html class="no-js not-oldie" lang="en" dir="ltr"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="true" />
+  <link rel="shortcut icon" href="https://www.epa.gov/sites/all/themes/epa/favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="MobileOptimized" content="width" />
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="ImageToolbar" content="false" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="version" content="20161218" />
+<!--googleon: all-->
+  <meta name="DC.description" content="" />
+  <meta name="DC.title" content="" />
+  <title>{{PAGE_NAME}} | {{WEB_AREA_NAME}} | US EPA</title>
+<!--googleoff: snippet-->
+  <meta name="keywords" content="" />
+  <link rel="shortlink" href="" />
+  <link rel="canonical" href="" />
+  <meta name="DC.creator" content="" />
+  <meta name="DC.language" content="en" />
+  <meta name="DC.Subject.epachannel" content="" />
+  <meta name="DC.type" content="" />
+  <meta name="DC.date.created" content="" />
+  <meta name="DC.date.modified" content="" />
+<!--googleoff: all-->
+  <link type="text/css" rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/template2/s.css" media="all" />
+  <!--[if lt IE 9]><link type="text/css" rel="stylesheet" href="https://www.epa.gov/sites/all/themes/epa/css/ie.css" media="all" /><![endif]-->
+  <link rel="alternate" type="application/atom+xml" title="EPA.gov All Press Releases" href="https://www.epa.gov/newsreleases/search/rss" />
+  <link rel="alternate" type="application/atom+xml" title="EPA.gov Headquarters Press Releases" href="https://www.epa.gov/newsreleases/search/rss/field_press_office/headquarters" />
+  <link rel="alternate" type="application/atom+xml" title="Greenversations, EPA's Blog" href="https://blog.epa.gov/blog/feed/" />
+  <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/html5.js"></script><![endif]-->
+  <style>
+    .hwbi-search-button {
+      background-image: url(https://www.epa.gov/sites/all/themes/epa/img/svg/search.svg);
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: 12px 12px;
+      border-radius: 0 3px 3px 0;
+      box-sizing: border-box;;
+      font-size: 0; 
+      line-height: 0;
+      right: 0;
+      text-decoration: none;
+      text-indent: -999em;
+      text-shadow: none;
+      top: 17px;
+      
+      width: 4%; 
+      margin-left: -4px; 
+      height: 27px
+    }
+
+    .hwbi-search-input {
+      width: 80%;
+      vertical-align: bottom;
+      height: 27px
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .bar {
+      fill: orange;
+    }
+
+    .solidArc:hover {
+      fill: orangered ;
+    }
+
+    .solidArc {
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .aster-score { 
+      line-height: 1;
+      font-weight: bold;
+      font-size: 100%;
+    }
+
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+
+    /* Style northward tooltips differently */
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+    }
+
+    .circle {
+      border-radius: 50%;
+      width: 17px;
+      height: 17px;
+      background-color: green;
+      color: white;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .location-search {
+      background-color: #5b616b;
+      color: #fff;
+    }
+    .quote-holder {
+      background-color: #205493;
+    }
+    .pullquote {
+      float: none; 
+      color: #fff; 
+      padding: 0.75em 0; 
+      border: none
+    }
+    .pullquote > .author {
+      color: #fff;
+    }
+    .about-search {
+      background-color: #8ba6ca;
+      padding: 3em 0;
+    }
+  </style>
+</head>
+<!-- NOTE, figure out body classes! -->
+<body class="node-type-(web-area|page|document|webform) (microsite|resource-directory)" >
+  <!-- Google Tag Manager -->
+  <!--
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-L8ZB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-L8ZB');</script>
+  -->
+  <!-- End Google Tag Manager -->
+  <div class="skip-links"><a href="#main-content" class="skip-link element-invisible element-focusable">Jump to main content</a></div>
+  <header class="masthead clearfix" role="banner">
+    <img class="site-logo" src="https://www.epa.gov/sites/all/themes/epa/logo.png" alt="" />
+    <hgroup class="site-name-and-slogan">
+      <h1 class="site-name"><a href="https://www.epa.gov/" title="Go to the home page" rel="home"><span>US EPA</span></a></h1>
+      <div class="site-slogan">United States Environmental Protection Agency</div>
+    </hgroup>
+    <form class="epa-search" method="get" action="https://search.epa.gov/epasearch/epasearch">
+      <label class="element-hidden" for="search-box">Search</label>
+      <input class="form-text" placeholder="Search EPA.gov" name="querytext" id="search-box" value=""/>
+      <button class="epa-search-button" id="search-button" type="submit" title="Search">Search</button>
+      <input type="hidden" name="ar7eaname" value="" />
+      <input type="hidden" name="areacontacts" value="" />
+      <input type="hidden" name="areasearchurl" value="" />
+      <input type="hidden" name="typeofsearch" value="epa" />
+      <input type="hidden" name="result_template" value="2col.ftl" />
+    </form>
+  </header>
+  <section id="main-content" class="main-content clearfix" role="main">
+    <div class="region-preface clearfix">
+      <div id="block-pane-epa-web-area-connect" class="block block-pane contextual-links-region">
+        <ul class="menu utility-menu">
+          <li class="menu-item"><a href="{CONTACT URL}" class="menu-link contact-us">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-column clearfix">
+<!--googleon: all-->
+      <h2 class="page-title">Well-Being and Your Community</h2>
+      <div class="panel-pane pane-node-content" >
+        <div class="pane-content">
+          <div class="node node-page clearfix view-mode-full">           
+
+            <div id="tabs">
+              <ul class="tabs" id="tabsnav">
+                <li style=""><a href="#tab-1" class="menu-internal">About</a></li>
+                <li style=""><a href="#tab-2" class="menu-internal">Community Snapshot</a></li>
+                <li style=""><a href="#tab-3" class="menu-internal">Customize</a></li>
+                <li style=""><a href="#tab-4" class="menu-internal">Compare</a></li>
+                <li style=""><a href="#tab-5" class="menu-internal">Additional Resources</a></li>
+              </ul>
+              
+              <div id="tab-1">
+
+                <div class="row cols-1">
+                  <div class="col"><p>Statement about community well-being. Soft intro for the HWBI.</p></div>
+                </div>
+                <div class="row cols-1 about-search">
+                  <div class="col">
+                    <label for="input1">What is <strong>well-being</strong> in your <strong>community</strong>?</label>
+                    <input id="input1" class="hwbi-search-input" type="text" />
+                    <button class="hwbi-search-button">Search</button>
+                    <div>Enter your address, city, state, or zip code</div>
+                  </div>
+                </div>
+
+                <div class="row cols-1 quote-holder">
+                  <div class="col">
+                    <p id="pullquote" class="pullquote">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <span class="author">—Author’s name goes here.</span></p>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tab-2">
+                <div class="row cols-1 location-search">
+                  <div class="col">
+                    <label for="input2">What is your community's well-being score?</label>
+                    <div class="row cols-5">
+                      <div class="col size-4of5">
+                        <input id="input2" class="hwbi-search-input" type="text" />
+                        <button class="hwbi-search-button">Search</button>
+                        <div>Enter your address, city, state, or zip code</div>
+                      </div>
+                      <div class="col size-1of5">
+                        <button>PDF Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row cols-2" id="community-snapshot">
+                  <div class="col size-1of2">
+                    <span>Snapshot results for <span id="location" class="bold"></span>.</span>
+                    <div bold="bold">HWBI Score: <span id="hwbi-score"></span></div>
+                    <div id="hwbi-visual"></div>
+                    <div>The Human Well-Being Index (HWBI) model calculator (calc) uses 22 economic, ecosystem, and social services values to calculate eight "domains of well-being": Connection to Nature, Cultural Fulfillment, Education, Health, Leisure Time, Living Standards, Safety &amp; Security, and Social Cohesion. These domains of well-being are then weighed based on user-supplied "relative importance values" and are used to determine the overall HWBI score.</div>
+                  </div>
+                  <div class="col size-1of2">
+                    <div class="row cols-2">
+                      <div class="col size-2of3"><h4>Well-Being Domain Scores</h4></div>
+                      <div class="col size-1of3"><button id="rank-domains">Rank</button></div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="range-slider box special">
+                          <div class="pane-content">The relative importance of domains may vary for each person. Use the range sliders to rank the importance of domains based on your preferences. A value of 5 is considered most important and a value of 1 has lowest importance.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    
+                    <div id="well-being-domain-scores" class="row">
+                      
+                      <div class="row">
+                        <div class="col"><span id="connectionToNature"></span></div>
+                        <div class="col"><div id='connectionToNature-score-bar'></div></div>
+                      </div>
+                      
+                      <div class="row range-slider">
+                        <div class="col"><input id="connectionToNature-slider" type="range" min="1" max="5" step="1" list="tickmarks" name="connectionToNature" value="1"></div>
+                        <div class="col"><label id="connectionToNature-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="culturalFulfillment"></div></div>
+                        <div class="col"><div id='culturalFulfillment-score-bar'></div></div>
+                      </div>
+
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="culturalFulfillment" value="1"></div>
+                        <div class="col"><label id="culturalFulfillment-label"></label></div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col"><div id="education"></div></div>
+                        <div class="col"><div id='education-score-bar'></div></div>
+                      </div>
+                      
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="education" value="1"></div>
+                        <div class="col"><label id="education-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="health"></div></div>
+                        <div class="col"><div id='health-score-bar'></div></div>
+                      </div>
+                      
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="health" value="1"></div>
+                        <div class="col"><label id="health-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="leisureTime"></div></div>
+                        <div class="col"><div id='leisureTime-score-bar'></div></div>
+                      </div>
+                      
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="leisureTime" value="1"></div>
+                        <div class="col"><label id="leisureTime-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="livingStandards"></div></div>
+                        <div class="col"><div id='livingStandards-score-bar'></div></div>
+                      </div>
+
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="livingStandards" value="1"></div>
+                        <div class="col"><label id="livingStandards-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="safetyAndSecurity"></div></div>
+                        <div class="col"><div id='safetyAndSecurity-score-bar'></div></div>
+                      </div>
+                      
+
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="safetyAndSecurity" value="1"></div>
+                        <div class="col"><label id="safetyAndSecurity-label"></label></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col"><div id="socialCohesion"></div></div>
+                        <div class="col"><div id='socialCohesion-score-bar'></div></div>
+                      </div>
+                      
+                      <div class="row range-slider">
+                        <div class="col"><input type="range" min="1" max="5" step="1" list="tickmarks" name="socialCohesion" value="1"></div>
+                        <div class="col"><label id="socialCohesion-label"></label></div>
+                      </div>
+                    </div>
+
+                    <datalist id="tickmarks">
+                      <option value="1" label="1">
+                      <option value="2">
+                      <option value="3" label="3">
+                      <option value="4">
+                      <option value="5" label="5">
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+              
+              <div id="tab-3">
+                <div class="row cols-1 location-search">
+                  <div class="col">
+                    <label for="input3">What is your community's well-being score?</label>
+                    <div class="row cols-5">
+                      <div class="col size-4of5">
+                        <input id="input3" class="hwbi-search-input" type="text" />
+                        <button class="hwbi-search-button">Search</button>
+                        <div>Enter your address, city, state, or zip code</div>
+                      </div>
+                      <div class="col size-1of5">
+                        <button>PDF Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="customize">
+                  <div class="row cols-1">
+                    <div class="col">
+                      <p><strong>Customizing the Human Well-Being Index for your community</strong></p>
+                      <p>Briefly and simply describe</p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div class="row cols-1">
+                    <div class="col">
+                      <ul class="menu pipeline customize-menu">
+                        <li class="menu-item"><a class="menu-link" href="#">Connection to Nature</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Cultural Fulfillment</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Education</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Health</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Leisure Time</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Living Standards</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Safety &amp; Security</a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">Social Cohesion</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div class="row cols-1">
+                    <div class="col size-1of1">
+                      <div id="customize-hwbi-score"></div>
+                    </div>
+                  </div>
+
+                  <div class="row cols-1">
+                    <div class="col size-1of1">
+                      <div id="customize-bar"></div>
+                    </div>
+                  </div>
+                  <div class="row cols-1">
+                    <div class="col size-1of1">
+                      <div id="customize-selected"></div>
+                    </div>
+                  </div>
+                  <div class="row cols-3 connectionToNature">
+                    <div class="col size-1of3 ">
+                      <label for="indicator-1-input"> 
+                        Biophilia:
+                        <span id="indicator-1-label"></span>
+                      </label>
+                      <input id="indicator-1-input" type="range" min="1" max="100" step=".1" name="indicator" class="connectionToNature">
+                    </div>
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 culturalFulfillment">
+                    <div class="col size-1of3">
+                      <label for="indicator-2-input">
+                        Activity Participation:
+                        <span id="indicator-2-label"></span>
+                      </label>
+                      <input id="indicator-2-input" type="range" min="1" max="100" step=".1" name="indicator" class="culturalFulfillment">
+                    </div>
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 education">
+                    <div class="col size-1of3">
+                      <label for="indicator-3-input"> 
+                        Social, Emotional and Developmental Aspects:
+                        <span id="indicator-3-label"></span>
+                      </label>
+                      <input id="indicator-3-input" type="range" min="1" max="100" step=".1" name="indicator" class="education">
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 education">
+                      <label for="indicator-4-input"> 
+                        Basic Educational Knowledge and Skills of the Youth:
+                        <span id="indicator-4-label"></span>
+                      </label>
+                      <input id="indicator-4-input" type="range" min="1" max="100" step=".1" name="indicator" class="education">
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 education">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-5-input"> 
+                          Participation and Attainment:
+                          <span id="indicator-5-label"></span>
+                        </label>
+                        <input id="indicator-5-input" type="range" min="1" max="100" step=".1" name="indicator" class="education">
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row cols-3 health">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-6-input"> 
+                          Personal Well-being:
+                          <span id="indicator-6-label"></span>
+                        </label>
+                        <input id="indicator-6-input" type="range" min="1" max="100" step=".1" name="indicator" class="health">
+                      </div>
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 health">
+                      <div class="col size-1of3">
+                        <label for="indicator-7-input"> 
+                          Life Expectancy/Mortality:
+                          <span id="indicator-7-label"></span>
+                        </label>
+                        <input id="indicator-7-input" type="range" min="1" max="100" step=".1" name="indicator" class="health">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 health">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-8-input"> 
+                          Physical and Mental Health:
+                          <span id="indicator-8-label"></span>
+                        </label>
+                        <input id="indicator-8-input" type="range" min="1" max="100" step=".1" name="indicator" class="health">
+                      </div>
+                    </div>
+                    <div class="col size-1of3">
+                      &nbsp;
+                    </div>
+                    <div class="col size-1of3 health">
+                      <div class="col size-1of3">
+                        <label for="indicator-25-input"> 
+                          Lifestyle and Behavior:
+                          <span id="indicator-25-label"></span>
+                        </label>
+                        <input id="indicator-25-input" type="range" min="1" max="100" step=".1" name="indicator" class="health">
+                      </div>
+                    </div>            
+                    
+                  </div>
+
+                  <div class="row cols-3 health">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-9-input"> 
+                          Healthcare:
+                          <span id="indicator-9-label"></span>
+                        </label>
+                        <input id="indicator-9-input" type="range" min="1" max="100" step=".1" name="indicator" class="health">
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row cols-3 leisureTime">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-10-input"> 
+                          Activity Participation:
+                          <span id="indicator-10-label"></span>
+                        </label>
+                        <input id="indicator-10-input" type="range" min="1" max="100" step=".1" name="indicator" class="leisureTime">
+                      </div>
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 leisureTime">
+                      <div class="col size-1of3">
+                        <label for="indicator-11-input"> 
+                          Time Spent:
+                          <span id="indicator-11-label"></span>
+                        </label>
+                        <input id="indicator-11-input" type="range" min="1" max="100" step=".1" name="indicator" class="leisureTime">
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row cols-3 leisureTime">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-12-input"> 
+                          Working Age Adults:
+                          <span id="indicator-12-label"></span>
+                        </label>
+                        <input id="indicator-12-input" type="range" min="1" max="100" step=".1" name="indicator" class="leisureTime">
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row cols-3 livingStandards">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-13-input"> 
+                          Wealth:
+                          <span id="indicator-13-label"></span>
+                        </label>
+                        <input id="indicator-13-input" type="range" min="1" max="100" step=".1" name="indicator" class="livingStandards">
+                      </div>
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 livingStandards">
+                      <div class="col size-1of3">
+                        <label for="indicator-14-input"> 
+                          Income:
+                          <span id="indicator-14-label"></span>
+                        </label>
+                        <input id="indicator-14-input" type="range" min="1" max="100" step=".1" name="indicator" class="livingStandards">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 livingStandards">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-15-input"> 
+                          Work:
+                          <span id="indicator-15-label"></span>
+                        </label>
+                        <input id="indicator-15-input" type="range" min="1" max="100" step=".1" name="indicator" class="livingStandards">
+                      </div>
+                    </div>
+                    <div class="col size-1of3">
+                      &nbsp;
+                    </div>
+                    <div class="col size-1of3 livingStandards">
+                      <div class="col size-1of3">
+                        <label for="indicator-16-input"> 
+                          Basic Necessities:
+                          <span id="indicator-16-label"></span>
+                        </label>
+                        <input id="indicator-16-input" type="range" min="1" max="100" step=".1" name="indicator" class="livingStandards">
+                      </div>
+                    </div>
+                  </div>
+                  
+                    
+                  <div class="row cols-3 safetyAndSecurity">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-17-input"> 
+                          Actual Safety:
+                          <span id="indicator-17-label"></span>
+                        </label>
+                        <input id="indicator-17-input" type="range" min="1" max="100" step=".1" name="indicator" class="safetyAndSecurity">
+                      </div>
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 safetyAndSecurity">
+                      <div class="col size-1of3">
+                        <label for="indicator-18-input"> 
+                          Perceived Safety:
+                          <span id="indicator-18-label"></span>
+                        </label>
+                        <input id="indicator-18-input" type="range" min="1" max="100" step=".1" name="indicator" class="safetyAndSecurity">
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row cols-3 safetyAndSecurity">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-19-input"> 
+                          Risk:
+                          <span id="indicator-19-label"></span>
+                        </label>
+                        <input id="indicator-19-input" type="range" min="1" max="100" step=".1" name="indicator" class="safetyAndSecurity">
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row cols-3 socialCohesion">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-20-input"> 
+                          Social Support:
+                          <span id="indicator-20-label"></span>
+                        </label>
+                        <input id="indicator-20-input" type="range" min="1" max="100" step=".1" name="indicator" class="socialCohesion">
+                      </div>
+                    </div>
+
+                    <div class="col size-1of3">
+                      Indicator name Pop-up on hover description of indicator (metrics?)
+                    </div>
+
+                    <div class="col size-1of3 socialCohesion">
+                      <div class="col size-1of3">
+                        <label for="indicator-21-input"> 
+                          Social Engagement:
+                          <span id="indicator-21-label"></span>
+                        </label>
+                        <input id="indicator-21-input" type="range" min="1" max="100" step=".1" name="indicator" class="socialCohesion">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row cols-3 socialCohesion">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-22-input"> 
+                          Attitude towards Others and the Community:
+                          <span id="indicator-22-label"></span>
+                        </label>
+                        <input id="indicator-22-input" type="range" min="1" max="100" step=".1" name="indicator" class="socialCohesion">
+                      </div>
+                    </div>
+                    <div class="col size-1of3">
+                      &nbsp;
+                    </div>
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-23-input"> 
+                          Family Bonding:
+                          <span id="indicator-23-label"></span>
+                        </label>
+                        <input id="indicator-23-input" type="range" min="1" max="100" step=".1" name="indicator" class="socialCohesion">
+                      </div>
+                    </div>            
+                    
+                  </div>
+
+                  <div class="row cols-3 socialCohesion">
+                    <div class="col size-1of3">
+                      <div class="col size-1of3">
+                        <label for="indicator-24-input"> 
+                          Democratic Engagement:
+                          <span id="indicator-24-label"></span>
+                        </label>
+                        <input id="indicator-24-input" type="range" min="1" max="100" step=".1" name="indicator" class="socialCohesion">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div id="tab-4">
+                <div class="row cols-1 location-search">
+                  <div class="col">
+                    <label for="input4">What is your community's well-being score?</label>
+                    <div class="row cols-5">
+                      <div class="col size-4of5">
+                        <input id="input4" class="hwbi-search-input" type="text" />
+                        <button class="hwbi-search-button">Search</button>
+                        <div>Enter your address, city, state, or zip code</div>
+                      </div>
+                      <div class="col size-1of5">
+                        <button>PDF Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                Compare
+              </div>
+
+              <div id="tab-5">
+                <div class="row cols-1 location-search">
+                  <div class="col">
+                    <label for="input4">What is your community's well-being score?</label>
+                    <div class="row cols-5">
+                      <div class="col size-4of5">
+                        <input id="input4" class="hwbi-search-input" type="text" />
+                        <button class="hwbi-search-button">Search</button>
+                        <div>Enter your address, city, state, or zip code</div>
+                      </div>
+                      <div class="col size-1of5">
+                        <button>PDF Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <p>More information including Excel download, reading, links</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div id="block-epa-og-footer" class="block block-epa-og">
+        <!-- <p>{FOOTER CONTENT}</p> -->
+      </div>
+<!--googleoff: all-->
+    </div>
+  </section>
+  <nav class="nav simple-nav simple-main-nav" role="navigation">
+    <div class="nav__inner">
+      <h2 class="element-invisible">Main menu</h2>
+      <ul class="menu" role="menu">
+        <li class="menu-item" id="menu-learn" role="presentation"><a href="https://www.epa.gov/environmental-topics" title="Learn about Environmental Topics that EPA covers." class="menu-link" role="menuitem">Environmental Topics</a></li>
+        <li class="menu-item" id="menu-lawsregs" role="presentation"><a href="https://www.epa.gov/laws-regulations" title="Laws written by Congress provide the authority for EPA to write regulations. Regulations explain the technical, operational, and legal details necessary to implement laws." class="menu-link" role="menuitem">Laws &amp; Regulations</a></li>
+        <li class="menu-item" id="menu-about" role="presentation"><a href="https://www.epa.gov/aboutepa" title="Learn more about: our mission and what we do, how we are organized, and our history." class="menu-link" role="menuitem">About EPA</a></li>
+      </ul>
+    </div>
+  </nav>
+  <footer class="main-footer clearfix" role="contentinfo">
+    <div class="main-footer__inner">
+      <div class="region-footer">
+        <div class="block block-pane block-pane-epa-global-footer">
+          <div class="row cols-3">
+            <div class="col size-1of3">
+              <div class="col__title">Discover.</div>
+              <ul class="menu">
+                <li><a href="https://www.epa.gov/accessibility">Accessibility</a></li>
+                <li><a href="https://www.epa.gov/aboutepa/administrator-gina-mccarthy">EPA Administrator</a></li>
+                <li><a href="https://www.epa.gov/planandbudget">Budget &amp; Performance</a></li>
+                <li><a href="https://www.epa.gov/contracts">Contracting</a></li>
+                <li><a href="https://www.epa.gov/home/grants-and-other-funding-opportunities">Grants</a></li>
+                <li><a href="https://www.epa.gov/ocr/whistleblower-protections-epa-and-how-they-relate-non-disclosure-agreements-signed-epa-employees">No FEAR Act Data</a></li>
+                <li><a href="https://www.epa.gov/home/privacy-and-security-notice">Privacy and Security</a></li>
+              </ul>
+            </div>
+            <div class="col size-1of3">
+              <div class="col__title">Connect.</div>
+              <ul class="menu">
+                <li><a href="https://www.data.gov/">Data.gov</a></li>
+                <li><a href="https://www.epa.gov/office-inspector-general/about-epas-office-inspector-general">Inspector General</a></li>
+                <li><a href="https://www.epa.gov/careers">Jobs</a></li>
+                <li><a href="https://www.epa.gov/newsroom">Newsroom</a></li>
+                <li><a href="https://www.whitehouse.gov/open">Open Government</a></li>
+                <li><a href="http://www.regulations.gov/">Regulations.gov</a></li>
+                <li><a href="https://www.epa.gov/newsroom/email-subscriptions">Subscribe</a></li>
+                <li><a href="https://www.usa.gov/">USA.gov</a></li>
+                <li><a href="https://www.whitehouse.gov/">White House</a></li>
+              </ul>
+            </div>
+            <div class="col size-1of3">
+              <div class="col__title">Ask.</div>
+              <ul class="menu">
+                <li><a href="https://www.epa.gov/home/forms/contact-us">Contact Us</a></li>
+                <li><a href="https://www.epa.gov/home/epa-hotlines">Hotlines</a></li>
+                <li><a href="https://www.epa.gov/foia">FOIA Requests</a></li>
+                <li><a href="https://www.epa.gov/home/frequent-questions-specific-epa-programstopics">Frequent Questions</a></li>
+              </ul>
+              <div class="col__title">Follow.</div>
+              <ul class="social-menu">
+                <li><a class="menu-link social-facebook" href="https://www.facebook.com/EPA">Facebook</a></li>
+                <li><a class="menu-link social-twitter" href="https://twitter.com/epa">Twitter</a></li>
+                <li><a class="menu-link social-youtube" href="https://www.youtube.com/user/USEPAgov">YouTube</a></li>
+                <li><a class="menu-link social-flickr" href="https://www.flickr.com/photos/usepagov">Flickr</a></li>
+                <li><a class="menu-link social-instagram" href="https://instagram.com/epagov">Instagram</a></li>
+              </ul>
+              <p class="last-updated">Last updated on January 10, 2018</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://www.epa.gov/sites/all/libraries/template2/jquery.js"></script>
+  <script src="https://www.epa.gov/sites/all/libraries/template2/js.js"></script>
+  <script src="https://www.epa.gov/sites/all/modules/custom/epa_core/js/alert.js"></script>
+  <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/ie.js"></script><![endif]-->
+
+  <script src="https://www.epa.gov/sites/all/libraries/js/d3.v3.min.js"></script>
+
+  <!-- <script src="https://www.epa.gov/sites/all/libraries/js/d3.v4.2.6.min.js"></script> -->
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#tabs > div').hide(); // hide all child divs
+      jQuery('#tabs div:first').show(); // show first child dive
+      jQuery('#tabsnav li:first').addClass('active');
+
+      jQuery('.menu-internal').click(function() {
+        jQuery('#tabsnav li').removeClass('active');
+        var currentTab = jQuery(this).attr('href');
+        jQuery('#tabsnav li a[href="' + currentTab + '"]').parent().addClass('active'); // NOTE: remove the spaces around the quote marks or your code will not work!
+        jQuery('#tabs > div').hide();
+        jQuery(currentTab).show();
+        return false;
+      });
+      hash = window.location.hash; // Create a bookmarkable tab link
+      elements = jQuery('a[href="' + hash + '"]'); // look for tabs that match the hash; NOTE: remove the spaces around the quote marks or your code will not work!
+      if (elements.length === 0) { // if there aren't any, then
+        jQuery("ul.tabs li:first").addClass("active").show(); // show the first tab
+      } else { 
+        jQuery('html,body').scrollTop(200); 
+        elements.click(); 
+      } // else, scroll back to top (if needed) and open the tab in the hash
+
+      $('.range-slider').hide() //Hide the range sliders on page load.
+
+      $('#well-being-domain-scores input[type="range"]').each(function() { // set labels to initial value of inputs
+        $('#' + $(this).attr("name") + '-label').html($(this).val());
+      });
+
+      $('#customize input[type="range"]').each(function() { // set labels to initial value of inputs
+        $('#' + $(this).attr("id").replace('-input','') + '-label').html($(this).val());
+      });
+
+      $('#community-snapshot').hide();
+      $('#customize').hide();
+
+
+      $('#customize .health').hide();
+      $('#customize .education').hide();
+      $('#customize .culturalFulfillment').hide();
+      $('#customize .connectionToNature').hide();
+      $('#customize .leisureTime').hide();
+      $('#customize .livingStandards').hide();
+      $('#customize .safetyAndSecurity').hide();
+      $('#customize .socialCohesion').hide();
+
+
+      $('.hwbi-search-button').on('click', function () {
+        findCity();
+      });
+
+      $('.customize-menu > li > a').on('click', function (event) {
+        event.preventDefault();
+
+        var name;
+        var options = {
+          "Connection to Nature" : "connectionToNature",
+          "Cultural Fulfillment" : "culturalFulfillment",
+          "Education" : "education",
+          "Health" : "health",
+          "Leisure Time" : "leisureTime",
+          "Living Standards" : "livingStandards",
+          "Safety &amp; Security" : "safetyAndSecurity",
+          "Social Cohesion" : "socialCohesion",
+        }
+
+        $('#customize .health').hide();
+        $('#customize .education').hide();
+        $('#customize .culturalFulfillment').hide();
+        $('#customize .connectionToNature').hide();
+        $('#customize .leisureTime').hide();
+        $('#customize .livingStandards').hide();
+        $('#customize .safetyAndSecurity').hide();
+        $('#customize .socialCohesion').hide();
+
+        $('#customize .' + options[$(this).html()]).show();
+        $('#customize-selected').html($(this).html());
+
+      });
+
+
+      $('#rank-domains').on('click', function () {
+        $('.range-slider').toggle();
+      });
+      
+    });
+
+    // Data returned for Benton County, Oregon 
+    var corvallisData = {"metaInfo":{"modelVersion":"hwbi","collection":"qed","version":1,"description":"The Human Well-Being Index (HWBI) model calculator (calc) uses 22 economic, ecosystem, and social services values to calculate eight 'domains of well-being': Connection to Nature, Cultural Fulfillment, Education, Health, Leisure Time, Living Standards, Safety & Security, and Social Cohesion. These domains of well-being are then weighed based on user-supplied 'relative importance values' and are used to determine the overall HWBI score.","status":"","timestamp":"2017-12-27 17:19:00.807002","url":{"type":"application/json","href":"/hwbi/rest/locations/run"}},"inputs":[{"name":"state","value":"Oregon","description":"US State"},{"name":"county","value":"Benton","description":"County"}],"outputs":{"hwbi":54.11061854035558,"services":[{"serviceID":"S01","name":"capitalInvestment","serviceTypeName":"economic","description":"Capital Investment","score":58.82612121},{"serviceID":"S02","name":"consumption","serviceTypeName":"economic","description":"Consumption","score":51.49197667},{"serviceID":"S03","name":"employment","serviceTypeName":"economic","description":"Employment","score":62.15443855},{"serviceID":"S04","name":"finance","serviceTypeName":"economic","description":"Finance","score":48.16404289},{"serviceID":"S05","name":"innovation","serviceTypeName":"economic","description":"Innovation","score":58.30480166},{"serviceID":"S06","name":"production","serviceTypeName":"economic","description":"Production","score":47.38165298},{"serviceID":"S07","name":"redistribution","serviceTypeName":"economic","description":"Re-Distribution","score":29.9108943},{"serviceID":"S08","name":"airQuality","serviceTypeName":"ecosystem","description":"Air Quality","score":90},{"serviceID":"S09","name":"foodFiberAndFuel","serviceTypeName":"ecosystem","description":"Food, Fiber And Fuel Provisioning","score":39.32100851},{"serviceID":"S10","name":"greenspace","serviceTypeName":"ecosystem","description":"Greenspace","score":44.4759863},{"serviceID":"S11","name":"waterQuality","serviceTypeName":"ecosystem","description":"Water Quality","score":16.9212387},{"serviceID":"S12","name":"waterQuantity","serviceTypeName":"ecosystem","description":"Water Quantity","score":44.99909125},{"serviceID":"S13","name":"activism","serviceTypeName":"social","description":"Activism","score":54.81796878},{"serviceID":"S14","name":"communication","serviceTypeName":"social","description":"Communication","score":53.33726659},{"serviceID":"S15","name":"communityAndFaith","serviceTypeName":"social","description":"Community And Faith-Based Initiatives","score":24.7802302},{"serviceID":"S16","name":"education","serviceTypeName":"social","description":"Education","score":40.92975147},{"serviceID":"S17","name":"emergencyPreparedness","serviceTypeName":"social","description":"Emergency Preparedness","score":58.75492716},{"serviceID":"S18","name":"familyServices","serviceTypeName":"social","description":"Family Services","score":54.51364129},{"serviceID":"S19","name":"healthcare","serviceTypeName":"social","description":"Healthcare","score":43.68382843},{"serviceID":"S20","name":"justice","serviceTypeName":"social","description":"Justice","score":42.47063664},{"serviceID":"S21","name":"labor","serviceTypeName":"social","description":"Labor","score":44.61766982},{"serviceID":"S22","name":"publicWorks","serviceTypeName":"social","description":"Public Works","score":46.21734209}],"domains":[{"domainID":"Connection","domainName":"","description":"Connection To Nature","score":51.885206293765094,"weight":1,"name":"connectionToNature"},{"domainID":"Culture","domainName":"","description":"Cultural Fulfillment","score":52.19226948839506,"weight":1,"name":"culturalFulfillment"},{"domainID":"Education","domainName":"","description":"Education","score":49.06778050680599,"weight":1,"name":"education"},{"domainID":"Health","domainName":"","description":"Health","score":62.58521941261898,"weight":1,"name":"health"},{"domainID":"Leisure","domainName":"","description":"Leisure Time","score":56.998528501120646,"weight":1,"name":"leisureTime"},{"domainID":"Living","domainName":"","description":"Living Standards","score":53.72969107265604,"weight":1,"name":"livingStandards"},{"domainID":"Safety","domainName":"","description":"Safety And Security","score":62.856887915026626,"weight":1,"name":"safetyAndSecurity"},{"domainID":"Social","domainName":"","description":"Social Cohesion","score":43.56936513245622,"weight":1,"name":"socialCohesion"}]}};
+
+
+    var rivData = corvallisData.outputs.domains;
+
+    function findCity() {
+      
+      if($('#community-snapshot').css('display') === 'none') {
+        $('#community-snapshot').show();
+      }
+      if($('#customize').css('display') === 'none') {
+        $('#customize').show();
+      }
+
+      /*
+
+      var stateVal = "Oregon";
+      var countyVal = "Benton";
+
+      var poststateData = {
+        "state":stateVal,"county":countyVal
+      }
+
+      console.log(poststateData);
+
+      //$.post('https://qedinternal.epa.gov/hwbi/rest/locations/run',             // url
+      $.post('http://127.0.0.1:8000/hwbi/rest/locations/run',             // local url
+          JSON.stringify(poststateData),                  // data (as JS object)
+          function(data) {                                // success (callback) function
+              console.log(data);
+              //updateRIVWeights(data.outputs.domains);
+              //updateDomainScores(data.outputs.domains);
+              //updateDomainScores2(data.outputs.domains);
+              //updateServiceScores(data.outputs.services);
+          },
+      "json");                                            // data type returned from server
+      */
+
+      $('#location').html(corvallisData.inputs[1].value + ' County, ' + corvallisData.inputs[0].value);
+
+      // the HWBU score for the county
+      $('#hwbi-score').html(corvallisData.outputs.hwbi.toFixed(1));
+
+      // Set the domain scores
+      for (var domain in corvallisData.outputs.domains) {
+        var data = corvallisData.outputs.domains[domain];
+
+        if (d3.select('#' + data.name + '-score-bar > svg').empty()) {
+          createDomainScoreBar(data);
+        } else {
+          updateDomainScoreBar(data);
+        }
+
+        // write the domain score to snapshot
+        $('#' + data.name).html(data.description + ': ' + data.score.toFixed(1));
+      }
+
+      // set the service scores? Are these the "Indicators" from the powerpoint?
+      for (var service in corvallisData.outputs.services) {
+        var data = corvallisData.outputs.services[service];
+        //console.log(data.description + ' = ' +  data.score);
+      }
+
+      if(d3.select('#hwbi-visual > svg > g').empty()) {
+        drawAsterPlot(corvallisData.outputs.domains);
+      } else {
+        updateAsterPlot(corvallisData.outputs.domains);
+      }
+      $('#tabsnav a')[1].click();
+
+    }
+
+    // When a RIV slider moves update the HWBI score
+    $('#well-being-domain-scores input[type=range]').change(function () {
+      $('#' + $(this).attr("name") + '-label').html($(this).val()); // update label with new value
+      var scoreSum = 0;
+      var weightSum = 0;
+
+      //update the rivData object with new weights
+      for (var prop in rivData) {
+        if (rivData[prop].name === $(this).attr('name')) {
+          rivData[prop].weight = parseInt($(this).val());
+          //updateDomainScoreBar(rivData[prop]);
+        }
+        scoreSum += rivData[prop].score * rivData[prop].weight;
+        weightSum += rivData[prop].weight;
+      }
+      var hwbiScore = scoreSum / weightSum;
+      $('#hwbi-score').html(hwbiScore.toFixed(1));
+      updateAsterPlot(rivData);
+    });
+
+    // listens for changes in indicator values on the customize tab
+    $('#customize input[type=range]').on('input change', function () {
+      $('#' + $(this).attr('id').replace('-input', '') + '-label').html($(this).val()); // update label with new value
+
+      var sum = 0;
+      var domain = $(this).attr('class');
+      var $inputs = $('#customize .' + domain + ' input[type=range]');
+      $inputs.each(function () {
+        sum += +$(this).val();
+      });
+
+      // calculate new domain score
+      var domainScore = sum / $inputs.length;
+
+      // update domain score
+      for (var prop in rivData) {
+        if (rivData[prop].name === domain) {
+          rivData[prop].score = domainScore;
+          updateDomainScoreBar(rivData[prop]); // update domain score bar
+          $('#' + rivData[prop].name).html(rivData[prop].description + ': ' + rivData[prop].score.toFixed(1)); // write the domain score to snapshot
+        }
+      }
+
+      // calculate new HWBI score?
+      var score = 
+        rivData.reduce(function(a, b) {
+          return a + (b.score * b.weight); 
+        }, 0) / 
+        rivData.reduce(function(a, b) { 
+          return a + b.weight; 
+        }, 0);
+
+      // display new HWBI scores
+      // UPDATE CHART when switching tabs if he data has changed instead of updating it every time the data changes.
+      updateAsterPlot(rivData);
+    });
+
+    function drawAsterPlot(data) {
+      var width = 300,
+        height = 300,
+        radius = Math.min(width, height) / 2,
+        innerRadius = 0.3 * radius;
+
+      var svg = d3.select("#hwbi-visual").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.weight; });
+
+      var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([0, 0])
+        .html(function(d) {
+          return d.data.description + ": <span style='color:orangered'>" + d.data.score.toFixed(1) + "</span>";
+        });
+
+      var arc = d3.svg.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(function (d) { 
+          return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius; 
+        });
+
+      var outlineArc = d3.svg.arc()
+              .innerRadius(innerRadius)
+              .outerRadius(radius);
+
+      svg.call(tip);
+
+      var path = svg.selectAll(".solidArc")
+          .data(pie(data))
+        .enter().append("path")
+          //assign colors to solidArc slice based on domain name
+          .attr("fill", (function (d) {
+              if (d.data.description == "Connection To Nature") { return "#569c83"; }
+              if (d.data.description == "Cultural Fulfillment") { return "#325481"; }
+              if (d.data.description == "Education") { return "#5E4EA1"; }
+              if (d.data.description == "Health") { return "#9E0041"; }
+              if (d.data.description == "Leisure Time") { return "#E1514B"; }
+              if (d.data.description == "Living Standards") { return "#FB9F59"; }
+              if (d.data.description == "Safety And Security") { return "#FAE38C"; }
+              if (d.data.description == "Social Cohesion") { return "#EAF195"; }
+          }))
+
+          .attr("class", "solidArc")
+          .attr("stroke", "gray")
+          .attr("d", arc)
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
+
+      var outerPath = svg.selectAll(".outlineArc")
+          .data(pie(data))
+        .enter().append("path")
+          .attr("fill", "none")
+          .attr("stroke", "gray")
+          .attr("class", "outlineArc")
+          .attr("d", outlineArc);  
+
+
+      // calculate the weighted mean score
+      var score = 
+        data.reduce(function(a, b) {
+          return a + (b.score * b.weight); 
+        }, 0) / 
+        data.reduce(function(a, b) { 
+          return a + b.weight; 
+        }, 0);
+
+      svg.append("svg:text")
+        .attr("class", "aster-score")
+        .attr("dy", ".35em")
+        .attr("text-anchor", "middle") // text-align: right
+        .text(score.toFixed(1));
+
+    //});
+    }
+
+    function updateAsterPlot(data) {
+      var width = 300,
+        height = 300,
+        radius = Math.min(width, height) / 2,
+        innerRadius = 0.3 * radius;
+
+      var svg = d3.select("#hwbi-visual > svg > g");
+      //use d3 to create the pie chart layout
+      var pie = d3.layout.pie()
+          .sort(null)
+          .value(function (d) { return d.weight; });
+
+      //use d3 to calculate size of arcs/angles
+      var arc = d3.svg.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(function (d) {
+              return (radius - innerRadius) * (d.data.score / 100) + innerRadius;
+          });
+
+      //use d3 to calculate size of outline arcs
+      var outlineArc = d3.svg.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(radius);
+
+      //create variable path that appends a solidArc to the svg
+      //"path" is any irregular SVG shape (pie slice)
+      var path = svg.selectAll(".solidArc")
+          .data(pie(data))
+           .transition()
+          //assign colors to solidArc slice based on domain name
+          .attr("fill", (function (d) {
+              if (d.data.description == "Connection To Nature") { return "#569c83"; }
+              if (d.data.description == "Cultural Fulfillment") { return "#325481"; }
+              if (d.data.description == "Education") { return "#5E4EA1"; }
+              if (d.data.description == "Health") { return "#9E0041"; }
+              if (d.data.description == "Leisure Time") { return "#E1514B"; }
+              if (d.data.description == "Living Standards") { return "#FB9F59"; }
+              if (d.data.description == "Safety And Security") { return "#FAE38C"; }
+              if (d.data.description == "Social Cohesion") { return "#EAF195"; }
+          }))
+          .attr("class", "solidArc")
+          .attr("stroke", "gray")
+          .attr("d", arc)
+          //.on('mouseover', tip.show)
+          //.on('mouseout', tip.hide);
+
+      //create variable outerPath that appends an outlineArc to svg
+      var outerPath = svg.selectAll(".outlineArc")
+          .data(pie(data))
+          .transition()
+          .attr("fill", "none")
+          .attr("stroke", "gray")
+          .attr("class", "outlineArc")
+          .attr("d", outlineArc);
+
+      // calculate the weighted mean HWBI score
+      var score =
+          data.reduce(function (a, b) {
+              return a + ((b.score) * b.weight);
+          }, 0) /
+          data.reduce(function (a, b) {
+              return a + b.weight;
+          }, 0)
+      ;
+
+      //display HWBI score
+      d3.select("text.aster-score")
+          .transition()
+          .text(score.toFixed(1));
+    }
+
+    function createDomainScoreBar(data) {
+      var score = data.score;
+      var svg = d3.select('#' + data.name + '-score-bar')
+        .append('svg')
+        .attr('height', 20)
+        .attr('width', 400);
+
+      var segmentWidth = 100;
+
+      svg.append('rect')
+        .attr('class', 'bg-rect')
+        .attr('rx', 10)
+        .attr('ry', 10)
+        .attr('fill', '#D3D3D3')
+        .attr('height', 15)
+        .attr('width', function() {
+          return segmentWidth * 3;
+        })
+        .attr('x', 0);
+
+      var domainScore = svg.append('rect')
+        .attr('class', 'domain-score-rect')
+        .attr("fill", (function (d) {
+          if (data.description === "Connection To Nature") { return "#569c83"; }
+          if (data.description === "Cultural Fulfillment") { return "#325481"; }
+          if (data.description === "Education") { return "#5E4EA1"; }
+          if (data.description === "Health") { return "#9E0041"; }
+          if (data.description === "Leisure Time") { return "#E1514B"; }
+          if (data.description === "Living Standards") { return "#FB9F59"; }
+          if (data.description === "Safety And Security") { return "#FAE38C"; }
+          if (data.description === "Social Cohesion") { return "#EAF195"; }
+        }))
+        .attr('height', 15)
+        .attr('width', 0)
+        .attr('rx', 10)
+        .attr('ry', 10)
+        .attr('x', 0);
+
+      domainScore.transition()
+        .duration(1000)
+        .attr('width', function(){
+          return score * 3;
+        });
+    }
+
+    function updateDomainScoreBar(data) {
+      var domainScore = d3.select('#' + data.name + '-score-bar .domain-score-rect');
+      domainScore.transition()
+        .duration(1000)
+        .attr("fill", (function (d) {
+          if (data.description === "Connection To Nature") { return "#569c83"; }
+          if (data.description === "Cultural Fulfillment") { return "#325481"; }
+          if (data.description === "Education") { return "#5E4EA1"; }
+          if (data.description === "Health") { return "#9E0041"; }
+          if (data.description === "Leisure Time") { return "#E1514B"; }
+          if (data.description === "Living Standards") { return "#FB9F59"; }
+          if (data.description === "Safety And Security") { return "#FAE38C"; }
+          if (data.description === "Social Cohesion") { return "#EAF195"; }
+        }))
+        .attr('width', function () {
+          return (data.score * 3).toFixed(1);
+        });
+    }
+
+    //Gradient bar on Customize page
+    var colors = ['rgb(255,0,0)', 'rgb(255,255,0)', 'rgb(0, 255, 0)'];
+    var margin = {};
+    var width, height;
+
+    var svg = d3.select('#customize-bar')
+      .append('svg')
+      .attr('width', 1000)
+      .attr('height', 50);
+
+    var grad = svg.append('defs')
+      .append('linearGradient')
+      .attr('id', 'grad')
+      .attr('x1', '0%')
+      .attr('x2', '100%')
+      .attr('y1', '0%')
+      .attr('y2', '0%');
+
+    grad.selectAll('stop')
+      .data(colors)
+      .enter()
+      .append('stop')
+      .style('stop-color', function (d) { 
+        return d;
+      })
+      .attr('offset', function (d, i) {
+        return 100 * (i / (colors.length - 1)) + '%';
+      });
+
+    svg.append('rect')
+      .attr('x', 10)
+      .attr('y', 10)
+      .attr('width', 986)
+      .attr('height', 20)
+      .style('fill', 'url(#grad)');
+
+  </script>
+</body>
+</html>
