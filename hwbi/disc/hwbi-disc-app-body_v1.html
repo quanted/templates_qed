@@ -46,7 +46,7 @@
                             <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p>
                         </div>
                         <div id="hwbi-info"><p>Generic static info regarding hwbi score.</p></div>
-                        {#                        <div id="disc-aster"></div>#}
+{#                        <div id="disc-aster"></div>#}
                     </div>
                 </div>
                 <div id="wellbeing-scores">
@@ -54,20 +54,13 @@
                     <button type="button" id="rank_btn"><b>Rank</b> <i>(What's this)</i></button>
                     <div id="domain-scores">
                         {#            Nature Block          #}
-                        <div id="nature-block" class="domain-score-block">
+                        <div id="nature-block">
                             <button class="accordion domain-expand"></button>
                             <div id="nature_title" class="domain-title">Connection to Nature:</div>
                             <div id="nature_score" class="domain-score">0.0</div>
                             <div id="nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar nature-bar" id="nature-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="nature_details" class="domain-description">
                                 <p>
@@ -78,20 +71,13 @@
                             </div>
                         </div>
                         {#            Cultural Fulfillment Block         #}
-                        <div id="cultural-block" class="domain-score-block">
+                        <div id="cultural-block">
                             <button class="accordion domain-expand"></button>
                             <div id="cultural_title" class="domain-title">Cultural Fulfillment:</div>
                             <div id="cultural_score" class="domain-score">0.0</div>
                             <div id="cultural_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="cultural_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar cultural-bar" id="cultural-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="cultural_details" class="domain-description">
                                 <p>
@@ -102,20 +88,13 @@
                             </div>
                         </div>
                         {#            Education Block           #}
-                        <div id="education-block" class="domain-score-block">
+                        <div id="education-block">
                             <button class="accordion domain-expand"></button>
                             <div id="education_title" class="domain-title">Education:</div>
                             <div id="education_score" class="domain-score">0.0</div>
                             <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar education-bar" id="education-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="education-slider-bar" class="rank-slider education-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="education_details" class="domain-description">
                                 <p>
@@ -126,20 +105,13 @@
                             </div>
                         </div>
                         {#            Health Block           #}
-                        <div id="health-block" class="domain-score-block">
+                        <div id="health-block">
                             <button class="accordion domain-expand"></button>
                             <div id="health_title" class="domain-title">Health:</div>
                             <div id="health_score" class="domain-score">0.0</div>
                             <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar health-bar" id="health-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="health-slider-bar" class="rank-slider health-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="health_details" class="domain-description">
                                 <p>
@@ -150,20 +122,13 @@
                             </div>
                         </div>
                         {#            Leisure Time Block           #}
-                        <div id="leisure-block" class="domain-score-block">
+                        <div id="leisure-block">
                             <button class="accordion domain-expand"></button>
                             <div id="leisure_title" class="domain-title">Leisure Time:</div>
                             <div id="leisure_score" class="domain-score">0.0</div>
                             <div id="leisure_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="leisure_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar leisure-bar" id="leisure-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="leisure_details" class="domain-description">
                                 <p>
@@ -174,20 +139,13 @@
                             </div>
                         </div>
                         {#            Living Standards Block           #}
-                        <div id="living-std-block" class="domain-score-block">
+                        <div id="living-std-block">
                             <button class="accordion domain-expand"></button>
                             <div id="living-std_title" class="domain-title">Living Standards:</div>
                             <div id="living-std_score" class="domain-score">0.0</div>
                             <div id="living-std_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="living-std_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar living-std-bar" id="living-std-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="living-std-slider-bar" class="rank-slider living-std-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="living-std_details" class="domain-description">
                                 <p>
@@ -198,20 +156,13 @@
                             </div>
                         </div>
                         {#            Safety and Security Block           #}
-                        <div id="safety-block" class="domain-score-block">
+                        <div id="safety-block">
                             <button class="accordion domain-expand"></button>
                             <div id="safety_title" class="domain-title">Safety & Security:</div>
                             <div id="safety_score" class="domain-score">0.0</div>
                             <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar safety-bar" id="safety-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
                             </div>
                             <div id="safety_details" class="domain-description">
                                 <p>
@@ -222,7 +173,7 @@
                             </div>
                         </div>
                         {#            Social Cohesion Block           #}
-                        <div id="cohesion-block" class="domain-score-block">
+                        <div id="cohesion-block">
                             <button class="accordion domain-expand"></button>
                             <div id="cohesion_title" class="domain-title">Social Cohesion:</div>
                             <div id="cohesion_score" class="domain-score">0.0</div>
@@ -230,19 +181,75 @@
                             <div id="cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar cohesion-bar" id="cohesion-score-bar"></div>
                             </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
-                                <div class="slider-container">
-                                    <div id="cohesion-slider-bar" class="rank-slider cohesion-slider"></div>
-                                </div>
-                                <span class="right-slider-legend">Most Valued</span>
-                            </div>
                             <div id="cohesion_details" class="domain-description">
                                 <p>
                                     Describes social cohesion.
                                     <br><br>
                                     Research suggests that...
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rank-window">
+                    <div id="rank-exit">&times;</div>
+                    <p id="rank-window-intro">People value certain things about their community, differently. Yada yada.
+                        See how the
+                        HWBI score changes.</p>
+                    <div id="rank-sliders">
+                        <div id="rank-slider-legend">
+                            <div id="legend-top">|---------------- Value ----------------|</div>
+                            <div id="legend-bottom">
+                                <div id="legend-left">Neutral</div>
+                                <div id="legend-right">Most</div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Connection to Nature</div>
+                            <div class="slider-container">
+                                <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Cultural Fulfillment</div>
+                            <div class="slider-container">
+                                <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Education</div>
+                            <div class="slider-container">
+                                <div id="education-slider-bar" class="rank-slider education-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Health</div>
+                            <div class="slider-container">
+                                <div id="health-slider-bar" class="rank-slider health-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Leisure Time</div>
+                            <div class="slider-container">
+                                <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Living Standards</div>
+                            <div class="slider-container">
+                                <div id="living-std-slider-bar" class="rank-slider living-std-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Safety & Security</div>
+                            <div class="slider-container">
+                                <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
+                            </div>
+                        </div>
+                        <div class="slider-block">
+                            <div class="slider-title">Social Cohesion</div>
+                            <div class="slider-container">
+                                <div id="cohesion-slider-bar" class="rank-slider cohesion-slider"></div>
                             </div>
                         </div>
                     </div>
@@ -285,121 +292,98 @@
                     </div>
                     <div id="customize_domain_details"></div>
                     <div id="customize_domain_indicators">
-                        <div id="connection_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Biophilia:</div><span id="nature_biophilia_value" class="indicator_value"></span>
-                                <div id="nature_biophilia_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="capital_indicator_block" class="indicator Living Social">
+                            <p>Capital Investment</p>
+                            <span id="capital_indicator" title="Capital Investment"></span>
                         </div>
-                        <div id="culture_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Activity Participation:</div><span id="culture_activity_value" class="indicator_value"></span>
-                                <div id="culture_activity_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="consumption_indicator_block" class="indicator Connection Education Leisure Social">
+                            <p>Consumption</p>
+                            <span id="consumption_indicator" title="Consumption"></span>
                         </div>
-                        <div id="education_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Basic Educational Knowledge and Skills of Youth:</div><span id="education_knowledge_value" class="indicator_value"></span>
-                                <div id="education_knowledge_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Participation and Attainment:</div><span id="education_participation_value" class="indicator_value"></span>
-                                <div id="education_participation_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Social, Emotional and Developmental Aspects:</div><span id="education_social_value" class="indicator_value"></span>
-                                <div id="education_social_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="employment_indicator_block" class="indicator Leisure Living Social">
+                            <p>Employment</p>
+                            <span id="employment_indicator" title="Employment"></span>
                         </div>
-                        <div id="health_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Healthcare:</div><span id="health_healthcare_value" class="indicator_value"></span>
-                                <div id="health_healthcare_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Life Expectancy and Mortality:</div><span id="health_life_expectancy_value" class="indicator_value"></span>
-                                <div id="health_life_expectancy_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Lifestyle and Behavior:</div><span id="health_lifestyle_value" class="indicator_value"></span>
-                                <div id="health_lifestyle_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Personal Well-Being:</div><span id="health_personal_value" class="indicator_value"></span>
-                                <div id="health_personal_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Phsical and Mental Health Conditions:</div><span id="health_conditions_value" class="indicator_value"></span>
-                                <div id="health_conditions_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="finance_indicator_block" class="indicator Leisure Living Safety">
+                            <p>Finance</p>
+                            <span id="finance_indicator" title="Finance"></span>
                         </div>
-                        <div id="leisure_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Activity Participation:</div><span id="leisure_activity_value" class="indicator_value"></span>
-                                <div id="leisure_activity_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Time Spent:</div><span id="leisure_time_value" class="indicator_value"></span>
-                                <div id="leisure_time_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Working Age Adults:</div><span id="leisure_working_age_value" class="indicator_value"></span>
-                                <div id="leisure_working_age_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="innovation_indicator_block" class="indicator Culture Health Leisure">
+                            <p>Innovation</p>
+                            <span id="innovation_indicator" title="Innovation"></span>
                         </div>
-                        <div id="living_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Basic Necessities:</div><span id="living_basic_value" class="indicator_value"></span>
-                                <div id="living_basic_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Income:</div><span id="living_income_value" class="indicator_value"></span>
-                                <div id="living_income_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Wealth:</div><span id="living_wealth_value" class="indicator_value"></span>
-                                <div id="living_wealth_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Work:</div><span id="living_work_value" class="indicator_value"></span>
-                                <div id="living_work_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="production_indicator_block" class="indicator Culture Education Safety Social">
+                            <p>Production</p>
+                            <span id="production_indicator" title="Production"></span>
                         </div>
-                        <div id="safety_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Actual Safety:</div><span id="safety_actual_value" class="indicator_value"></span>
-                                <div id="safety_actual_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Perceived Safety:</div><span id="safety_perceived_value" class="indicator_value"></span>
-                                <div id="safety_perceived_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Risk:</div><span id="safety_risk_value" class="indicator_value"></span>
-                                <div id="safety_risk_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="redistribution_indicator_block" class="indicator Connection Education Social">
+                            <p>Redistribution</p>
+                            <span id="redistribution_indicator" title="Redistribution"></span>
                         </div>
-                        <div id="social_indicators" class="domain_indicator">
-                            <div class="indicator_block">
-                                <div class="indicator_title">Attitude Toward Others and the Community:</div><span id="social_attitude_value" class="indicator_value"></span>
-                                <div id="social_attitude_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Democratic Engagement:</div><span id="social_democratic_value" class="indicator_value"></span>
-                                <div id="social_democratic_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Family Bonding:</div><span id="social_family_value" class="indicator_value"></span>
-                                <div id="social_family_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Social Engagement:</div><span id="social_engagement_value" class="indicator_value"></span>
-                                <div id="social_engagement_slider" class="indicator_slider"></div>
-                            </div>
-                            <div class="indicator_block">
-                                <div class="indicator_title">Social Support:</div><span id="social_support_value" class="indicator_value"></span>
-                                <div id="social_support_slider" class="indicator_slider"></div>
-                            </div>
+                        <div id="airquality_indicator_block" class="indicator Culture Social">
+                            <p>Air Quality</p>
+                            <span id="airquality_indicator" title="Air Quality"></span>
+                        </div>
+                        <div id="foodfiberandfuel_indicator_block" class="indicator Leisure Living Safety">
+                            <p>Food, Fiber And Fuel Provisioning</p>
+                            <span id="foodfiberandfuel_indicator" title="Food, Fiber And Fuel Provisioning"></span>
+                        </div>
+                        <div id="greenspace_indicator_block"
+                             class="indicator Connection Education Leisure Safety Social">
+                            <p>Greenspace</p>
+                            <span id="greenspace_indicator" title="Greenspace"></span>
+                        </div>
+                        <div id="waterquantity_indicator_block" class="indicator Culture Health Leisure Living Safety">
+                            <p>Water Quantity</p>
+                            <span id="waterquantity_indicator" title="Water Quantity"></span>
+                        </div>
+                        <div id="waterquality_indicator_block"
+                             class="indicator Connection Leisure Living Safety Social">
+                            <p>Water Quality</p>
+                            <span id="waterquality_indicator" title="Water Quality"></span>
+                        </div>
+                        <div id="activism_indicator_block"
+                             class="indicator Connection Education Health Leisure Living Safety">
+                            <p>Activism</p>
+                            <span id="activism_indicator" title="Activism"></span>
+                        </div>
+                        <div id="communication_indicator_block" class="indicator Culture Health Leisure Living">
+                            <p>Communication</p>
+                            <span id="communication_indicator" title="Communication"></span>
+                        </div>
+                        <div id="communityandfaith_indicator_block"
+                             class="indicator Connection Culture Education Health Leisure Safety Social">
+                            <p>Community and Faith</p>
+                            <span id="community_indicator" title="Community and Faith"></span>
+                        </div>
+                        <div id="education_indicator_block" class="indicator Connection Culture Health Leisure">
+                            <p>Education</p>
+                            <span id="education_indicator" title="Education"></span>
+                        </div>
+                        <div id="emergencypreparedness_indicator_block"
+                             class="indicator Connection Culture Health Safety">
+                            <p>Emergency Preparedness</p>
+                            <span id="emergencypreparedness_indicator" title="Emergency Preparedness"></span>
+                        </div>
+                        <div id="familyservices_indicator_block" class="indicator Education Health Social">
+                            <p>Family Services</p>
+                            <span id="familyservices_indicator" title="Family Services"></span>
+                        </div>
+                        <div id="healthcare_indicator_block" class="indicator Connection Safety">
+                            <p>Healthcare</p>
+                            <span id="healthcare_indicator" title="Healthcare"></span>
+                        </div>
+                        <div id="justice_indicator_block" class="indicator Education Health Living Safety Social">
+                            <p>Justice</p>
+                            <span id="justice_indicator" title="Justice"></span>
+                        </div>
+                        <div id="labor_indicator_block" class="indicator Connection Health Living Safety Social">
+                            <p>Labor</p>
+                            <span id="labor_indicator" title="Labor"></span>
+                        </div>
+                        <div id="publicworks_indicator_block" class="indicator Education Leisure Living Safety SOcial">
+                            <p>Public Works</p>
+                            <span id="publicworks_indicator" title="Public Works"></span>
                         </div>
                     </div>
                 </div>
