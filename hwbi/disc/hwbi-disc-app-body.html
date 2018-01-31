@@ -30,7 +30,8 @@
             <button id="search_button" class="search_button epa-search-button" type="submit"
                     onclick="setTimeout(getScoreData, 300); return false;">Search
             </button>
-            <label for="search_form" id="search_placeholder">Enter your address, city, state, or zip code</label>
+            <label for="search_form" id="search_placeholder">Enter your address, city, state, or zip code.</label>
+            <label id="search_error_notification">Your search could not be completed. Please try another location.</label>
         </form>
         <button id="report_pdf" class="report_pdf_button" type="button">PDF Report</button>
     </div>
@@ -484,43 +485,43 @@
             <div class="row cols-5 community-row">
                 <div class="col size-2of5 community-col">Community</div>
                 <div class="col size-1of5">
-                    <button id="community-close-button-0" class="close-compare-search" style="display: none;"
-                            data-community="0">&#215;
+                    <button id="community-close-button-0" class="close-compare-search" data-community="0">&#215;
                     </button>
                     <div id="community-location-0" class="community-location"></div>
                     <button id="community-button-0" class="add-community" data-community="0">Add Community</button>
-                    <div class="add-community-search" style="display: none;">
+                    <div class="add-community-search">
                         <input id="compare-search-0" class="compare-search-input" type="text" autocomplete="off">
-                        <button class="compare-search-button compare-search" data-community="0">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code</div>
+                        <button class="compare-search-button" data-community="0">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
                     </div>
                 </div>
                 <div class="col size-1of5">
-                    <button id="community-close-button-1" class="close-compare-search" style="display: none;"
-                            data-community="1">&#215;
-                    </button>
+                    <button id="community-close-button-1" class="close-compare-search" data-community="1">&#215;
+                        </button>
                     <div id="community-location-1" class="community-location"></div>
                     <button id="community-button-1" class="add-community button-disabled" data-community="1" disabled>
                         Add Community
                     </button>
-                    <div class="add-community-search" style="display: none;">
+                    <div class="add-community-search">
                         <input id="compare-search-1" class="compare-search-input" type="text" autocomplete="off">
-                        <button class="compare-search-button compare-search" data-community="1">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code</div>
+                        <button class="compare-search-button" data-community="1">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
                     </div>
                 </div>
                 <div class="col size-1of5">
-                    <button id="community-close-button-2" class="close-compare-search" style="display: none;"
-                            data-community="2">&#215;
-                    </button>
+                    <button id="community-close-button-2" class="close-compare-search" data-community="2">&#215;
+                        </button>
                     <div id="community-location-2" class="community-location"></div>
                     <button id="community-button-2" class="add-community button-disabled" data-community="2" disabled>
                         Add Community
                     </button>
-                    <div class="add-community-search" style="display: none;">
+                    <div class="add-community-search">
                         <input id="compare-search-2" class="compare-search-input" type="text" autocomplete="off">
-                        <button class="compare-search-button compare-search" data-community="2">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code</div>
+                        <button class="compare-search-button" data-community="2">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
                     </div>
                 </div>
             </div>
