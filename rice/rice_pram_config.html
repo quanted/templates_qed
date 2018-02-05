@@ -1,0 +1,62 @@
+<script> 
+$(document).ready(function(){
+	var test = "";
+	$.ajax({
+		url:"pram",
+		async: false,
+		type: 'GET',
+		success: function(pram_data) {
+			var config_names = pram_data['config_names'];
+			if(config_names != null)
+			{
+				for(i = 0; i < config_names.length; i++)
+				{
+					var config_name = config_names[i];
+					$("#id_pram_configuration").append(new Option(config_name, config_name));
+				}
+			}
+		}
+	});
+	
+	$("#id_pram_configuration").change(function(){
+		var pram_configuration = $("#id_pram_configuration")[0].value;
+		if(pram_configuration != "None")
+		{
+			$.ajax({
+				url:"pram/all_props/"+pram_configuration,
+				async: false,
+				type: 'GET',
+				success: function(pram_data) {
+					var cas_number = pram_data["use"]["cas_number"];
+					if(cas_number != undefined)
+					{
+						chemical_name = undefined;
+						$.ajax({
+							url:"cas/"+cas_number,
+							async: false,
+							type: 'GET',
+							success: function(cas_data) {
+								chemical_name = cas_data["chemical_name"];
+							}
+						});
+						if(chemical_name != undefined)
+						{
+							$("#id_chemical_name")[0].value = chemical_name;
+						}
+					}
+					var application_rate = pram_data["use"]["application_kg_rate"];
+					if(application_rate != undefined)
+					{
+						$("#id_mai")[0].value = application_rate;
+					}
+					var kd = pram_data["pest"]["kd"];
+					if(kd != undefined)
+					{
+						$("#id_kd")[0].value = kd;
+					}
+				}
+			});
+		}
+	});
+});
+</script>
