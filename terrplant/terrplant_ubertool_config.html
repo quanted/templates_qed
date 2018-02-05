@@ -24,12 +24,12 @@ $(document).ready(function(){
 		form_data['user_id'] = user_id;
 		form_data['session_id'] = session_id;
 		$.ajax({
-			url:"{{ubertool_service_url}}/user/sessionid",
+			url:"{{pram_service_url}}/user/sessionid",
 			async: false,
 			type: 'post',
 			data: JSON.stringify(form_data),
-			success: function(ubertool_data) {
-				var decision = ubertool_data['decision'];
+			success: function(pram_data) {
+				var decision = pram_data['decision'];
 				user_authed = decision;
 			}
 		});
@@ -37,31 +37,31 @@ $(document).ready(function(){
 	if(user_authed)
 	{
 		$.ajax({
-			url:"ubertool",
+			url:"pram",
 			async: false,
 			type: 'GET',
-			success: function(ubertool_data) {
-				var config_names = ubertool_data['config_names'];
+			success: function(pram_data) {
+				var config_names = pram_data['config_names'];
 				if(config_names != null)
 				{
 					for(i = 0; i < config_names.length; i++)
 					{
 						var config_name = config_names[i];
-						$("#id_ubertool_configuration").append(new Option(config_name, config_name));
+						$("#id_pram_configuration").append(new Option(config_name, config_name));
 					}
 				}
 			}
 		});
-		$("#id_ubertool_configuration").change(function(){
-			var ubertool_configuration = $("#id_ubertool_configuration")[0].value;
-			if(ubertool_configuration != "None")
+		$("#id_pram_configuration").change(function(){
+			var pram_configuration = $("#id_pram_configuration")[0].value;
+			if(pram_configuration != "None")
 			{
 				$.ajax({
-					url:"ubertool/all_props/"+ubertool_configuration,
+					url:"pram/all_props/"+pram_configuration,
 					async: false,
 					type: 'GET',
-					success: function(ubertool_data) {
-						var cas_number = ubertool_data["use"]["cas_number"];
+					success: function(pram_data) {
+						var cas_number = pram_data["use"]["cas_number"];
 						if(cas_number != undefined)
 						{
 							chemical_name = undefined;
@@ -84,62 +84,62 @@ $(document).ready(function(){
 								$("#id_pc_code")[0].value = pc_code;
 							}
 						}
-						var application_rate = ubertool_data["use"]["application_lbs_rate"];
+						var application_rate = pram_data["use"]["application_lbs_rate"];
 						if(application_rate != undefined)
 						{
 							$("#id_application_rate")[0].value = application_rate;
 						}
-						var incorporation_depth = ubertool_data["use"]["incorporation_depth"];
+						var incorporation_depth = pram_data["use"]["incorporation_depth"];
 						if(incorporation_depth != undefined)
 						{
 							$("#id_incorporation")[0].value = incorporation_depth;
 						}
-						var runoff = ubertool_data["use"]["runoff"];
+						var runoff = pram_data["use"]["runoff"];
 						if(runoff != undefined)
 						{
 							$("#id_runoff_fraction")[0].value = runoff;
 						}
-						var spray_drift = ubertool_data["use"]["spray_drift"];
+						var spray_drift = pram_data["use"]["spray_drift"];
 						if(spray_drift != undefined)
 						{
 							$("#id_drift_fraction")[0].value = spray_drift;
 						}
-						var EC25_for_nonlisted_seedling_emergence_monocot = ubertool_data["terra"]["EC25_for_nonlisted_seedling_emergence_monocot"];
+						var EC25_for_nonlisted_seedling_emergence_monocot = pram_data["terra"]["EC25_for_nonlisted_seedling_emergence_monocot"];
 						if(EC25_for_nonlisted_seedling_emergence_monocot != undefined)
 						{
 							$("#id_EC25_for_nonlisted_seedling_emergence_monocot")[0].value = EC25_for_nonlisted_seedling_emergence_monocot;
 						}
-						var EC25_for_nonlisted_seedling_emergence_dicot = ubertool_data["terra"]["EC25_for_nonlisted_seedling_emergence_dicot"];
+						var EC25_for_nonlisted_seedling_emergence_dicot = pram_data["terra"]["EC25_for_nonlisted_seedling_emergence_dicot"];
 						if(EC25_for_nonlisted_seedling_emergence_dicot != undefined)
 						{
 							$("#id_EC25_for_nonlisted_seedling_emergence_dicot")[0].value = EC25_for_nonlisted_seedling_emergence_dicot;
 						}
-						var EC25_for_nonlisted_vegetative_vigor_monocot = ubertool_data["terra"]["EC25_for_nonlisted_vegetative_vigor_monocot"];
+						var EC25_for_nonlisted_vegetative_vigor_monocot = pram_data["terra"]["EC25_for_nonlisted_vegetative_vigor_monocot"];
 						if(EC25_for_nonlisted_vegetative_vigor_monocot != undefined)
 						{
 							$("#id_EC25_for_nonlisted_vegetative_vigor_monocot")[0].value = EC25_for_nonlisted_vegetative_vigor_monocot;
 						}
-						var EC25_for_nonlisted_vegetative_vigor_dicot = ubertool_data["terra"]["EC25_for_nonlisted_vegetative_vigor_dicot"];
+						var EC25_for_nonlisted_vegetative_vigor_dicot = pram_data["terra"]["EC25_for_nonlisted_vegetative_vigor_dicot"];
 						if(EC25_for_nonlisted_vegetative_vigor_dicot != undefined)
 						{
 							$("#id_EC25_for_nonlisted_vegetative_vigor_dicot")[0].value = EC25_for_nonlisted_vegetative_vigor_dicot;
 						}
-						var NOAEC_for_listed_seedling_emergence_monocot = ubertool_data["terra"]["NOAEC_for_listed_seedling_emergence_monocot"];
+						var NOAEC_for_listed_seedling_emergence_monocot = pram_data["terra"]["NOAEC_for_listed_seedling_emergence_monocot"];
 						if(NOAEC_for_listed_seedling_emergence_monocot != undefined)
 						{
 							$("#id_NOAEC_for_listed_seedling_emergence_monocot")[0].value = NOAEC_for_listed_seedling_emergence_monocot;
 						}
-						var NOAEC_for_listed_seedling_emergence_dicot = ubertool_data["terra"]["NOAEC_for_listed_seedling_emergence_dicot"];
+						var NOAEC_for_listed_seedling_emergence_dicot = pram_data["terra"]["NOAEC_for_listed_seedling_emergence_dicot"];
 						if(NOAEC_for_listed_seedling_emergence_dicot != undefined)
 						{
 							$("#id_NOAEC_for_listed_seedling_emergence_dicot")[0].value = NOAEC_for_listed_seedling_emergence_dicot;
 						}
-						var NOAEC_for_listed_vegetative_vigor_monocot = ubertool_data["terra"]["NOAEC_for_listed_vegetative_vigor_monocot"];
+						var NOAEC_for_listed_vegetative_vigor_monocot = pram_data["terra"]["NOAEC_for_listed_vegetative_vigor_monocot"];
 						if(NOAEC_for_listed_vegetative_vigor_monocot != undefined)
 						{
 							$("#id_NOAEC_for_listed_vegetative_vigor_monocot")[0].value = NOAEC_for_listed_vegetative_vigor_monocot;
 						}
-						var NOAEC_for_listed_vegetative_vigor_dicot = ubertool_data["terra"]["NOAEC_for_listed_vegetative_vigor_dicot"];
+						var NOAEC_for_listed_vegetative_vigor_dicot = pram_data["terra"]["NOAEC_for_listed_vegetative_vigor_dicot"];
 						if(NOAEC_for_listed_vegetative_vigor_dicot != undefined)
 						{
 							$("#id_NOAEC_for_listed_vegetative_vigor_dicot")[0].value = NOAEC_for_listed_vegetative_vigor_dicot;

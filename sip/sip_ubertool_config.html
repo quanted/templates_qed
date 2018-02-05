@@ -2,32 +2,32 @@
 $(document).ready(function(){
 	var test = "";
 	$.ajax({
-		url:"ubertool",
+		url:"pram",
 		async: false,
 		type: 'GET',
-		success: function(ubertool_data) {
-			var config_names = ubertool_data['config_names'];
+		success: function(pram_data) {
+			var config_names = pram_data['config_names'];
 			if(config_names != null)
 			{
 				for(i = 0; i < config_names.length; i++)
 				{
 					var config_name = config_names[i];
-					$("#id_ubertool_configuration").append(new Option(config_name, config_name));
+					$("#id_pram_configuration").append(new Option(config_name, config_name));
 				}
 			}
 		}
 	});
 	
-	$("#id_ubertool_configuration").change(function(){
-		var ubertool_configuration = $("#id_ubertool_configuration")[0].value;
-		if(ubertool_configuration != "None")
+	$("#id_pram_configuration").change(function(){
+		var pram_configuration = $("#id_pram_configuration")[0].value;
+		if(pram_configuration != "None")
 		{
 			$.ajax({
-				url:"ubertool/all_props/"+ubertool_configuration,
+				url:"pram/all_props/"+pram_configuration,
 				async: false,
 				type: 'GET',
-				success: function(ubertool_data) {
-					var cas_number = ubertool_data["use"]["cas_number"];
+				success: function(pram_data) {
+					var cas_number = pram_data["use"]["cas_number"];
 					if(cas_number != undefined)
 					{
 						chemical_name = undefined;
@@ -45,7 +45,7 @@ $(document).ready(function(){
 							$("#id_chemical_name")[0].value = chemical_name;
 						}
 					}
-					var body_weight_of_the_assessed_bird = ubertool_data["terra"]["body_weight_of_the_assessed_bird"];
+					var body_weight_of_the_assessed_bird = pram_data["terra"]["body_weight_of_the_assessed_bird"];
 					if(body_weight_of_the_assessed_bird != undefined)
 					{
 						$("#id_body_weight_of_bird")[0].value = body_weight_of_the_assessed_bird;
@@ -53,45 +53,45 @@ $(document).ready(function(){
 						$("#id_body_weight_of_the_tested_bird")[0].value = body_weight_of_the_assessed_bird;
 					}
 					// Where is the mammalian weight?
-					var solubility = ubertool_data["pest"]["solubility"];
+					var solubility = pram_data["pest"]["solubility"];
 					if(solubility != undefined)
 					{
 						$("#id_solubility")[0].value = solubility;
 					}
-					var ld50 = ubertool_data["terra"]["avian_ld50"];
+					var ld50 = pram_data["terra"]["avian_ld50"];
 					if(ld50 != undefined)
 					{
 						$("#id_ld50")[0].value = ld50;
 					}
 					else
 					{
-						ld50 = ubertool_data["terra"]["mammalian_ld50"];
+						ld50 = pram_data["terra"]["mammalian_ld50"];
 						if(ld50 != undefined)
 						{
 							$("#id_ld50")[0].value = ld50;
 						}
 					}
-					var noaec = ubertool_data["terra"]["avian_NOAEC"];
+					var noaec = pram_data["terra"]["avian_NOAEC"];
 					if(noaec != undefined)
 					{
 						$("#id_NOAEC")[0].value = noaec;
 					}
 					else
 					{
-						noaec = ubertool_data["terra"]["mammlian_NOAEC"];
+						noaec = pram_data["terra"]["mammlian_NOAEC"];
 						if(noaec != undefined)
 						{
 							$("#id_NOAEC")[0].value = noaec;
 						}
 					}
-					var noael = ubertool_data["terra"]["avian_NOAEL"];
+					var noael = pram_data["terra"]["avian_NOAEL"];
 					if(noael != undefined)
 					{
 						$("#id_NOAEL")[0].value = noael;
 					}
 					else
 					{
-						noael = ubertool_data["terra"]["mammlian_NOAEL"];
+						noael = pram_data["terra"]["mammlian_NOAEL"];
 						if(noael != undefined)
 						{
 							$("#id_NOAEL")[0].value = noael;
