@@ -41,19 +41,36 @@
                             <div id="input-geometry-huc8">
                                 <span id="hucID"></span>
                             </div>
+                            <br>
                             <p>Information relating to input selected for area of interest.</p>
                         </div>
                         <h3 id="date-title">Dates</h3>
                         <div id="input-dates" class="workflow-dates">
                             <p>Start and end date inputs</p>
+                            <span id="date-input-error" class="input-error"></span>
+                            <label for="startDate">Start Date:</label>
+                            <input type="text" id="startDate" class="date-input">
+                            <label for="endDate">End Date:</label>
+                            <input type="text" id="endDate" class="date-input">
                         </div>
                         <h3 id="dataset-title">Dataset</h3>
                         <div id="input-dataset" class="workflow-dataset">
                             <p>Selection of dataset, with a brief description</p>
+                            <label for="dataset-input">Dataset:</label>
+                            <select id="dataset-input">
+                                <option value=""></option>
+                                <option value="totalFlow">Total Flow</option>
+                            </select>
                         </div>
                         <h3 id="source-title">Data Source</h3>
                         <div id="input-source" class="workflow-source">
                             <p>Selection of data source, dependent on the selected dataset.</p>
+                            <label for="source-input">Data source:</label>
+                            <select id="source-input">
+                                <option value=""></option>
+                                <option value="nldas">NLDAS</option>
+                                <option value="gldas">GLDAS</option>
+                            </select>
                         </div>
                         <h3 id="options-title">Options</h3>
                         <div id="input-options" class="workflow-options">
