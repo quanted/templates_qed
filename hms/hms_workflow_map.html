@@ -31,6 +31,10 @@
                             <option value="huc12">HUC 12</option>
                             <option value="streamNetwork">Stream Network</option>
                         </select>
+                        <span id="inputSearchBlock">
+                            <label for="inputSearch">Search for specific <span id="inputSearchType"></span>:</label>
+                            <input type="text" id="inputSearch">
+                        </span>
                     </p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
@@ -59,7 +63,7 @@
                             <label for="dataset-input">Dataset:</label>
                             <select id="dataset-input">
                                 <option value=""></option>
-                                <option value="totalFlow">Total Flow</option>
+                                <option value="totalflow">Total Flow</option>
                             </select>
                         </div>
                         <h3 id="source-title">Data Source</h3>
@@ -75,6 +79,14 @@
                         <h3 id="options-title">Options</h3>
                         <div id="input-options" class="workflow-options">
                             <p>Input and output options based on the selected dataset and source.</p>
+                        </div>
+                    </div>
+                    <div id="data-request" class="button-div">
+                        <button id="data-request-button" type="button" onclick="getData();return false;">Retrieve Data
+                        </button>
+                        <div id="data-request-messages">
+                            <span id="data-request-error" class="input-error"></span>
+                            <span id="data-request-success"></span>
                         </div>
                     </div>
                     <!-- basemap wrapper -->
