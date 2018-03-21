@@ -29,6 +29,7 @@
                         <select id="inputLayer" onchange="updateInputLayer()">
                             <option value="none">None</option>
                             <option value="huc8">HUC 8</option>
+                            <option value="catchment">Catchment</option>
 {#                            <option value="huc12">HUC 12</option>#}
 {#                            <option value="streamNetwork">Stream Network</option>#}
                         </select>
@@ -46,8 +47,11 @@
                             <div id="input-geometry-huc8">
                                 <span id="hucID"></span>
                             </div>
+                            <div id="input-geometry-comid">
+                                <span id="comid"></span>
+                            </div>
                             <br>
-                            <p>Information relating to input selected for area of interest.</p>
+                            <span id="input-description"></span>
                         </div>
                         <h3 id="date-title">Dates</h3>
                         <div id="input-dates" class="workflow-dates">
@@ -74,7 +78,7 @@
                             <select id="source-input">
                                 <option value=""></option>
                                 <option value="nldas">NLDAS</option>
-                                <option value="gldas">GLDAS</option>
+{#                                <option value="gldas">GLDAS</option>#}
                             </select>
                         </div>
                         <h3 id="options-title">Options</h3>
