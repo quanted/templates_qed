@@ -64,6 +64,7 @@ $(document).ready(function() {
         blockInterface(true);
 
         $('#pdfExport, #htmlExport').hide();
+        $('#export_menu').hide();
 
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
 
@@ -168,7 +169,7 @@ function connectToSocket() {
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
 
             // if (workflow == 'gentrans') {
-            if (data['workflow'] == 'gentrans') {
+            if (data['workflow'] == 'gentrans' || data['request_post']['workflow'] == 'gentrans') {
                 // workflow global var was getting set to false during
                 // gentrans batch, oddly enough...
 
@@ -192,8 +193,24 @@ function connectToSocket() {
 
                     batch_data.push(product_data);
 
-                    // TODO: Refactor this section
-                    // If p-chem data requested, make requests for products
+
+                }
+                else if (data.request_post.service == 'getChemInfo') {
+                    // add chem info data to correct product
+                    for (var parent_index in batch_data) {
+                        var parents_data_array = batch_data[parent_index];  // array of objects
+                        for (var product_index in parents_data_array) {
+                            var product_data_object = parents_data_array[product_index];
+                            if (data.request_post.chemical == product_data_object.smiles) {
+                                // add chem info to this product object:
+                                // batch_data[parent_index][product_index]
+                                $.extend(batch_data[parent_index][product_index], data.data);
+                            }
+                        }
+                    }
+
+
+                    // Make pchem request after cheminfo single chemical is collected...
                     if (Object.keys(checkedCalcsAndProps).length > 0) {
 
                         // getting pchem data for a batch chem's trans products..
@@ -202,19 +219,21 @@ function connectToSocket() {
 
                         // need to increase total_calls with batch chem's
                         // products and p-chem requests:
-                        total_calls = calls_tracker + calculateTotalCalls([product_data.length], checkedCalcsAndProps);
-                        // calls_tracker = total_calls - 1;
+                        // total_calls = calls_tracker + calculateTotalCalls([product_data.length], checkedCalcsAndProps);
+                        total_calls = calls_tracker + calculateTotalCalls([1], checkedCalcsAndProps);
                         calls_tracker = total_calls
                         sessionStorage.setItem('calls_tracker', calls_tracker);
                         sessionStorage.setItem('total_calls', total_calls);
 
                         var pchem_data = {
-                            'chemical': structure,
+                            'chemical': data.data['chemical'],
                             'ph': kowPH,
-                            'nodes': product_data,
+                            // 'nodes': product_data,
                             'pchem_request': checkedCalcsAndProps,
                             'run_type': run_type,
-                            'workflow': 'gentrans'
+                            'workflow': 'gentrans',
+                            'genKey': data.request_post['genKey'],
+                            'mass': data.data['mass']
                         };
 
                         var cache = [];
@@ -235,6 +254,8 @@ function connectToSocket() {
 
                     }
 
+
+
                 }
                 else {
 
@@ -242,8 +263,11 @@ function connectToSocket() {
                     // todo: prop keys for checking, refactor to js obj
 
                     // get genKey of incoming data object:
-                    var data_obj_genkey = data['node']['genKey'];
-                    var data_obj_smiles = data['node']['smiles'];  // this or data['chemical']?
+                    // var data_obj_genkey = data['node']['genKey'];
+                    // var data_obj_smiles = data['node']['smiles'];  // this or data['chemical']?
+
+                    var data_obj_genkey = data['genKey'];
+                    var data_obj_smiles = data['chemical'];
 
                     // add p-chem data to the right metabolite in batch_data array
                     for (var index in batch_data) {
@@ -363,7 +387,7 @@ function connectToSocket() {
 
             // Notify user that p-chem data is available for download for
             // gentrans single mode p-chem requests for products:
-            var is_gentrans_pchem = data['prop'] != 'products' && !(is_cheminfo);
+            var is_gentrans_pchem = data['prop'] != 'products' && !(is_cheminfo) && workflow == 'gentrans' && run_type == 'single';
             if (is_gentrans_pchem) {
 
                 var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Physicochemical data successfully retrieved!<br><br>The data can be downloaded at the top-right of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
@@ -374,7 +398,7 @@ function connectToSocket() {
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
-                $('#export_menu').css('position', 'relative');
+                $('#export_menu').css('position', 'relative').show();
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
             }
 
@@ -437,7 +461,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         'chemical': structure,
         'ph': kowPH,
         // 'node': node,
-        'pchem_request': checkedCalcsAndProps
+        'pchem_request': checkedCalcsAndProps,
+        'service': null
     };
     if (node != null) {
         var _node_data = {};
@@ -714,27 +739,30 @@ function organizeData(calc, prop, data) {
         }
     }
 
-    if (typeof data === "string" || data == null) {
+    if (typeof data === "string") {
         return data;
     }
 
     // For multiple pKa values in a cell..
+
+    if (data == null ) {
+        return "none";  // return "none" to pchem table cell
+    }
+
     var parsedData = "";
     for (item in data) {
-        if (data.hasOwnProperty(item) && data[item] != null) {
-            var itemVals = data[item];
-            for (var i = 0; i < itemVals.length; i++) {
-                var label = item + String(i + 1).sub() +  ': ';
-                try {
-                    parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
-                }
-                catch (e) {
-                    if (e instanceof TypeError) {
-                        parsedData += '<div class="pka-wrapper">' + label + itemVals[i] + '</div>';  // probably a message instead of Number   
-                    } 
-                }
-                
+        var itemVals = data[item];
+        for (var i = 0; i < itemVals.length; i++) {
+            var label = item + String(i + 1).sub() +  ': ';
+            try {
+                parsedData += '<div class="pka-wrapper">' + label + itemVals[i].toFixed(2) + '</div>';    
             }
+            catch (e) {
+                if (e instanceof TypeError) {
+                    parsedData += '<div class="pka-wrapper">' + label + itemVals[i] + '</div>';  // probably a message instead of Number   
+                } 
+            }
+            
         }
     }
     return parsedData;
@@ -761,6 +789,9 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                         num_props += 3;  // these chemaxon props have 3 methods
                     }
                     else { num_props += 1; }
+                }
+                else if (calc == "epi" && prop == "water_sol") {
+                    num_props += 2;  // epi's water_sol has 2 methods now..
                 }
                 else { num_props += 1; }
             }

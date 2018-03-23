@@ -626,7 +626,8 @@ function molecular_info_request_websocket(node) {
         'chemical': node.data.smiles,
         'is_node': true,
         'service': "getChemInfo",
-        'genKey': node['data']['genKey']
+        'genKey': node['data']['genKey'],
+        'workflow': 'gentrans'
     });
 
     // Send data to cts_nodejs server:

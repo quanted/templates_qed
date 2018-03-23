@@ -1,0 +1,860 @@
+<div id="hwbi-intro">
+    <p>Communities sit at the intersection where the natural, built and social environments meet. From creating jobs to
+        building greener infrastructure, many considerations are needed to yield the most sustainable decision outcomes
+        for a community. Understanding what aspects about your community you value and wish to sustain or improve may
+        help inform community planning decisions.</p>
+    <p>Indicators and indices can be used to assess various attributes about your community. Indicators summarize raw
+        measures (e.g., median income, disease prevalence) to help interpret data patterns and trends. For communities,
+        no single index or indicator set can offer a complete picture of status or conditions. However, an integrative
+        approach that synthesizes information from many different indicator sets can offer broader insight from multiple
+        viewpoints.</p>
+    <p>The Decision Integration for Strong Communities (DISC) application is a simple and intuitive tool designed to
+        bring together information from many indicator products to help characterize quality of life in your community
+        and present resources that may present ways to help improve aspects about your community that you value.</p>
+</div>
+
+<div id="disc-tabs">
+    <ul>
+        <li><a href="#about-tab" id="about-tab-link" class="disc-tab">About</a></li>
+        <li><a href="#community-snapshot-tab" id="community-snapshot-tab-link" class="disc-tab">Community Snapshot</a>
+        </li>
+        <li><a href="#customize-tab" id="customize-tab-link" class="disc-tab">Customize</a></li>
+        <li><a href="#compare-tab" id="compare-tab-link" class="disc-tab">Compare</a></li>
+        <li><a href="#resources-tab" id="resources-tab-link" class="disc-tab">Additional Resources</a></li>
+    </ul>
+    <div id="search_block" class="about_search">
+        <form id="search_form" action="#community-snapshot-tab">
+            <label for="search_form" id="search_label">What is the <b>DISC</b> profile of your
+                <b>community?</b></label>
+            <input type="text" id="search_field" placeholder="" name="location_input">
+            <button id="search_button" class="search_button epa-search-button" type="submit"
+                    onclick="setTimeout(getScoreData, 300); return false;">Search
+            </button>
+            <label for="search_form" id="search_placeholder">Enter your address, city, state, or zip code.</label>
+            <label id="search_error_notification">Your search could not be completed. Please try another
+                location.</label>
+        </form>
+        <button id="report_pdf" class="report_pdf_button" type="button">PDF Report</button>
+    </div>
+    <div id="about-tab" class="disc-body selected-tab">
+        <div id="about-content">
+            <div id="quote_body">
+                <div id="quote-1" class="quote">“It is not more bigness that should be our goal. We must attempt,
+                    rather, to bring people back to...the warmth of community, to the worth of individual effort and
+                    responsibility...and of individuals working together as a community, to better their lives and their
+                    children's future.”
+                    <span class="quote_author">--Robert F. Kennedy</span>
+                </div>
+                <div id="quote-2" class="quote">“Never doubt that a small group of thoughtful, committed, citizens can
+                    change the world. Indeed, it is the only thing that ever has.”
+                    <span class="quote_author">--Margaret Mead</span>
+                </div>
+                <div id="quote-3" class="quote">“One Love! One Heart! Let's get together and feel all right”
+                    <span class="quote_author">--Bob Marley, “One Love”</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="community-snapshot-tab" class="disc-body">
+        <div id="community-snapshot-content">
+            <div id="results_body">
+                <div id="snapshot_results">
+                    <div id="hwbi-score">
+                        <p id="location">Snapshot results for:<br>[location]</p>
+                        <div id="score_graph_div">
+                            <span class="score_indicator" id="score_indicator_span"></span>
+                            <p id="wellbeing-score">0</p>
+                            <p id="wellbeing-score-scale"><b>DISC Score</b><br>(Scale: 0 - 100)</p>
+                            <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p>
+                        </div>
+                        <div id="hwbi-info">
+                            <h4>DISC Score</h4>
+                            <p>The Decision Integration for Strong Communities (DISC) index is a summary measure that
+                                provides a profile about select community characteristics. The index is based on
+                                indicators and metrics derived from existing cultural, economic, health, and other
+                                related data. The DISC profile index provides a snapshot about quality of life
+                                characteristics common across all communities and is sensitive to changes in the
+                                economic, social and ecological environments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="wellbeing-scores">
+                    <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
+                    <button type="button" id="rank_btn"><b>Rank</b> <i>(What's this)</i></button>
+                    <div id="domain-scores">
+                        {#            Nature Block        #}
+                        <div id="nature-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
+                            <div id="nature_score" class="domain-score">0.0</div>
+                            <div id="nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar nature-bar" id="nature-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="nature_details" class="domain-description">
+                                <p>
+                                    Humans’ connection with nature is a subjective trait most easily explained by the
+                                    biophilia hypothesis. Biophilia is a term coined by prominent evolutionary biologist
+                                    and entomologist, Edward O. Wilson, who defined it as the “innately emotional
+                                    affiliation of human beings to other living organisms” and hypothesized that this
+                                    psychological, and possibly genetic, phenomena arose due to humans’ long time
+                                    interaction with the natural environment. Biophilia is most evident by the
+                                    popularity of zoos and outdoor activities and in people who have non-economic
+                                    motivations for the protection of natural areas and biodiversity, such as positive
+                                    experiences of an area, solastalgia, and having affection or sympathy for non- human
+                                    species.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/connection_to_nature.jpg"
+                                         alt="Connection to Nature">
+                                    <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
+                                </figure>
+                                <p>
+                                    Biophilia is also evident in other domains of well-being such as spiritual and
+                                    cultural fulfillment, education, health, and leisure time. Humans, however, are
+                                    experiencing an increasing disconnection with nature through urban development and
+                                    technology— especially noted in children as the “nature-deficit disorder” and
+                                    coincides with rising trends in obesity, attention deficit disorder, and depression.
+                                    An attempt to correct this growing disconnection and to incorporate the health of
+                                    the environment in land use planning is through “biophilic design”, which aims to
+                                    enhance human physical health, psychological benefits, and productivity by fostering
+                                    a human-nature connection. Although our detachment with nature will never completely
+                                    rid us of the desire to associate with nature, it can weaken our appreciation for
+                                    nature and decrease our well-being.
+                                </p>
+                                <p>
+                                    Economic and social services have significant direct and indirect effects on the
+                                    connection to nature domain. For example, economic programs and funding can increase
+                                    or decrease natural areas, either by putting aside more areas or decreasing those
+                                    areas through capital investment. Additionally, social services such as activism,
+                                    community and faith-based initiatives, justice (e.g., environmental justice), and
+                                    public works can affect policies that support ecosystems or can possibly be used as
+                                    indirect measures of our connection to nature.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Cultural Fulfillment Block         #}
+                        <div id="cultural-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
+                            <div id="cultural_score" class="domain-score">0.0</div>
+                            <div id="cultural_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="cultural_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar cultural-bar" id="cultural-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="cultural_details" class="domain-description">
+                                <p>
+                                    This domain captures metrics that measure opportunities that afford people and
+                                    communities access to fulfilling their cultural needs. Indicators are multi-faceted
+                                    and may represent cultural interests, cultural identity, and/or connection to nature
+                                    (i.e., visits to national parks). Cultural indicators encompass values- driven
+                                    metrics that examine the concepts of the “self” that centers around vital
+                                    interconnections with others and the environment.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/cultural_fulfillment.jpg"
+                                         alt="Cultural Fulfillment">
+                                    <figcaption>Courtesy of iStockphoto</figcaption>
+                                </figure>
+                                <p>
+                                    While there are many variations of the specific definition, few would argue the
+                                    important role of spirituality and culture within populations. Cultural values are
+                                    in many ways integral to vital communities, yet are rarely considered in most
+                                    well-being indices. Investment in museums, cultural centers, and other similar
+                                    gathering places offer educational opportunities to help mitigate inequities typical
+                                    of cultural exclusion. Faith- and community-based activities, such as festivals,
+                                    concerts, arts and crafts shows, etc., further strengthen social cohesion by
+                                    preserving cultural and spiritual heritage. Moreover, it is the environmental
+                                    culture that is often the harmonizing factor that supports community vitality when
+                                    obvious economic disparity would otherwise cause discord.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Education Block           #}
+                        <div id="education-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="education_data-title" class="domain-data-title">Education:</div>
+                            <div id="education_score" class="domain-score">0.0</div>
+                            <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar education-bar" id="education-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="education-slider-bar" class="rank-slider education-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="education_details" class="domain-description">
+                                <p>
+                                    The domain of education is defined as the outcomes derived from the formal and
+                                    informal transfer of knowledge and skills and is measured using standardized test
+                                    scores, literacy rates, educational attainment and participation, and various
+                                    social, emotional, and developmental aspects in childhood. Education has been
+                                    referred to as a basic capability leading to the expansion of other capabilities and
+                                    is fundamental to well-being. Educational progress and benefits influence other
+                                    well-being domains and may be measured at the individual level by economic returns
+                                    by subjective feelings of achievement and accomplishment, or at a societal level by
+                                    creating a skilled workforce with enhanced worker productivity, lower crime rates,
+                                    and greater civic participation.
+                                </p>
+                                <figure class="domain_image_right">
+                                    <img src="/static_qed/hwbi/disc/img/education.jpg"
+                                         alt="Education">
+                                    <figcaption>Courtesy of U.S. FWS</figcaption>
+                                </figure>
+                                <p>
+                                    Economic and social services provide funding and other programs that influence the
+                                    access to and opportunities for education. Educational services provide programs are
+                                    aimed at reaching more students, especially those with disabilities or other special
+                                    circumstances, and hiring qualified teachers. Community and faith-based initiatives
+                                    may also act in this manner to reach additional children and families. Communication
+                                    through public broadcasting and public service announcements helps educate the
+                                    public about various issues (e.g., public health issues). Financial assistance in
+                                    the form of grants, scholarships, and student loans is also essential to allow
+                                    opportunities for post-secondary education.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Health Block           #}
+                        <div id="health-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="health_data-title" class="domain-data-title">Health:</div>
+                            <div id="health_score" class="domain-score">0.0</div>
+                            <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar health-bar" id="health-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="health-slider-bar" class="rank-slider health-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="health_details" class="domain-description">
+                                <p>
+                                    The domain of healthy populations includes health outcome measures of personal
+                                    well-being, life expectancy and mortality, and physical and mental health
+                                    conditions. This domain also incorporates lifestyle behavior and healthcare, all of
+                                    which influences a population’s health status. Food utilization (a part of food
+                                    security) also falls into this domain because of its connection to healthy
+                                    behaviors. Other outside influences such as environmental quality (e.g., clean air
+                                    days, clean water, etc.) are captured through indicators of ecosystem services.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/health.jpg"
+                                         alt="Health">
+                                    <figcaption>Courtesy of iStockphoto</figcaption>
+                                </figure>
+                                <p>
+                                    The connections between economic services and human health are so numerous and
+                                    complex that an entire sub-discipline of economics, known as health economics, has
+                                    emerged. Economic assessments of health- related interventions are critical to
+                                    decision makers because expenditure on health care in the United States has outpaced
+                                    the general rate of inflation. Social services are also strongly tied to human
+                                    health. Many large organizations within the U.S. government were formed to protect
+                                    and enhance the health of the U.S. population, and several well-known private
+                                    organizations, such as the American Red Cross, United Way of America, and Ronald
+                                    McDonald House Charities, provide health-related services to populations in need.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Leisure Time Block           #}
+                        <div id="leisure-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
+                            <div id="leisure_score" class="domain-score">0.0</div>
+                            <div id="leisure_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="leisure_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar leisure-bar" id="leisure-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="leisure_details" class="domain-description">
+                                <p>
+                                    Leisure time is time that individuals have to voluntarily engage in pleasurable
+                                    activities when they are free from the demands of work or other responsibilities. It
+                                    is commonly deemed as necessary for basic survival and has increasingly been
+                                    referred to as a domain of the “good life”. Suggested metrics of this domain are the
+                                    amount of time spent on specific leisure activities, types of activities, frequency
+                                    of participation, and expenditures on leisure activities. Measures of work hours and
+                                    continuous sleep time can be used as surrogate measures indicating the amount of
+                                    time available for leisure activities. Enjoyable activities may also act as
+                                    “restorers” that facilitate the individual’s recovery from stress as the result of
+                                    positive social interactions or relaxation that lead to increased positive emotions.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/leisure_time.png"
+                                         alt="Leisure Time">
+                                    <figcaption>Courtesy of U.S. EPA</figcaption>
+                                </figure>
+                                <p>
+                                    Participation in leisure time activities has been positively linked to both physical
+                                    and mental health measures. Leisure time also provides for psychological detachment
+                                    from work which in turn promotes well-being and productivity. Leisure time
+                                    activities also provide opportunities for social interactions through group
+                                    participation (e.g., clubs, sports, religious organizations) and expand the size of
+                                    social networks, enhancing social cohesion. Higher income has been positively
+                                    associated with increased leisure time as it relates to more disposable income;
+                                    however, in the U.S. the cost of the loss of leisure time due to increased work
+                                    hours has continued to rise since the 1950s.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Living Standards Block           #}
+                        <div id="living-std-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="living-std_data-title" class="domain-data-title">Living Standards:</div>
+                            <div id="living-std_score" class="domain-score">0.0</div>
+                            <div id="living-std_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="living-std_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar living-std-bar" id="living-std-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="living-std-slider-bar" class="rank-slider living-std-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="living-std_details" class="domain-description">
+                                <p>
+                                    In the simplest of terms, living standards may be best described as “the physical
+                                    circumstances in which people live, the goods and services they are able to consume
+                                    and the economic resources to which they have access”. Living standard indicators
+                                    tend to be largely economic in nature, characterized by demography and geography.
+                                    Income level is the most dominate class of metrics used for evaluating standard of
+                                    living followed by living conditions which includes housing status, household
+                                    crowding (rooms per person), and state of housing repair. Home ownership, household
+                                    assets, and other measures of material affluence were used to evaluate wealth.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/living_standards.jpg"
+                                         alt="Living Standards">
+                                    <figcaption>Courtesy of Microsoft.com</figcaption>
+                                </figure>
+                                <p>
+                                    Economic and social services aim to improve the living standards of a population.
+                                    Economic services provide a means to accumulate and distribute wealth, while many
+                                    social services help to improve living conditions among the most impoverished within
+                                    the community.
+                                    Poverty metrics (e.g., income- and housing-related) figure promi- nently in living
+                                    standard assessments because there is a close relationship between standards of
+                                    living and attainment of basic human needs. However, wealth disparity alone cannot
+                                    fully account for standards of living. Current research suggests that
+                                    conceptualizing basic human needs in light of multi-dimensional well- being may
+                                    provide a more comprehensive picture relative to living standards. For example,
+                                    indices that exclude time use measures may be missing non-market activities that may
+                                    enhance standards of living without significantly contributing to household income.
+                                    Further, the perception of living standards is often an overlooked influence on a
+                                    population’s overall well-being.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Safety and Security Block           #}
+                        <div id="safety-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
+                            <div id="safety_score" class="domain-score">0.0</div>
+                            <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar safety-bar" id="safety-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="safety_details" class="domain-description">
+                                <figure class="domain_image_right">
+                                    <img src="/static_qed/hwbi/disc/img/safety.jpg"
+                                         alt="Safety">
+                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                </figure>
+                                <p>
+                                    Based on Maslow’s hierarchy of basic human needs, once physical needs are relatively
+                                    satisfied, safety needs take precedence. Personal security can be linked to
+                                    unemployment, poverty, education level and social cohesion, and is most often
+                                    evaluated using crime rates, number of accident-related injuries and deaths, and
+                                    perceived safety. In basic terms, safety and security can be described as freedom
+                                    from harm (physical security—personal and national) but is also described by
+                                    measures related to financial security. Economic security is evaluated in the event
+                                    of unemployment, sickness, widowhood, old age and disability. These measures can be
+                                    linked to economic services of employment and income and heavily associated with
+                                    social nets provided through the provisioning of social services — particularly
+                                    financial assistance and healthcare. Our sense of safety and security can be altered
+                                    in the wake of technological and natural disasters due to degradation of ecosystems,
+                                    economic loss, and increased reliance on social safety nets and recovery services.
+                                    From the ecosystem services perspective, clean water and air, sufficient food
+                                    production, and natural hazard protection significantly contribute to our sense of
+                                    safety and security through direct relationships to our health via exposure to
+                                    pathogens and contaminants, food supply, and prevention of loss of life and
+                                    property. Additionally, there is a comfort derived from knowing that we are not on
+                                    the brink of environmental problems and that a natural system will be conserved for
+                                    future generations.
+                                </p>
+                            </div>
+                        </div>
+                        {#            Social Cohesion Block           #}
+                        <div id="cohesion-block" class="domain-score-block">
+                            <button class="accordion domain-expand"></button>
+                            <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
+                            <div id="cohesion_score" class="domain-score">0.0</div>
+                            <div id="cohesion_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div class="score-bar cohesion-bar" id="cohesion-score-bar"></div>
+                            </div>
+                            <div class="slider-block">
+                                <span class="left-slider-legend">Least Valued</span>
+                                <div class="slider-container">
+                                    <div id="cohesion-slider-bar" class="rank-slider cohesion-slider"></div>
+                                </div>
+                                <span class="right-slider-legend">Most Valued</span>
+                            </div>
+                            <div id="cohesion_details" class="domain-description">
+                                <p>
+                                    The ties that bind humans together in society have a large bearing on our personal
+                                    well-being and the well- being of our community. A social network propagates
+                                    opportunities to enhance the quality of life to all of its members, and creates a
+                                    safety net for difficult times. A cohesive community allows open discussion and
+                                    resolution of difficult problems, and gives its members a sense of identity.
+                                </p>
+                                <figure class="domain_image_left">
+                                    <img src="/static_qed/hwbi/disc/img/social_cohesion.jpg"
+                                         alt="Social Cohesion">
+                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                </figure>
+                                <p>
+                                    Social participation of all concerned citizens is essential to obtaining
+                                    environmental well-being. Indicators of social cohesion vary greatly, with the most
+                                    common indicator being volunteering rates.
+                                    <br>
+                                    Measures of the health of one’s social network typically revolved around qualitative
+                                    assessments of existing relationships and quantitative assessments of the size of
+                                    the network. Feelings and behaviors associated with trust and reciprocity are often
+                                    used as a proxy for community cohesion. Divorce rates, migration patterns, family
+                                    demographics, and charitable contributions were some of the more objective measures
+                                    used to measure cohesiveness.
+                                </p>
+                                <p>
+                                    Social services can establish social norms that promote cohesion, repair and
+                                    strengthen family cohesion, and provide safe, equitable working environments which
+                                    foster healthy coworker relationship development.
+                                    Economic services impact social cohesion by creating equitable wages and
+                                    redistributing wealth, thereby relieving tensions between different social-economic
+                                    classes, and they allow businesses to generate excess revenue to be given back to
+                                    the community.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="customize-tab" class="disc-body">
+        <div id="customize-content">
+            <div id="customize_body">
+                <div id="customize_top">
+                    <div id="customize_data-title">
+                        <h4>Customizing the DISC profile score for <span
+                                id="customize_location">your community</span></h4>
+                    </div>
+                    <div id="customize_intro">
+                        All values used in the DISC profile are based on county-scale baseline data. Adjusting values 
+                        that contribute to the summary index is one way to incorporate information that may not be 
+                        presently considered in calculating the indicators used for DISC. Here you have the opportunity 
+                        to adjust the indicator scores to better reflect more local conditions in the individual 
+                        community characteristic measures.<br /><br />
+						Click on a circle labeled with the characteristic that you are interested in changing to display 
+						the related indicators. Use the sliders associated with each indicator to increase or decrease 
+						its score to adjust the overall community characteristic value.
+                    </div>
+                </div>
+                <div id="customize_bottom">
+                    <div id="customize_domains">
+                        <span id="Connection" class="domain-icon">Nature</span>
+                        <span id="Culture" class="domain-icon">Cultural Fulfillment</span>
+                        <span id="Education" class="domain-icon">Education</span>
+                        <span id="Health" class="domain-icon">Health</span>
+                        <span id="Leisure" class="domain-icon">Leisure Time</span>
+                        <span id="Living" class="domain-icon">Living Standards</span>
+                        <span id="Safety" class="domain-icon">Safety and Security</span>
+                        <span id="Social" class="domain-icon">Social Cohesion</span>
+                    </div>
+                    <div id="customize_domain_score">
+                        <div id="customize_domain_arrow">
+                            <span id="arrow_initial"></span>
+                            <span id="arrow_adjusted"></span>
+                            <span id="score_initial">0.0</span>
+                            <span id="score_adjusted">0.0</span>
+                        </div>
+                        <div id="customize_domain_bar"></div>
+                    </div>
+                    <div id="customize_domain_details"></div>
+                    <div id="customize_domain_indicators">
+                        <div id="connection_indicators" class="row cols-3 domain_indicator">
+                            <div class="col size-1of3">
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures of spiritual fulfillment and connection to life itself.">
+	                                <div class="indicator_data-title">Biophilia:</div>
+	                                <span id="nature_biophilia_value" class="indicator_value"></span>
+	                                <div id="nature_biophilia_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                            <div class="col size-1of3">
+	                        	<h4 id="connection_indicators_title"></h4>
+	                        	<div id="connection_indicators_description"></div>
+	                        </div>
+                        </div>
+                        <div id="culture_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures of individuals who participate in performing arts along with congregational adherence.">
+	                                <div class="indicator_data-title">Activity Participation:</div>
+	                                <span id="culture_activity_value" class="indicator_value"></span>
+	                                <div id="culture_activity_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                            <div class="col size-1of3">
+	                        	<h4 id="culture_indicators_title"></h4>
+	                        	<div id="culture_indicators_description"></div>
+	                        </div>
+                        </div>
+                        <div id="education_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures the percentages at or above achievement levels in the skills of mathematics, reading, and science at the 4th and 8th grade levels.">
+	                                <div class="indicator_data-title">Basic Educational Knowledge and Skills of Youth:</div>
+	                                <span id="education_knowledge_value" class="indicator_value"></span>
+	                                <div id="education_knowledge_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures bullying, child physical health, social relationships and emotional well-being, and preprimary education and care.">
+	                                <div class="indicator_data-title">Social, Emotional and Developmental Aspects:</div>
+	                                <span id="education_social_value" class="indicator_value"></span>
+	                                <div id="education_social_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                            <div class="col size-1of3">
+	                        	<h4 id="education_indicators_title"></h4>
+	                        	<div id="education_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures of adult literacy estimates, young adult participation in post-secondary education, completion of high school, and young adult completion of a bachelor's degree or higher.">
+	                                <div class="indicator_data-title">Participation and Attainment:</div>
+	                                <span id="education_participation_value" class="indicator_value"></span>
+	                                <div id="education_participation_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>                            
+                        </div>
+                        <div id="health_indicators" class="row cols-3 domain_indicator">
+                            <div class="col size-1of3">
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures the percentage of the population with a regular family doctor and are generally satisfied with the quality of healthcare.">
+	                                <div class="indicator_data-title">Healthcare:</div>
+	                                <span id="health_healthcare_value" class="indicator_value"></span>
+	                                <div id="health_healthcare_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Includes the Healthy Behaviors Index and measures of alcohol consumption, teen pregnancy, and teen smoking rates.">
+	                                <div class="indicator_data-title">Lifestyle and Behavior:</div>
+	                                <span id="health_lifestyle_value" class="indicator_value"></span>
+	                                <div id="health_lifestyle_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="row cols-1 indicator_block"
+	                                 data-title="Measures the prevalence of major disease types and health conditions such as adult asthma, childhood asthma, cancer, depression, diabetes, heart attack, coronary heart disease, obesity, and stroke.">
+	                                <div class="indicator_data-title">Phsical and Mental Health Conditions:</div>
+	                                <span id="health_conditions_value" class="indicator_value"></span>
+	                                <div id="health_conditions_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                        	<h4 id="health_indicators_title"></h4>
+	                        	<div id="health_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measures of mortality rates related to asthma, cancer, diabetes, heart disease, suicide. Also includes infant mortality and general life expectancy.">
+	                                <div class="indicator_data-title">Life Expectancy and Mortality:</div>
+	                                <span id="health_life_expectancy_value" class="indicator_value"></span>
+	                                <div id="health_life_expectancy_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1" 
+	                            data-title="Measures of personal happiness and life satisfaction.">
+	                                <div class="indicator_data-title">Personal Well-Being:</div>
+	                                <span id="health_personal_value" class="indicator_value"></span>
+	                                <div id="health_personal_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div id="leisure_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measures the number of individuals who participated in physical activities not related to work such as running, golf, and hiking or vacations away from home.">
+	                                <div class="indicator_data-title">Activity Participation:</div>
+	                                <span id="leisure_activity_value" class="indicator_value"></span>
+	                                <div id="leisure_activity_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of adults who actively work long hours, work standard hours, and adults who provide care to senior citizens.">
+	                                <div class="indicator_data-title">Working Age Adults:</div>
+	                                <span id="leisure_working_age_value" class="indicator_value"></span>
+	                                <div id="leisure_working_age_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                        	<h4 id="leisure_indicators_title"></h4>
+	                        	<div id="leisure_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1" 
+	                            	 data-title="Measures the time spent on leisure activities.">
+	                                <div class="indicator_data-title">Time Spent:</div>
+	                                <span id="leisure_time_value" class="indicator_value"></span>
+	                                <div id="leisure_time_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div id="living_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Includes measures of housing affordability and food security.">
+	                                <div class="indicator_data-title">Basic Necessities:</div>
+	                                <span id="living_basic_value" class="indicator_value"></span>
+	                                <div id="living_basic_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1" 
+	                            	 data-title="Measures median home value and mortgage debt.">
+	                                <div class="indicator_data-title">Wealth:</div>
+	                                <span id="living_wealth_value" class="indicator_value"></span>
+	                                <div id="living_wealth_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                        	<h4 id="living_indicators_title"></h4>
+	                        	<div id="living_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of personal economy, including the incidence and persistence levels of low income and median household income.">
+	                                <div class="indicator_data-title">Income:</div>
+	                                <span id="living_income_value" class="indicator_value"></span>
+	                                <div id="living_income_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1" 
+	                            	 data-title="Measures job quality and job satisfaction.">
+	                                <div class="indicator_data-title">Work:</div>
+	                                <span id="living_work_value" class="indicator_value"></span>
+	                                <div id="living_work_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div id="safety_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measures the range of property and violent crimes along with accidental or natural hazard related morbidity and mortality.">
+	                                <div class="indicator_data-title">Actual Safety:</div>
+	                                <span id="safety_actual_value" class="indicator_value"></span>
+	                                <div id="safety_actual_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of social vulnerability to environmental factors.">
+	                                <div class="indicator_data-title">Risk:</div>
+	                                <span id="safety_risk_value" class="indicator_value"></span>
+	                                <div id="safety_risk_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                        	<h4 id="safety_indicators_title"></h4>
+	                        	<div id="safety_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                            	 data-title="Measures perceived overall community safety.">
+	                                <div class="indicator_data-title">Perceived Safety:</div>
+	                                <span id="safety_perceived_value" class="indicator_value"></span>
+	                                <div id="safety_perceived_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div id="social_indicators" class="row cols-3 domain_indicator">
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measures overall trust, city satisfaction, the action of helping others, a sense of belonging, and discrimination.">
+	                                <div class="indicator_data-title">Attitude Toward Others and the Community:</div>
+	                                <span id="social_attitude_value" class="indicator_value"></span>
+	                                <div id="social_attitude_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of family connectedness including parent-child reading activities, the frequency of at-home meals, and measures exceeded screen time guidelines.">
+	                                <div class="indicator_data-title">Family Bonding:</div>
+	                                <span id="social_family_value" class="indicator_value"></span>
+	                                <div id="social_family_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of community connectedness based on percentage of the population that have over six close friends and relatives.">
+	                                <div class="indicator_data-title">Social Support:</div>
+	                                <span id="social_support_value" class="indicator_value"></span>
+	                                <div id="social_support_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                        	<h4 id="social_indicators_title"></h4>
+	                        	<div id="social_indicators_description"></div>
+	                        </div>
+	                        <div class="col size-1of3">
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of individuals who hold interest in politics, registered voters, satisfaction with democracy, trust in the government, individuals who hold a voice in government decisions, and general voter turnout.">
+	                                <div class="indicator_data-title">Democratic Engagement:</div>
+	                                <span id="social_democratic_value" class="indicator_value"></span>
+	                                <div id="social_democratic_slider" class="indicator_slider"></div>
+	                            </div>
+	                            <div class="indicator_block row cols-1"
+	                                 data-title="Measure of community involvement through participation in group activities, volunteering, and overall participation in organized, extracurricular activities.">
+	                                <div class="indicator_data-title">Social Engagement:</div>
+	                                <span id="social_engagement_value" class="indicator_value"></span>
+	                                <div id="social_engagement_slider" class="indicator_slider"></div>
+	                            </div>
+	                        </div>
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="compare-tab" class="disc-body">
+        <h4>Compare DISC Scores</h4>
+        <p>The DISC profile and related characteristic scores may be used to understand aspects that are potentially
+            influencing your community's DISC profile and to see how these characteristics may differ in other
+            communities. These comparisons may help identify possible improvement opportunities to explore as well as
+            provide context for interpreting DISC scores.</p>
+        <div class="compare-communities-container">
+            <div class="row cols-5 community-row">
+                <div class="col size-2of5 community-col">Community</div>
+                <div class="col size-1of5">
+                    <button id="community-close-button-0" class="close-compare-search" data-community="0">&#215;
+                    </button>
+                    <div id="community-location-0" class="community-location"></div>
+                    <button id="community-button-0" class="add-community" data-community="0">Add Community</button>
+                    <div class="add-community-search">
+                        <input id="compare-search-0" class="compare-search-input" type="text" autocomplete="off">
+                        <button class="compare-search-button" data-community="0">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
+                    </div>
+                </div>
+                <div class="col size-1of5">
+                    <button id="community-close-button-1" class="close-compare-search" data-community="1">&#215;
+                    </button>
+                    <div id="community-location-1" class="community-location"></div>
+                    <button id="community-button-1" class="add-community button-disabled" data-community="1" disabled>
+                        Add Community
+                    </button>
+                    <div class="add-community-search">
+                        <input id="compare-search-1" class="compare-search-input" type="text" autocomplete="off">
+                        <button class="compare-search-button" data-community="1">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
+                    </div>
+                </div>
+                <div class="col size-1of5">
+                    <button id="community-close-button-2" class="close-compare-search" data-community="2">&#215;
+                    </button>
+                    <div id="community-location-2" class="community-location"></div>
+                    <button id="community-button-2" class="add-community button-disabled" data-community="2" disabled>
+                        Add Community
+                    </button>
+                    <div class="add-community-search">
+                        <input id="compare-search-2" class="compare-search-input" type="text" autocomplete="off">
+                        <button class="compare-search-button" data-community="2">Search</button>
+                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="compare-search-error"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cols-5 community-row">
+                <div class="col size-2of5 community-col">HWBI Score</div>
+                <div class="col size-1of5 compare-hwbi-score" id="compare-score-0"></div>
+                <div class="col size-1of5 compare-hwbi-score" id="compare-score-1"></div>
+                <div class="col size-1of5 compare-hwbi-score" id="compare-score-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Connection to Nature</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Cultural Fulfillment</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Education</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-education-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-education-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-education-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Health</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-health-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-health-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-health-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Leisure Time</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Living Standards</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Safety &amp; Security</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-safety-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-safety-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-safety-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col-bottom">Social Cohesion</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-2"></div>
+            </div>
+        </div>
+    </div>
+    <div id="resources-tab" class="disc-body">
+        <div id="resources-content"></div>
+    </div>
+</div>

@@ -218,8 +218,21 @@
 
     $(document).ready(function () {
         guid = getCookie('task_id');
-        $('#processID').html(guid);
-        setTimeout(checkProcessStatus, timeout);
+        if(guid === "1234567890"){
+            $('#processID').html("");
+            $('#processStatus').html("<div id='completedProcess'>The task failed to start.</div>");
+        }
+        else {
+            $('#processID').html(guid);
+            setTimeout(checkProcessStatus, timeout);
+
+            // Directly show results link, used when celery not being given task
+            {#var watershed_url = "/pram/sam/watershed/" + guid;#}
+            {#var json_url = "/pram/rest/pram/sam/data/" + guid;#}
+            {#$('#processStatus').html(#}
+            {#    "<div id='completedProcess'><a href=" + watershed_url + ">Watershe Results Page</a><br><a href=" + json_url + ">JSON Results</a></div>"#}
+            {#);#}
+        }
     });
 
     function getCookie(name) {
@@ -238,11 +251,11 @@
     }
 
     function checkProcessStatus() {
-        var statusUrl = "/rest/ubertool/sam/status/" + guid;     // Configure status url endpoint using guid.
+        var statusUrl = "/pram/rest/pram/sam/status/" + guid;     // Configure status url endpoint using guid.
         attemptCount += 1;
         var pendingCount = 0;
 {#        if(attemptCount >= 3){      // TESTING#}
-{#            $('#processStatus').html("<div id='processCompleted'><a href='/ubertool/sam/watershed'>Completed</a></div>");#}
+{#            $('#processStatus').html("<div id='processCompleted'><a href='/pram/sam/watershed'>Completed</a></div>");#}
 {#            return false;#}
 {#        }#}
         console.log("Process check #: " + attemptCount);
@@ -255,7 +268,7 @@
                     if (data['task_status'] === "PENDING") {
                         pendingCount += 1;
                         if(pendingCount >= 10){
-                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding task.</div>");
+                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding the task.</div>");
                         }else {
                             setTimeout(checkProcessStatus, timeout);
                         }
@@ -265,15 +278,22 @@
                     }
                     else if (data['task_status'] === "SUCCESS") {
                         // Set processStatus to 'Completed' with a clickable link to sam/watershed page
-                        var watershed_url = "/ubertool/sam/watershed/" + guid;
+                        var watershed_url = "/pram/sam/watershed/" + guid;
                         $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Completed</a></div>");
+                        var json_url = "/pram/rest/pram/sam/data/" + guid;
+                        $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Watershe Results Page</a><br><a href=" + json_url + ">JSON Results</a></div>");
                     }
                     else if (data['task_status'] === "FAILURE") {
                         // No process found for the provided guid
                         $('#processStatus').html("<div id='invalidProcess'>Task failed to complete.</div>");
                     }
                     else {
-                        setTimeout(checkProcessStatus, timeout);
+                        pendingCount += 1;
+                        if(pendingCount >= 10){
+                            $('#processStatus').html("<div id='completedProcess'>There was a problem finding the task.</div>");
+                        }else {
+                            setTimeout(checkProcessStatus, timeout);
+                        }
                     }
                 }
                 else{

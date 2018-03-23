@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	$.ajax({
 		type: 'GET',
-		url: '/ubertool/{{ model }}/history/query',
+		url: '/pram/{{ model }}/history/query',
 		beforeSend:function(){
 			// this is where we append a loading image
 			$('#ajax-panel').html('<div class="loading"><img id="ajax_loader" src="/static/images/loader.gif" alt="Loading..." /></div>');

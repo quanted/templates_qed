@@ -102,9 +102,11 @@ $(document).ready(function() {
 
 		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
 
+		var uploaded_chems = $('#batch_list li');
+
 		// only allow ten max for now:
-		if (batch_chems.length > 10) {
-			alert("Early batch version is only accepting a maximum of 10 chemicals at a time. This will be increased in the near future. Try reducing the number of chemicals in the file, refresh the page, and try again..");
+		if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
+			alert("Only a maximum of 10 chemicals can be uploaded in batch mode at this time.");
 			return;
 		}
 

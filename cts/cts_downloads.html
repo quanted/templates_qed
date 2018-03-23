@@ -73,7 +73,7 @@ $(document).ready(function () {
     	json_data['run_data'] = run_data;
 
 		var cache = [];
-		json_data = JSON.stringify(json_data, function(key, value) {
+		var json_data_string = JSON.stringify(json_data, function(key, value) {
 		    if (typeof value === 'object' && value !== null) {
 		        if (cache.indexOf(value) !== -1) {
 		            return;  // Circular reference found, discard key
@@ -84,7 +84,7 @@ $(document).ready(function () {
 		});
 		cache = null;  // Enable garbage collection
 
-    	return json_data;
+    	return json_data_string;
 	}
 
 

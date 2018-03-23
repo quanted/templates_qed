@@ -3,109 +3,112 @@
         width: 100%;
         height: 450px;
     }
+
     #basemaps-wrapper {
         background: white;
         padding: 10px;
         width: 100%;
-	}
-{#    remove all EPA css transitions for leaflet map#}
+    }
+
+    {#    remove all EPA css transitions for leaflet map#}
     * {
-         -o-transition-property: none !important;
-         -moz-transition-property: none !important;
-         -ms-transition-property: none !important;
-         -webkit-transition-property: none !important;
-         transition-property: none !important;
+        -o-transition-property: none !important;
+        -moz-transition-property: none !important;
+        -ms-transition-property: none !important;
+        -webkit-transition-property: none !important;
+        transition-property: none !important;
     }
 </style>
 
 <head>
 
-<!-- jquery -->
-<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-<!-- datatables import -->
-<link rel="stylesheet" href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
-<script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
+    <!-- datatables import -->
+    <link rel="stylesheet"
+          href="https://www.epa.gov/sites/all/libraries/js/datatables/media/css/jquery.dataTables.min.css">
+    <script src="https://www.epa.gov/sites/all/libraries/js/datatables/media/js/jquery.dataTables.min.js"></script>
 
-<!-- local js -->
-<script src="/static_qed/cyan/scripts/myjson.js"></script>
+    <!-- local js -->
+    <script src="/static_qed/cyan/scripts/myjson.js"></script>
 
 
 </head>
 <body>
-  <div class="panel-display panel-1col clearfix" >
+<div class="panel-display panel-1col clearfix">
     <div class="panel-panel panel-col">
 
         <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.css">
-	<script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+        <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.1/esri-leaflet.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.css">
+        <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.1/esri-leaflet-geocoder.js"></script>
 
         <!--- content div -->
         <div class="col-md-10">
-          <div class="box multi news">
-            <div class="pane-content" id="mapDiv">
-              <p><strong>Click the map</strong> to view the most recent weekly cyanobacteria concentration estimate.</p>
-                <!-- leaflet map div -->
-                <div id="map"></div>
-                <!-- basemap wrapper -->
-                <div id="basemaps-wrapper" class="leaflet-bar">
-                  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-                    <option value="Imagery">Imagery</option>
-                    <option value="Topographic">Topographic</option>
-                    <option value="Streets">Streets</option>
-                    <option value="NationalGeographic">National Geographic</option>
-                    <option value="ShadedRelief">Shaded Relief</option>
-                  </select>
-                </div>
-                <br>
-                <!-- datatables div -->
-                <div>
-                <table id="cyan_data" width="90%"></table>
+            <div class="box multi news">
+                <div class="pane-content" id="mapDiv">
+                    <p><strong>Click the map</strong> to view the most recent weekly cyanobacteria concentration
+                        estimate.</p>
+                    <!-- leaflet map div -->
+                    <div id="map"></div>
+                    <!-- basemap wrapper -->
+                    <div id="basemaps-wrapper" class="leaflet-bar">
+                        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                            <option value="Imagery">Imagery</option>
+                            <option value="Topographic">Topographic</option>
+                            <option value="Streets">Streets</option>
+                            <option value="NationalGeographic">National Geographic</option>
+                            <option value="ShadedRelief">Shaded Relief</option>
+                        </select>
+                    </div>
+                    <br>
+                    <!-- datatables div -->
+                    <div>
+                        <table id="cyan_data" width="90%"></table>
+                    </div>
                 </div>
             </div>
-          </div>
-         </div>
+        </div>
 
         <script>
 
             //get current date
             var today = new Date();
             var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+            var mm = today.getMonth() + 1; //January is 0!
             var yyyy = today.getFullYear();
 
-            if(dd<10) {
-                dd='0'+dd
+            if (dd < 10) {
+                dd = '0' + dd
             }
 
-            if(mm<10) {
-                mm='0'+mm
+            if (mm < 10) {
+                mm = '0' + mm
             }
 
-            date = yyyy+'-'+mm+'-'+dd;
+            date = yyyy + '-' + mm + '-' + dd;
             console.log(date);
 
 
             //initialize the map
-            var map = L.map('map', { renderer: L.svg({ padding: 100 }) }).setView([28.20322, -81.60198], 7);
+            var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([28.20322, -81.60198], 7);
 
             L.esri.basemapLayer('Imagery')
-            .addTo(map);
+                .addTo(map);
 
 
             //generate map "pop-up" box
             var popup = L.popup();
 
             var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/M20110012011007.L3m_7D_CYAN_CI_cyano_CYAN_CONUS_300m_7_5.png',
-{#            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.2012094.0403.1551C.L3.EF3.v670.CIcyano2.png',#}
-{#           var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.'+yyyy+'097.'+mm+dd+'.1541C.L3.EF3.v670.CIcyano1.png',#}
-{#                imageBounds = [[26.387, -82.445], [30.614, -79.852]]; <--- lower left then upper right#}
+                {#            var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.2012094.0403.1551C.L3.EF3.v670.CIcyano2.png',#}
+                {#           var imageUrl = 'https://cyan.epa.gov/cyan/cyano/location/images/envisat.'+yyyy+'097.'+mm+dd+'.1541C.L3.EF3.v670.CIcyano1.png',#}
+                {#                imageBounds = [[26.387, -82.445], [30.614, -79.852]]; <--- lower left then upper right#}
                 imageBounds = [[25.1, -85.2], [30.38, -79.47]];
-
-
 
 
             //confirm example json data loaded
@@ -118,36 +121,41 @@
             function onMapClick(e) {
                 L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
-                var mylatlong = {"latitude": (e.latlng.lat.toString()),
-                     "longitude": (e.latlng.lng.toFixed(5).toString()),
-                     "date": date
+                var mylatlong = {
+                    "latitude": (e.latlng.lat.toString()),
+                    "longitude": (e.latlng.lng.toFixed(5).toString()),
+                    "date": date
+                };
+                var csrfToken = getCookie('csrftoken');
+                //ajax POST request lat long data to django
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken
+                    },
+                    url: "rest/location/data/",
+                    dataType: "json",
+                    data: mylatlong,
+                    success: function (json, status, jqXHR) {
+                        myjson = json;
+
+                        //verify myjson variable updated after click
+                        console.log(myjson);
+                        cyanValue = Math.floor(myjson.outputs[0].cellConcentration);
+                        lakeName = myjson.metaInfo.locationName;
+                        console.log(lakeName, cyanValue);
+
+                        popup
+                            .setLatLng(e.latlng)
+                            .setContent(cyanValue.toString() + " cyano cells/ml (" + lakeName.toString() + " lat/long " + e.latlng.lat.toFixed(3).toString() + ", " + e.latlng.lng.toFixed(3).toString() + ")")
+                            .openOn(map);
+
+                    },
+                    error: function (jqXHR, status) {
+                        console.log("onMapClick failed: " + status);
+                        return null;
                     }
-
-                    //ajax POST request lat long data to django
-                    $.ajax({
-                        type:"POST",
-                        url: "rest/location/data",
-                        dataType: "json",
-                        data: mylatlong,
-                        success: function(json, status, jqXHR) {
-                            myjson = json;
-
-                            //verify myjson variable updated after click
-                            console.log(myjson);
-                            cyanValue = Math.floor(myjson.meanCellConcentration);
-                            lakeName = myjson.name;
-                            console.log(lakeName, cyanValue);
-
-                            popup
-                                .setLatLng(e.latlng)
-                                .setContent(cyanValue.toLocaleString() + " cyano cells/ml (" + lakeName.toLocaleString() + " lat/long " + e.latlng.lat.toFixed(3).toString() + ", "+ e.latlng.lng.toFixed(3).toString() + ")")
-                                .openOn(map);
-
-                        },
-                        error: function(jqXHR, status) {
-                            return null;
-                        }
-                    })
+                })
             }
 
             map.on('click', onMapClick);
@@ -158,16 +166,16 @@
 
             var searchControl = L.esri.Geocoding.geosearch({
                 providers: [
-                  arcgisOnline,
-                  L.esri.Geocoding.featureLayerProvider({
-                      url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
-                      searchFields: ['Name', 'Organization'],
-                      label: 'GIS Day Events',
-                      bufferRadius: 5000,
-                      formatSuggestion: function(feature){
-                          return feature.properties.Name + ' - ' + feature.properties.Organization;
-                      }
-                  })
+                    arcgisOnline,
+                    L.esri.Geocoding.featureLayerProvider({
+                        url: 'https://services.arcgis.com/uCXeTVveQzP4IIcx/arcgis/rest/services/gisday/FeatureServer/0/',
+                        searchFields: ['Name', 'Organization'],
+                        label: 'GIS Day Events',
+                        bufferRadius: 5000,
+                        formatSuggestion: function (feature) {
+                            return feature.properties.Name + ' - ' + feature.properties.Organization;
+                        }
+                    })
                 ]
             }).addTo(map);
 
@@ -197,10 +205,25 @@
                 setBasemap(basemap);
             }
 
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
         </script>
 
     </div>
-  </div>
+</div>
 
 </body>
 </html>

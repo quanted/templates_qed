@@ -106,17 +106,17 @@
                                                                                             id="{{ valueValue }}"
                                                                                             class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}"
                                                                                             title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
-                        {% if MODEL == "hydrology" and valueValue == MODEL %}
+                        {% if MODEL == "hydrology" and valueValue == "hydrology/" %}
                             <ul class="menu">
-                                <li class="menu-item"><a href="/hms/{{ MODEL }}/evapotranspiration"
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/evapotranspiration/"
                                                          title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "evapotranspiration" %} active-trail active{% endif %}">Evapotranspiration</a>
                                 </li>
-                                <li class="menu-item"><a href="/hms/{{ MODEL }}/precipitation"
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/precipitation/"
                                                          title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "precipitation" %} active-trail active{% endif %}">Precipitation</a>
                                 </li>
-                                <li class="menu-item"><a href="/hms/{{ MODEL }}/soilmoisture"
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/soilmoisture/"
                                                          title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "soilmoisture" %} active-trail active{% endif %}">Soil
                                     Moisture</a></li>
@@ -124,11 +124,11 @@
                                                          title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "subsurfaceflow" %} active-trail active{% endif %}">Subsurface
                                     Flow</a></li>
-                                <li class="menu-item"><a href="/hms/{{ MODEL }}/surfacerunoff"
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/surfacerunoff/"
                                                          title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "surfacerunoff" %} active-trail active{% endif %}">Surface
                                     Runoff</a></li>
-                                <li class="menu-item"><a href="/hms/{{ MODEL }}/temperature" title="{{ valueKey|safe }}"
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/temperature/" title="{{ valueKey|safe }}"
                                                          class="menu-link{% if SUBMODEL == "temperature" %} active-trail active{% endif %}">Temperature</a>
                                 </li>
                             </ul>
