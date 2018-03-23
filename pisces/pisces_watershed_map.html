@@ -454,7 +454,7 @@
                 while (left <= right) {
                     var mid = Math.floor((left + right) / 2);
                     if(huc8Layer.hasLayer(mid)) {
-                        var midValue = Number(huc8Layer.getLayer(mid).feature.properties.HUC8);
+                        var midValue = Number(huc8Layer.getLayer(mid).feature.properties.HUC_8);
                         if (Number(midValue) === Number(value)) {
                             return mid;
                         }
@@ -477,12 +477,12 @@
             function onEachFeatureClick(feature, layer) {
                 layer.on('click', function (e) {
                     $('.fishSearchBox').val("");
-                    if (this.currentHUC !== feature.properties.HUC8 || this.currentHUC === null) {
-                        this.currentHUC = feature.properties.HUC8;
+                    if (this.currentHUC !== feature.properties.HUC_8 || this.currentHUC === null) {
+                        this.currentHUC = feature.properties.HUC_8;
                         var hucs = [];
-                        hucs.push(feature.properties.HUC8);
+                        hucs.push(feature.properties.HUC_8);
                         selectHUCs(hucs);
-                        getFishDataonMapClick(feature.properties.HUC8);
+                        getFishDataonMapClick(feature.properties.HUC_8);
                     }
                     else {
                         $('.fishTable').closest('div').hide();
@@ -758,7 +758,7 @@
                 console.log(fishrequest);
                 $.ajax({
                     type: "POST",
-                    url: "/pisces/rest/api/v1/fish/properties/names",
+                    url: "/pisces/rest/api/v1/fish/properties/names/",
                     data: fishrequest,
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",

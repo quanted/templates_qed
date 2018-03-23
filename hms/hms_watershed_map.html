@@ -247,13 +247,74 @@
                             $('#hucName').html(huc_data["features"][0]["attributes"]["HU_" + tempHuc + "_NAME"]);
                             $('#hucArea').html(huc_data["features"][0]["attributes"]["AREA_SQKM"]);
                             map.fitBounds(selectedHuc.getBounds());
+                            getRiver(latitude, longitude);
                         },
                         error: function () {
                             $('#hucNumber').html("ERROR: Unable to download data for selected HUC");
                         }
                     })
                 }
+
+                function getRiver(latitude, longitude) {
+                    var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+                    var ptIndexParams = {
+                        'pGeometry': 'POINT(' + longitude + ' ' + latitude + ')'
+                        , 'pGeometryMod': 'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+                        , 'pPointIndexingMethod': 'DISTANCE'
+                        , 'pPointIndexingMaxDist': 25
+                        , 'pOutputPathFlag': 'TRUE'
+                        , 'pReturnFlowlineGeomFlag': 'TRUE'
+                        , 'optOutCS': 'SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+                        , 'optOutPrettyPrint': 0
+                    };
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        jsonp: true,
+                        data: ptIndexParams,
+                        async: false,
+                        success: function (data, status, jqXHR) {
+                            var streamData = JSON.parse(data);
+                            delineateWatershed(streamData.output.start_point.coordinates[0], streamData.output.start_point.coordinates[1]);
+                            return data;
+                        },
+                        error: function (jqXHR, status) {
+                            $('#comId').html("Error attempting to get river data.");
+                            return null;
+                        }
+                    });
+
+                }
+
+                function delineateWatershed(latitude, longitude) {
+                    var url = "http://127.0.0.1:8000/hms/rest/watershed_delineation?latitude=" + latitude + "&longitude=" + longitude;
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        jsonp: true,
+                        async: false,
+                        success: function (data, status, jqXHR) {
+                            L.geoJSON(data.featurecollection[0], {
+                                style: {
+                                    fillColor: '#7F203A',
+                                    weight: .5,
+                                    opacity: 0.9,
+                                    color: 'white',
+                                    fillOpacity: 0.5
+                                }
+                            }).addTo(map);
+                            return null;
+                        },
+                        error: function (jqXHR, status) {
+                            return null;
+                        }
+                    });
+                }
             });
+
+
         </script>
 
     </div>
