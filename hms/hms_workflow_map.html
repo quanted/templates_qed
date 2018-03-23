@@ -84,6 +84,16 @@
                         <h3 id="options-title">Options</h3>
                         <div id="input-options" class="workflow-options">
                             <p>Input and output options based on the selected dataset and source.</p>
+                            <label for="temporal-resolution">Time Step Resolution:</label>
+                            <select id="temporal-resolution">
+                                <option value="hourly">Hourly</option>
+                                <option value="daily" selected>Daily</option>
+                            </select>
+                            <label for="time-localized">Time set to local timezone:</label>
+                            <select id="time-localized">
+                                <option value="true" selected>True</option>
+                                <option value="false">False</option>
+                            </select>
                         </div>
                     </div>
                     <div id="data-request" class="button-div">
