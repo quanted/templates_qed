@@ -13,11 +13,23 @@
     <script src="https://unpkg.com/esri-leaflet@2.1.3/dist/esri-leaflet.js"
             integrity="sha512-pijLQd2FbV/7+Jwa86Mk3ACxnasfIMzJRrIlVQsuPKPCfUBCDMDUoLiBQRg7dAQY6D1rkmCcR8286hVTn/wlIg=="
             crossorigin=""></script>
+
+    <!-- Load Google charts api -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>
 <div id="startup-div"></div>
 <div id="loading-div">
     <div id="loading"></div>
+</div>
+<div id="data-display">
+    <span id="data-display-exit" onclick="closeData();return false;">x</span>
+    <h3>Workflow Metadata</h3>
+    <div id="metadata-table"></div>
+    <h3>Workflow Data</h3>
+    <div id="data-table"></div>
+    <button id="download-csv" type="button" onclick="downloadDataAsCSV();return false;">Download CSV</button>
 </div>
 <div class="panel-display panel-1col clearfix">
     <div class="panel-panel panel-col">
@@ -28,7 +40,7 @@
                         <label for="inputLayer">Select hydrologic area of interest layer:</label>
                         <select id="inputLayer" onchange="updateInputLayer()">
                             <option value="none">None</option>
-                            <option value="huc8">HUC 8</option>
+{#                            <option value="huc8">HUC 8</option>#}
                             <option value="catchment">Catchment</option>
 {#                            <option value="huc12">HUC 12</option>#}
 {#                            <option value="streamNetwork">Stream Network</option>#}
@@ -102,6 +114,9 @@
                         <div id="data-request-messages">
                             <span id="data-request-error" class="input-error"></span>
                             <span id="data-request-success"></span>
+                        </div>
+                        <div id="data-display-button-div">
+                            <button id="data-display-button" type="button" onclick="showData();return false;">Show Data</button>
                         </div>
                     </div>
                     <!-- basemap wrapper -->
