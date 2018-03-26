@@ -345,7 +345,7 @@
     function readOutputJSON() {
         var key = getCookie('task_id');
         // TODO: change to correct base url
-        var url = "/ubertool/rest/ubertool/sam/data/" + key.toString();
+        var url = "/pram/rest/pram/sam/data/" + key.toString();
         var samOutput = null;
         $.ajax({
             type: "GET",
