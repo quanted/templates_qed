@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	$.ajax({
 		type: 'GET',
-		url: '/ubertool/{{ model }}/history/query',
+		url: '/pram/{{ model }}/history/query',
 		beforeSend:function(){
 			// this is where we append a loading image
 			$('#ajax-panel').html('<div class="loading"><img id="ajax_loader" src="/static/images/loader.gif" alt="Loading..." /></div>');
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	// function queryMongo() {
 	// 	$.ajax({
 	// 		type: 'POST',
-	// 		url: '/ubertool/{{ model }}/history/query',
+	// 		url: '/pram/{{ model }}/history/query',
 	// 		data: { postVar1: 'theValue1', postVar2: 'theValue2' },
 	// 	});
 	// }
