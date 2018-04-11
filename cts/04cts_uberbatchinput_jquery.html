@@ -49,6 +49,13 @@ $(document).ready(function() {
 
 	});
 
+	$('#sample-batch-link').on('click', function() {
+
+		// Request sample batch input file from server:
+		$('#sample-batch-form').attr({'action': '/cts/batch/sample', 'method': 'GET'}).submit();
+
+	});
+
 
 	$('.testws-submit').on('click', function () {
 
