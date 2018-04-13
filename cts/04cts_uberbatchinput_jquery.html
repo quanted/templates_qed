@@ -148,6 +148,8 @@ $(document).ready(function() {
 
 		for (chem in batch_chems) {
 
+			console.log("Making request for " + batch_chems[chem]);
+
 		    var mol_info_request = JSON.stringify({
 		        'chemical': batch_chems[chem],
 		        'service': "getChemInfo"
@@ -157,23 +159,6 @@ $(document).ready(function() {
 		    socketConn.emit('get_data', mol_info_request);
 
 		}
-		socketConn.on('message', function(chemInfoResponse) {
-			
-			var chemResponseObject = JSON.parse(chemInfoResponse);
-
-			nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
-
-			var chemical_display;
-			if (chemResponseObject.status) {
-				// valid chemical, normal stuff...
-				chemical_display = chemResponseObject.data.chemical;
-			}
-			else {
-				// invalid chemical, display chemical and error, and don't use...
-				chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
-			}
-			$('#batch_list').append('<li>' + chemical_display + '</li>');
-		});
 
 		$('#batchfilewrap').show();
 
@@ -193,9 +178,30 @@ $(document).ready(function() {
             pka_chkbox.hide();
 	    }
 
-
-
 	}
+
+
+	socketConn.on('message', function(chemInfoResponse) {
+			
+		var chemResponseObject = JSON.parse(chemInfoResponse);
+
+		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
+
+		nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
+
+		var chemical_display;
+		if (chemResponseObject.status) {
+			// valid chemical, normal stuff...
+			chemical_display = chemResponseObject.data.chemical;
+		}
+		else {
+			// invalid chemical, display chemical and error, and don't use...
+			chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
+		}
+		var testing = $('#batch_list');
+		$('#batch_list').append('<li>' + chemical_display + '</li>');
+	});
+
 
 	function getCookie(name) {
 	  var cookieValue = null;
