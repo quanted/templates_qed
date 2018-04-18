@@ -3,6 +3,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	var nodejs_host = "{{nodejsHost}}";
+    var nodejs_port = {{nodejsPort}};
+
 	var validator = $("#form1").validate({
 		rules: {
 			upfile: "required"	
@@ -10,8 +13,8 @@ $(document).ready(function() {
 	});
 
 	var nodes = [];  // array of batch chems with modecular info
-	var socket;
 	var batch_chems = [];  // list of chemicals in batch file
+	var socketConn = connectToWebsocketServer();
 
 	$('#dialog').dialog();
 
@@ -46,8 +49,17 @@ $(document).ready(function() {
 
 	});
 
+	$('#sample-batch-link').on('click', function() {
+
+		// Request sample batch input file from server:
+		$('#sample-batch-form').attr({'action': '/cts/batch/sample', 'method': 'GET'}).submit();
+
+	});
+
 
 	$('.testws-submit').on('click', function () {
+
+		// TEST WS test page submit button event..
 
 		console.log(nodes);
 
@@ -97,15 +109,34 @@ $(document).ready(function() {
 	});
 
 
+	function connectToWebsocketServer() {
+		// connect to socket.io!
+        if (nodejs_host == 'nginx') {
+            return io.connect();  // docker way
+        }
+        else {
+            if (nodejs_port && nodejs_port != 80) {
+                return io.connect('http://' + nodejs_host + ':' + nodejs_port, {'force new connection': true});
+            }
+            else {
+                return io.connect(nodejs_host, {'force new connection': true});
+            }
+        }
+	}
+
+
 	function displayBatchFileChemicals(file_content) {
 
 
 		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
 
-		var uploaded_chems = $('#batch_list li');
+		// var uploaded_chems = $('#batch_list li');
+		$('#batch_list').empty();  // clear any chems already in list
+		nodes = [];  // clear out list of molecule objects (todo: rename 'nodes')
 
 		// only allow ten max for now:
-		if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
+		// if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
+		if (batch_chems.length > 10) {
 			alert("Only a maximum of 10 chemicals can be uploaded in batch mode at this time.");
 			return;
 		}
@@ -117,25 +148,15 @@ $(document).ready(function() {
 
 		for (chem in batch_chems) {
 
-			getMolecularInfoForBatchChemicals(batch_chems[chem], function (chem_results) {
+			console.log("Making request for " + batch_chems[chem]);
 
-				// molecular info for a batch chem returns here...
+		    var mol_info_request = JSON.stringify({
+		        'chemical': batch_chems[chem],
+		        'service': "getChemInfo"
+		    });
 
-				var chemical_display;
-
-				if (chem_results.status) {
-					// valid chemical, normal stuff...
-					chemical_display = chem_results.data.chemical;
-				}
-				else {
-					// invalid chemical, display chemical and error, and don't use...
-					chemical_display = '<p class="redFont">' + chem_results.chemical + " -- invalid chemical" + '</p>';  // ?????
-				}
-
-
-				$('#batch_list').append('<li>' + chemical_display + '</li>');
-
-			});
+		    // Send data to cts_nodejs server:
+		    socketConn.emit('get_data', mol_info_request);
 
 		}
 
@@ -157,9 +178,30 @@ $(document).ready(function() {
             pka_chkbox.hide();
 	    }
 
-
-
 	}
+
+
+	socketConn.on('message', function(chemInfoResponse) {
+			
+		var chemResponseObject = JSON.parse(chemInfoResponse);
+
+		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
+
+		nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
+
+		var chemical_display;
+		if (chemResponseObject.status) {
+			// valid chemical, normal stuff...
+			chemical_display = chemResponseObject.data.chemical;
+		}
+		else {
+			// invalid chemical, display chemical and error, and don't use...
+			chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
+		}
+		var testing = $('#batch_list');
+		$('#batch_list').append('<li>' + chemical_display + '</li>');
+	});
+
 
 	function getCookie(name) {
 	  var cookieValue = null;
