@@ -728,7 +728,10 @@ function organizeData(calc, prop, data) {
     // formats data for pchem table
 
     if (typeof data === "number") {
-        if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
+        var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
+                            "henrys_law_con","water_sol_ph"];
+        // if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
+        if (roundList.indexOf(prop) > -1) {
             if (calc == "test" && prop == "vapor_press") { 
                 data = Math.pow(10, data);
             }
@@ -790,8 +793,11 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                     }
                     else { num_props += 1; }
                 }
-                else if (calc == "epi" && prop == "water_sol") {
-                    num_props += 2;  // epi's water_sol has 2 methods now..
+                else if (calc == "epi") {
+                    if (prop == "water_sol" || prop == "log_bcf") {
+                        num_props += 2;  // epi's water_sol and log_bcf has 2 methods
+                    }
+                    else { num_props += 1; }
                 }
                 else { num_props += 1; }
             }
