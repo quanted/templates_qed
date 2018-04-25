@@ -132,6 +132,21 @@
                                                          class="menu-link{% if SUBMODEL == "temperature" %} active-trail active{% endif %}">Temperature</a>
                                 </li>
                             </ul>
+                        {% if MODEL == "hydrodynamic" and valueValue == "hydrodynamic/" %}
+                            <ul class="menu">
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/constantvolume/"
+                                                         title="{{ valueKey|safe }}"
+                                                         class="menu-link{% if SUBMODEL == "constantvolume" %} active-trail active{% endif %}">Constant Volume</a>
+                                </li>
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/changingvolume/"
+                                                         title="{{ valueKey|safe }}"
+                                                         class="menu-link{% if SUBMODEL == "changingvolume" %} active-trail active{% endif %}">Changing Volume</a>
+                                </li>
+                                <li class="menu-item"><a href="/hms/{{ MODEL }}/kinematicwave/"
+                                                         title="{{ valueKey|safe }}"
+                                                         class="menu-link{% if SUBMODEL == "kinematicwave" %} active-trail active{% endif %}">Kinematic
+                                    Wave</a></li>
+                            </ul>
                         {% elif MODEL == "water_quality" %}
                             <ul class="menu">
                                 <li class="menu-item">

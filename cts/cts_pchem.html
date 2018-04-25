@@ -68,12 +68,23 @@
 
 	
 		<tr>
-		<th class="chemprop"><input id="id_mol_diss" name="mol_diss" type="checkbox" />&nbsp;&nbsp;<span>Molecular Diffusivity (cm<sup>2</sup>/s)</span></th>
+		<th class="chemprop"><input id="id_mol_diss" name="mol_diss" type="checkbox" />&nbsp;&nbsp;<span>Molecular Diffusivity in Water (cm<sup>2</sup>/s)</span></th>
 		<td id="id_mol_diss_ChemAxon" class="ChemCalcs_unavailable chemaxon mol_diss"></td>
 		<td id="id_mol_diss_EPI" class="ChemCalcs_unavailable epi mol_diss"></td>
 		<td id="id_mol_diss_TEST" class="ChemCalcs_unavailable test mol_diss"></td>
 		<td id="id_mol_diss_SPARC" class="ChemCalcs_available sparc mol_diss"></td>
 		<td id="id_mol_diss_Measured" class="ChemCalcs_unavailable measured mol_diss"></td>
+		</tr>
+
+
+
+		<tr>
+		<th class="chemprop"><input id="id_mol_diss_air" name="mol_diss_air" type="checkbox" />&nbsp;&nbsp;<span>Molecular Diffusivity in Air (cm<sup>2</sup>/s)</span></th>
+		<td id="id_mol_diss_air_ChemAxon" class="ChemCalcs_unavailable chemaxon mol_diss_air"></td>
+		<td id="id_mol_diss_air_EPI" class="ChemCalcs_unavailable epi mol_diss_air"></td>
+		<td id="id_mol_diss_air_TEST" class="ChemCalcs_unavailable test mol_diss_air"></td>
+		<td id="id_mol_diss_air_SPARC" class="ChemCalcs_available sparc mol_diss_air"></td>
+		<td id="id_mol_diss_air_Measured" class="ChemCalcs_unavailable measured mol_diss_air"></td>
 		</tr>
 	
 
@@ -117,7 +128,27 @@
 		<td id="id_koc_SPARC" class="ChemCalcs_unavailable sparc koc"></td>
 		<td id="id_koc_Measured" class="ChemCalcs_unavailable measured koc"></td>
 		</tr>
+
+		<tr>
+		<th class="chemprop"><input id="id_log_bcf" name="log_bcf" type="checkbox" />&nbsp;&nbsp;<span>Bioconcentration Factor (log)</span></th>
+		<td id="id_koc_ChemAxon" class="ChemCalcs_unavailable chemaxon log_bcf"></td>
+		<td id="id_log_bcf_EPI" class="ChemCalcs_available epi log_bcf"></td>
+		<td id="id_log_bcf_TEST" class="ChemCalcs_unavailable test log_bcf"></td>
+		<td id="id_log_bcf_SPARC" class="ChemCalcs_unavailable sparc log_bcf"></td>
+		<td id="id_log_bcf_Measured" class="ChemCalcs_unavailable measured log_bcf"></td>
+		</tr>
+
+		<tr>
+		<th class="chemprop"><input id="id_log_baf" name="log_baf" type="checkbox" />&nbsp;&nbsp;<span>Bioaccumulation Factor (log)</span></th>
+		<td id="id_koc_ChemAxon" class="ChemCalcs_unavailable chemaxon log_baf"></td>
+		<td id="id_log_baf_EPI" class="ChemCalcs_available epi log_baf"></td>
+		<td id="id_log_baf_TEST" class="ChemCalcs_unavailable test log_baf"></td>
+		<td id="id_log_baf_SPARC" class="ChemCalcs_unavailable sparc log_baf"></td>
+		<td id="id_log_baf_Measured" class="ChemCalcs_unavailable measured log_baf"></td>
+		</tr>
 	
+
+
 
 		<tr>
 			<th class="pchem_label"><br><h3><span>pH-Dependent Inputs</span> <span>at pH:</span> <input class="numberInput" data-parsley-max="14" data-parsley-required="true" data-parsley-required-message="This field is required." data-parsley-type="number" data-parsley-type-digits-message="Enter a number." data-parsley-type-number-message="Enter a number." id="id_kow_ph" max="14" min="0" name="kow_ph" step="0.1" type="number" value="7.0" /><br><div style="float:right;"></div></th>

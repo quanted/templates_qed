@@ -734,7 +734,7 @@
             var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + sName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
-                '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Group</td><td>' + details["group"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
+                '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Tribe</td><td>' + details["tribe"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
                 '<tr><td class="detailTitle">Max Length (cm)</td><td id="alternating"> ' + details["max_length"].toFixed(1) + ' </td><td class="detailTitle">System</td><td>' + system.toString() + '</td></tr>' +
                 '<tr><td class="detailTitle">Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td class="detailTitle">Lotic Habitat</td><td id="alternating">' + lotic.toString() + '</td></tr>' +
                 '<tr><td class="detailTitle">Mean Length (cm)</td><td id="alternating">' + details["mean_length"].toFixed(1) + '</td><td class="detailTitle">Water Column</td><td>' + column.toString() + '</td></tr>' +
@@ -1381,57 +1381,61 @@
                                     <tbody>
                                     <tr>
                                         <td class="noshow"></td>
-                                        <td><strong>Group</strong>
+                                        <td><strong>Tribe</strong>
                                             <label for="fishGroup"></label>
                                             <select multiple id="fishGroup" title="Select one or multiple groups"
                                                     style="width: 100%;overflow: overlay;">
-                                                <option value="Anchovies">Anchovies</option>
+{#                                                <option value="Anchovies">Anchovies</option>#}
                                                 <option value="Black Bass">Black Bass</option>
-                                                <option value="Bowfin">Bowfin</option>
-                                                <option value="Burbot">Burbot</option>
+{#                                                <option value="Bowfin">Bowfin</option>#}
+{#                                                <option value="Burbot">Burbot</option>#}
+                                                <option value="Carp">Carp</option>
                                                 <option value="Catfish">Catfish</option>
                                                 <option value="Cavefish">Cavefish</option>
-                                                <option value="Characins">Characins</option>
-                                                <option value="Cichlids">Cichlids</option>
-                                                <option value="Clupeids">Clupeids</option>
-                                                <option value="Cod">Cod</option>
-                                                <option value="Darters">Darters</option>
-                                                <option value="Drum">Drum</option>
-                                                <option value="Eel">Eel</option>
-                                                <option value="Flounders">Flounders</option>
+{#                                                <option value="Characins">Characins</option>#}
+                                                <option value="Cichlid">Cichlid</option>
+{#                                                <option value="Clupeids">Clupeids</option>#}
+{#                                                <option value="Cod">Cod</option>#}
+                                                <option value="Darter">Darter</option>
+{#                                                <option value="Drum">Drum</option>#}
+{#                                                <option value="Eel">Eel</option>#}
+{#                                                <option value="Flounders">Flounders</option>#}
                                                 <option value="Gar">Gar</option>
-                                                <option value="Gobies">Gobies</option>
-                                                <option value="Knifefish">Knifefish</option>
+                                                <option value="Goby">Goby</option>
+{#                                                <option value="Knifefish">Knifefish</option>#}
                                                 <option value="Lamprey">Lamprey</option>
-                                                <option value="Livebearers">Livebearers</option>
-                                                <option value="Loach">Loach</option>
-                                                <option value="Madtoms">Madtoms</option>
-                                                <option value="Minnows">Minnows</option>
-                                                <option value="Mooneye">Mooneye</option>
-                                                <option value="Mudminnows">Mudminnows</option>
-                                                <option value="Mullet">Mullet</option>
-                                                <option value="Needlefish">Needlefish</option>
-                                                <option value="Paddlefish">Paddlefish</option>
+                                                <option value="Livebearer">Livebearer</option>
+{#                                                <option value="Loach">Loach</option>#}
+                                                <option value="Madtom">Madtom</option>
+                                                <option value="Minnow">Minnow</option>
+{#                                                <option value="Mooneye">Mooneye</option>#}
+{#                                                <option value="Mudminnows">Mudminnows</option>#}
+{#                                                <option value="Mullet">Mullet</option>#}
+                                                <option value="Misc">Misc</option>
+{#                                                <option value="Needlefish">Needlefish</option>#}
+{#                                                <option value="Paddlefish">Paddlefish</option>#}
                                                 <option value="Perch">Perch</option>
                                                 <option value="Pike">Pike</option>
-                                                <option value="Pipefish">Pipefish</option>
-                                                <option value="Pirate Perch">Pirate Perch</option>
+{#                                                <option value="Pipefish">Pipefish</option>#}
+{#                                                <option value="Pirate Perch">Pirate Perch</option>#}
                                                 <option value="Pupfish">Pupfish</option>
                                                 <option value="Pygmy Sunfish">Pygmy Sunfish</option>
-                                                <option value="Salmonids">Salmonids</option>
-                                                <option value="Sculpins">Sculpins</option>
-                                                <option value="Silversides">Silversides</option>
+                                                <option value="Salmon and Trout">Salmon and Trout</option>
+{#                                                <option value="Salmonids">Salmonids</option>#}
+                                                <option value="Sculpin">Sculpin</option>
+                                                <option value="Shad and Herring">Shad and Herring</option>
+                                                <option value="Silverside">Silverside</option>
                                                 <option value="Smelt">Smelt</option>
-                                                <option value="Snakeheads">Snakeheads</option>
-                                                <option value="Splitfins">Splitfins</option>
-                                                <option value="Sticklebacks">Sticklebacks</option>
-                                                <option value="Stingrays">Stingrays</option>
+{#                                                <option value="Snakeheads">Snakeheads</option>#}
+                                                <option value="Splitfin">Splitfin</option>
+                                                <option value="Stickleback">Stickleback</option>
+{#                                                <option value="Stingrays">Stingrays</option>#}
                                                 <option value="Sturgeon">Sturgeon</option>
-                                                <option value="Suckers">Suckers</option>
+                                                <option value="Sucker">Sucker</option>
                                                 <option value="Sunfish">Sunfish</option>
-                                                <option value="Surfperch">Surfperch</option>
-                                                <option value="Topminnows">Topminnows</option>
-                                                <option value="Trout-Perch">Trout-Perch</option>
+{#                                                <option value="Surfperch">Surfperch</option>#}
+                                                <option value="Topminnow">Topminnow</option>
+{#                                                <option value="Trout-Perch">Trout-Perch</option>#}
                                                 <option value="White Bass">White Bass</option>
                                                 <option value="Whitefish">Whitefish</option>
                                             </select>
@@ -1708,7 +1712,7 @@
                         <tr>
                             <th>Common Name</th>
                             <th>Scientific Name</th>
-                            <th>Groups</th>
+                            <th>Tribe</th>
                             <th>Biogeography</th>
                             <th>Beneficial Use</th>
                             <th>Tolerance</th>
