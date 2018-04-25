@@ -3,7 +3,8 @@
 var kowPH; // pH for logD
 var smiles, name, mass, formula, time;
 
-var jchem_methods = ['KLOP', 'PHYS', 'VG'];
+var ctsWorkflows = ['chemspec', 'pchemprop', 'gentrans'];
+var ctsInputTypes = ['single', 'batch'];
 var checkedCalcsAndProps, structure; // format --> {'calc': ['checked_prop', ..], ..}
 var spinner_html = '<img src="/static_qed/cts/images/loader.gif" id="spinner" />';
 var calls_tracker = 0;  // keeps track of pchem data calls for metabolites
@@ -120,6 +121,37 @@ function buildCheckedCalcsAndProps () {
 }
 
 
+function redirectToInputsPage() {
+    // Called when cancel button is selected.
+    // Triggered by 'cancel' socket event.
+
+    var currentUrl = window.location.href;
+    var workflow = null;
+    var inputType = null;
+
+    // Loop CTS workflows to match current one in URL:
+    for (var ind in ctsWorkflows) {
+        if (currentUrl.indexOf(ctsWorkflows[ind]) > -1) {
+            workflow = ctsWorkflows[ind];  // matched workflow in url with list
+        }
+    }
+
+    // Loop CTS input page types (input or batch) to match current one in URL:
+    for (var ind in ctsInputTypes) {
+        if (currentUrl.indexOf(ctsInputTypes[ind]) > -1) {
+            inputType = ctsInputTypes[ind];
+        }
+    }
+
+    if (workflow && inputType) {
+        console.log("Redirecting to " + workflow + "'s " + inputType + " page");
+        window.location.replace('/cts/' + workflow + '/' + inputType);
+    }
+
+    return;
+}
+
+
 function connectToSocket() {
 
     if (typeof io !== 'undefined') {
@@ -143,25 +175,29 @@ function connectToSocket() {
         return;
     }
 
+    socket.on('cancel', function(cancelMessage) {
+        console.log("Incoming 'cancel' request!");
+        if (cancelMessage) {
+            console.log("Canceling request!");
+            var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Request has been canceled. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+
+            blockInterface(true, blockui_message);
+        }
+    });
+
     // incoming data pushed to client from redis:
     socket.on('message', function(data) {
         
         data = JSON.parse(data);
-
-        // expecting node object for gentrans workflow:
-        // this conditional may ALWAYS be true! should be !=
 
         if (workflow == 'pchemprop' && run_type == 'single') {
             parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
             return;
         }
 
-
-
         calls_tracker--;
         sessionStorage.setItem('calls_tracker', calls_tracker);
         console.log("calls tracker: " + calls_tracker);
-
 
         if (window.location.href.indexOf('batch') > -1 || window.location.href.indexOf('testws') > -1) {
 
@@ -213,13 +249,6 @@ function connectToSocket() {
                     // Make pchem request after cheminfo single chemical is collected...
                     if (Object.keys(checkedCalcsAndProps).length > 0) {
 
-                        // getting pchem data for a batch chem's trans products..
-                        // calls_tracker needs to be increased to account for
-                        // batch chem products.
-
-                        // need to increase total_calls with batch chem's
-                        // products and p-chem requests:
-                        // total_calls = calls_tracker + calculateTotalCalls([product_data.length], checkedCalcsAndProps);
                         total_calls = calls_tracker + calculateTotalCalls([1], checkedCalcsAndProps);
                         calls_tracker = total_calls
                         sessionStorage.setItem('calls_tracker', calls_tracker);
@@ -258,13 +287,6 @@ function connectToSocket() {
 
                 }
                 else {
-
-                    // 'prop' key not 'products', assuming p-chem prop
-                    // todo: prop keys for checking, refactor to js obj
-
-                    // get genKey of incoming data object:
-                    // var data_obj_genkey = data['node']['genKey'];
-                    // var data_obj_smiles = data['node']['smiles'];  // this or data['chemical']?
 
                     var data_obj_genkey = data['genKey'];
                     var data_obj_smiles = data['chemical'];
@@ -544,13 +566,6 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         pchem_data['service'] = "pchemprops";
     }
 
-    // var is_one_chemical = !('nodes' in pchem_data);
-    // // var has_mass_key = 'mass' in Object.keys(pchem_data['node']);
-    // if (workflow == 'gentrans' && is_one_chemical) {
-    //     // pchem_data['mass'] = pchem_data['node']['data']['mass'];
-    //     pchem_data['mass'] = pchem_data['node']['mass'];
-    // }
-
     // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];
     var pchem_data_json = JSON.stringify(pchem_data, function(key, value) {
@@ -728,7 +743,10 @@ function organizeData(calc, prop, data) {
     // formats data for pchem table
 
     if (typeof data === "number") {
-        if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
+        var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
+                            "henrys_law_con","water_sol_ph"];
+        // if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
+        if (roundList.indexOf(prop) > -1) {
             if (calc == "test" && prop == "vapor_press") { 
                 data = Math.pow(10, data);
             }
@@ -790,8 +808,11 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                     }
                     else { num_props += 1; }
                 }
-                else if (calc == "epi" && prop == "water_sol") {
-                    num_props += 2;  // epi's water_sol has 2 methods now..
+                else if (calc == "epi") {
+                    if (prop == "water_sol" || prop == "log_bcf") {
+                        num_props += 2;  // epi's water_sol and log_bcf has 2 methods
+                    }
+                    else { num_props += 1; }
                 }
                 else { num_props += 1; }
             }

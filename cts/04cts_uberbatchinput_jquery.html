@@ -3,6 +3,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	var spinner_html = '<img src="/static_qed/cts/images/loader.gif" id="spinner" />';
+	var nodejs_host = "{{nodejsHost}}";
+    var nodejs_port = {{nodejsPort}};
+
 	var validator = $("#form1").validate({
 		rules: {
 			upfile: "required"	
@@ -10,8 +14,9 @@ $(document).ready(function() {
 	});
 
 	var nodes = [];  // array of batch chems with modecular info
-	var socket;
 	var batch_chems = [];  // list of chemicals in batch file
+	var chem_calls = 0;  // keeps track of number of chem info requests & responses
+	var socketConn = connectToWebsocketServer();
 
 	$('#dialog').dialog();
 
@@ -46,8 +51,17 @@ $(document).ready(function() {
 
 	});
 
+	$('#sample-batch-link').on('click', function() {
+
+		// Request sample batch input file from server:
+		$('#sample-batch-form').attr({'action': '/cts/batch/sample', 'method': 'GET'}).submit();
+
+	});
+
 
 	$('.testws-submit').on('click', function () {
+
+		// TEST WS test page submit button event..
 
 		console.log(nodes);
 
@@ -97,15 +111,34 @@ $(document).ready(function() {
 	});
 
 
+	function connectToWebsocketServer() {
+		// connect to socket.io!
+        if (nodejs_host == 'nginx') {
+            return io.connect();  // docker way
+        }
+        else {
+            if (nodejs_port && nodejs_port != 80) {
+                return io.connect('http://' + nodejs_host + ':' + nodejs_port, {'force new connection': true});
+            }
+            else {
+                return io.connect(nodejs_host, {'force new connection': true});
+            }
+        }
+	}
+
+
 	function displayBatchFileChemicals(file_content) {
 
 
 		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
 
-		var uploaded_chems = $('#batch_list li');
+		// var uploaded_chems = $('#batch_list li');
+		$('#batch_list').empty();  // clear any chems already in list
+		nodes = [];  // clear out list of molecule objects (todo: rename 'nodes')
 
 		// only allow ten max for now:
-		if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
+		// if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
+		if (batch_chems.length > 10) {
 			alert("Only a maximum of 10 chemicals can be uploaded in batch mode at this time.");
 			return;
 		}
@@ -115,27 +148,27 @@ $(document).ready(function() {
 		$(batch_inputs).children().show();
 		$('#cont, #reactionpathways').hide();  // todo: separate html and js in cts_gentrans_tree.html
 
+		var chemInd = 1;
 		for (chem in batch_chems) {
 
-			getMolecularInfoForBatchChemicals(batch_chems[chem], function (chem_results) {
+			var list_html = '<li id="chem' + chemInd + '">' +
+								spinner_html + batch_chems[chem] + '</li>';
 
-				// molecular info for a batch chem returns here...
+			$('#batch_list').append(list_html);
 
-				var chemical_display;
+			console.log("Making request for " + batch_chems[chem]);
 
-				if (chem_results.status) {
-					// valid chemical, normal stuff...
-					chemical_display = chem_results.data.chemical;
-				}
-				else {
-					// invalid chemical, display chemical and error, and don't use...
-					chemical_display = '<p class="redFont">' + chem_results.chemical + " -- invalid chemical" + '</p>';  // ?????
-				}
+		    var mol_info_request = JSON.stringify({
+		        'chemical': batch_chems[chem],
+		        'service': "getChemInfo",
+		        'id': 'chem'+chemInd
+		    });
 
+		    // Send data to cts_nodejs server:
+		    socketConn.emit('get_data', mol_info_request);
 
-				$('#batch_list').append('<li>' + chemical_display + '</li>');
-
-			});
+		    chemInd += 1;
+		    // chem_calls += 1;  // increment chem info request counter
 
 		}
 
@@ -157,9 +190,41 @@ $(document).ready(function() {
             pka_chkbox.hide();
 	    }
 
-
-
 	}
+
+
+	socketConn.on('message', function(chemInfoResponse) {
+
+		var chemResponseObject = JSON.parse(chemInfoResponse);
+
+		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
+
+		nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
+
+		var chemical_display;
+		if (chemResponseObject.status) {
+			// valid chemical, normal stuff...
+			chemical_display = chemResponseObject.data.chemical;
+		}
+		else {
+			// invalid chemical, display chemical and error, and don't use...
+			chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
+		}
+
+		// $('#batch_list').append('<li>' + chemical_display + '</li>');
+		// $('#' + chemical_display).html('<li>' + chemical_display + '</li>'); // remove spinner next to chemical
+
+		// Expecting an 'id' key in 'request_post' to use for mapping responses to chemical list:
+		var batchLength = $('#batch_list > li').length;
+		for (var i = 1; i <= batchLength; i++) {
+			var chemicalClass = 'chem' + i;
+			if (chemResponseObject.request_post.id == chemicalClass) {
+				$('#' + chemicalClass).text(chemical_display);
+			}
+		}
+
+	});
+
 
 	function getCookie(name) {
 	  var cookieValue = null;
@@ -179,35 +244,35 @@ $(document).ready(function() {
 	var csrftoken = getCookie('csrftoken');
 
 
-	function getMolecularInfoForBatchChemicals(chem, callback) {
+	// function getMolecularInfoForBatchChemicals(chem, callback) {
 		
-		$.ajax({
-		    url: '/cts/rest/molecule',
-		    // url: '/rest/cts/molecule',
-		    type: 'POST',
-		    data: {'chemical': chem},
-		    dataType: 'json',
-		    timeout: 10000,
-		    beforeSend: function(xhr, settings) {
-		      xhr.setRequestHeader("X-CSRFToken", csrftoken);
-		    },
-		    success: function(data) {
-				console.log(data);
+	// 	$.ajax({
+	// 	    url: '/cts/rest/molecule',
+	// 	    // url: '/rest/cts/molecule',
+	// 	    type: 'POST',
+	// 	    data: {'chemical': chem},
+	// 	    dataType: 'json',
+	// 	    timeout: 10000,
+	// 	    beforeSend: function(xhr, settings) {
+	// 	      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	// 	    },
+	// 	    success: function(data) {
+	// 			console.log(data);
 
-				if (data.status) {
-					nodes.push(data.data);  // if valid, add to list of chems for processing
-				}
+	// 			if (data.status) {
+	// 				nodes.push(data.data);  // if valid, add to list of chems for processing
+	// 			}
 
-				callback(data);
+	// 			callback(data);
 
-		    },
-		    error: function(jqXHR, textStatus, errorThrown) {
-				console.log(textStatus);
-				// what to do here?
-		    }
-		});
+	// 	    },
+	// 	    error: function(jqXHR, textStatus, errorThrown) {
+	// 			console.log(textStatus);
+	// 			// what to do here?
+	// 	    }
+	// 	});
 
-	}
+	// }
 
 });
 
