@@ -92,7 +92,12 @@ $(document).ready(function() {
     $('#btn-pchem-cancel').on('click', function () {
         console.log("pchem cancel button selected");
         socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
-        blockInterface(false);
+        if (typeof(blockInterface) == "function") {
+            // Check if progress bar JS module is being used (e.g., batch mode progress bar)
+            blockInterface(false);
+        }
+        console.log("Clearing p-chem table..");  // todo: only clear loading wheels, keep data..
+        $('#btn-pchem-cleardata').trigger('click');
     });
 
 });
@@ -176,9 +181,8 @@ function connectToSocket() {
     }
 
     socket.on('cancel', function(cancelMessage) {
-        console.log("Incoming 'cancel' request!");
-        if (cancelMessage) {
-            console.log("Canceling request!");
+        console.log("User request is canceled..");
+        if (cancelMessage && typeof(blockInterface) == "function") {
             var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Request has been canceled. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
 
             blockInterface(true, blockui_message);
