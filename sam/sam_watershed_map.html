@@ -102,10 +102,50 @@
     #pestTable table {
         border: black 1px solid;
     }
+    
+    #huctable thead * {
+        font-size: 10px;
+    }
+
+    #huctable tbody {
+        cursor: pointer;
+    }
+
+    #huctable thead *, tr *, td * {
+        border: 0 !important;
+        text-align: center !important;
+    }
+
+    #huctable td * {
+        width: 50% !important;
+    }
+
+    #huctable tr:hover td {
+        background-color: #02bfe7;
+    }
+
+    #huctable tbody tr.odd {
+        background-color: #D4D4D4 !important;
+    }
+
+    #huctable thead th {
+        background-color: white !important;
+    }
 
     #tbl_col {
         background-color: lightgray;
     }
+
+    #mapDiv {
+        display: inline-block;
+        /*float: none; */
+        width: 100%;
+        height: 625px;
+        border-radius: 10px;
+        border-color: black;
+        border-bottom-width: 1px;
+    }
+
 
 </style>
 
@@ -134,18 +174,25 @@
     <script src="/static_qed/sam/huc250k_4326_sp.js"></script>
     <script src="/static_qed/sam/waterslayer.js"></script>
 
+    <!-- Include the loading control -->
+    <link rel="stylesheet" href="/static_qed/sam/Control.Loading.css" />
+    <script src="/static_qed/sam/Control.Loading.js"></script>
 
 
     <script>
 
         //  create placeholder global comid variable
         var comid = null;
+        var selectedHuc = null;
         console.log(comid);
         $(document).ready(function () {
             $('#csvSave').on("click", saveTableAsCSV);
         });
 
         function onStreamMapClick(e) {
+            if(selectedHuc != null){
+                map.removeLayer(selectedHuc);
+            }
             getStreamData(e.latlng.lat, e.latlng.lng);
         }
 
@@ -240,6 +287,7 @@
                     "</tbody>" +
                     "</table>";
             $('#pestTable').html(dataHtml);
+            $('#pestTable').show();
             $('#saveTable').show();
         }
 
@@ -301,7 +349,7 @@
 
                 <!--- map and info -->
                 <div class="pane-content" id="mapDiv">
-                    <p><strong>Select a stream</strong> on the map to view the local probability of pesticide exceedance
+                    <p><strong>Select a HUC8 catchment </strong> to view summary info.<br><strong>Zoom in and select a stream</strong> to view the local probability of pesticide exceedance
                         for various populations.</p>
                     <!-- leaflet map div -->
                     <div id="map" class="mapNoTransition"></div>
@@ -331,6 +379,7 @@
                         </select>
                     </div>
                 </div>
+
 
                 <br>
 
@@ -476,12 +525,20 @@
         return '#93D4BC'
     }
 
+    //style the downloaded selected huc shapefile - setting to invisible because it is not simplified like the base layer
+    var hucStyleSelected = {
+                    fillColor: 'white',
+                    weight: 0.0,
+                    opacity: 0.9,
+                    color: 'black',
+                    fillOpacity: 0.0
+    };
+
+
     //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
     function colorHUC8s(fieldVal, summary_stat) {
-        console.log(summary_stat)
         huc8Layer.setStyle(function(feature) {
             stat = feature.properties.summary[fieldVal + "_" + summary_stat];
-            //console.log(stat);
             return {
                 fillColor: exceedanceColor(stat),
                 weight: .3,
@@ -490,6 +547,34 @@
                 fillOpacity: getHUCFillOpacity(stat)
             }
         });
+    }
+
+    function setSelectedHUC8(hucID) {
+        huc8Layer.setStyle({weight: 0.3});
+        huc8Layer.setStyle(function(feature) {
+            if(feature.properties.HUC_CODE == hucID){
+                return {
+                    weight: 1.5
+                }
+            }
+        });
+    }
+
+    // returns the huc8 feature for a given huc8 ID
+    function fetchHUC8Shape(hucID){
+        console.log(hucID);
+        //y = $.grep(huc8s, function(n,i){
+        //    return n.properties.HUC_CODE===hucID;
+        //});
+        var out = huc8s.features.filter(x => x.properties.HUC_CODE == hucID)[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
+        //$(huc8s).filter(function (i,n){return n.features.properties['HUC_CODE']===comID});
+        return out;
+    }
+
+    //returns a given summary stat for a hucID, from the huc8 shapefile
+    function fetchHUC8LayerData(hucID, summary_stat){
+        feat = fetchHUC8Shape(hucID);
+        return feat.properties.summary[summary_stat]
     }
 
 
@@ -520,12 +605,114 @@
     }
 
 
+    function popupContent(hucNumber, hucName){
+        var e1 = document.createElement('div');
+        e1.classList.add("huc_popup");
+        e1.innerHTML = '<h3> <strong> HUC8 Summary </strong></h3>';
+        e1.innerHTML += '<strong>ID #: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
+        e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(selectedHucArea).toFixed(2) + 'km'+'2'.sup();
+        summary_select = $('#summaryselect').val();
+        summary_stat = $('#fieldselect').val() + '_' + summary_select;
+        e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^'+summary_select[0]+''), summary_select[0].toUpperCase()) +
+            ' probability of exceedance: </strong><br>';
+        prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+        if(isNaN(prob)){prob = "Not calculated";}
+        e1.innerHTML += prob;
+        return e1;
+    }
+
+
+
+    function GetHuc(latitude, longitude) {
+        var hucLvl = 2; //HUC8
+        var tempHuc = (12 - hucLvl * 2);
+        var hucURL = "https://watersgeo.epa.gov/arcgis/rest/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/" +
+            hucLvl + "/query?geometry=%7B%22x%22+%3A+" + longitude + "%2C+%22y%22+%3A+" + latitude +
+            "%2C+%22spatialReference%22+%3A+%7B%22wkid%22+%3A+4326%7D%7D&geometryType=esriGeometryPoint&" +
+            "inSR=%7B%22wkid%22+%3A+4326%7D&spatialRel=esriSpatialRelWithin&outFields=HUC_" + tempHuc +
+            "%2C+STATES%2C+Shape%2C+AREA_SQKM%2C+HU_" + tempHuc + "_NAME&" +
+            "returnGeometry=true&returnTrueCurves=false&outSR=%7B%22wkid%22+%3A+4326%7D&returnIdsOnly=false&" +
+            "returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=false&returnExtentsOnly=false&f=pjson";
+        $.ajax({
+            url: hucURL,
+            method: 'GET',
+            success: function (result_huc) {
+                if (selectedHuc !== null) {
+                    map.removeLayer(selectedHuc);
+                }
+                // Convert HUC json data to valid geojson.
+                var huc_data = JSON.parse(result_huc.replace("rings", "coordinates"));
+                huc_data["type"] = "FeatureCollection";
+                huc_data["features"][0]["type"] = "Feature";
+                huc_data["features"][0]["properties"] = {};
+                huc_data["features"][0]["geometry"]["type"] = "Polygon";
+                selectedHuc = L.geoJSON(huc_data, {
+                    style: hucStyleSelected,
+                    onEachFeature: function onEachFeature(feature, layer) {
+                        layer.on('click', function(e) {
+                             var zoomLvl = map.getZoom();
+                             if(zoomLvl >= 11) {
+                                 onMapClick(e);
+                             }
+                        });
+                    }
+                }).addTo(map);
+                selectedHucNumber = huc_data["features"][0]["attributes"]["HUC_" + tempHuc];
+                selectedHucName = huc_data["features"][0]["attributes"]["HU_" + tempHuc + "_NAME"];
+                selectedHucArea = huc_data["features"][0]["attributes"]["AREA_SQKM"];
+                setSelectedHUC8(selectedHucNumber);
+                map.fitBounds(selectedHuc.getBounds());
+                //map.setContent('Selected');
+                selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName)).openPopup();
+            },
+            error: function () {
+                $('#hucNumber').html("ERROR: Unable to download data for selected HUC");
+            }
+        })
+    }
+
+
+    // HUC on click action
+    function hucOnClick(e){
+        GetHuc(e.latlng.lat, e.latlng.lng);
+    }
+
+
+
+    function onMapClick(e){
+        var zoomLvl = map.getZoom();
+        if(zoomLvl >= 11) {
+            map.closePopup();
+            onStreamMapClick(e);
+        } else{
+            if (map.hasLayer(selectedStream)) {
+                map.removeLayer(selectedStream);
+            }
+            $('#pestTable').hide();
+            $('#saveTable').hide();
+            $('#latVal').html("");
+            $('#lngVal').html("");
+            $('#ComID').html("");
+
+            hucOnClick(e);
+        }
+    }
+
+
+
+
+
     // initialize the map
-    var map = L.map('map').setView([39.609280, -92.100678], 8);
+    var map = L.map('map',{
+        loadingControl: true
+    }).setView([39.609280, -92.100678], 8);
     // sets variable for selected stream
     var selectedStream;
     // sets the Huc for the selected stream
     var selectedIntake;
+    var selectedHucName = null;
+    var selectedHucNumber = null;
+    var selectedHucArea = null;
 
     // read model output
     var outputData = readOutputJSON();
@@ -569,7 +756,7 @@
                     return streamStyle(feature, field)
                 }
             }).addTo(map);
-            map.on('click', onStreamMapClick);
+            map.on('click', onMapClick);
             info_box_title = "Stream Segment Info"
             info_box_id = "ComID"
         }
@@ -580,9 +767,12 @@
         map.removeLayer(outLayer);
         displayOutput(newfield.value);
         colorHUC8s(newfield.value, summaryfield.value);//$('#summaryselect').val());
+        if(selectedHuc != null){
+            selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
+        }
     }
 
-    displayOutput(field)
+    displayOutput(field);
 
     // load a tile layer
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
