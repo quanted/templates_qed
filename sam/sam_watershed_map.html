@@ -229,6 +229,12 @@
                     });
                     $('#boxid').html(selectedComid);
                     addStreamSeg(streamData, selectedComid);
+                    if(wantedData.length == 0){
+                        $('#pestTable').hide();
+                        $('#saveTable').hide();
+                        console.log("Selected stream was not included in SAM run");
+                        return false;
+                    }
                     setTimeout(populateFilteredTable(wantedData[0].properties), 300);
                     return false;
                 },
