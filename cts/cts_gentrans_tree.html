@@ -170,25 +170,38 @@ function toggleHeaders() {
 function addPchemDataToNode(node, pchem_data) {
     var node_index = "";
     for (node_index in st.graph.nodes) {
-        var some_node = st.graph.nodes[node_index];
-        // if (some_node.id === node.id) {
-        if (some_node.data.genKey == node.genKey) {
-            if (!('pchemprops' in some_node.data)) {
-                some_node.data.pchemprops = [];
+        var matchedNode = st.graph.nodes[node_index];
+        if (matchedNode.data.genKey == node.data.genKey) {
+            if (!('pchemprops' in matchedNode.data)) {
+                matchedNode.data.pchemprops = [];
             }
-            
-            delete pchem_data.node;
 
-            for (pchemprop_obj in some_node.data.pchemprops) {
-                if (Object.is(some_node.data.pchemprops[pchemprop_obj], pchem_data)) {
+            for (pchemprop_obj in matchedNode.data.pchemprops) {
+                // if (Object.is(matchedNode.data.pchemprops[pchemprop_obj], pchem_data)) {
+                //     return;
+                // }
+                var productObj = matchedNode.data.pchemprops[pchemprop_obj];
+                if (productObj.prop == pchem_data['prop'] && productObj.method == pchem_data['method']) {
+                    // Returns instead of adding data if prop already exist for product (i.e., node):
                     return;
                 }
+
             }
 
-            some_node.data.pchemprops.push(pchem_data);
+            // if (Array.isArray(pchem_data['data'])) {
+            //     for (var dataInd in pchem_data['data']) {
+            //         var dataObj = pchem_data.data[dataInd];
+            //         matchedNode.data.pchemprops.push(dataObj);
+            //     }
+            //     return;
+            // }
 
-            $("#" + some_node.id).children('img')
+            matchedNode.data.pchemprops.push(pchem_data);
+
+            $("#" + matchedNode.id).children('img')
                 .addClass("hasPchemProps"); // highlight nodes
+
+            return;
         }
     }
 }
