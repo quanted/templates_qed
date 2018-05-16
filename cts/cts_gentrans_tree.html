@@ -181,7 +181,7 @@ function addPchemDataToNode(node, pchem_data) {
                 //     return;
                 // }
                 var productObj = matchedNode.data.pchemprops[pchemprop_obj];
-                if (productObj.prop == pchem_data['prop'] && productObj.method == pchem_data['method']) {
+                if (productObj.prop == pchem_data['prop'] && productObj.method == pchem_data['method'] && productObj.data == pchem_data['data']) {
                     // Returns instead of adding data if prop already exist for product (i.e., node):
                     return;
                 }
