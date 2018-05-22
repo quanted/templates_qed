@@ -297,7 +297,8 @@ function collectDOM(workflow) {
 	    	// elements = $('div.articles_output').children().not(':hidden, div#export_menu');
 	    	var ph = $(pchem_elements).find('#id_kow_ph').val();
 	    	$(pchem_elements).find('#id_kow_ph').parent('h3').append(ph);
-	    	$(pchem_elements).find('p, td.colorKey, input').remove();
+	    	// $(pchem_elements).find('p, td.colorKey, input').remove();
+	    	$(pchem_elements).find('td.colorKey, input, p.gentransError, p.selectNodeForData').remove();
 
 	    	// elements.add(pchem_elements);
 

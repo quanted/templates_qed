@@ -8,7 +8,7 @@ $(document).ready(function() {
 </script>
 
 <div class="intro-text" id="nav-info">
-    <ul><li><h4>Select (right click) a product in the tree below to view its properties.</h4></li>
+    <ul><li><h4>Select (right click) a product in the tree below to view its molecular information.</h4></li>
     <!-- <li><h4>Metabolites can be viewed by generation using the "Display up to" selection below,
     or view a metabolite's progeny by left-clicking the metabolite of interest.</h4></li> -->
     <li><h4>Left click a product in the tree below to view its transformation product and formation pathway.</h4></li>
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     <h3 class="collapsible out_1 mol-info-header"><span></span>View Molecular Information</h3>
     <div id="mol-info-wrapper">
-        <p class="intro-text">Select (right-click) a metabolite to view its properties.</p>
+        <p class="intro-text">Select (right-click) a metabolite to view its molecular information.</p>
         <br>
         <div class="nodeWrapDiv"></div>
         <table class="mol-info-table ctsTableStylin">
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
     <br>
 
-    <h3 class="collapsible out_1"><span></span>Calculate Physicochemical Data</h3>
+    <h3 class="collapsible out_1"><span></span>Calculate Physicochemical Properties</h3>
     <div id="pchemprop-wrapper">
         Calculate physicochemical properties for:
         <select id="gen-select-pchem">
@@ -59,7 +59,7 @@ $(document).ready(function() {
         <input type="button" value="Clear data" class="input_button btn-pchem" id="btn-pchem-cleardata">
         <br>
         <p class="gentransError">Must right-click a metabolite first</p>
-        <p class="selectNodeForData">Select (right-click) a node to view its physicochemical data</p>
+        <p class="selectNodeForData">Select (right-click) a node to view its physicochemical properties</p>
     </div>
 
 </div>

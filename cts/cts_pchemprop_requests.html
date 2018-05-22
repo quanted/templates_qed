@@ -706,8 +706,7 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
             post_data['method'] = response['method'];
         }
         if (hasData == false) {
-            node.data.pchemprops.push(post_data);
-            // $('')
+            // node.data.pchemprops.push(post_data);
             addPchemDataToNode(node, post_data);
         }
     }
