@@ -262,6 +262,7 @@
         $.ajax({
             url: statusUrl,
             type: "GET",
+            cache: false,
             success: function (data, status, jqXHR) {
                 if ('task_status' in data) {
 
