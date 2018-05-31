@@ -91,8 +91,13 @@ $(document).ready(function() {
     // TODO: Cancel button, which removes pending tasks from celery queues:
     $('#btn-pchem-cancel').on('click', function () {
         console.log("pchem cancel button selected");
-        socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
-        blockInterface(false);
+        socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps, 'service': service}));
+        if (typeof(blockInterface) == "function") {
+            // Check if progress bar JS module is being used (e.g., batch mode progress bar)
+            blockInterface(false);
+        }
+        console.log("Clearing p-chem table..");  // todo: only clear loading wheels, keep data..
+        $('#btn-pchem-cleardata').trigger('click');
     });
 
 });
@@ -137,15 +142,27 @@ function redirectToInputsPage() {
     }
 
     // Loop CTS input page types (input or batch) to match current one in URL:
-    for (var ind in ctsInputTypes) {
-        if (currentUrl.indexOf(ctsInputTypes[ind]) > -1) {
-            inputType = ctsInputTypes[ind];
-        }
+    if (run_type == "single") {
+        inputType = "input";
+    }
+    else if (run_type == "batch") {
+        inputType = "batch";
     }
 
+    // Redirects after canceled request:
     if (workflow && inputType) {
+        // Redirects to input page (single or batch)
         console.log("Redirecting to " + workflow + "'s " + inputType + " page");
         window.location.replace('/cts/' + workflow + '/' + inputType);
+    }
+    else if (workflow && inputType == null) {
+        // If only workflow, redirects to workflow main page..
+        window.location.replace('/cts/' + workflow);
+    }
+    else {
+        // Redirects to CTS main page if something goes wrong with redirect..
+        console.log("Couldn't get workflow type of input type, redirecting to /cts page..");
+        window.location.replace('/cts');
     }
 
     return;
@@ -176,11 +193,20 @@ function connectToSocket() {
     }
 
     socket.on('cancel', function(cancelMessage) {
-        console.log("Incoming 'cancel' request!");
-        if (cancelMessage) {
-            console.log("Canceling request!");
-            var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Request has been canceled. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+        /*
+        Socket for canceling user request.
+        */
+        console.log("User request is canceled..");
+        var blockui_message = '';
 
+        if (service == "pchem" && workflow == "gentrans" && run_type == "single") {
+            // Checks if it's a pchem request on gentrans output page, and doesn't redirect to inputs..
+            blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Request has been canceled.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+            return;
+        }
+
+        if (cancelMessage && typeof(blockInterface) == "function") {
+            blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Request has been canceled. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
             blockInterface(true, blockui_message);
         }
     });
@@ -680,8 +706,7 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
             post_data['method'] = response['method'];
         }
         if (hasData == false) {
-            node.data.pchemprops.push(post_data);
-            // $('')
+            // node.data.pchemprops.push(post_data);
             addPchemDataToNode(node, post_data);
         }
     }
