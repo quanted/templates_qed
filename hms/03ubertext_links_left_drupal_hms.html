@@ -9,7 +9,7 @@
         <h3 class="headerbar">{{ key|safe }}</h3>
         {% for valueKey, valueValue in value.items %}
             <li class="menu-item{% if forloop.last %} menu-item-last{% endif %}"><a href="/hms/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
-                {% if MODEL == "hydrologyyyyyyyyyy" and valueValue == "hydrology/" %}
+                {% if MODEL == "hydrology" and valueValue == "hydrology/" %}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ MODEL }}/evapotranspiration/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "evapotranspiration" %} active-trail active{% endif %}">Evapotranspiration</a></li>
                     <li class="menu-item"><a href="/hms/{{ MODEL }}/precipitation/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "precipitation" %} active-trail active{% endif %}">Precipitation</a></li>
@@ -44,11 +44,14 @@
 {#                    <li class="menu-item"><a href="/hms/{{ MODEL }}/changingvolume/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "changingvolume" %} active-trail active{% endif %}">Changing Volume</a></li>#}
 {#                    <li class="menu-item"><a href="/hms/{{ MODEL }}/kinematicwave/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "kinematicwave" %} active-trail active{% endif %}">Kinematic Wave</a></li>#}
 {#                </ul>#}
+            {% elif MODEL == "meteorology" and valueValue == "meteorology/" %}
+                   <ul class="menu">
+                       <li class="menu-item"><a href="/hms/{{ MODEL }}/solarcalculator/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "solarcalculator" %} active-trail active{% endif %}">Solar Calculator</a></li>
+                   </ul>
             {% elif MODEL == "meteorology" and SUBMODEL == "precipitation" and valueValue == "meteorology/precipitation"%}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ valueValue }}/runmodel/" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "run" %} active-trail active{% endif %}">Run {{ valueKey|safe }}</a></li>
                     <li class="menu-item"><a href="/hms/{{ valueValue }}/algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">{{ valueKey|safe }} Algorithms</a></li>
-                    {# <li class="menu-item"><a href="/hms/{{ MODEL }}/solarcalculator/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "solarcalculator" %} active-trail active{% endif %}">Solar Calculator</a></li> #}
                 </ul>
             {% elif MODEL == "meteorology" and SUBMODEL == "solarcalculator" and valueValue == "meteorology/solarcalculator"%}
                 <ul class="menu">
