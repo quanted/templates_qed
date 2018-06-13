@@ -18,22 +18,22 @@
                     <li class="menu-item"><a href="/hms/{{ MODEL }}/surfacerunoff/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "surfacerunoff" %} active-trail active{% endif %}">Surface Runoff</a></li>
                     <li class="menu-item"><a href="/hms/{{ MODEL }}/temperature/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "temperature" %} active-trail active{% endif %}">Temperature</a></li>
                 </ul>
-            {% elif MODEL == "hydrology" and SUBMODEL == "evapotranspiration" and valueValue == "hydrology/evapotranspiration/" %}
+            {% elif MODEL == "v2hydrology" and SUBMODEL == "evapotranspiration" and valueValue == "v2hydrology/evapotranspiration/" %}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ valueValue }}runmodel/" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "run" %} active-trail active{% endif %}">Run {{ valueKey|safe }}</a></li>
                     <li class="menu-item"><a href="/hms/{{ valueValue }}algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">{{ valueKey|safe }} Algorithms</a></li>
                 </ul>
-            {% elif MODEL == "hydrology" and SUBMODEL == "soilmoisture" and valueValue == "hydrology/soilmoisture/" %}
+            {% elif MODEL == "v2hydrology" and SUBMODEL == "soilmoisture" and valueValue == "v2hydrology/soilmoisture/" %}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ valueValue }}runmodel/" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "run" %} active-trail active{% endif %}">Run {{ valueKey|safe }}</a></li>
                     <li class="menu-item"><a href="/hms/{{ valueValue }}algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">{{ valueKey|safe }} Algorithms</a></li>
                 </ul>
-            {% elif MODEL == "hydrology" and SUBMODEL == "subsurfaceflow" and valueValue == "hydrology/subsurfaceflow/" %}
+            {% elif MODEL == "v2hydrology" and SUBMODEL == "subsurfaceflow" and valueValue == "v2hydrology/subsurfaceflow/" %}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ valueValue }}runmodel/" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "run" %} active-trail active{% endif %}">Run {{ valueKey|safe }}</a></li>
                     <li class="menu-item"><a href="/hms/{{ valueValue }}algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">{{ valueKey|safe }} Algorithms</a></li>
                 </ul>
-            {% elif MODEL == "hydrology" and SUBMODEL == "surfacerunoff" and valueValue == "hydrology/surfacerunoff/" %}
+            {% elif MODEL == "v2hydrology" and SUBMODEL == "surfacerunoff" and valueValue == "v2hydrology/surfacerunoff/" %}
                 <ul class="menu">
                     <li class="menu-item"><a href="/hms/{{ valueValue }}runmodel/" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "run" %} active-trail active{% endif %}">Run {{ valueKey|safe }}</a></li>
                     <li class="menu-item"><a href="/hms/{{ valueValue }}algorithms" title="{{ valueKey|safe }} Algorithms" class="menu-link{% if PAGE == "algorithms" %} active-trail active{% endif %}">{{ valueKey|safe }} Algorithms</a></li>
