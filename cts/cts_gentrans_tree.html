@@ -92,9 +92,9 @@ $('#btn-pchem-getdata').click(function () {
     service = "pchem";
     kowPH = $('#id_kow_ph').val();
 
-    if (socket) {
-        socket.disconnect();
-    }
+    // if (socket) {
+    //     socket.disconnect();
+    // }
     connectToSocket(); // cts_pchemprop_ajax_calls
 
     //Check  #gen-select-pchem value to determine how
