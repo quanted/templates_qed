@@ -172,6 +172,11 @@ function redirectToInputsPage() {
 function connectToSocket() {
 
     if (typeof io !== 'undefined') {
+
+        if (socket && socket.connected) {
+            // Ignores connection attempt if already connected
+            return;
+        }
         
         // connect to socket.io!
         if (nodejs_host == 'nginx') {
