@@ -52,7 +52,7 @@
                     {% csrf_token %}
                 {% else %}
                     <form id="inputOptions" method="post" enctype="multipart/form-data"
-                          action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output" name="input_table">
+                          action="/hms/{{ MODEL }}/{{ SUBMODEL }}/output/" name="input_table">
                     {% csrf_token %}
                 {% endif %}
                 <table class="nostripe input_table" id="input_table">
