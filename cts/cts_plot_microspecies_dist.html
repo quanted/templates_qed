@@ -77,10 +77,13 @@ function plotMicroDist() {
       ms_num += 1;
   });
 
+  // Gets microspecies' color and name to add to borders of
+  // microspecies images:
   for (var series in plot['series']) {
     var color = plot['series'][series]['color']; // series color..
     var name = plot['series'][series]['label']; // series name..
-    $('#' + name).parent('div').css('border', '2px solid ' + color); // color parent div..
+    // $('#' + name).parent('div').css('border', '2px solid ' + color); // color parent div..
+    $('#' + name).parent('div').css('border', '5px solid ' + color); // sets border color
     $('#' + name).css({'border': 'none', 'margin': '0px'}); // remove image border..
   }
 
