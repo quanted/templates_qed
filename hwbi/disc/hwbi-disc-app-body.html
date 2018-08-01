@@ -29,7 +29,7 @@
             <button id="search_button" class="search_button epa-search-button" type="submit"
                     onclick="setTimeout(getScoreData, 300); return false;">Search
             </button>
-            <label for="search_form" id="search_placeholder">Enter your address, city, state, or zip code or <a href="#" id="toggle_search_type" onclick="toggleSearchType(event)">select your state and county</a>.</label>
+            <label for="search_form" id="search_placeholder">Enter your city, state, or zip code or <a href="#" id="toggle_search_type" onclick="toggleSearchType(event)">select your state and county</a>.</label>
             <label id="search_error_notification">Your search could not be completed. Please try another
                 location.</label>
         </form>
@@ -44,13 +44,14 @@
                         <option value="" selected="selected">select county</option>
                     </select>
                 </div>
-                <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your address, city, state, or zip code</a>.</label>
+                <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city, state, or zip code</a>.</label>
                 <label id="search_error_notification">Your search could not be completed. Please try another
                     location.</label>
             </form>
         </div>
         <button id="report_pdf" class="report_pdf_button" type="button">PDF Report</button>
     </div>
+    <div id="toast">Unable to find location. Please try another.</div>
     <div id="about-tab" class="disc-body selected-tab">
         <div id="about-content">
             <div id="quote_body">
