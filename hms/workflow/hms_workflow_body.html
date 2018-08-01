@@ -1,6 +1,7 @@
 <div id="huc_map_block">
     <span class="close_button" onclick="toggleHucMap(); return false;">x</span>
     <h5>HUC Selection Map</h5>
+    <div id="current_huc_level"> - Currently viewing HUC 2 boundaries</div>
     <div id="huc_map_div"></div>
     <div id="basemaps-wrapper" class="leaflet-bar">
         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
@@ -48,9 +49,9 @@
         </div>
         <div id="input_block" class="main_block">
             <div id="spatial_input" class="input_fields">
-                <h5>Spatial Input Options</h5>
                 <span class="close_button" onclick="toggleSpatialInputs(); return false;">x</span>
-                <br>
+{#                <h5>Spatial Input Options</h5>#}
+{#                <br>#}
                 <label for="spatial_type">Input Type:</label>
                 <select id="spatial_type" title="Select the type of spatial input for the workflow." onchange="spatialTypeSelect(); return false;">
                     <option disabled selected value>select type</option>
@@ -68,6 +69,10 @@
                     <br>
                     <label for="comid">COMID:</label>
                     <input type="text" id="comid" title="Please provide a stream/catchment comid.">
+                    <div id="comid_choice_div">
+                        <input type="radio" name="comid_choice" value="single" checked>Single<br>
+                        <input type="radio" name="comid_choice" value="multiple">Multiple
+                    </div>
                 </div>
                 <br>
                 <br>
@@ -76,9 +81,9 @@
                 </button>
             </div>
             <div id="temporal_input" class="input_fields">
-                <h5>Temporal Input Options</h5>
                 <span class="close_button" onclick="toggleTemporalInputs(); return false;">x</span>
-                <br>
+{#                <h5>Temporal Input Options</h5>#}
+{#                <br>#}
                 <label for="start_datepicker">Start Date:</label>
                 <input type="text" id="start_datepicker">
                 <br><br>
@@ -95,9 +100,9 @@
                 <button id="add_temporal_input" type="button" onclick="addTemporalInput(); return false;" title="Add input to selected input list.">Add</button>
             </div>
             <div id="runoff_input" class="input_fields">
-                <h5>Runoff Input Options</h5>
                 <span class="close_button" onclick="toggleRunoffInputs(); return false;">x</span>
-                <br>
+{#                <h5>Runoff Input Options</h5>#}
+{#                <br>#}
                 <label for="runoff_select">Data Source:</label>
                 <select id="runoff_select" title="Please select a surface runoff data source or algorithm.">
                     <option selected value="nldas">NLDAS</option>
@@ -109,9 +114,9 @@
                 <button id="add_runoff_input" type="button" onclick="addRunoffInput(); return false;" title="Add input to selected input list.">Add</button>
             </div>
             <div id="precip_input" class="input_fields">
-                <h5>Precipitation Input for Runoff Calculation</h5>
                 <span class="close_button" onclick="togglePrecipInputs(); return false;">x</span>
-                <br>
+{#                <h5>Precipitation Input for Runoff Calculation</h5>#}
+{#                <br>#}
                 <label for="precip_select">Data Source:</label>
                 <select id="precip_select" title="Please select the precipiation data source or algorithm for use with your selected runoff algorithm.">
                     <option selected value="nldas">NLDAS</option>
@@ -126,9 +131,9 @@
                 <button id="add_precip_input" type="button" onclick="addPrecipInput(); return false;" title="Add input to selected input list.">Add</button>
             </div>
             <div id="stream_input" class="input_fields">
-                <h5>Stream Hydrology Input Options</h5>
                 <span class="close_button" onclick="toggleStreamInputs(); return false;">x</span>
-                <br>
+{#                <h5>Stream Hydrology Input Options</h5>#}
+{#                <br>#}
                 <label for="stream_algorithm_select">Stream Hydrology Algorithm:</label>
                 <select id="stream_algorithm_select" title="Please select a stream algorithm for your workflow model.">
                     <option selected value="constantvolume">Constant Volume</option>
