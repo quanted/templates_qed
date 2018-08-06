@@ -82,7 +82,7 @@
                             <span class="score_indicator" id="score_indicator_span"></span>
                             <p id="wellbeing-score">0</p>
                             <p id="wellbeing-score-scale"><b>DISC Score</b><br>(Scale: 0 - 100)</p>
-                            <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p>
+                            <!-- <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p> -->
                         </div>
                         <div id="hwbi-info">
                             <h4>DISC Score</h4>
@@ -97,23 +97,25 @@
                 </div>
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
-                    <button type="button" id="rank_btn"><b>Rank</b> <i>(What's this)</i></button>
+                    <button type="button" id="rank_btn" onclick="priorityText()"><b>Rank Priority</b></button>
+                    <br><br>
+                    <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
                     <div id="domain-scores">
                         {#            Built Environment Block        #}
                         <div id="environment-block" class="domain-score-block">
                             <button class="accordion domain-expand"></button>
                             <div id="environment_data-title" class="domain-data-title">Built Environment:</div>
                             <div id="environment_score" class="domain-score">0.0</div>
-                            <div id="environment_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="environment_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="environment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar environment-bar" id="environment-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="environment-slider-bar" class="rank-slider environment-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="environment_details" class="domain-description">
                                 
@@ -132,16 +134,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="community_data-title" class="domain-data-title">Community Involvement:</div>
                             <div id="community_score" class="domain-score">0.0</div>
-                            <div id="community_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="community_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="community_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar community-bar" id="community-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="community-slider-bar" class="rank-slider community-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="community_details" class="domain-description">
                                 
@@ -160,16 +162,17 @@
                             <button class="accordion domain-expand"></button>
                             <div id="education_data-title" class="domain-data-title">Education:</div>
                             <div id="education_score" class="domain-score">0.0</div>
-                            <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
+                            
                             <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar education-bar" id="education-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="education-slider-bar" class="rank-slider education-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="education_details" class="domain-description">
                                 
@@ -188,16 +191,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="health_data-title" class="domain-data-title">Health:</div>
                             <div id="health_score" class="domain-score">0.0</div>
-                            <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar health-bar" id="health-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="health-slider-bar" class="rank-slider health-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="health_details" class="domain-description">
                                 
@@ -216,16 +219,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="resource-mgmt_data-title" class="domain-data-title">Environmental Resource Management:</div>
                             <div id="resource-mgmt_score" class="domain-score">0.0</div>
-                            <div id="resource-mgmt_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="resource-mgmt_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="resource-mgmt_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar resource-mgmt-bar" id="resource-mgmt-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="resource-mgmt-slider-bar" class="rank-slider resource-mgmt-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="resource-mgmt_details" class="domain-description">
                                 
@@ -244,16 +247,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="hazard_data-title" class="domain-data-title">Hazard Vulnerability:</div>
                             <div id="hazard_score" class="domain-score">0.0</div>
-                            <div id="hazard_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="hazard_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="hazard_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar hazard-bar" id="hazard-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="hazard-slider-bar" class="rank-slider hazard-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="hazard_details" class="domain-description">
                                 
@@ -272,16 +275,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="economy_data-title" class="domain-data-title">Local Economy:</div>
                             <div id="economy_score" class="domain-score">0.0</div>
-                            <div id="economy_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="economy_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="economy_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar economy-bar" id="economy-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="economy-slider-bar" class="rank-slider economy-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="economy_details" class="domain-description">
                                 <!-- <figure class="domain_image_right">
@@ -299,16 +302,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="resilience_data-title" class="domain-data-title">Resilience Planning:</div>
                             <div id="resilience_score" class="domain-score">0.0</div>
-                            <div id="resilience_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="resilience_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar resilience-bar" id="resilience-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="resilience_details" class="domain-description">
                                 
@@ -327,16 +330,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="culture_data-title" class="domain-data-title">Local Culture:</div>
                             <div id="culture_score" class="domain-score">0.0</div>
-                            <div id="culture_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="culture_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="culture_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar culture-bar" id="culture-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="culture-slider-bar" class="rank-slider culture-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="culture_details" class="domain-description">
                                 
@@ -355,16 +358,16 @@
                             <button class="accordion domain-expand"></button>
                             <div id="safety_data-title" class="domain-data-title">Safety and Security:</div>
                             <div id="safety_score" class="domain-score">0.0</div>
-                            <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <!-- <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
                             <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar safety-bar" id="cohesion-score-bar"></div>
                             </div>
                             <div class="slider-block">
-                                <span class="left-slider-legend">Least Valued</span>
+                                <span class="left-slider-legend">Less</span>
                                 <div class="slider-container">
                                     <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
                                 </div>
-                                <span class="right-slider-legend">Most Valued</span>
+                                <span class="right-slider-legend">More</span>
                             </div>
                             <div id="safety_details" class="domain-description">
                                 
@@ -397,7 +400,7 @@
                         presently considered in calculating the indicators used for DISC. Here you have the opportunity 
                         to adjust the indicator scores to better reflect more local conditions in the individual 
                         community characteristic measures.<br /><br />
-						Click on a circle labeled with the characteristic that you are interested in changing to display 
+						Click on a label with the characteristic that you are interested in changing to display 
 						the related indicators. Use the sliders associated with each indicator to increase or decrease 
 						its score to adjust the overall community characteristic value.
                     </div>
