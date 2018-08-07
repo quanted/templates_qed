@@ -142,24 +142,25 @@ $(document).ready(function () {
 	}
 
 	$('#pdfExport').click(function () {
-		// parseOutput('pdf');
-		// $('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		parseOutput('pdf');
+		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		
 		// var html = $('form.post_form');
 
 		// var html_string = $('form.post_form')[0];
 		// var html_string = parseOutput('pdf');
 
-  		// This method may need to have all svgs removed, and use
-  		// the "popup" png images instead.
-  		var objects_for_pdf = $('.articles_output').css({'backgroundColor': 'white'});  // fix background from defaulting to black
+  // 		// This method may need to have all svgs removed, and use
+  // 		// the "popup" png images instead.
+  // 		var objects_for_pdf = $('.articles_output').css({'backgroundColor': 'white'});  // fix background from defaulting to black
 
-  		var pdf = new jsPDF();
-		var options = {
-			pagesplit: true
-		};
-		pdf.addHTML(objects_for_pdf, 0, 0, options, function(){
-		    pdf.save("test.pdf");
-		});
+  // 		var pdf = new jsPDF();
+		// var options = {
+		// 	pagesplit: true
+		// };
+		// pdf.addHTML(objects_for_pdf, 0, 0, options, function(){
+		//     pdf.save("test.pdf");
+		// });
 
 	});
 
@@ -297,7 +298,8 @@ function collectDOM(workflow) {
 	    	// elements = $('div.articles_output').children().not(':hidden, div#export_menu');
 	    	var ph = $(pchem_elements).find('#id_kow_ph').val();
 	    	$(pchem_elements).find('#id_kow_ph').parent('h3').append(ph);
-	    	$(pchem_elements).find('p, td.colorKey, input').remove();
+	    	// $(pchem_elements).find('p, td.colorKey, input').remove();
+	    	$(pchem_elements).find('td.colorKey, input, p.gentransError, p.selectNodeForData').remove();
 
 	    	// elements.add(pchem_elements);
 

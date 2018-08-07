@@ -1,10 +1,177 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame { /* Static Frame */
+            -pdf-frame-content: header_content;
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 40pt;
+        }
+        @frame content_frame {
+            /* Content Frame */
+        left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+        }
+        @frame footer_frame {
+            /* Another static Frame */
+        -pdf-frame-content:footer_content;
+        left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+        }
+        }
+
+        .site-name img {
+        {#background: url();#} color: transparent;
+            display: block;
+            font: 0/0 a;
+            width: 388px;
+            height: 46px;
+            text-shadow: none;
+        }
+
+        .site-slogan {
+            color: #0071bc;
+            font-family: Arial, sans-serif;
+            font-size: 16pt;
+            font-weight: 500;
+            line-height: 1;
+            position: relative;
+        }
+
+        #hwbi-intro {
+        {#border-top: 3px #183E62 solid;#} font-size: 12px;
+        {#padding: 25px 20px;#} font-weight: normal;
+            font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+        }
+
+        #hwbi-intro p {
+            border: none;
+        }
+
+        #snapshot_results {
+            position: absolute;
+        }
+
+        #score_graph_div {
+            {#background: url('/static_qed/hwbi/disc/img/rainbow_need_to_replace.png') no-repeat;#}
+            height: 83px;
+            position: relative;
+            width: 145px;
+            z-index: 1;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 75px;
+        }
+
+        #wellbeing-score {
+            color: #36bc28;
+            font-size: 42px;
+            line-height: 3.125rem;
+            font-weight: 700;
+            margin: 0;
+            padding: 33px 0 0;
+            text-align: center;
+        }
+
+        #snapshot_results {
+            height: 500px;
+            width: 33%
+        }
+
+        #hwbi-score {
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+
+        #location {
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #wellbeing-score-scale, #wellbeing-score-location {
+            padding-bottom: 0;
+            width: 100%;
+            font-size: 14px;
+            white-space: nowrap;
+
+        }
+
+        #hwbi-info p {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #hwbi-info h4 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<div id="header_content">
+    <div class="site-name-block" style="float:left;display:block;">
+        <div class="site-name"><img src="{% static 'images/epa_logo.png' %}"></div>
+        <div class="site-slogan">United States Environmental Protection Agency</div>
+    </div>
+</div>
+
+<div id="footer_content">US EPA: DISC Report - page
+    <pdf:pagenumber> of
+        <pdf:pagecount>
+</div>
+
+<div id="content_frame">
+    <h1><span id="title">HWBI DISC Report</span></h1><br>
+    <h2>Decision Integration for Strong Communities</h2>
+    <div id="hwbi-intro">
+        <p>Communities sit at the intersection where the natural, built and social environments meet. From creating jobs
+            to
+            building greener infrastructure, many considerations are needed to yield the most sustainable decision
+            outcomes
+            for a community. Understanding what aspects about your community you value and wish to sustain or improve
+            may
+            help inform community planning decisions.</p>
+        <p>Indicators and indices can be used to assess various attributes about your community. Indicators summarize
+            raw
+            measures (e.g., median income, disease prevalence) to help interpret data patterns and trends. For
+            communities,
+            no single index or indicator set can offer a complete picture of status or conditions. However, an
+            integrative
+            approach that synthesizes information from many different indicator sets can offer broader insight from
+            multiple
+            viewpoints.</p>
+        <p>The Decision Integration for Strong Communities (DISC) application is a simple and intuitive tool designed to
+            bring together information from many indicator products to help characterize quality of life in your
+            community
+            and present resources that may present ways to help improve aspects about your community that you value.</p>
+    </div>
+    <pdf:nextpage/>
+    <div id="snapshot_results">
+        <div id="hwbi-score">
+            <p id="location">Snapshot results for:<br>[location]</p>
+            <div id="score_graph_div">
+                <p id="wellbeing-score">0</p>
+                <p id="wellbeing-score-scale"><b>DISC Score</b><br>(Scale: 0 - 100)</p>
+                <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p>
+            </div>
+            <div id="hwbi-info">
+                <h4>DISC Score</h4>
+                <p>The Decision Integration for Strong Communities (DISC) index is a summary measure that
+                    provides a profile about select community characteristics. The index is based on
+                    indicators and metrics derived from existing cultural, economic, health, and other
+                    related data. The DISC profile index provides a snapshot about quality of life
+                    characteristics common across all communities and is sensitive to changes in the
+                    economic, social and ecological environments.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

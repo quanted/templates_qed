@@ -92,9 +92,9 @@ $('#btn-pchem-getdata').click(function () {
     service = "pchem";
     kowPH = $('#id_kow_ph').val();
 
-    if (socket) {
-        socket.disconnect();
-    }
+    // if (socket) {
+    //     socket.disconnect();
+    // }
     connectToSocket(); // cts_pchemprop_ajax_calls
 
     //Check  #gen-select-pchem value to determine how
@@ -170,25 +170,38 @@ function toggleHeaders() {
 function addPchemDataToNode(node, pchem_data) {
     var node_index = "";
     for (node_index in st.graph.nodes) {
-        var some_node = st.graph.nodes[node_index];
-        // if (some_node.id === node.id) {
-        if (some_node.data.genKey == node.genKey) {
-            if (!('pchemprops' in some_node.data)) {
-                some_node.data.pchemprops = [];
+        var matchedNode = st.graph.nodes[node_index];
+        if (matchedNode.data.genKey == node.data.genKey) {
+            if (!('pchemprops' in matchedNode.data)) {
+                matchedNode.data.pchemprops = [];
             }
-            
-            delete pchem_data.node;
 
-            for (pchemprop_obj in some_node.data.pchemprops) {
-                if (Object.is(some_node.data.pchemprops[pchemprop_obj], pchem_data)) {
+            for (pchemprop_obj in matchedNode.data.pchemprops) {
+                // if (Object.is(matchedNode.data.pchemprops[pchemprop_obj], pchem_data)) {
+                //     return;
+                // }
+                var productObj = matchedNode.data.pchemprops[pchemprop_obj];
+                if (productObj.prop == pchem_data['prop'] && productObj.method == pchem_data['method'] && productObj.data == pchem_data['data']) {
+                    // Returns instead of adding data if prop already exist for product (i.e., node):
                     return;
                 }
+
             }
 
-            some_node.data.pchemprops.push(pchem_data);
+            // if (Array.isArray(pchem_data['data'])) {
+            //     for (var dataInd in pchem_data['data']) {
+            //         var dataObj = pchem_data.data[dataInd];
+            //         matchedNode.data.pchemprops.push(dataObj);
+            //     }
+            //     return;
+            // }
 
-            $("#" + some_node.id).children('img')
+            matchedNode.data.pchemprops.push(pchem_data);
+
+            $("#" + matchedNode.id).children('img')
                 .addClass("hasPchemProps"); // highlight nodes
+
+            return;
         }
     }
 }
@@ -889,21 +902,17 @@ function molecularInfoRequestStatus(in_progress) {
 
 
 function cancelRequest() {
+
+    var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Physicochemical data successfully retrieved!<br><br>The data can be downloaded at the top-right of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+
     console.log("canceling request");
     socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
     $.unblockUI();
 }
 
 
-
-
 function jsonRepack(jsonobj) {
   return JSON.parse(JSON.stringify(jsonobj));
-}
-
-
-function handleTransformationProductsBatchRequest() {
-
 }
 
 </script>

@@ -8,12 +8,18 @@
     <div class="nav__inner">
       <h2 class="element-invisible">Main menu</h2>
       <ul class="menu" role="menu">
-        <li class="menu-item" id="menu-learn" role="presentation"><a href="https://www.epa.gov/environmental-topics" title="Learn about Environmental Topics that EPA covers." class="menu-link" role="menuitem">Environmental Topics</a></li>
-        <li class="menu-item" id="menu-lawsregs" role="presentation"><a href="https://www.epa.gov/laws-regulations" title="Laws written by Congress provide the authority for EPA to write regulations. Regulations explain the technical, operational, and legal details necessary to implement laws." class="menu-link" role="menuitem">Laws &amp; Regulations</a></li>
-        <li class="menu-item" id="menu-about" role="presentation"><a href="https://www.epa.gov/aboutepa" title="Learn more about: our mission and what we do, how we are organized, and our history." class="menu-link" role="menuitem">About EPA</a></li>
+        {% if not electron %}
+          <li class="menu-item" id="menu-learn" role="presentation"><a href="https://www.epa.gov/environmental-topics" title="Learn about Environmental Topics that EPA covers." class="menu-link" role="menuitem">Environmental Topics</a></li>
+          <li class="menu-item" id="menu-lawsregs" role="presentation"><a href="https://www.epa.gov/laws-regulations" title="Laws written by Congress provide the authority for EPA to write regulations. Regulations explain the technical, operational, and legal details necessary to implement laws." class="menu-link" role="menuitem">Laws &amp; Regulations</a></li>
+          <li class="menu-item" id="menu-about" role="presentation"><a href="https://www.epa.gov/aboutepa" title="Learn more about: our mission and what we do, how we are organized, and our history." class="menu-link" role="menuitem">About EPA</a></li>
+        {% endif %}
+        {% if electron %}
+          <li class="menu-item" role="presentation"><span style="padding: 1.2em 1.6em;">&nbsp;</span></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
+  {% if not electron %}
   <footer class="main-footer clearfix" role="contentinfo">
     <div class="main-footer__inner">
       <div class="region-footer">
@@ -68,8 +74,17 @@
       </div>
     </div>
   </footer>
+  {% endif %}
+  {% if not electron %}
   <script src="https://www.epa.gov/sites/all/libraries/template2/jquery.js"></script>
   <script src="https://www.epa.gov/sites/all/libraries/template2/js.js"></script>
   <script src="https://www.epa.gov/sites/all/modules/custom/epa_core/js/alert.js"></script>
   <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/ie.js"></script><![endif]-->
+  {% else %}
+  <script src="/external_resources/jquery.js"></script>
+  <script src="/external_resources/js.js"></script>
+  <script src="/external_resources/alert.js"></script>
+  <script src="/sql.js"></script>
+  <script src="/db.js"></script>
+  {% endif %}
 </html>
