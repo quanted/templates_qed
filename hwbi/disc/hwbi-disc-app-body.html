@@ -25,10 +25,13 @@
         <form id="search_form" action="#community-snapshot-tab">
             <label for="search_form" id="search_label">What is the <b>DISC</b> profile of your
                 <b>community?</b></label>
-            <input type="text" id="search_field" placeholder="" name="location_input">
-            <button id="search_button" class="search_button epa-search-button" type="submit"
-                    onclick="setTimeout(getScoreData, 300); return false;">Search
-            </button>
+            <div class="inputcontainer">
+                <input type="text" id="search_field" placeholder="Search a Location" name="location_input" class="searchicon">
+                
+                <!--<button id="search_button" class="search_button epa-search-button" type="submit"
+                        onclick="setTimeout(getScoreData, 300); return false;">Search
+                </button>-->
+            </div>
             <label for="search_form" id="search_placeholder">Enter your city, state, or zip code or <a href="#" id="toggle_search_type" onclick="toggleSearchType(event)">select your state and county</a>.</label>
             <label id="search_error_notification">Your search could not be completed. Please try another
                 location.</label>
