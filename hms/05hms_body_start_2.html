@@ -1,0 +1,41 @@
+<!--start 05hms_body_start.html-->
+<div id="main-column" class="main-column clearfix" style="width: 98%;">
+    <h2 class="page-title">{{ TITLE }}</h2>
+    <div id="component_tabs">
+        <ul>
+            <li><a href="#overview_tab" id="overview_tab_link">Overview</a></li>
+            <li><a href="#data_request_tab" id="data_request_link">Data Request</a></li>
+            <li><a href="#output_tab" id="output_link">Output Data</a></li>
+            <li><a href="#algorithms_tab" id="algorithms_link">Data Algorithms</a></li>
+        </ul>
+        <div id="overview_tab" class="single_tab">
+            {{ DESCRIPTION|safe }}
+        </div>
+        <div id="data_request_tab" class="single_tab">
+            {{ INPUT_FORM|safe }}
+        </div>
+        <div id="output_tab" class="single_tab">
+            <div id="output_data_block">
+                <div id="output_metadata_block">
+                    <h3 id="output_metadata_title" class="output_title"></h3>
+                    <div id="output_metadata"></div>
+                </div>
+                <div id="output_data_block_table">
+                    <h3 id="output_data_title" class="output_title"></h3>
+                    <div id="output_data_save_block">
+                        <div id="output_data_save_json"><a id="output_json_download"
+                                                           onclick="exportDataToJSON(); return false;">Export JSON</a>
+                        </div>
+                        <div id="output_data_save_csv"><a id="output_csv_download"
+                                                          onclick="exportDataToCSV(); return false;">Export CSV</a>
+                        </div>
+                    </div>
+                    <div id="output_data"></div>
+                </div>
+            </div>
+        </div>
+        <div id="algorithms_tab" class="single_tab">
+            {{ ALGORITHMS|safe }}
+        </div>
+    </div>
+    <!--end 05hms_body_start.html-->
