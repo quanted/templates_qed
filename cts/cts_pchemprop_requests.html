@@ -769,10 +769,14 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
 }
 
 
+
 function organizeData(calc, prop, data) {
     // formats data for pchem table
-    if (!Number(data) && Number(data) != 0) {
+    if (!Number(data) && Number(data) != 0 && typeof data == "string") {
         return data;  // doesn't do anything if it isn't a number (e.g., "N/A")
+    }
+    else if (typeof data == "object" && prop == "ion_con") {
+        return organizePkaData(data);
     }
     else {
         data = Number(data); // makes sure data is Number before rounding
@@ -787,7 +791,11 @@ function organizeData(calc, prop, data) {
     else {
         return data.toFixed(2);
     }
+}
 
+
+
+function organizePkaData(data) {
     // For multiple pKa values in a cell:
     if (data == null ) {
         return "none";  // return "none" to pchem table cell
@@ -810,6 +818,7 @@ function organizeData(calc, prop, data) {
     }
     return parsedData;
 }
+
 
 
 function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
@@ -850,6 +859,7 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
     var total_calls = num_nodes * num_props;
     return total_calls;
 }
+
 
 
 function jsonRepack(jsonobj) {
