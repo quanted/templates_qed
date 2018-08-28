@@ -19,7 +19,22 @@
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Overview</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "precipitation" and valueValue == "meteorology/precipitation/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation</a></li>
-{#            {% elif MODEL == "hydrology" and valueValue == "hydrology/" %}#}
+            {% elif MODEL == "meteorology" and SUBMODEL == "temperature" and valueValue == "meteorology/temperature/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Temperature</a></li>
+            {% elif MODEL == "meteorology" and SUBMODEL == "solarcalculator" and valueValue == "meteorology/solarcalculator/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Solar Calculator</a></li>
+            {% elif MODEL == "hydrology" and SUBMODEL == "overview" and valueValue == "hydrology/overview/"%}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Overview</a></li>
+            {% elif MODEL == "hydrology" and SUBMODEL == "evapotranspiration" and valueValue == "hydrology/evapotranspiration/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Evapotranspiration</a></li>
+            {% elif MODEL == "hydrology" and SUBMODEL == "surfacerunoff" and valueValue == "hydrology/surfacerunoff/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Surface Runoff</a></li>
+            {% elif MODEL == "hydrology" and SUBMODEL == "soilmoisture" and valueValue == "hydrology/soilmoisture/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Soil Moisture</a></li>
+            {% elif MODEL == "hydrology" and SUBMODEL == "subsurfaceflow" and valueValue == "hydrology/subsurfaceflow/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Subsurface Flow</a></li>
+
+                {#            {% elif MODEL == "hydrology" and valueValue == "hydrology/" %}#}
 {#                <ul class="menu">#}
 {#                    <li class="menu-item"><a href="/hms/{{ MODEL }}/evapotranspiration/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "evapotranspiration" %} active-trail active{% endif %}">Evapotranspiration</a></li>#}
 {#                    <li class="menu-item"><a href="/hms/{{ MODEL }}/soilmoisture/" title="{{ valueKey|safe }}" class="menu-link{% if SUBMODEL == "soilmoisture" %} active-trail active{% endif %}">Soil Moisture</a></li>#}
