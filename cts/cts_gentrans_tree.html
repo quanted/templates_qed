@@ -113,6 +113,15 @@ $('#btn-pchem-getdata').click(function () {
 
     if (genLevel == 0) {
         total_calls = calculateTotalCalls([1], checkedCalcsAndProps);
+
+        // Don't make p-chem request to backend, no calcs or props were selected:
+        if (total_calls < 1) {
+            var test = $('.pchemSelectError');
+            $('.pchemSelectError').show();
+            return;   
+        }
+        $('.pchemSelectError').hide();
+
         console.log("starting with " + total_calls + " calls");
         calls_tracker = total_calls;
         node = currentNode;
@@ -126,6 +135,14 @@ $('#btn-pchem-getdata').click(function () {
     blockInterface(true);
 
     total_calls = calculateTotalCalls(parsedNodeList, checkedCalcsAndProps);  // get total calls (pchemprop_ajax global)
+
+    // Don't make p-chem request to backend, no calcs or props were selected:
+    if (total_calls < 1) {
+        $('.pchemSelectError').show();
+        return;   
+    }
+    $('.pchemSelectError').hide();
+
     console.log("starting with " + total_calls + " calls");
     calls_tracker = total_calls;
 
@@ -142,6 +159,21 @@ $('#btn-pchem-getdata').click(function () {
 
     startPchemPropDataCollection(smiles, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
 
+});
+
+
+// User clicks "+" to zoom in:
+$('#zoom-in').on('click', function() {
+    var val = st.controller.Navigation.zooming/1000;
+    var ans = 1 + (5.0 * val);
+    st.canvas.scale(ans, ans);
+});
+
+// User clicks "-" to zoom out:
+$('#zoom-out').on('click', function() {
+    var val = st.controller.Navigation.zooming/1000;
+    var ans = 1 - (5.0 * val);
+    st.canvas.scale(ans, ans);
 });
 
 
@@ -491,9 +523,14 @@ function searchForNodeByGenKey(genKey, nodes) {
 }
 
 
-function setLabelScaling() {
-    var x = st.canvas.scaleOffsetX;
-    var y = st.canvas.scaleOffsetY;
+function setLabelScaling(x, y) {
+    /*
+    Handles products zooming in/out with the mouse wheel, and
+    now with some zoom in/out buttons on the tree canvas.
+    */
+    
+    x = st.canvas.scaleOffsetX;
+    y = st.canvas.scaleOffsetY;
 
     // .node class is apparently somewhere in drupal2017 template,
     // causing browser window and spacetree div to zoom.
