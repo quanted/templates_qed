@@ -9,12 +9,12 @@
       {% for key, value in LINK_DICT.items %}
         <h3 class="headerbar">{{ key|safe }}</h3>
         {% for valueKey, valueValue in value.items %}
-            {% if MODEL == "watershed" and valueValue == "workflow/watershed/" %}
-                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Watershed Workflow</a></li>
-            {% elif MODEL == "precip_compare" and valueValue == "workflow/precip_compare/" %}
-                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation Compare</a></li>
-            {% elif MODEL == "runoff_compare" and valueValue == "workflow/runoff_compare/" %}
-                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Runoff Compare</a></li>
+            {% if MODEL == "workflow" and SUBMODEL == "watershed" and valueValue == "workflow/watershed/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}" title="{{ valueKey|safe }}" class="menu-link active-trail active">Watershed Workflow</a></li>
+            {% elif MODEL == "workflow" and SUBMODEL == "precip_compare" and valueValue == "workflow/precip_compare/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation Compare</a></li>
+{#            {% elif MODEL == "workflow" and valueValue == "workflow/runoff_compare/" %}#}
+{#                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Runoff Compare</a></li>#}
             {% elif MODEL == "meteorology" and SUBMODEL == "overview" and valueValue == "meteorology/overview/"%}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Overview</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "precipitation" and valueValue == "meteorology/precipitation/" %}
