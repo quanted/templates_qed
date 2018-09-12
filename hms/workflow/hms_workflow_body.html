@@ -57,7 +57,7 @@
                         onchange="spatialTypeSelect(); return false;">
                     <option disabled selected value>select type</option>
                     <option value="hucid">HUC ID</option>
-                    <option value="comid" disabled>COMID</option>
+                    <option value="comid">COMID</option>
                 </select>
                 <br>
                 <div id="spatial_type_huc" class="spatial_type_block">
@@ -65,7 +65,7 @@
                     <label for="huc_id">HUC ID:</label>
                     <input type="text" id="huc_id" title="Please provide a HUC 8 or HUC 12 ID.">
                     <button id="huc_map_button" type="button" onclick="openHucMap(); return false;"
-                            title="Open map to select or view HUC. NOT FULLY IMPLEMENTED.">Map
+                            title="Open map to select or view HUC.">Map
                     </button>
                 </div>
                 <div id="spatial_type_comid" class="spatial_type_block">
@@ -74,8 +74,11 @@
                     <input type="text" id="comid" title="Please provide a stream/catchment comid.">
                     <div id="comid_choice_div">
                         <input type="radio" name="comid_choice" value="single" checked>Single<br>
-                        <input type="radio" name="comid_choice" value="multiple">Multiple
+                        <input type="radio" name="comid_choice" value="multiple" disabled>Multiple
                     </div>
+                    <button id="huc_map_button" type="button" onclick="openHucMap(); return false;"
+                            title="Open map to select or view HUC/Stream Segment.">Map
+                    </button>
                 </div>
                 <br>
                 <br>
@@ -184,6 +187,11 @@
         </div>
     </div>
     <div id="output_tab" style="display:none" class="single_tab">
+        <div id="output_loading">
+            <div id="loading_msg"></div>
+            <div id="loader">
+            </div>
+        </div>
         <div id="output_window">
             <div id="output_title"></div>
             <div id="output_center_top">
@@ -207,7 +215,21 @@
                     <div id="output_table"></div>
                 </div>
             </div>
-            <div id="output_export"></div>
+            <div id="output_export">
+                <h4>Download Task Data</h4>
+                <button type="button" id="export_json_all" onclick="exportAllDataToJSON(); return false;">
+                    Export to JSON
+                </button>
+                <button type="button" id="export_csv_all" onclick="exportAllDataToCSV(); return false;">
+                    Export to CSV
+                </button>
+                <button type="button" id="export_json_catchment" onclick="exportCatchmentDataToJSON(); return false;">
+                    Export Catchment to JSON
+                </button>
+                <button type="button" id="export_csv_catchment" onclick="exportCatchmentDataToCSV(); return false;">
+                    Export Catchment to CSV
+                </button>
+            </div>
         </div>
     </div>
     <div id="data_tab" style="display:none" class="single_tab">
