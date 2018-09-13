@@ -769,34 +769,37 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
 }
 
 
+
 function organizeData(calc, prop, data) {
     // formats data for pchem table
-
-    if (typeof data === "number") {
-        var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
-                            "henrys_law_con","water_sol_ph"];
-        // if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
-        if (roundList.indexOf(prop) > -1) {
-            if (calc == "test" && prop == "vapor_press") { 
-                data = Math.pow(10, data);
-            }
-            return data.toExponential(2);
-        }
-        else {
-            return data.toFixed(2);
-        }
+    if (!Number(data) && Number(data) != 0 && typeof data == "string") {
+        return data;  // doesn't do anything if it isn't a number (e.g., "N/A")
+    }
+    else if (typeof data == "object" && prop == "ion_con") {
+        return organizePkaData(data);
+    }
+    else {
+        data = Number(data); // makes sure data is Number before rounding
     }
 
-    if (typeof data === "string") {
-        return data;
+    var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
+                        "henrys_law_con","water_sol_ph"];
+
+    if (roundList.indexOf(prop) > -1) {
+        return data.toExponential(2);
     }
+    else {
+        return data.toFixed(2);
+    }
+}
 
-    // For multiple pKa values in a cell..
 
+
+function organizePkaData(data) {
+    // For multiple pKa values in a cell:
     if (data == null ) {
         return "none";  // return "none" to pchem table cell
     }
-
     var parsedData = "";
     for (item in data) {
         var itemVals = data[item];
@@ -815,6 +818,7 @@ function organizeData(calc, prop, data) {
     }
     return parsedData;
 }
+
 
 
 function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
@@ -839,13 +843,18 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                     else { num_props += 1; }
                 }
                 else if (calc == "epi") {
-                    if (prop == "water_sol" || prop == "log_bcf") {
-                        num_props += 2;  // epi's water_sol and log_bcf has 2 methods
+                    if (prop == "water_sol" || prop == "log_bcf" || prop == "koc") {
+                        num_props += 2;  // epi's water_sol, log_bcf, and koc has 2 methods
                     }
                     else { num_props += 1; }
                 }
                 else if (calc == "test") {
-                    num_props += 4;  // TESTWS has 4 methods
+                    if (prop == "log_bcf") {
+                        num_props += 4;  // bcf has 4 methods
+                    }
+                    else {
+                        num_props += 3;  // TESTWS has 3 methods
+                    }
                 }
                 else { num_props += 1; }
             }
@@ -854,6 +863,7 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
     var total_calls = num_nodes * num_props;
     return total_calls;
 }
+
 
 
 function jsonRepack(jsonobj) {
