@@ -1,0 +1,15 @@
+<table>
+	
+	<tr>
+		<th>Message</th>
+		<th>Description</th>
+	</tr>
+	
+	{% for row in cts_errors_list %}
+	<tr>
+		<td>"{{row.message}}"</td>
+		<td>{{row.description}}</td>
+	</tr>
+	{%endfor%}
+
+</table>
