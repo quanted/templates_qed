@@ -4,7 +4,7 @@
     <div id="current_huc_level"> - Currently viewing HUC 2 boundaries</div>
     <div id="huc_map_div"></div>
     <div id="basemaps-wrapper" class="leaflet-bar">
-        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
+        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps);" title="Base Map">
             <option value="Topographic">Topographic</option>
             <option value="Imagery">Imagery</option>
             <option value="Streets">Streets</option>
@@ -233,5 +233,11 @@
         </div>
     </div>
     <div id="data_tab" style="display:none" class="single_tab">
+        <div id="data_tab_task_id">
+            <h4>Get data from previous task</h4>
+            <label for="previous_task_id">Task ID:</label>
+            <input id="previous_task_id" type="text">
+            <button id="get_previous_data" onclick="getPreviousData();">Get Data</button>
+        </div>
     </div>
 </div>
