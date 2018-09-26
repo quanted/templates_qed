@@ -22,7 +22,15 @@
     </ul>
     <div id="workflow_info_tab" style="display:none" class="single_tab">
         <p id="workflow_info_p">
-            Some useful information about the workflow and how to use the workflow app.
+            This workflow simulates the amount of water added to a stream system during precipitation events.
+            The user chooses a stream system either by HUC ID or COMID then chooses a start and end date. A runoff
+            algorithm is chosen to calculate the amount of precipitation that is converted to surface runoff. The NLDAS,
+            GLDAS or Curve number runoff method can be simulated. A precipitation source needs to be chosen from NLDAS,
+            GLDAS, DAYMET, NCDC, PRISM, or WGEN a stochastic weather generator to initialize the simulation. The final
+            input needed is a flow routing algorithm calculated by the constant volume, changing volume, or the
+            Kinematic wave technique.
+            The results give the amount of precipitation, surface runoff, and the percent of subsurface flow as well as
+            streamflow in an time series of hourly totals for each COMID chosen.
             <img id="workflow_stream_img" src="/static_qed/hms/images/stream.jpg" alt="Some random placeholder stream">
         </p>
     </div>
