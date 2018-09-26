@@ -4,7 +4,7 @@
     <div id="current_huc_level"> - Currently viewing HUC 2 boundaries</div>
     <div id="huc_map_div"></div>
     <div id="basemaps-wrapper" class="leaflet-bar">
-        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
+        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps);" title="Base Map">
             <option value="Topographic">Topographic</option>
             <option value="Imagery">Imagery</option>
             <option value="Streets">Streets</option>
@@ -15,10 +15,10 @@
 </div>
 <div id="workflow_tabs">
     <ul>
-        <li><a href="#workflow_info_tab">About the Workflow</a></li>
-        <li><a href="#input_tab">Workflow Inputs</a></li>
-        <li><a href="#output_tab">Workflow Output</a></li>
-        <li><a href="#data_tab">Workflow Data</a></li>
+        <li><a href="#workflow_info_tab">About Stream Flow</a></li>
+        <li><a href="#input_tab">Stream Flow Inputs</a></li>
+        <li><a href="#output_tab">Stream Flow Output</a></li>
+        <li><a href="#data_tab">Stream Flow Data</a></li>
     </ul>
     <div id="workflow_info_tab" style="display:none" class="single_tab">
         <p id="workflow_info_p">
@@ -28,7 +28,7 @@
     </div>
     <div id="input_tab" style="display:none" class="single_tab">
         <div id="input_buttons_block" class="main_block">
-            <h3>Input Selection for Workflow</h3>
+            <h3>Input Selection for Stream Flow</h3>
             <div class="input_row">
                 <div id="spatial_input_button" class="workflow_input">
                     <h5>Spatial Input</h5>
@@ -181,8 +181,8 @@
                     <div id="selected_stream_input" class="selected_input table_row"></div>
                 </div>
             </div>
-            <button type="button" id="submit_workflow" onclick="submitWorkflowJob(); return false;">
-                Submit Workflow
+            <button type="button" id="submit_workflow" class="blocked" onclick="submitWorkflowJob(); return false;">
+                Submit Job
             </button>
         </div>
     </div>
@@ -233,5 +233,11 @@
         </div>
     </div>
     <div id="data_tab" style="display:none" class="single_tab">
+        <div id="data_tab_task_id">
+            <h4>Get data from previous task</h4>
+            <label for="previous_task_id">Task ID:</label>
+            <input id="previous_task_id" type="text">
+            <button id="get_previous_data" onclick="getPreviousData();">Get Data</button>
+        </div>
     </div>
 </div>
