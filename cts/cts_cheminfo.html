@@ -1,4 +1,4 @@
-
+<!-- Marvin Sketch Content -->
 <div id="chemEditDraw">
 	<table class="input_table tab tab_Chemical">
 		<tr>
@@ -19,55 +19,17 @@
 
 
 
+<!-- Results Table Content -->
 <div id="chemEditResults">
 	<table id="chem-results-table" class="input_table tab tab_Chemical">
-		
 		<tr>
 			<td id="results" colspan="2"><span><h3>Results</h3></span></td>
 		</tr>
+		{% for chem_obj in chem_objects %}
 		<tr>
-			<td class="label">Entered chemical:</td>
-			<td><textarea id="chemical" name="chemical" readonly></textarea></td>
+			<td class="label">{{chem_obj.label}}</td>
+			<td><textarea id="{{chem_obj.name}}" name="{{chem_obj.name}}" readonly></textarea></td>
 		</tr>
-		<tr>
-			<td class="label">Initial SMILES:</td>
-			<td><textarea id="origsmiles" name="orig_smiles" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Standardized SMILES:</td>
-			<td><textarea id="smiles" name="smiles" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Preferred Name:</td>
-			<td><textarea id="preferredName" name="preferredName" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">IUPAC:</td>
-			<td><textarea id="iupac" name="iupac" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Formula:</td>
-			<td><textarea id="formula" name="formula" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Preferred CAS:</td>
-			<td><textarea id="casrn" name="casrn" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Associated CAS:</td>
-			<td><textarea id="cas" name="cas" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">DTXSID:</td>
-			<td><textarea id="dtxsid" name="dtxsid" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Average Mass (g/mol):</td>
-			<td><textarea id="mass" name="mass" readonly></textarea></td>
-		</tr>
-		<tr>
-			<td class="label">Monoisotopic Mass (g/mol):</td>
-			<td><textarea id="exactmass" name="exactmass" readonly></textarea></td>
-		</tr>
+		{% endfor %}
 	</table>
 </div>
