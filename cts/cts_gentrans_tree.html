@@ -392,8 +392,8 @@ function init(json){
 
                 tip.innerHTML = '<div align="left"><b>generation: </b>' + node.data.genKey + '<br></div>';
                 tip.innerHTML += '<div align="left"><b>smiles: </b>' + node.data.smiles + '<br></div>';
-                tip.innerHTML += '<div align="left"><b>production: </b>' + Math.round(100.0 * node.data.production) + '%<br></div>';
-                tip.innerHTML += '<div align="left"><b>accumulation: </b>' + Math.round(100.0 * node.data.accumulation) + '%<br></div>';
+                tip.innerHTML += '<div align="left"><b>production: </b>' + (100.0 * node.data.production).toFixed(2) + '%<br></div>';
+                tip.innerHTML += '<div align="left"><b>accumulation: </b>' + (100.0 * node.data.accumulation).toFixed(2) + '%<br></div>';
                 tip.innerHTML += $(node_enlarged_image)[0].innerHTML;
 
             }

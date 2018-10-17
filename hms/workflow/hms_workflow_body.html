@@ -1,10 +1,11 @@
+<div id="load_page"><span id="load_message"></span></div>
 <div id="huc_map_block">
     <span class="close_button" onclick="toggleHucMap(); return false;">x</span>
     <h5>HUC Selection Map</h5>
     <div id="current_huc_level"> - Currently viewing HUC 2 boundaries</div>
     <div id="huc_map_div"></div>
     <div id="basemaps-wrapper" class="leaflet-bar">
-        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)" title="Base Map">
+        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps);" title="Base Map">
             <option value="Topographic">Topographic</option>
             <option value="Imagery">Imagery</option>
             <option value="Streets">Streets</option>
@@ -15,20 +16,28 @@
 </div>
 <div id="workflow_tabs">
     <ul>
-        <li><a href="#workflow_info_tab">About the Workflow</a></li>
-        <li><a href="#input_tab">Workflow Inputs</a></li>
-        <li><a href="#output_tab">Workflow Output</a></li>
-        <li><a href="#data_tab">Workflow Data</a></li>
+        <li><a href="#workflow_info_tab">About Stream Flow</a></li>
+        <li><a href="#input_tab">Stream Flow Inputs</a></li>
+        <li><a href="#output_tab">Stream Flow Output</a></li>
+        <li><a href="#data_tab">Stream Flow Data</a></li>
     </ul>
     <div id="workflow_info_tab" style="display:none" class="single_tab">
         <p id="workflow_info_p">
-            Some useful information about the workflow and how to use the workflow app.
+            This workflow simulates the amount of water added to a stream system during precipitation events.
+            The user chooses a stream system either by HUC ID or COMID then chooses a start and end date. A runoff
+            algorithm is chosen to calculate the amount of precipitation that is converted to surface runoff. The NLDAS,
+            GLDAS or Curve number runoff method can be simulated. A precipitation source needs to be chosen from NLDAS,
+            GLDAS, DAYMET, NCDC, PRISM, or WGEN a stochastic weather generator to initialize the simulation. The final
+            input needed is a flow routing algorithm calculated by the constant volume, changing volume, or the
+            Kinematic wave technique.
+            The results give the amount of precipitation, surface runoff, and the percent of subsurface flow as well as
+            streamflow in an time series of hourly totals for each COMID chosen.
             <img id="workflow_stream_img" src="/static_qed/hms/images/stream.jpg" alt="Some random placeholder stream">
         </p>
     </div>
     <div id="input_tab" style="display:none" class="single_tab">
         <div id="input_buttons_block" class="main_block">
-            <h3>Input Selection for Workflow</h3>
+            <h3>Input Selection for Stream Flow</h3>
             <div class="input_row">
                 <div id="spatial_input_button" class="workflow_input">
                     <h5>Spatial Input</h5>
@@ -181,8 +190,8 @@
                     <div id="selected_stream_input" class="selected_input table_row"></div>
                 </div>
             </div>
-            <button type="button" id="submit_workflow" onclick="submitWorkflowJob(); return false;">
-                Submit Workflow
+            <button type="button" id="submit_workflow" class="blocked" onclick="submitWorkflowJob(); return false;">
+                Submit Job
             </button>
         </div>
     </div>
@@ -206,12 +215,16 @@
                 <div id="output_info_div"></div>
             </div>
             <div id="output_center_bottom" style="display:none">
+                <ul>
+                    <li><a href="#output_graph_div">Time Series Graph</a></li>
+                    <li><a href="#output_table_div">Time Series Table</a></li>
+                </ul>
                 <div id="output_graph_div">
-                    <h4>Data plot for catchment</h4>
+                    <h4>Data Plot for Catchment</h4>
                     <div id="output_graph"></div>
                 </div>
                 <div id="output_table_div">
-                    <h4>Time series data for catchment</h4>
+                    <h4>Time Series Data for Catchment</h4>
                     <div id="output_table"></div>
                 </div>
             </div>
@@ -233,5 +246,11 @@
         </div>
     </div>
     <div id="data_tab" style="display:none" class="single_tab">
+        <div id="data_tab_task_id">
+            <h4>Get data from previous task</h4>
+            <label for="previous_task_id">Task ID:</label>
+            <input id="previous_task_id" type="text">
+            <button id="get_previous_data" onclick="getPreviousData();">Get Data</button>
+        </div>
     </div>
 </div>
