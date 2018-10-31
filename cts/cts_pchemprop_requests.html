@@ -952,12 +952,18 @@ function sumPropValsForGeomean(prop, isLog) {
             continue;
         }
 
+        var dataVal = parseFloat(dataObj['data']);
+
+        if (isNaN(dataVal)) {
+            continue;  // ignore any vals that aren't numbers (e.g., error message)
+        }
+
         // Sums data vals by prop, wrapping in log() if prop isn't already in log form:
         if (isLog) {
-            dataSum = dataSum + parseFloat(dataObj['data']);
+            dataSum = dataSum + dataVal;
         }
         else {
-            dataSum = dataSum + Math.log10(parseFloat(dataObj['data']));
+            dataSum = dataSum + Math.log10(dataVal);
         }
 
         numVals = numVals + 1;
