@@ -231,8 +231,9 @@ function connectToSocket() {
             calls_tracker--;
             batch_data.push(data);
             parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
+            console.log("calls tracker " + calls_tracker);
             if (calls_tracker <= 0) {
-                handleGeomean();
+                handleGeomean(workflow, run_type);
                 calls_tracker = 0;
                 batch_data = [];
             }
@@ -422,13 +423,11 @@ function connectToSocket() {
             console.log("All data retrieved!");
             blockInterface(false);
 
-            // Computes the geomean of pchem properties:
-            // handleGeomean();
-
             var pchemprop_option = $('#gen-select-pchem').val();
             var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
             if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
+                handleGeomean(workflow, run_type);
                 displayProductData();  // cts_gentrans_tree function
             }
 
@@ -463,12 +462,15 @@ function connectToSocket() {
 
                 blockInterface(true, blockui_message);
 
+                // handleGeomean(workflow, run_type);  // calculates geomean
+
             }
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
                 $('#export_menu').css('position', 'relative').show();
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
+                handleGeomean(workflow, run_type);
             }
 
             // TESTWS Test Page - Initially print JSON to textarea!
@@ -889,128 +891,6 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
 
 function jsonRepack(jsonobj) {
   return JSON.parse(JSON.stringify(jsonobj));
-}
-
-
-
-function handleGeomean() {
-    /*
-    Calculates the logarithmic geomean of CTS
-    p-chem data for ChemAxon, EPI, TEST, and SPARC
-    calculators. Adds data to pchem table as well.
-    */
-
-    geomeanDict = {};  // initializes global geomean dictionary
-
-    var alreadyLogProps = ['kow_no_ph', 'koc', 'log_bcf', 'log_baf', 'kow_wph'];
-    var nonLogProps = ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'henrys_law_con', 'water_sol_ph'];
-
-    var props = alreadyLogProps.concat(nonLogProps);
-
-    for (var ind in props) {
-
-        var prop = props[ind];
-        var geomeanSum = 0.0;
-
-        if (alreadyLogProps.includes(prop)) {
-            // Gets average for props already in log form:
-            var geomeanSumVals = sumPropValsForGeomean(prop, true);
-            geomeanSum = geomeanSumVals.sum;
-            geomeanDict[prop] = geomeanSum / geomeanSumVals.numVals;
-        }
-        else if (nonLogProps.includes(prop)) {
-            // Gets geomean for props not yet in log form:
-            var geomeanSumVals = sumPropValsForGeomean(prop, false);
-            geomeanSum = geomeanSumVals.sum;
-            geomeanDict[prop] = Math.pow(10, (1.0/geomeanSumVals.numVals)*geomeanSum);
-        }
-
-        addGeomeanToTable(prop, geomeanDict[prop]);
-
-    }
-
-}
-
-
-
-function sumPropValsForGeomean(prop, isLog) {
-    /*
-    Loops through calc values by property (batch_data global dict), summing them up
-    by wrapping them in a log() or not depending if the property
-    is already in log form.
-    */
-
-    var dataSum = 0.0;  // sum of data values for a given prop
-    var numVals = 0;  // number of data values that are summed
-
-    for (var ind in batch_data) {
-        
-        var dataObj = batch_data[ind];
-
-        // Continues looping until data for requested prop is found:
-        if (dataObj['prop'] != prop) {
-            continue;
-        }
-
-        var dataVal = parseFloat(dataObj['data']);
-
-        if (isNaN(dataVal)) {
-            continue;  // ignore any vals that aren't numbers (e.g., error message)
-        }
-
-        // Sums data vals by prop, wrapping in log() if prop isn't already in log form:
-        if (isLog) {
-            dataSum = dataSum + dataVal;
-        }
-        else {
-            dataSum = dataSum + Math.log10(dataVal);
-        }
-
-        numVals = numVals + 1;
-
-    }
-
-    return {sum: dataSum, numVals: numVals};
-
-}
-
-
-
-function addGeomeanToTable(prop, geomean) {
-    /*
-    Adds geomean to pchem table if it's a user
-    requested property.
-    */
-    if (geomean > 0.0 || geomean < 0.0) {
-        var pchemTableCell = $('.geomean.' + prop);  // selects table cell for adding geomean to pchem table
-
-        $(pchemTableCell).html(organizeData('geomean', prop, geomean));  // adds geomean to table cell
-    }
-
-}
-
-
-
-function clearGeomeanColumn() {
-    /*
-    Clears html content from pchem table's geomean column.
-    */
-    $('.geomean').each(function(i, obj) {
-        $(this).html("");
-    });
-}
-
-
-
-function addSpinnersToGeomeanColumn() {
-    /*
-    Adds spinning wheels to geomean column while p-chem
-    data is being retrieved.
-    */
-
-    $('.geomean').each(function(i, obj) {
-        $(this).html(spinner_html);
-    });   
 }
 
 </script>
