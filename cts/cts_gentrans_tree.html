@@ -405,6 +405,12 @@ function init(json){
                 if (node) {
                     getMolecularInfo(node);
                     currentNode = node;  // set global node tracking var
+
+                    if ('geomeanDict' in node.data) {
+                        // Adds geomean data to p-chem table (from calculate_geomean.js):
+                        addGeomeanToTable(node['data']['geomeanDict']);
+                    }
+
                 }
             },
             onClick: function (node, eventInfo, e) {
@@ -861,6 +867,7 @@ function displayProductData() {
             var node_gen = st.graph.nodes[node].data.genKey;
             if (node_gen == selected_product) {
                 getMolecularInfo(st.graph.nodes[node]);
+                addGeomeanToTable(st.graph.nodes[node]['data']['geomeanDict']);
                 return;
             }
         }
@@ -872,6 +879,7 @@ function displayProductData() {
             var node_gen = st.graph.nodes[node].data.generation;
             if (node_gen == 0) {
                 getMolecularInfo(st.graph.nodes[node]);
+                addGeomeanToTable(st.graph.nodes[node]['data']['geomeanDict']);
                 return;
             }
         }
