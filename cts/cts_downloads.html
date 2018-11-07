@@ -48,11 +48,15 @@ $(document).ready(function () {
 	    				}
 	    			}
 	    		}
+
+	    		json_data['geomeanDict'] = geomeanDict;  // gets global geomean for p-chem properties
+
     		}
     		else {
     			json_data['batch_data'] = batch_data;
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['batch_chems'] = batch_chems;
+    			json_data['geomeanDict'] = geomeanDict;
     		}
 
     		
@@ -62,11 +66,13 @@ $(document).ready(function () {
     			json_data['batch_data'] = batch_data;
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['batch_chems'] = batch_chems;
+    			json_data['geomeanDict'] = geomeanDict;
     		}
     		else {
     			// buildMetabolitesArray() is for spacetree (i.e., not batch mode)
     			json_data['data'] = buildMetabolitesArray();
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
+    			json_data['geomeanDict'] = geomeanDict;  // gets global geomean for p-chem properties
     		}
     	}
 
