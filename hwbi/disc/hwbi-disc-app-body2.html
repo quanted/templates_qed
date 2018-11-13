@@ -1,380 +1,4 @@
-<div id="printable">
-    <table class="summary" id="table">
-        <thead>
-            <tr>
-                <th colspan="8" id="reportlocation"></th>
-            </tr>
-            <tr>
-                <th colspan="5">Indicator Scores</th>
-                <th colspan="3">Domain Scores</th>
-            </tr>
-            <tr>
-                <th>Domains</th>
-                <th>Indicators</th>
-                <th>Original Baseline</th>
-                <th>Updated</th>
-                <th class="separator">Change</th>
-                <th>Original Baseline</th>
-                <th>With Indicator Updates</th>
-                <th>Change</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="report-domains"> <!-- built environment -->
-                <th rowspan="5">Built Environment</th>
-                <td>Communication Infrastructure</td>
-                <td id="communication_infrastructure" class="baselineindicator"></td>
-                <td id="communication_infrastructure_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="5" class="baselinedomain" id="environment_score_summary"></td>
-                <td rowspan="5" class="updateddomain" id="environment_adj">-</td>
-                <td rowspan="5" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Housing Characteristics</td>
-                <td id="housing_characteristics" class="baselineindicator"></td>
-                <td id="housing_characteristics_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Transportation Infrastructure</td>
-                <td id="transportation_infrastructure" class="baselineindicator"></td>
-                <td id="transportation_infrastructure_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Utility Infrastucture</td>
-                <td id="utility_infrastructure" class="baselineindicator"></td>
-                <td id="utility_infrastructure_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Vacant Structures</td>
-                <td id="vacant_structures" class="baselineindicator"></td>
-                <td id="vacant_structures_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- community involvement -->
-                <th rowspan="5">Community Involvement</th>
-                <td>Attitudes Towards Others and the Community</td>
-                <td id="attitudes" class="baselineindicator"></td>
-                <td id="attitude_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="5" class="baselinedomain" id="community_score_summary"></td>
-                <td rowspan="5" class="updateddomain"id="community_adj">-</td>
-                <td rowspan="5" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Democratic Engagement</td>
-                <td id="democratic_engagement" class="baselineindicator"></td>
-                <td id="democratic_engagement_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Family Bonding</td>
-                <td id="family_bonding" class="baselineindicator"></td>
-                <td id="family_bonding_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Social Engagement</td>
-                <td id="social_engagement" class="baselineindicator"></td>
-                <td id="social_engagement_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Social Support</td>
-                <td id="social_support" class="baselineindicator"></td>
-                <td id="social_support_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- education -->
-                <th rowspan="3">Education</th>
-                <td>Basic Educational Knowledge and Skills of Youth</td>
-                <td id="educational_knowledge" class="baselineindicator"></td>
-                <td id="educational_knowledge_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="3" class="baselinedomain" id="education_score_summary"></td>
-                <td rowspan="3" class="updateddomain" id="education_adj">-</td>
-                <td rowspan="3" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Participation and Attainment</td>
-                <td id="participation_attainment" class="baselineindicator"></td>
-                <td id="participation_attainment_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Social, Emotional and Developmental Aspects</td>
-                <td id="social_emotional_developmental" class="baselineindicator"></td>
-                <td id="social_emotional_developmental_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- health -->
-                <th rowspan="6">Health</th>
-                <td>Healthcare</td>
-                <td id="healthcare" class="baselineindicator"></td>
-                <td id="healthcare_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="6" class="baselinedomain" id="health_score_summary"></td>
-                <td rowspan="6" class="updateddomain" id="health_adj">-</td>
-                <td rowspan="6" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Lifestyle and Behavior</td>
-                <td id="lifestyle_behavior" class="baselineindicator"></td>
-                <td id="lifestyle_behavior_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>health Characteristics</td>
-                <td id="health_characteristics" class="baselineindicator"></td>
-                <td id="health_characteristics_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Life Expectancy and Mortality</td>
-                <td id="life_exp" class="baselineindicator"></td>
-                <td id="life_exp_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Personal Well-Being</td>
-                <td id="personal_wellbeing" class="baselineindicator"></td>
-                <td id="personal_wellbeing_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Social Services</td>
-                <td id="social_services" class="baselineindicator"></td>
-                <td id="social_services_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- env resource mgmt-->
-                <th rowspan="2">Environmental Resource Management</th>
-                <td>Condition</td>
-                <td id="condition" class="baselineindicator"></td>
-                <td id="condition_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="2" class="baselinedomain" id="resource-mgmt_score_summary"></td>
-                <td rowspan="2" class="updateddomain" id="resource-mgmt_adj">-</td>
-                <td rowspan="2" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Extent of Ecosystem Types</td>
-                <td id="ecosystem_types" class="baselineindicator"></td>
-                <td id="ecosystem_types_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- hazard vulnerability-->
-                <th rowspan="2">Hazard Vulnerability</th>
-                <td>Exposure</td>
-                <td id="exposure" class="baselineindicator"></td>
-                <td id="exposure_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="2" class="baselinedomain" id="hazard_score_summary"></td>
-                <td rowspan="2" class="updateddomain" id="hazard_adj">-</td>
-                <td rowspan="2" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Loss</td>
-                <td id="loss" class="baselineindicator"></td>
-                <td id="loss_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- local economy -->
-                <th rowspan="5">Local Economy</th>
-                <td>Basic Necessities</td>
-                <td id="basic_necessities" class="baselineindicator"></td>
-                <td id="basic_necessities_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="5" class="baselinedomain" id="economy_score_summary"></td>
-                <td rowspan="5" class="updateddomain" id="economy_adj">-</td>
-                <td rowspan="5"class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Economic Diversity</td>
-                <td id="economic_diversity" class="baselineindicator"></td>
-                <td id="economic_diversity_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Socio-Economics</td>
-                <td id="socio_economics" class="baselineindicator"></td>
-                <td id="socio_economics_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Wealth</td>
-                <td id="wealth" class="baselineindicator"></td>
-                <td id="wealth_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Work</td>
-                <td id="work" class="baselineindicator"></td>
-                <td id="work_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- resilience planning -->
-                <th rowspan="3">Resilience Planning</th>
-                <td>Community Preparedness</td>
-                <td id="community_preparedness" class="baselineindicator"></td>
-                <td id="community_preparedness_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="3" class="baselinedomain" id="resilience_score_summary"></td>
-                <td rowspan="3" class="updateddomain" id="resilience_adj">-</td>
-                <td rowspan="3" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Natural Resource Conservation</td>
-                <td id="resource_conservation" class="baselineindicator"></td>
-                <td id="resource_conservation_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Personal Preparedness</td>
-                <td id="personal_preparedness" class="baselineindicator"></td>
-                <td id="personal_preparedness_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr class="report-domains"> <!-- local culture -->
-                <th rowspan="4">Local Culture</th>
-                <td>Activity Participation</td>
-                <td id="activity_participation" class="baselineindicator"></td>
-                <td id="activity_participation_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="4" class="baselinedomain" id="culture_score_summary"></td>
-                <td rowspan="4" class="updateddomain" id="culture_adj">-</td>
-                <td rowspan="4" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Biophilia</td>
-                <td id="biophilia" class="baselineindicator"></td>
-                <td id="biophilia_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Time Spent</td>
-                <td id="time_spent" class="baselineindicator"></td>
-                <td id="time_spent_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Working Age Adults</td>
-                <td id="working_adults" class="baselineindicator"></td>
-                <td id="working_adults_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-
-            </tr>
-            <tr class="report-domains"> <!-- safety and security -->
-                <th rowspan="3">Safety and Security</th>
-                <td>Actual Safety</td>
-                <td id="actual_safety" class="baselineindicator"></td>
-                <td id="actual_safety_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-                <td rowspan="3" class="baselinedomain" id="safety_score_summary"></td>
-                <td rowspan="3" class="updateddomain" id="safety_adj">-</td>
-                <td rowspan="3" class="changed">-</td>
-            </tr>
-            <tr>
-                <td>Perceived Safety</td>
-                <td id="perceived_safety" class="baselineindicator"></td>
-                <td id="perceived_safety_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td>Risk</td>
-                <td id="risk" class="baselineindicator"></td>
-                <td id="risk_adj" class="updatedindicator">-</td>
-                <td class="separator">-</td>
-            </tr>
-            <tr>
-                <td colspan="5" class="originaldiscscore">Original DISC Score: <span id="report-wellbeing-score"></span></td>
-                <td colspan="3" class="newdiscscore">New DISC Score: <span id="report-wellbeing-score-new"></span> </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div id="hwbi-intro">
-    <p>Communities sit at the intersection where the natural, built and social environments meet. From creating jobs to
-        building greener infrastructure, many considerations are needed to yield the most sustainable decision outcomes
-        for a community. Understanding what aspects about your community you value and wish to sustain or improve may
-        help inform community planning decisions.</p>
-    <p>Indicators and indices can be used to assess various attributes about your community. Indicators summarize raw
-        measures (e.g., median income, disease prevalence) to help interpret data patterns and trends. For communities,
-        no single index or indicator set can offer a complete picture of status or conditions. However, an integrative
-        approach that synthesizes information from many different indicator sets can offer broader insight from multiple
-        viewpoints.</p>
-    <p>The Decision Integration for Strong Communities (DISC) application is a simple and intuitive tool designed to
-        bring together information from many indicator products to help characterize quality of life in your community
-        and present resources that may present ways to help improve aspects about your community that you value.</p>
-</div>
-
-<div id="disc-tabs">
-    <ul id="main-tab-nav">
-        <li><a href="#about-tab" id="about-tab-link" class="disc-tab">About</a></li>
-        <li><a href="#community-snapshot-tab" id="community-snapshot-tab-link" class="disc-tab">Community Snapshot</a></li>
-        <li><a href="#customize-tab" id="customize-tab-link" class="disc-tab">Customize</a></li>
-        <li><a href="#compare-tab" id="compare-tab-link" class="disc-tab">Compare</a></li>
-        <li><a href="#resources-tab" id="resources-tab-link" class="disc-tab">Resources</a></li>
-    </ul>
-    <div id="search_block" class="about_search">
-        <form id="search_form" action="#community-snapshot-tab">
-            <label for="search_form" id="search_label">What is the <b>DISC</b> profile of your
-                <b>community?</b></label>
-            <div class="inputcontainer">
-                <input type="text" id="search_field" placeholder="Search a Location" name="location_input" class="searchicon">
-                
-                <!--<button id="search_button" class="search_button epa-search-button" type="submit"
-                        onclick="setTimeout(getScoreData, 300); return false;">Search
-                </button>-->
-            </div>
-            <label for="search_form" id="search_placeholder">Enter your city, state, or zip code or <a href="#" id="toggle_search_type" onclick="toggleSearchType(event)">select your state and county</a>.</label>
-            <label id="search_error_notification">Your search could not be completed. Please try another
-                location.</label>
-        </form>
-        <div id="statecounty" hidden>
-            <form id="stateform">
-                <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br />
-                <div id="county-state-select">
-                    <select name="optone" id="stateSel" class="form-select">
-                        <option value="" selected="selected">select state</option>
-                    </select>
-                    <select name="opttwo" id="countySel" class="form-select">
-                        <option value="" selected="selected">select county</option>
-                    </select>
-                </div>
-                <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city, state, or zip code</a>.</label>
-                <label id="search_error_notification">Your search could not be completed. Please try another
-                    location.</label>
-            </form>
-        </div>
-
-    </div>
-    <div id="toast"></div>
-    <div id="about-tab" class="disc-body selected-tab">
-        <div id="about-content">
-            <div id="quote_body">
-                <div id="quote-1" class="quote">"It is not more bigness that should be our goal. We must attempt,
-                    rather, to bring people back to...the warmth of community, to the worth of individual effort and
-                    responsibility...and of individuals working together as a community, to better their lives and their
-                    children's future."
-                    <span class="quote_author">--Robert F. Kennedy</span>
-                </div>
-                <div id="quote-2" class="quote">"Never doubt that a small group of thoughtful, committed, citizens can
-                    change the world. Indeed, it is the only thing that ever has."
-                    <span class="quote_author">--Margaret Mead</span>
-                </div>
-                <div id="quote-3" class="quote">"One Love! One Heart! Let's get together and feel all right."
-                    <span class="quote_author">--Bob Marley, "One Love"</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div id="community-snapshot-tab" class="disc-body">
+<div id="community-snapshot-tab" class="disc-body">
         <div id="community-snapshot-content">
             <div id="results_body">
                 <div id="snapshot_results">
@@ -1349,7 +973,302 @@
                 <li><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Model for clean energy farming</a></li>
                 <li><a href="https://www.oecd.org/regional/regional-policy/Renewable-rural-energy-summary.pdf">Policy Brief for policy makers on renewable energy and rural development</a></li>
             </ul>
+            <div id="printable">
+                <table class="summary" id="table">
+                    <thead>
+                        <tr>
+                            <th colspan="8" id="reportlocation"></th>
+                        </tr>
+                        <tr>
+                            <th colspan="5">Indicator Scores</th>
+                            <th colspan="3">Domain Scores</th>
+                        </tr>
+                        <tr>
+                            <th>Domains</th>
+                            <th>Indicators</th>
+                            <th>Original Baseline</th>
+                            <th>Updated</th>
+                            <th class="separator">Change</th>
+                            <th>Original Baseline</th>
+                            <th>With Indicator Updates</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="report-domains"> <!-- built environment -->
+                            <th rowspan="5">Built Environment</th>
+                            <td>Communication Infrastructure</td>
+                            <td id="communication_infrastructure" class="baselineindicator"></td>
+                            <td id="communication_infrastructure_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="5" class="baselinedomain" id="environment_score_summary"></td>
+                            <td rowspan="5" class="updateddomain" id="environment_adj">-</td>
+                            <td rowspan="5" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Housing Characteristics</td>
+                            <td id="housing_characteristics" class="baselineindicator"></td>
+                            <td id="housing_characteristics_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Transportation Infrastructure</td>
+                            <td id="transportation_infrastructure" class="baselineindicator"></td>
+                            <td id="transportation_infrastructure_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Utility Infrastucture</td>
+                            <td id="utility_infrastructure" class="baselineindicator"></td>
+                            <td id="utility_infrastructure_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Vacant Structures</td>
+                            <td id="vacant_structures" class="baselineindicator"></td>
+                            <td id="vacant_structures_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- community involvement -->
+                            <th rowspan="5">Community Involvement</th>
+                            <td>Attitudes Towards Others and the Community</td>
+                            <td id="attitudes" class="baselineindicator"></td>
+                            <td id="attitude_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="5" class="baselinedomain" id="community_score_summary"></td>
+                            <td rowspan="5" class="updateddomain" id="community_adj">-</td>
+                            <td rowspan="5" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Democratic Engagement</td>
+                            <td id="democratic_engagement" class="baselineindicator"></td>
+                            <td id="democratic_engagement_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Family Bonding</td>
+                            <td id="family_bonding" class="baselineindicator"></td>
+                            <td id="family_bonding_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Social Engagement</td>
+                            <td id="social_engagement" class="baselineindicator"></td>
+                            <td id="social_engagement_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Social Support</td>
+                            <td id="social_support" class="baselineindicator"></td>
+                            <td id="social_support_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- education -->
+                            <th rowspan="3">Education</th>
+                            <td>Basic Educational Knowledge and Skills of Youth</td>
+                            <td id="educational_knowledge" class="baselineindicator"></td>
+                            <td id="educational_knowledge_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="3" class="baselinedomain" id="education_score_summary"></td>
+                            <td rowspan="3" class="updateddomain" id="education_adj">-</td>
+                            <td rowspan="3" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Participation and Attainment</td>
+                            <td id="participation_attainment" class="baselineindicator"></td>
+                            <td id="participation_attainment_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Social, Emotional and Developmental Aspects</td>
+                            <td id="social_emotional_developmental" class="baselineindicator"></td>
+                            <td id="social_emotional_developmental_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- health -->
+                            <th rowspan="6">Health</th>
+                            <td>Healthcare</td>
+                            <td id="healthcare" class="baselineindicator"></td>
+                            <td id="healthcare_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="6" class="baselinedomain" id="health_score_summary"></td>
+                            <td rowspan="6" class="updateddomain" id="health_adj">-</td>
+                            <td rowspan="6" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Lifestyle and Behavior</td>
+                            <td id="lifestyle_behavior" class="baselineindicator"></td>
+                            <td id="lifestyle_behavior_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>health Characteristics</td>
+                            <td id="health_characteristics" class="baselineindicator"></td>
+                            <td id="health_characteristics_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Life Expectancy and Mortality</td>
+                            <td id="life_exp" class="baselineindicator"></td>
+                            <td id="life_exp_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Personal Well-Being</td>
+                            <td id="personal_wellbeing" class="baselineindicator"></td>
+                            <td id="personal_wellbeing_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Social Services</td>
+                            <td id="social_services" class="baselineindicator"></td>
+                            <td id="social_services_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- env resource mgmt-->
+                            <th rowspan="2">Environmental Resource Management</th>
+                            <td>Condition</td>
+                            <td id="condition" class="baselineindicator"></td>
+                            <td id="condition_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="2" class="baselinedomain" id="resource-mgmt_score_summary"></td>
+                            <td rowspan="2" class="updateddomain" id="resource-mgmt_adj">-</td>
+                            <td rowspan="2" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Extent of Ecosystem Types</td>
+                            <td id="ecosystem_types" class="baselineindicator"></td>
+                            <td id="ecosystem_types_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- hazard vulnerability-->
+                            <th rowspan="2">Hazard Vulnerability</th>
+                            <td>Exposure</td>
+                            <td id="exposure" class="baselineindicator"></td>
+                            <td id="exposure_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="2" class="baselinedomain" id="hazard_score_summary"></td>
+                            <td rowspan="2" class="updateddomain" id="hazard_adj">-</td>
+                            <td rowspan="2" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Loss</td>
+                            <td id="loss" class="baselineindicator"></td>
+                            <td id="loss_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- local economy -->
+                            <th rowspan="5">Local Economy</th>
+                            <td>Basic Necessities</td>
+                            <td id="basic_necessities" class="baselineindicator"></td>
+                            <td id="basic_necessities_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="5" class="baselinedomain" id="economy_score_summary"></td>
+                            <td rowspan="5" class="updateddomain" id="economy_adj">-</td>
+                            <td rowspan="5" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Economic Diversity</td>
+                            <td id="economic_diversity" class="baselineindicator"></td>
+                            <td id="economic_diversity_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Socio-Economics</td>
+                            <td id="socio_economics" class="baselineindicator"></td>
+                            <td id="socio_economics_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Wealth</td>
+                            <td id="wealth" class="baselineindicator"></td>
+                            <td id="wealth_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Work</td>
+                            <td id="work" class="baselineindicator"></td>
+                            <td id="work_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- resilience planning -->
+                            <th rowspan="3">Resilience Planning</th>
+                            <td>Community Preparedness</td>
+                            <td id="community_preparedness" class="baselineindicator"></td>
+                            <td id="community_preparedness_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="3" class="baselinedomain" id="resilience_score_summary"></td>
+                            <td rowspan="3" class="updateddomain" id="resilience_adj">-</td>
+                            <td rowspan="3" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Natural Resource Conservation</td>
+                            <td id="resource_conservation" class="baselineindicator"></td>
+                            <td id="resource_conservation_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Personal Preparedness</td>
+                            <td id="personal_preparedness" class="baselineindicator"></td>
+                            <td id="personal_preparedness_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr class="report-domains"> <!-- local culture -->
+                            <th rowspan="4">Local Culture</th>
+                            <td>Activity Participation</td>
+                            <td id="activity_participation" class="baselineindicator"></td>
+                            <td id="activity_participation_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="4" class="baselinedomain" id="culture_score_summary"></td>
+                            <td rowspan="4" class="updateddomain" id="culture_adj">-</td>
+                            <td rowspan="4" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Biophilia</td>
+                            <td id="biophilia" class="baselineindicator"></td>
+                            <td id="biophilia_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Time Spent</td>
+                            <td id="time_spent" class="baselineindicator"></td>
+                            <td id="time_spent_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Working Age Adults</td>
+                            <td id="working_adults" class="baselineindicator"></td>
+                            <td id="working_adults_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+            
+                        </tr>
+                        <tr class="report-domains"> <!-- safety and security -->
+                            <th rowspan="3">Safety and Security</th>
+                            <td>Actual Safety</td>
+                            <td id="actual_safety" class="baselineindicator"></td>
+                            <td id="actual_safety_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                            <td rowspan="3" class="baselinedomain" id="safety_score_summary"></td>
+                            <td rowspan="3" class="updateddomain" id="safety_adj">-</td>
+                            <td rowspan="3" class="changed">-</td>
+                        </tr>
+                        <tr>
+                            <td>Perceived Safety</td>
+                            <td id="perceived_safety" class="baselineindicator"></td>
+                            <td id="perceived_safety_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td>Risk</td>
+                            <td id="risk" class="baselineindicator"></td>
+                            <td id="risk_adj" class="updatedindicator">-</td>
+                            <td class="separator">-</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="originaldiscscore">Original DISC Score: <span id="report-wellbeing-score"></span></td>
+                            <td colspan="3" class="newdiscscore">New DISC Score: <span id="report-wellbeing-score-new"></span> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-    </div>
-</div>

@@ -1,0 +1,77 @@
+<div id="hwbi-intro">
+    <p>Communities sit at the intersection where the natural, built and social environments meet. From creating jobs to
+        building greener infrastructure, many considerations are needed to yield the most sustainable decision outcomes
+        for a community. Understanding what aspects about your community you value and wish to sustain or improve may
+        help inform community planning decisions.</p>
+    <p>Indicators and indices can be used to assess various attributes about your community. Indicators summarize raw
+        measures (e.g., median income, disease prevalence) to help interpret data patterns and trends. For communities,
+        no single index or indicator set can offer a complete picture of status or conditions. However, an integrative
+        approach that synthesizes information from many different indicator sets can offer broader insight from multiple
+        viewpoints.</p>
+    <p>The Decision Integration for Strong Communities (DISC) application is a simple and intuitive tool designed to
+        bring together information from many indicator products to help characterize quality of life in your community
+        and present resources that may present ways to help improve aspects about your community that you value.</p>
+</div>
+
+<div id="disc-tabs">
+    <ul id="main-tab-nav">
+        <li><a href="#about-tab" id="about-tab-link" class="disc-tab">About</a></li>
+        <li><a href="#community-snapshot-tab" id="community-snapshot-tab-link" class="disc-tab">Community Snapshot</a></li>
+        <li><a href="#customize-tab" id="customize-tab-link" class="disc-tab">Customize</a></li>
+        <li><a href="#compare-tab" id="compare-tab-link" class="disc-tab">Compare</a></li>
+        <li><a href="#resources-tab" id="resources-tab-link" class="disc-tab">Resources</a></li>
+    </ul>
+    <div id="search_block" class="about_search">
+        <form id="search_form" action="#community-snapshot-tab">
+            <label for="search_form" id="search_label">What is the <b>DISC</b> profile of your
+                <b>community?</b></label>
+            <div class="inputcontainer">
+                <input type="text" id="search_field" placeholder="Search a Location" name="location_input" class="searchicon">
+                
+                <!--<button id="search_button" class="search_button epa-search-button" type="submit"
+                        onclick="setTimeout(getScoreData, 300); return false;">Search
+                </button>-->
+            </div>
+            <label for="search_form" id="search_placeholder">Enter your city, state, or zip code or <a href="#" id="toggle_search_type" onclick="toggleSearchType(event)">select your state and county</a>.</label>
+            <label id="search_error_notification">Your search could not be completed. Please try another
+                location.</label>
+        </form>
+        <div id="statecounty" hidden>
+            <form id="stateform">
+                <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br />
+                <div id="county-state-select">
+                    <select name="optone" id="stateSel" class="form-select">
+                        <option value="" selected="selected">select state</option>
+                    </select>
+                    <select name="opttwo" id="countySel" class="form-select">
+                        <option value="" selected="selected">select county</option>
+                    </select>
+                </div>
+                <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city, state, or zip code</a>.</label>
+                <label id="search_error_notification">Your search could not be completed. Please try another
+                    location.</label>
+            </form>
+        </div>
+
+    </div>
+    <div id="toast"></div>
+    <div id="about-tab" class="disc-body selected-tab">
+        <div id="about-content">
+            <div id="quote_body">
+                <div id="quote-1" class="quote">"It is not more bigness that should be our goal. We must attempt,
+                    rather, to bring people back to...the warmth of community, to the worth of individual effort and
+                    responsibility...and of individuals working together as a community, to better their lives and their
+                    children's future."
+                    <span class="quote_author">--Robert F. Kennedy</span>
+                </div>
+                <div id="quote-2" class="quote">"Never doubt that a small group of thoughtful, committed, citizens can
+                    change the world. Indeed, it is the only thing that ever has."
+                    <span class="quote_author">--Margaret Mead</span>
+                </div>
+                <div id="quote-3" class="quote">"One Love! One Heart! Let's get together and feel all right."
+                    <span class="quote_author">--Bob Marley, "One Love"</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
