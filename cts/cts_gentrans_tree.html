@@ -411,6 +411,38 @@ function init(json){
                         addGeomeanToTable(node['data']['geomeanDict']);
                     }
 
+                    var selectedNodeHTML = $.parseHTML(node.name)[0];
+                    // var selectedNodeImage = $(selectedNodeHTML).children('svg');
+
+                    // Removes "selectedMetabolite" class from nodes:
+                    var selectedItems = $('div.cts-chem-wrap');
+                    $(selectedItems).removeClass("selectedMetabolite");
+
+                    $(selectedNodeHTML).addClass("selectedMetabolite");
+
+                    for (var ind in st.graph.nodes) {
+                        
+                        var treeNode = st.graph.nodes[ind];
+
+                        // Check if given node has "selectedMetabolite" class already,
+                        // and remove it:
+                        var treeNodeHTML = $.parseHTML(treeNode.name);
+
+                        $(treeNodeHTML).removeClass("selectedMetabolite");
+
+                        if (node.data.genKey == treeNode.data.genKey) {
+                            node.name = $(selectedNodeHTML).prop('outerHTML');
+                            // node.name = newNodeHTML;
+                            // break;
+                        }
+                        else {
+                            treeNode.name = $(treeNodeHTML).prop('outerHTML');
+                        }
+
+                    }
+
+                    redrawProductTree();  // redraws the tree
+
                 }
             },
             onClick: function (node, eventInfo, e) {
@@ -733,24 +765,14 @@ function molecular_info_request(node) {
 
             molecularInfoRequestStatus(true);
 
+            // Updates tree with product images after all chem info is returned:
             if (calls_tracker <= 0) {
-                // // try to get graph JSON before and after refreshing, etc.
-                var new_json = st.toJSON();
-                st.loadJSON(new_json);
-                st.compute();
-                st.select(st.root);  // re-select the node to replot the tree
+                redrawProductTree();  // redraws the tree
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
             }
 
-
-
             // Update tree for each mol info response:
-            // var new_json = st.toJSON();
-            // st.loadJSON(new_json);
-            // st.compute();
-            // st.select(st.root);
-
-
+            // redrawProductTree();
 
             var product_node = $('img#' + node.id + '.metabolite[height=114]');
             var molInfo = $('#mol-info-wrapper');
@@ -957,6 +979,45 @@ function cancelRequest() {
 
 function jsonRepack(jsonobj) {
   return JSON.parse(JSON.stringify(jsonobj));
+}
+
+
+
+function redrawProductTree() {
+    /*
+    Redraws the tree, which is needed after
+    an update has occured (e.g., selected product
+    border, likely border).
+    */
+    var new_json = st.toJSON();
+    st.loadJSON(new_json);
+    st.compute();
+    st.select(st.root);
+}
+
+
+
+function addLikelyBorderToProducts() {
+    /*
+    Adds a border around products in the tree that
+    have a global accumulation > 10%.
+    */
+    var treeNode;  // tree node object
+    var treeNodeHtmlObject;  // tree node's displayed HTML on the tree
+
+    for (var ind in st.graph.nodes) {
+        treeNode = st.graph.nodes[ind];
+        if (treeNode.data.globalAccumulation <= 0.1) {
+            continue;
+        }
+        // Adds border to product with accumlation above 10%:
+        treeNodeHtmlObject = $.parseHTML(treeNode.name);  // gets object from node's HTML
+        $(treeNodeHtmlObject).addClass("likelyProduct");  // adds border
+        treeNode.name = $(treeNodeHtmlObject).prop("outerHTML");  // adds new HTML to node
+    }
+
+    // redrawProductTree();  // redraws the tree after above updates to nodes
+
 }
 
 </script>
