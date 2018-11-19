@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DISC</title>
+    <link rel="stylesheet" href="../../../static_qed/hwbi/disc/css/mainstyle.css">
+    <link rel="stylesheet" href="../../../static_qed/hwbi/disc/css/hwbi-disc_snapshot.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+    <script>
+        function show(shown, hidden) {
+            document.getElementById(shown).style.display='block';
+            document.getElementById(hidden).style.display='none';
+            return false;
+        }
+    </script>
+    <script src="../../../static_qed/hwbi/disc/js/jquery-3.3.1.min.js"></script>
+    <script src="../../../static_qed/hwbi/disc/js/main.js"></script>
+    <script src="../../../static_qed/hwbi/disc/js/hwbi-disc-app.js"></script>
+
+</head>
+<body>
+
+    <main class="main-content">
+
+        <!-- HOMEPAGE -->
+        <div id="homepage">
+            <div class="split left">
+        
+                <img class="epalogo-home" src="../../../static_qed/hwbi/disc/img/epa2.gif" alt="">
+                <h1 class=""></h1>
+
+            </div>
+            <div class="split right">
+                <div class="container-home">
+                    
+
+                    <h3 class="searchtitle">What is the <strong>DISC</strong> profile of your <strong>community?</strong></h3>
+                    
+                    <form class="search-container">
+                        <input type="text" id="search_field" class="search-bar" placeholder="Search">
+                        
+                        <a href="#community-snapshot-tab" onclick="return show('mainpage','homepage');"><img class="search-icon-home" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
+                    </form>
+
+                    <h4 class="searchbelow">Enter your address, city, state, or zip code.</h4>
+
+                    <a class="info-popup-button" href="#popup1">What is DISC?</a>
+
+                    <div id="popup1" class="overlay">
+                        <div class="popup">
+                            <h2 class="popup-title">Decision Integration for Strong Communities (DISC)</h2>
+                            <a href="#" class="close">&times;</a>
+                            <div class="popupcontent">
+                                Communities sit at the intersection where the natural, built and social environments meet. From creating jobs to building greener infrastructure, many considerations are needed to yield the most sustainable decision outcomes for a community. Understanding what aspects about your community you value and wish to sustain or improve may help inform community planning decisions.
+                                <br>
+                                <br>
+                                Indicators and indices can be used to assess various attributes about your community. Indicators summarize raw measures (e.g., median income, disease prevalence) to help interpret data patterns and trends. For communities, no single index or indicator set can offer a complete picture of status or conditions. However, an integrative approach that synthesizes information from many different indicator sets can offer broader insight from multiple viewpoints.
+                                <br>
+                                <br>
+                                The Decision Integration for Strong Communities (DISC) application is a simple and intuitive tool designed to bring together information from many indicator products to help characterize quality of life in your community and present resources that may present ways to help improve aspects about your community that you value.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAV/MAINPAGE -->
+        <div id="mainpage" style="display: none;">
+
+            <header class="main-header">
+                <a href="#" class="logo"><img src="../../../static_qed/hwbi/disc/img/epawhite.png" alt="EPA logo"></a>
+        
+                <div class="search">
+                    <form action="#">
+                        <input type="search" id="" placeholder="Enter your address, city, state, or zip code"><img class="search-icon" src="../../../static_qed/hwbi/disc/img/searchwhite.png">
+                    </form>
+                </div>
+            </header>
+
+            <nav class="sidenav">
+                <ul>
+                    <li class="home">
+                        <a href="#" onclick="return show('homepage','mainpage');">Home</a>
+                    </li>
+                    <li class="snapshot active">
+                        <a href="#community-snapshot-tab" id="community-snapshot-tab-link">Community Snapshot</a>
+                    </li>
+                    <li class="has-children customize">
+                        <a href="#customize-tab" id="customize-tab-link">Customize</a>
+
+                        <ul class="submenu">
+                            <li><a  class="active-sub" href="#">Indexes & Metrics</a></li>
+                            <li><a href="#">Domains & Services</a></li>
+                        </ul>
+                    </li>
+                    <li class="compare">
+                        <a href="#compare-tab" id="compare-tab-link">Compare</a>
+                    </li>
+                    <li class="resources">
+                        <a href="#resources-tab" id="resources-tab-link">Additional Resources</a>
+                    </li>
+
+
+                </ul> <!-- end nav list -->
+            </nav> <!-- end nav -->
+
+        <div class="content-wrapper">
+            
+        
