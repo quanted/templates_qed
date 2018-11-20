@@ -1,13 +1,24 @@
-            
-            
-
-
-                    
             </div> <!-- end content wrapper-->
         </div> <!-- end mainpage -->
-
     </main>
-
-
+    {% if electron %}
+    <script src="/external_resources/jquery.js"></script>
+    <script src="/external_resources/js.js"></script>
+    <script src="/external_resources/alert.js"></script>
+    <script src="/sql.js"></script>
+    <script src="/db.js"></script>
+    {% else %}
+    <script src="https://www.epa.gov/sites/all/libraries/template2/jquery.js"></script>
+    <script src="https://www.epa.gov/sites/all/libraries/template2/js.js"></script>
+    <script src="https://www.epa.gov/sites/all/modules/custom/epa_core/js/alert.js"></script>
+    <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/ie.js"></script><![endif]-->
+    {% endif %}
+    <script>
+        function show(shown, hidden) {
+            document.getElementById(shown).style.display='block';
+            document.getElementById(hidden).style.display='none';
+            return false;
+        }
+    </script>
 </body>
 </html>

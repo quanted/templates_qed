@@ -1,36 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DISC</title>
-    <link rel="stylesheet" href="../../../static_qed/hwbi/disc/css/mainstyle.css">
-    <link rel="stylesheet" href="../../../static_qed/hwbi/disc/css/hwbi-disc_snapshot.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-
-    <script>
-        function show(shown, hidden) {
-            document.getElementById(shown).style.display='block';
-            document.getElementById(hidden).style.display='none';
-            return false;
-        }
-    </script>
-    <script src="../../../static_qed/hwbi/disc/js/jquery-3.3.1.min.js"></script>
-    <script src="../../../static_qed/hwbi/disc/js/main.js"></script>
-    <script src="../../../static_qed/hwbi/disc/js/hwbi-disc-app.js"></script>
-
-</head>
 <body>
 
     <main class="main-content">
-
+        <div id="toast"></div>
         <!-- HOMEPAGE -->
         <div id="homepage">
             <div class="split left">
         
-                <img class="epalogo-home" src="../../../static_qed/hwbi/disc/img/epa2.gif" alt="">
+                <img class="epalogo-home" src="/static_qed/hwbi/disc/img/epa2.gif" alt="">
                 <h1 class=""></h1>
 
             </div>
@@ -41,15 +17,32 @@
                     <h3 class="searchtitle">What is the <strong>DISC</strong> profile of your <strong>community?</strong></h3>
                     
                     <form class="search-container">
-                        <a href="#community-snapshot-tab" onclick="return show('mainpage','homepage');">
+                        
                         <span class="search-icon-home"><img src="../../static_qed/hwbi/disc/img/searchdark.png" alt=""></span>
-                        </a>
+                        
                         <input type="text" id="search_field" class="search-bar" placeholder="Search">
                         
                         
                     </form>
 
                     <h4 class="searchbelow">Enter your address, city, state, or zip code.</h4>
+
+                    <div id="statecounty" hidden>
+                        <form id="stateform">
+                            <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br />
+                            <div id="county-state-select">
+                                <select name="optone" id="stateSel" class="form-select">
+                                    <option value="" selected="selected">select state</option>
+                                </select>
+                                <select name="opttwo" id="countySel" class="form-select">
+                                    <option value="" selected="selected">select county</option>
+                                </select>
+                            </div>
+                            <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city, state, or zip code</a>.</label>
+                            <label id="search_error_notification">Your search could not be completed. Please try another
+                                location.</label>
+                        </form>
+                    </div>
 
                     <a class="info-popup-button" href="#popup1">What is DISC?</a>
 
@@ -76,11 +69,11 @@
         <div id="mainpage" style="display: none;">
 
             <header class="main-header">
-                <a href="#" class="logo"><img src="../../../static_qed/hwbi/disc/img/epawhite.png" alt="EPA logo"></a>
+                <a href="#" class="logo"><img src="/static_qed/hwbi/disc/img/epawhite.png" alt="EPA logo"></a>
         
                 <div class="search">
                     <form action="#">
-                        <input type="search" id="" placeholder="Enter your address, city, state, or zip code"><img class="search-icon" src="../../../static_qed/hwbi/disc/img/searchwhite.png">
+                        <input type="search" id="top-search-bar" placeholder="Enter your address, city, state, or zip code"><img class="search-icon" src="/static_qed/hwbi/disc/img/searchwhite.png">
                     </form>
                 </div>
             </header>
@@ -90,15 +83,15 @@
                     <li class="home">
                         <a href="#" onclick="return show('homepage','mainpage');">Home</a>
                     </li>
-                    <li class="snapshot active">
+                    <li class="snapshot">
                         <a href="#community-snapshot-tab" id="community-snapshot-tab-link">Community Snapshot</a>
                     </li>
                     <li class="has-children customize">
                         <a href="#customize-tab" id="customize-tab-link">Customize</a>
 
                         <ul class="submenu">
-                            <li><a  class="active-sub" href="#">Indexes & Metrics</a></li>
-                            <li><a href="#">Domains & Services</a></li>
+                            <li><a class="active-sub" href="#customize-tab">Indicators & Metrics</a></li>
+                            <li><a href="#customize-tab">Domains & Services</a></li>
                         </ul>
                     </li>
                     <li class="compare">
@@ -107,11 +100,7 @@
                     <li class="resources">
                         <a href="#resources-tab" id="resources-tab-link">Additional Resources</a>
                     </li>
-
-
                 </ul> <!-- end nav list -->
             </nav> <!-- end nav -->
 
         <div class="content-wrapper">
-            
-        
