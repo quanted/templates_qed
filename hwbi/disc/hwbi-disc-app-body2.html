@@ -27,68 +27,114 @@
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
                     <div id="domain-scores">
-                        {#            Built Environment Block        #}
-                        <div id="environment-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="environment_data-title" class="domain-data-title">Built Environment:</div>
-                            <div id="environment_score" class="domain-score">0.0</div>
-                            <!-- <div id="environment_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="environment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar environment-bar" id="environment-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="environment-slider-bar" class="rank-slider environment-slider"></div>
+                        {#            Nature Block        #}
+                        <div id="nature-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
+                                <div id="nature_score" class="domain-score">0.0</div>
+                                <div id="nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar nature-bar" id="nature-score-bar"></div>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="environment_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/connection_to_nature.jpg"
-                                         alt="Built Environment">
-                                    <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Built Environment domain characterizes human-made spaces where people live, work and play. Information used to describe this domain include infrastructures, recreational resources and basic housing characteristics. 
-                                </p>
-                            </div>
-                        </div>
-                        {#            Community Involvement Block         #}
-                        <div id="community-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="community_data-title" class="domain-data-title">Community Involvement:</div>
-                            <div id="community_score" class="domain-score">0.0</div>
-                            <!-- <div id="community_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="community_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar community-bar" id="community-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="community-slider-bar" class="rank-slider community-slider"></div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
                                 </div>
-                                <span class="right-slider-legend">More</span>
+                                <div id="nature_details" class="domain-description">
+                                    <p>
+                                        Humans' connection with nature is a subjective trait most easily explained by the
+                                        biophilia hypothesis. Biophilia is a term coined by prominent evolutionary biologist
+                                        and entomologist, Edward O. Wilson, who defined it as the "innately emotional
+                                        affiliation of human beings to other living organisms" and hypothesized that this
+                                        psychological, and possibly genetic, phenomena arose due to humans' long time
+                                        interaction with the natural environment. Biophilia is most evident by the
+                                        popularity of zoos and outdoor activities and in people who have non-economic
+                                        motivations for the protection of natural areas and biodiversity, such as positive
+                                        experiences of an area, solastalgia, and having affection or sympathy for non- human
+                                        species.
+                                    </p>
+                                    <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/connection_to_nature.jpg"
+                                             alt="Connection to Nature">
+                                        <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
+                                    </figure>
+                                    <p>
+                                        Biophilia is also evident in other domains of well-being such as spiritual and
+                                        cultural fulfillment, education, health, and leisure time. Humans, however, are
+                                        experiencing an increasing disconnection with nature through urban development and
+                                        technology— especially noted in children as the "nature-deficit disorder" and
+                                        coincides with rising trends in obesity, attention deficit disorder, and depression.
+                                        An attempt to correct this growing disconnection and to incorporate the health of
+                                        the environment in land use planning is through "biophilic design", which aims to
+                                        enhance human physical health, psychological benefits, and productivity by fostering
+                                        a human-nature connection. Although our detachment with nature will never completely
+                                        rid us of the desire to associate with nature, it can weaken our appreciation for
+                                        nature and decrease our well-being.
+                                    </p>
+                                    <p>
+                                        Economic and social services have significant direct and indirect effects on the
+                                        connection to nature domain. For example, economic programs and funding can increase
+                                        or decrease natural areas, either by putting aside more areas or decreasing those
+                                        areas through capital investment. Additionally, social services such as activism,
+                                        community and faith-based initiatives, justice (e.g., environmental justice), and
+                                        public works can affect policies that support ecosystems or can possibly be used as
+                                        indirect measures of our connection to nature.
+                                    </p>
+                                </div>
                             </div>
-                            <div id="community_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/cultural_fulfillment.jpg"
-                                         alt="Community Involvement">
-                                    <figcaption>Courtesy of iStockphoto</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Community Involvement domain characterizes people’s relationship with each other and their community.  Involvement in family, democracy, and the community as a whole are measures used to represent this domain.
-                                </p>
+                        {#            Cultural Block         #}
+                        <div id="cultural-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
+                                <div id="cultural_score" class="domain-score">0.0</div>
+                                <div id="cultural_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="cultural_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cultural-bar" id="cultural-score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
+                                </div>
+                                <div id="cultural_details" class="domain-description">
+                                    <p>
+                                        This domain captures metrics that measure opportunities that afford people and
+                                        communities access to fulfilling their cultural needs. Indicators are multi-faceted
+                                        and may represent cultural interests, cultural identity, and/or connection to nature
+                                        (i.e., visits to national parks). Cultural indicators encompass values- driven
+                                        metrics that examine the concepts of the "self" that centers around vital
+                                        interconnections with others and the environment.
+                                    </p>
+                                    <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/cultural_fulfillment.jpg"
+                                             alt="Cultural Fulfillment">
+                                        <figcaption>Courtesy of iStockphoto</figcaption>
+                                    </figure>
+                                    <p>
+                                        While there are many variations of the specific definition, few would argue the
+                                        important role of spirituality and culture within populations. Cultural values are
+                                        in many ways integral to vital communities, yet are rarely considered in most
+                                        well-being indices. Investment in museums, cultural centers, and other similar
+                                        gathering places offer educational opportunities to help mitigate inequities typical
+                                        of cultural exclusion. Faith- and community-based activities, such as festivals,
+                                        concerts, arts and crafts shows, etc., further strengthen social cohesion by
+                                        preserving cultural and spiritual heritage. Moreover, it is the environmental
+                                        culture that is often the harmonizing factor that supports community vitality when
+                                        obvious economic disparity would otherwise cause discord.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                         {#            Education Block           #}
                         <div id="education-block" class="domain-score-block">
                             <button class="accordion domain-expand"></button>
                             <div id="education_data-title" class="domain-data-title">Education:</div>
                             <div id="education_score" class="domain-score">0.0</div>
-                            <!-- <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
+                            <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             
                             <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar education-bar" id="education-score-bar"></div>
@@ -117,7 +163,7 @@
                             <button class="accordion domain-expand"></button>
                             <div id="health_data-title" class="domain-data-title">Health:</div>
                             <div id="health_score" class="domain-score">0.0</div>
-                            <!-- <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
+                            <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
                             <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar health-bar" id="health-score-bar"></div>
                             </div>
@@ -140,173 +186,202 @@
                                 </p>
                             </div>
                         </div>
-                        {#            Environmental Resource Management Block           #}
-                        <div id="resource-mgmt-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="resource-mgmt_data-title" class="domain-data-title">Environmental Resource Management:</div>
-                            <div id="resource-mgmt_score" class="domain-score">0.0</div>
-                            <!-- <div id="resource-mgmt_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="resource-mgmt_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar resource-mgmt-bar" id="resource-mgmt-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="resource-mgmt-slider-bar" class="rank-slider resource-mgmt-slider"></div>
+                        {#            Leisure Block           #}
+                        <div id="leisure-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
+                                <div id="leisure_score" class="domain-score">0.0</div>
+                                <div id="leisure_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="leisure_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar leisure-bar" id="leisure-score-bar"></div>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="resource-mgmt_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/leisure_time.png"
-                                         alt="Environmental Resource Management">
-                                    <figcaption>Courtesy of U.S. EPA</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Environmental Resource Management domain characterizes the quantity and quality of the natural resources within a community. Measures used to describe this domain are intended to represent outcomes related to conservation and sustainability management practices.
-                                </p>
-                            </div>
-                        </div>
-                        {#            Hazard Vulnerability Block           #}
-                        <div id="hazard-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="hazard_data-title" class="domain-data-title">Hazard Vulnerability:</div>
-                            <div id="hazard_score" class="domain-score">0.0</div>
-                            <!-- <div id="hazard_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="hazard_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar hazard-bar" id="hazard-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="hazard-slider-bar" class="rank-slider hazard-slider"></div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="hazard_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/living_standards.jpg"
-                                         alt="Hazard Vulnerability">
-                                    <figcaption>Courtesy of Microsoft.com</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Hazard Vulnerability domain characterizes the likelihood that a community will face an adverse climate-related or other natural hazard event.  Measures used to to describe this domain include a range of historical natural disaster events, losses incurred as a result of an event and the potential for co-occuring exposures to the accidental release of toxic substances.
-                                </p>
-                            </div>
-                        </div>
-                        {#            Local Economy Block           #}
-                        <div id="economy-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="economy_data-title" class="domain-data-title">Local Economy:</div>
-                            <div id="economy_score" class="domain-score">0.0</div>
-                            <!-- <div id="economy_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="economy_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar economy-bar" id="economy-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="economy-slider-bar" class="rank-slider economy-slider"></div>
+                                <div id="leisure_details" class="domain-description">
+                                    <p>
+                                        Leisure time is time that individuals have to voluntarily engage in pleasurable
+                                        activities when they are free from the demands of work or other responsibilities. It
+                                        is commonly deemed as necessary for basic survival and has increasingly been
+                                        referred to as a domain of the "good life". Suggested metrics of this domain are the
+                                        amount of time spent on specific leisure activities, types of activities, frequency
+                                        of participation, and expenditures on leisure activities. Measures of work hours and
+                                        continuous sleep time can be used as surrogate measures indicating the amount of
+                                        time available for leisure activities. Enjoyable activities may also act as
+                                        "restorers" that facilitate the individual's recovery from stress as the result of
+                                        positive social interactions or relaxation that lead to increased positive emotions.
+                                    </p>
+                                    <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/leisure_time.png"
+                                             alt="Leisure Time">
+                                        <figcaption>Courtesy of U.S. EPA</figcaption>
+                                    </figure>
+                                    <p>
+                                        Participation in leisure time activities has been positively linked to both physical
+                                        and mental health measures. Leisure time also provides for psychological detachment
+                                        from work which in turn promotes well-being and productivity. Leisure time
+                                        activities also provide opportunities for social interactions through group
+                                        participation (e.g., clubs, sports, religious organizations) and expand the size of
+                                        social networks, enhancing social cohesion. Higher income has been positively
+                                        associated with increased leisure time as it relates to more disposable income;
+                                        however, in the U.S. the cost of the loss of leisure time due to increased work
+                                        hours has continued to rise since the 1950s.
+                                    </p>
                                 </div>
-                                <span class="right-slider-legend">More</span>
                             </div>
-                            <div id="economy_details" class="domain-description">
-                                <!-- <figure class="domain_image_right">
-                                    <img src="/static_qed/hwbi/disc/img/safety.jpg"
-                                         alt="Local Economy">
-                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Local Economy domain characterizes  a community's economic environment and its ability to promote economic opportunity. This domain is represented by measures associated with  living standards that align with the perspective of the people who live in the community.
-                                </p>
-                            </div>
-                        </div>
-                        {#            Resilience Planning Block           #}
-                        <div id="resilience-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="resilience_data-title" class="domain-data-title">Resilience Planning:</div>
-                            <div id="resilience_score" class="domain-score">0.0</div>
-                            <!-- <div id="resilience_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar resilience-bar" id="resilience-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
+                        {#            Living Standards Block           #}
+                        <div id="living-std-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="living-std_data-title" class="domain-data-title">Living Standards:</div>
+                                <div id="living-std_score" class="domain-score">0.0</div>
+                                <div id="living-std_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="living-std_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar living-std-bar" id="living-std-score-bar"></div>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="resilience_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/social_cohesion.jpg"
-                                         alt="Resilience Planning">
-                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Resilience Planning domain characterizes the efforts of federal, state and local organization to identify, mitigate and recover from  natural disasters. Measures related to preparedness and proactive management are used to describe this domain.
-                                </p>
-                            </div>
-                        </div>
-                        {#            Local Culture Block           #}
-                        <div id="culture-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="culture_data-title" class="domain-data-title">Local Culture:</div>
-                            <div id="culture_score" class="domain-score">0.0</div>
-                            <!-- <div id="culture_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="culture_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar culture-bar" id="culture-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="culture-slider-bar" class="rank-slider culture-slider"></div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="living-std-slider-bar" class="rank-slider living-std-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
                                 </div>
-                                <span class="right-slider-legend">More</span>
+                                <div id="living-std_details" class="domain-description">
+                                    <p>
+                                        In the simplest of terms, living standards may be best described as "the physical
+                                        circumstances in which people live, the goods and services they are able to consume
+                                        and the economic resources to which they have access". Living standard indicators
+                                        tend to be largely economic in nature, characterized by demography and geography.
+                                        Income level is the most dominate class of metrics used for evaluating standard of
+                                        living followed by living conditions which includes housing status, household
+                                        crowding (rooms per person), and state of housing repair. Home ownership, household
+                                        assets, and other measures of material affluence were used to evaluate wealth.
+                                    </p>
+                                    <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/living_standards.jpg"
+                                             alt="Living Standards">
+                                        <figcaption>Courtesy of Microsoft.com</figcaption>
+                                    </figure>
+                                    <p>
+                                        Economic and social services aim to improve the living standards of a population.
+                                        Economic services provide a means to accumulate and distribute wealth, while many
+                                        social services help to improve living conditions among the most impoverished within
+                                        the community.
+                                        Poverty metrics (e.g., income- and housing-related) figure promi- nently in living
+                                        standard assessments because there is a close relationship between standards of
+                                        living and attainment of basic human needs. However, wealth disparity alone cannot
+                                        fully account for standards of living. Current research suggests that
+                                        conceptualizing basic human needs in light of multi-dimensional well- being may
+                                        provide a more comprehensive picture relative to living standards. For example,
+                                        indices that exclude time use measures may be missing non-market activities that may
+                                        enhance standards of living without significantly contributing to household income.
+                                        Further, the perception of living standards is often an overlooked influence on a
+                                        population's overall well-being.
+                                    </p>
+                                </div>
                             </div>
-                            <div id="culture_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/social_cohesion.jpg"
-                                         alt="Local Culture">
-                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Local Culture domain characterizes the opportunities that a community offers to help people fulfill their cultural needs or interests. This domain is described by measures representing work culture, recreational activities, cultural interests and cultural.
-                                </p>
-                            </div>
-                        </div>
-                            {#            Safety and Security Block           #}
+                        {#            Safety Block           #}
                         <div id="safety-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="safety_data-title" class="domain-data-title">Safety and Security:</div>
-                            <div id="safety_score" class="domain-score">0.0</div>
-                            <!-- <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div> -->
-                            <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar safety-bar" id="cohesion-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
+                                <button class="accordion domain-expand"></button>
+                                <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
+                                <div id="safety_score" class="domain-score">0.0</div>
+                                <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar safety-bar" id="safety-score-bar"></div>
                                 </div>
-                                <span class="right-slider-legend">More</span>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
+                                </div>
+                                <div id="safety_details" class="domain-description">
+                                    <figure class="domain_image_right">
+                                        <img src="/static_qed/hwbi/disc/img/safety.jpg"
+                                             alt="Safety">
+                                        <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                    </figure>
+                                    <p>
+                                        Based on Maslow's hierarchy of basic human needs, once physical needs are relatively
+                                        satisfied, safety needs take precedence. Personal security can be linked to
+                                        unemployment, poverty, education level and social cohesion, and is most often
+                                        evaluated using crime rates, number of accident-related injuries and deaths, and
+                                        perceived safety. In basic terms, safety and security can be described as freedom
+                                        from harm (physical security—personal and national) but is also described by
+                                        measures related to financial security. Economic security is evaluated in the event
+                                        of unemployment, sickness, widowhood, old age and disability. These measures can be
+                                        linked to economic services of employment and income and heavily associated with
+                                        social nets provided through the provisioning of social services — particularly
+                                        financial assistance and healthcare. Our sense of safety and security can be altered
+                                        in the wake of technological and natural disasters due to degradation of ecosystems,
+                                        economic loss, and increased reliance on social safety nets and recovery services.
+                                        From the ecosystem services perspective, clean water and air, sufficient food
+                                        production, and natural hazard protection significantly contribute to our sense of
+                                        safety and security through direct relationships to our health via exposure to
+                                        pathogens and contaminants, food supply, and prevention of loss of life and
+                                        property. Additionally, there is a comfort derived from knowing that we are not on
+                                        the brink of environmental problems and that a natural system will be conserved for
+                                        future generations.
+                                    </p>
+                                </div>
                             </div>
-                            <div id="safety_details" class="domain-description">
-                                
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/social_cohesion.jpg"
-                                         alt="Safety and Security">
-                                    <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                </figure> -->
-                                <p>
-                                    The Safety and Security domain characterizes the aspects of a community that represent threats or harm imposed by others. Measures of perceived safety, actual safety and potential for danger are among the measures used to represent this domain.
-                                </p>
+                        {#            Social Cohesion Block           #}
+                        <div id="cohesion-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
+                                <div id="cohesion_score" class="domain-score">0.0</div>
+                                <div id="cohesion_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cohesion-bar" id="cohesion-score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Least Valued</span>
+                                    <div class="slider-container">
+                                        <div id="cohesion-slider-bar" class="rank-slider cohesion-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">Most Valued</span>
+                                </div>
+                                <div id="cohesion_details" class="domain-description">
+                                    <p>
+                                        The ties that bind humans together in society have a large bearing on our personal
+                                        well-being and the well- being of our community. A social network propagates
+                                        opportunities to enhance the quality of life to all of its members, and creates a
+                                        safety net for difficult times. A cohesive community allows open discussion and
+                                        resolution of difficult problems, and gives its members a sense of identity.
+                                    </p>
+                                    <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/social_cohesion.jpg"
+                                             alt="Social Cohesion">
+                                        <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                    </figure>
+                                    <p>
+                                        Social participation of all concerned citizens is essential to obtaining
+                                        environmental well-being. Indicators of social cohesion vary greatly, with the most
+                                        common indicator being volunteering rates.
+                                        <br>
+                                        Measures of the health of one's social network typically revolved around qualitative
+                                        assessments of existing relationships and quantitative assessments of the size of
+                                        the network. Feelings and behaviors associated with trust and reciprocity are often
+                                        used as a proxy for community cohesion. Divorce rates, migration patterns, family
+                                        demographics, and charitable contributions were some of the more objective measures
+                                        used to measure cohesiveness.
+                                    </p>
+                                    <p>
+                                        Social services can establish social norms that promote cohesion, repair and
+                                        strengthen family cohesion, and provide safe, equitable working environments which
+                                        foster healthy coworker relationship development.
+                                        Economic services impact social cohesion by creating equitable wages and
+                                        redistributing wealth, thereby relieving tensions between different social-economic
+                                        classes, and they allow businesses to generate excess revenue to be given back to
+                                        the community.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -315,7 +390,7 @@
     <div id="customize-tab" class="disc-body">
         <div id="customize-content">
             <div id="customize_body">
-                <div id="customize_top">
+                <!-- <div id="customize_top">
                     <div id="customize_data-title">
                         <h4>Customizing the DISC profile score for <span
                                 id="customize_location">your community</span></h4>
@@ -330,9 +405,9 @@
 						the related indicators. Use the sliders associated with each indicator to increase or decrease 
 						its score to adjust the overall community characteristic value.
                     </div>
-                </div>
+                </div> -->
                 <div id="customize_bottom">
-                    <div id="customize_domains">
+                    <!-- <div id="customize_domains">
                         <span id="environment" class="domain-icon">Built Environment</span>
                         <span id="community" class="domain-icon">Community Involvement</span>
                         <span id="Education" class="domain-icon">Education</span>
@@ -343,7 +418,7 @@
                         <span id="resilience" class="domain-icon">Resilience Planning</span>
                         <span id="culture" class="domain-icon">Local Culture</span>
                         <span id="safety" class="domain-icon">Safety and Security</span>
-                    </div>
+                    </div> -->
                     <div id="customize_domain_score">
                         <div id="customize_domain_arrow">
                             <span id="arrow_initial"></span>
@@ -353,7 +428,170 @@
                         </div>
                         <div id="customize_domain_bar"></div>
                     </div>
-                    <div id="customize_domain_details"></div>
+                    <div class="customize_description">
+                        <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
+                        <p>Click on a card labeled with the characteristic that your are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
+                    </div>
+                    <div class="card-list">
+                        <div class="card-wrap">
+                            <div class="card">
+                                <a href="#nature-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Nature</div>
+                                </a>
+                                <div id="nature-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Nature</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                                <div id="customize_domain_indicators">
+                                                    <div id="connection_indicators" class="row cols-2 domain_indicator">
+                                                        <div class="col size-1of2">
+                                                            <h4 id="connection_indicators_title"></h4>
+                                                            <div id="connection_indicators_description"></div>
+                                                        </div>
+                                                        <div class="col size-1of2">
+                                                            <div class="row cols-1 indicator_block"
+                                                                    data-title="Measures of spiritual fulfillment and connection to life itself.">
+                                                                <div class="indicator_data-title">Biophilia:</div>
+                                                                <span id="nature_biophilia_value" class="indicator_value"></span>
+                                                                <div id="nature_biophilia_slider" class="indicator_slider"></div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card1">
+                                <a href="#cultural-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Cultural Fulfillment</div>
+                                </a>
+                                <div id="cultural-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Cultural Fulfillment</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card2">
+                                <a href="#education-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Education</div>
+                                </a>
+                                <div id="education-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Education</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card3">
+                                <a href="#health-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Health</div>
+                                </a>
+                                <div id="health-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Health</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card4">
+                                <a href="#leisure-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Leisure Time</div>
+                                </a>
+                                <div id="leisure-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Leisure Time</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card5">
+                                <a href="#living-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Living Standards</div>
+                                </a>
+                                <div id="living-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Living Standards</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card6">
+                                <a href="#safety-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Safety and Security</div>
+                                </a>
+                                <div id="safety-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Safety and Security</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card card7">
+                                <a href="#social-modal">
+                                    <img src="../../../static_qed/hwbi/disc/img/connection_to_nature.jpg" />
+                                    <div class="card-text-overlay">Social Cohesion</div>
+                                </a>
+                                <div id="social-modal" class="modal-overlay">
+                                        <div class="modal">
+                                            <h2 class="modal-title">Social Cohesion</h2>
+                                            <a href="#" class="close">&times;</a>
+                                            <div class="modalcontent">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- <div id="customize_domain_details"></div>
                     <div id="customize_domain_indicators">
                         <div id="environment_indicators" class="row cols-3 domain_indicator">
                             <div class="col size-1of3">
@@ -686,7 +924,7 @@
                                             <div id="safety_risk_slider" class="indicator_slider"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                     </div>
                 </div>
             </div>
