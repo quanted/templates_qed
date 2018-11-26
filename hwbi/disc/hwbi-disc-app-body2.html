@@ -387,7 +387,7 @@
             </div>
         </div>
     </div>
-    <div id="customize-tab" class="disc-body">
+    <div id="customize-indicators-metrics" class="disc-body">
         <div id="customize-content">
             <div id="customize_body">
                 <!-- <div id="customize_top">
@@ -444,7 +444,7 @@
                                             <h2 class="modal-title">Nature</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                <div id="customize_domain_details"></div>
                                                 <div id="customize_domain_indicators">
                                                     <div id="connection_indicators" class="row cols-2 domain_indicator">
                                                         <div class="col size-1of2">
@@ -481,7 +481,24 @@
                                             <h2 class="modal-title">Cultural Fulfillment</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <div id="customize_domain_details"></div>
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="culture_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="culture_indicators_title"></h4>
+                                                                <div id="culture_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="row cols-1 indicator_block"
+                                                                     data-title="Measures of individuals who participate in performing arts along with congregational adherence.">
+                                                                    <div class="indicator_data-title">Activity Participation:</div>
+                                                                    <span id="culture_activity_value" class="indicator_value"></span>
+                                                                    <div id="culture_activity_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
@@ -498,7 +515,36 @@
                                             <h2 class="modal-title">Education</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                <div id="customize_domain_details"></div>
+                                                <div id="customize_domain_indicators">
+                                                <div id="education_indicators" class="row cols-2 domain_indicator">
+                                                        <div class="col size-1of2">
+                                                            <h4 id="education_indicators_title"></h4>
+                                                            <div id="education_indicators_description"></div>
+                                                        </div>
+                                                        <div class="col size-1of2">
+                                                            <div class="row cols-1 indicator_block"
+                                                                    data-title="Measures the percentages at or above achievement levels in the skills of mathematics, reading, and science at the 4th and 8th grade levels.">
+                                                                <div class="indicator_data-title">Basic Educational Knowledge and Skills of Youth:</div>
+                                                                <span id="education_knowledge_value" class="indicator_value"></span>
+                                                                <div id="education_knowledge_slider" class="indicator_slider"></div>
+                                                            </div>
+                                                            <div class="row cols-1 indicator_block"
+                                                                    data-title="Measures bullying, child physical health, social relationships and emotional well-being, and preprimary education and care.">
+                                                                <div class="indicator_data-title">Social, Emotional and Developmental Aspects:</div>
+                                                                <span id="education_social_value" class="indicator_value"></span>
+                                                                <div id="education_social_slider" class="indicator_slider"></div>
+                                                            </div>
+                                                        
+                                                            <div class="row cols-1 indicator_block"
+                                                                    data-title="Measures of adult literacy estimates, young adult participation in post-secondary education, completion of high school, and young adult completion of a bachelor's degree or higher.">
+                                                                <div class="indicator_data-title">Participation and Attainment:</div>
+                                                                <span id="education_participation_value" class="indicator_value"></span>
+                                                                <div id="education_participation_slider" class="indicator_slider"></div>
+                                                            </div>
+                                                        </div>                            
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -515,7 +561,48 @@
                                             <h2 class="modal-title">Health</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <!-- <div id="customize_domain_details"></div> -->
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="health_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="health_indicators_title"></h4>
+                                                                <div id="health_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="row cols-1 indicator_block"
+                                                                     data-title="Measures the percentage of the population with a regular family doctor and are generally satisfied with the quality of healthcare.">
+                                                                    <div class="indicator_data-title">Healthcare:</div>
+                                                                    <span id="health_healthcare_value" class="indicator_value"></span>
+                                                                    <div id="health_healthcare_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="row cols-1 indicator_block"
+                                                                     data-title="Includes the Healthy Behaviors Index and measures of alcohol consumption, teen pregnancy, and teen smoking rates.">
+                                                                    <div class="indicator_data-title">Lifestyle and Behavior:</div>
+                                                                    <span id="health_lifestyle_value" class="indicator_value"></span>
+                                                                    <div id="health_lifestyle_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="row cols-1 indicator_block"
+                                                                     data-title="Measures the prevalence of major disease types and health conditions such as adult asthma, childhood asthma, cancer, depression, diabetes, heart attack, coronary heart disease, obesity, and stroke.">
+                                                                    <div class="indicator_data-title">Physical and Mental Health Conditions:</div>
+                                                                    <span id="health_conditions_value" class="indicator_value"></span>
+                                                                    <div id="health_conditions_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measures of mortality rates related to asthma, cancer, diabetes, heart disease, suicide. Also includes infant mortality and general life expectancy.">
+                                                                    <div class="indicator_data-title">Life Expectancy and Mortality:</div>
+                                                                    <span id="health_life_expectancy_value" class="indicator_value"></span>
+                                                                    <div id="health_life_expectancy_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1" 
+                                                                data-title="Measures of personal happiness and life satisfaction.">
+                                                                    <div class="indicator_data-title">Personal Well-Being:</div>
+                                                                    <span id="health_personal_value" class="indicator_value"></span>
+                                                                    <div id="health_personal_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -532,7 +619,36 @@
                                             <h2 class="modal-title">Leisure Time</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <div id="customize_domain_details"></div>
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="leisure_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="leisure_indicators_title"></h4>
+                                                                <div id="leisure_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measures the number of individuals who participated in physical activities not related to work such as running, golf, and hiking or vacations away from home.">
+                                                                    <div class="indicator_data-title">Activity Participation:</div>
+                                                                    <span id="leisure_activity_value" class="indicator_value"></span>
+                                                                    <div id="leisure_activity_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of adults who actively work long hours, work standard hours, and adults who provide care to senior citizens.">
+                                                                    <div class="indicator_data-title">Working Age Adults:</div>
+                                                                    <span id="leisure_working_age_value" class="indicator_value"></span>
+                                                                    <div id="leisure_working_age_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            
+                                                                <div class="indicator_block row cols-1" 
+                                                                     data-title="Measures the time spent on leisure activities.">
+                                                                    <div class="indicator_data-title">Time Spent:</div>
+                                                                    <span id="leisure_time_value" class="indicator_value"></span>
+                                                                    <div id="leisure_time_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -549,7 +665,42 @@
                                             <h2 class="modal-title">Living Standards</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <div id="customize_domain_details"></div>
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="living_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="living_indicators_title"></h4>
+                                                                <div id="living_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Includes measures of housing affordability and food security.">
+                                                                    <div class="indicator_data-title">Basic Necessities:</div>
+                                                                    <span id="living_basic_value" class="indicator_value"></span>
+                                                                    <div id="living_basic_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1" 
+                                                                     data-title="Measures median home value and mortgage debt.">
+                                                                    <div class="indicator_data-title">Wealth:</div>
+                                                                    <span id="living_wealth_value" class="indicator_value"></span>
+                                                                    <div id="living_wealth_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of personal economy, including the incidence and persistence levels of low income and median household income.">
+                                                                    <div class="indicator_data-title">Income:</div>
+                                                                    <span id="living_income_value" class="indicator_value"></span>
+                                                                    <div id="living_income_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1" 
+                                                                     data-title="Measures job quality and job satisfaction.">
+                                                                    <div class="indicator_data-title">Work:</div>
+                                                                    <span id="living_work_value" class="indicator_value"></span>
+                                                                    <div id="living_work_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -566,7 +717,36 @@
                                             <h2 class="modal-title">Safety and Security</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <div id="customize_domain_details"></div>
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="safety_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="safety_indicators_title"></h4>
+                                                                <div id="safety_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measures the range of property and violent crimes along with accidental or natural hazard related morbidity and mortality.">
+                                                                    <div class="indicator_data-title">Actual Safety:</div>
+                                                                    <span id="safety_actual_value" class="indicator_value"></span>
+                                                                    <div id="safety_actual_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of social vulnerability to environmental factors.">
+                                                                    <div class="indicator_data-title">Risk:</div>
+                                                                    <span id="safety_risk_value" class="indicator_value"></span>
+                                                                    <div id="safety_risk_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measures perceived overall community safety.">
+                                                                    <div class="indicator_data-title">Perceived Safety:</div>
+                                                                    <span id="safety_perceived_value" class="indicator_value"></span>
+                                                                    <div id="safety_perceived_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -583,7 +763,48 @@
                                             <h2 class="modal-title">Social Cohesion</h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
-                                                
+                                                    <div id="customize_domain_details"></div>
+                                                    <div id="customize_domain_indicators">
+                                                    <div id="social_indicators" class="row cols-2 domain_indicator">
+                                                            <div class="col size-1of2">
+                                                                <h4 id="social_indicators_title"></h4>
+                                                                <div id="social_indicators_description"></div>
+                                                            </div>
+                                                            <div class="col size-1of2">
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measures overall trust, city satisfaction, the action of helping others, a sense of belonging, and discrimination.">
+                                                                    <div class="indicator_data-title">Attitude Toward Others and the Community:</div>
+                                                                    <span id="social_attitude_value" class="indicator_value"></span>
+                                                                    <div id="social_attitude_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of family connectedness including parent-child reading activities, the frequency of at-home meals, and measures exceeded screen time guidelines.">
+                                                                    <div class="indicator_data-title">Family Bonding:</div>
+                                                                    <span id="social_family_value" class="indicator_value"></span>
+                                                                    <div id="social_family_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of community connectedness based on percentage of the population that have over six close friends and relatives.">
+                                                                    <div class="indicator_data-title">Social Support:</div>
+                                                                    <span id="social_support_value" class="indicator_value"></span>
+                                                                    <div id="social_support_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of individuals who hold interest in politics, registered voters, satisfaction with democracy, trust in the government, individuals who hold a voice in government decisions, and general voter turnout.">
+                                                                    <div class="indicator_data-title">Democratic Engagement:</div>
+                                                                    <span id="social_democratic_value" class="indicator_value"></span>
+                                                                    <div id="social_democratic_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                                <div class="indicator_block row cols-1"
+                                                                     data-title="Measure of community involvement through participation in group activities, volunteering, and overall participation in organized, extracurricular activities.">
+                                                                    <div class="indicator_data-title">Social Engagement:</div>
+                                                                    <span id="social_engagement_value" class="indicator_value"></span>
+                                                                    <div id="social_engagement_slider" class="indicator_slider"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>
@@ -591,344 +812,15 @@
                         </div>
                     </div>
                 
-                    <!-- <div id="customize_domain_details"></div>
-                    <div id="customize_domain_indicators">
-                        <div id="environment_indicators" class="row cols-3 domain_indicator">
-                            <div class="col size-1of3">
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The communications infrastructure indicator represents a measure regarding the ability of a community to perform essential communication functions.">
-	                                <div class="indicator_data-title">Communication Infrastructure:</div>
-	                                <span id="environment_communication_value" class="indicator_value"></span>
-	                                <div id="environment_communication_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The housing characteristics indicator relates to the potential resilience weaknesses that the distribution or condition of dwellings introduce to a community, particularly in the context of adverse climate events.">
-	                                <div class="indicator_data-title">Housing Characteristics:</div>
-	                                <span id="environment_housing_value" class="indicator_value"></span>
-	                                <div id="environment_housing_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The transportation infrastructure indicator measures the quality and continuity of roadways, railways and ports that support the flow of people, goods and services.">
-	                                <div class="indicator_data-title">Transportation Infrastructure:</div>
-	                                <span id="environment_transportation_value" class="indicator_value"></span>
-	                                <div id="environment_transportation_slider" class="indicator_slider"></div>
-                                </div>
-                            </div>
-                            <div class="col size-1of3">
-                                    <h4 id="environment_indicators_title"></h4>
-                                    <div id="environment_indicators_description"></div>
-                            </div>
-                            <div class="col size-1of3">
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The utilities infrastructure indicator measures the general local availability and potential continuity for communities to provide critical drinking water and wastewater services.">
-	                                <div class="indicator_data-title">Utility Infrastructure:</div>
-	                                <span id="environment_utility_value" class="indicator_value"></span>
-	                                <div id="environment_utility_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The vacant structures indicator includes the number of vacant business structures, residential and public-access buildings in the county (e.g., hospitals, schools, government buildings).">
-	                                <div class="indicator_data-title">Vacant Structures:</div>
-	                                <span id="environment_vacant_value" class="indicator_value"></span>
-	                                <div id="environment_vacant_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-                            
-                        </div>
-                        <div id="community_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The attitudes towards others and the community indicator relates to people's sense of belonging and trust within their community.">
-	                                <div class="indicator_data-title">Attitudes Towards Others and the Community:</div>
-	                                <span id="community_attitude_value" class="indicator_value"></span>
-	                                <div id="community_attitude_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The democratic engagement indicator characterizes a people's level of democratic and civic engagement in a local and national context.">
-	                                <div class="indicator_data-title">Democratic Engagement:</div>
-	                                <span id="community_democratic_value" class="indicator_value"></span>
-	                                <div id="community_democratic_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="row cols-1 indicator_block"
-	                                 data-title="The family bonding indicator describes family-centered activities to may contribute to family connectedness.">
-	                                <div class="indicator_data-title">Family Bonding:</div>
-	                                <span id="community_family_value" class="indicator_value"></span>
-	                                <div id="community_family_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-                            <div class="col size-1of3">
-	                        	<h4 id="community_indicators_title"></h4>
-	                        	<div id="community_indicators_description"></div>
-                            </div>
-                            <div class="col size-1of3">
-                                <div class="row cols-1 indicator_block"
-                                    data-title="The social engagement indicator measures community involvement through volunteer activities and group participation.">
-                                   <div class="indicator_data-title">Social Engagement:</div>
-                                   <span id="community_social_eng_value" class="indicator_value"></span>
-                                   <div id="community_social_eng_slider" class="indicator_slider"></div>
-                               </div>
-                            
-                                <div class="row cols-1 indicator_block"
-                                        data-title="The social support indicator describes the family, friends and community networks available to provide personal or family support. ">
-                                        <div class="indicator_data-title">Social Support:</div>
-                                        <span id="community_support_value" class="indicator_value"></span>
-                                        <div id="community_support_slider" class="indicator_slider"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="education_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The basic educational knowledge and skills indicator describes educational achievement as measured by mathematics, reading and science skills assessments of primary and middle school age children.">
-	                                <div class="indicator_data-title">Basic Educational Knowledge and Skills of Youth:</div>
-	                                <span id="education_knowledge_value" class="indicator_value"></span>
-	                                <div id="education_knowledge_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The social, emotional and developmental aspects indicator describes the general physical and emotional characteristics of school age children in context of the social environment in the educational setting.">
-	                                <div class="indicator_data-title">Social, Emotional and Developmental Aspects:</div>
-	                                <span id="education_social_value" class="indicator_value"></span>
-	                                <div id="education_social_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-                            <div class="col size-1of3">
-	                        	<h4 id="education_indicators_title"></h4>
-	                        	<div id="education_indicators_description"></div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The participation and attainment indicator measures educational participation and accomplishment as an indication of enhanced workforce and improved community involvement.">
-	                                <div class="indicator_data-title">Participation and Attainment:</div>
-	                                <span id="education_participation_value" class="indicator_value"></span>
-	                                <div id="education_participation_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>                            
-                        </div>
-                        <div id="health_indicators" class="row cols-3 domain_indicator">
-                            <div class="col size-1of3">
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The healthcare indicator describes the goods and services available to help restore or maintain individual physical and psychological health.">
-	                                <div class="indicator_data-title">Healthcare:</div>
-	                                <span id="health_healthcare_value" class="indicator_value"></span>
-	                                <div id="health_healthcare_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The lifestyle and behavior indicator serves a measure characterizing health impact behaviors.">
-	                                <div class="indicator_data-title">Lifestyle and Behavior:</div>
-	                                <span id="health_lifestyle_value" class="indicator_value"></span>
-	                                <div id="health_lifestyle_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="row cols-1 indicator_block"
-	                                 data-title="The health characteristics indicator addresses factors associated with healthcare access, special health vulnerability populations, and specific health problems related to or exacerbated by acute climate events.">
-	                                <div class="indicator_data-title">Health Characteristics:</div>
-	                                <span id="health_characteristics_value" class="indicator_value"></span>
-	                                <div id="health_characteristics_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                        	<h4 id="health_indicators_title"></h4>
-	                        	<div id="health_indicators_description"></div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The life expectancy and mortality indicator uses life-span measure to describe potential health outcome factors.">
-	                                <div class="indicator_data-title">Life Expectancy and Mortality:</div>
-	                                <span id="health_life_expectancy_value" class="indicator_value"></span>
-	                                <div id="health_life_expectancy_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="indicator_block row cols-1" 
-	                            data-title="The personal well-being indicator describes overall personal happiness and life satisfaction.">
-	                                <div class="indicator_data-title">Personal Well-Being:</div>
-	                                <span id="health_personal_value" class="indicator_value"></span>
-	                                <div id="health_personal_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="indicator_block row cols-1" 
-	                            data-title="The social services indicator represents a range of critical services provided by government, private, and non-profit organizations.">
-	                                <div class="indicator_data-title">Social Services:</div>
-	                                <span id="health_services_value" class="indicator_value"></span>
-	                                <div id="health_services_slider" class="indicator_slider"></div>
-                                </div>
-	                        </div>
-                        </div>
-                        <div id="resource-mgmt_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The condition indicator is related to metrics that describe the ecological condition of various natural and managed ecosystems.">
-	                                <div class="indicator_data-title">Condition:</div>
-	                                <span id="resource-mgmt_condition_value" class="indicator_value"></span>
-	                                <div id="resource-mgmt_condition_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The extent indicator includes the spatial extent or acreage of ecosystem types that occur naturally without significant human intervention.">
-	                                <div class="indicator_data-title">Extent of Ecosystem Types:</div>
-	                                <span id="resource-mgmt_ecosystem_value" class="indicator_value"></span>
-	                                <div id="resource-mgmt_ecosystem_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                        	<h4 id="resource-mgmt_indicators_title"></h4>
-	                        	<div id="resource-mgmt_indicators_description"></div>
-	                        </div>
-	                        
-                        </div>
-                        <div id="hazard_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The exposure indicator suggests the likelihood of one or more adverse hazardous exposures across a full spectrum of geologic and atmospheric events, including toxic releases that may co-occur.">
-	                                <div class="indicator_data-title">Exposure:</div>
-	                                <span id="hazard_exposure_value" class="indicator_value"></span>
-	                                <div id="hazard_exposure_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="indicator_block row cols-1" 
-	                            	 data-title="The loss indicator addresses an aspect of a community's vulnerability represented through historical loss of life and property (including crops) associated with specific hazards.">
-	                                <div class="indicator_data-title">Loss:</div>
-	                                <span id="hazard_loss_value" class="indicator_value"></span>
-	                                <div id="hazard_loss_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                        	<h4 id="hazard_indicators_title"></h4>
-	                        	<div id="hazard_indicators_description"></div>
-	                        </div>
-	                        
-                        </div>
-                        <div id="economy_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The basic necessities indicator describes housing affordability and food security, two of the most fundamental.">
-	                                <div class="indicator_data-title">Basic Necessities:</div>
-	                                <span id="economy_necessities_value" class="indicator_value"></span>
-	                                <div id="economy_necessities_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The economic diversity indicator represents factors associated with economic stability and recoverability within communities.">
-	                                <div class="indicator_data-title">Economic Diversity:</div>
-	                                <span id="economy_diversity_value" class="indicator_value"></span>
-	                                <div id="economy_diversity_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="indicator_block row cols-1"
-	                                 data-title="The socio-economic indicator relates to employment opportunity and issues associated with personal economics, primarily level of income.">
-	                                <div class="indicator_data-title">Socio-Economics:</div>
-	                                <span id="economy_socio_value" class="indicator_value"></span>
-	                                <div id="economy_socio_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                        	<h4 id="economy_indicators_title"></h4>
-	                        	<div id="economy_indicators_description"></div>
-	                        </div>
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                            	 data-title="The wealth indicator describes personal net assets.">
-	                                <div class="indicator_data-title">Wealth:</div>
-	                                <span id="economy_wealth_value" class="indicator_value"></span>
-	                                <div id="economy_wealth_slider" class="indicator_slider"></div>
-                                </div>
-                                <div class="indicator_block row cols-1"
-	                            	 data-title="The work indicator describes job opportunity and satisfaction from a qualitative perspective.">
-	                                <div class="indicator_data-title">Work:</div>
-	                                <span id="economy_work_value" class="indicator_value"></span>
-	                                <div id="economy_work_slider" class="indicator_slider"></div>
-	                            </div>
-	                        </div>
-                        </div>
-                        <div id="resilience_indicators" class="row cols-3 domain_indicator">
-	                        <div class="col size-1of3">
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The community preparedness indicator addresses community resilience strengthening and structure hazard mitigation.">
-	                                <div class="indicator_data-title">Community Preparedness:</div>
-	                                <span id="resilience_community_value" class="indicator_value"></span>
-	                                <div id="resilience_community_slider" class="indicator_slider"></div>
-	                            </div>
-	                            <div class="indicator_block row cols-1"
-	                                 data-title="The natural resource conservation indicator addresses the protection of natural resources from anthropogenic activities as measures of quantity and quantity.">
-	                                <div class="indicator_data-title">Natural Resource Conservation:</div>
-	                                <span id="resilience_conservation_value" class="indicator_value"></span>
-	                                <div id="resilience_conservation_slider" class="indicator_slider"></div>
-                                </div>
-                            </div>
-                            <div class="col size-1of3">
-                                <h4 id="resilience_indicators_title"></h4>
-                                <div id="resilience_indicators_description"></div>
-                            </div>
-                            <div class="col size-1of3">
-                                <div class="indicator_block row cols-1"
-                                    data-title="The personal preparedness indicator addresses individual or household activities that help protect personal property, especially in terms of acute climate events.">
-                                   <div class="indicator_data-title">Personal Preparedness:</div>
-                                   <span id="resilience_personal_value" class="indicator_value"></span>
-                                   <div id="resilience_personal_slider" class="indicator_slider"></div>
-                               </div>
-                            </div>
-                            
-	                        
-                        </div>
-                        <div id="culture_indicators" class="row cols-3 domain_indicator">
-                                <div class="col size-1of3">
-                                    <div class="indicator_block row cols-1"
-                                         data-title="The activity participation indicator describes the level of people's cultural involvement in activities such as cultural attractions and religious fellowship.
-                                         The activity participation indicator describes the local cultural in terms of people's participation in physical fitness, outdoor activities and vacations.
-                                         ">
-                                        <div class="indicator_data-title">Activity Participation:</div>
-                                        <span id="culture_activity_value" class="indicator_value"></span>
-                                        <div id="culture_activity_slider" class="indicator_slider"></div>
-                                    </div>
-                                    <div class="indicator_block row cols-1"
-                                         data-title="The biophilia indicator describes the innate connection that exists between human beings and all other living organisms, where people exhibit non-economic motivations for the protection of natural areas and biodiversity.">
-                                        <div class="indicator_data-title">Biophilia:</div>
-                                        <span id="culture_biophilia_value" class="indicator_value"></span>
-                                        <div id="culture_biophilia_slider" class="indicator_slider"></div>
-                                    </div>
-                                    <div class="indicator_block row cols-1"
-                                         data-title="The time spent indicator represents the amount of time dedicated to leisure and recreational activities such as reading, socializing and sports.">
-                                        <div class="indicator_data-title">Time Spent:</div>
-                                        <span id="culture_time_value" class="indicator_value"></span>
-                                        <div id="culture_time_slider" class="indicator_slider"></div>
-                                    </div>
-                                </div>
-                                <div class="col size-1of3">
-                                    <h4 id="culture_indicators_title"></h4>
-                                    <div id="culture_indicators_description"></div>
-                                </div>
-                                <div class="col size-1of3">
-                                    <div class="indicator_block row cols-1"
-                                         data-title="The working age adults indicator describes the amount of time dedicated to work and caregiving activities.">
-                                        <div class="indicator_data-title">Working Age Adults:</div>
-                                        <span id="culture_adults_value" class="indicator_value"></span>
-                                        <div id="culture_adults_slider" class="indicator_slider"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="safety_indicators" class="row cols-3 domain_indicator">
-                                    <div class="col size-1of3">
-                                        <div class="indicator_block row cols-1"
-                                             data-title="The actual safety indicator represents observed property and human safety incidents related to crime rate.">
-                                            <div class="indicator_data-title">Actual Safety:</div>
-                                            <span id="safety_actual_value" class="indicator_value"></span>
-                                            <div id="safety_actual_slider" class="indicator_slider"></div>
-                                        </div>
-                                        <div class="indicator_block row cols-1"
-                                             data-title="The perceived safety indicator represents how safe and secure people perceive their community to be.">
-                                            <div class="indicator_data-title">Perceived Safety:</div>
-                                            <span id="safety_perceived_value" class="indicator_value"></span>
-                                            <div id="safety_perceived_slider" class="indicator_slider"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col size-1of3">
-                                        <h4 id="safety_indicators_title"></h4>
-                                        <div id="safety_indicators_description"></div>
-                                    </div>
-                                    <div class="col size-1of3">
-                                        <div class="indicator_block row cols-1"
-                                             data-title="The risk indicator describes how vulnerable people are to environmental factors such as accidents and natural hazards.">
-                                            <div class="indicator_data-title">Risk:</div>
-                                            <span id="safety_risk_value" class="indicator_value"></span>
-                                            <div id="safety_risk_slider" class="indicator_slider"></div>
-                                        </div>
-                                    </div>
-                                </div> -->
                     </div>
                 </div>
             </div>
         </div>
+
+    <div id="customize-domains-services" class="disc-body">
+        <h2>Domains and Services</h2>
+    </div>
+
     <div id="compare-tab" class="disc-body">
         <h4>Compare DISC Scores</h4>
         <p>The DISC profile and related characteristic scores may be used to understand aspects that are potentially
