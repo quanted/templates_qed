@@ -23,7 +23,7 @@
                 </div>
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
-                    <button type="button" id="rank_btn" onclick="priorityText()"><b>Rank Priority</b></button>
+                    <!-- <button type="button" id="rank_btn" onclick="priorityText()"><b>Rank Priority</b></button> -->
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
                     <div id="domain-scores">
@@ -818,71 +818,83 @@
         </div>
 
     <div id="customize-domains-services" class="disc-body">
-        <h2>Domains and Services</h2>
-        <a href="#" class="show-baseline">Show Baseline Values</a>
-        <h3>Priority Rankings</h3>
-        <p>Use the arrows to rank the importance of domains based on your preferences. A value of 5 has more importance and a value of 1 has less importance.</p>
+        <div class="priority-rankings">
+            <a href="#" class="show-baseline">Show Baseline Values</a>
+            <h3>Priority Rankings</h3>
+            <p>Use the arrows to rank the importance of domains based on your preferences. A value of 5 has more importance and a value of 1 has less importance.</p>
 
-        <div id="aster">
-            <script src="http://d3js.org/d3.v3.min.js"></script>
-            <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-        
-            <script src="draw.js" ></script>
+            <div id="aster">
+                <script src="http://d3js.org/d3.v3.min.js"></script>
+                <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+            
+                <script src="draw.js" ></script>
+            </div>
+            
+            
+            <div class="ranking-list-container">
+                <ul class="rankinglist">
+                    <li class="nature-rank">
+                        <form action="">
+                                Connection to Nature
+                            <input type="number" name="nature-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="cultural-rank">
+                        <form action="">
+                                Cultural Fulfillment
+                            <input type="number" name="cultural-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="education-rank">
+                        <form action="">
+                                Education
+                            <input type="number" name="education-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="health-rank">
+                        <form action="">
+                                Health
+                            <input type="number" name="health-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="leisure-rank">
+                        <form action="">
+                                Leisure Time
+                            <input type="number" name="leisure-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="living-rank">
+                        <form action="">
+                                Living Standards
+                            <input type="number" name="living-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="safety-rank">
+                        <form action="">
+                                Safety and Security
+                            <input type="number" name="safety-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                    <li class="social-rank">
+                        <form action="">
+                                Social Cohesion
+                            <input type="number" name="social-rank-number" min="1" max="5" value="1">
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-        
-        
-        <div class="ranking-list-container">
-            <ul class="rankinglist">
-                <li class="nature-rank">
-                    <form action="">
-                            Connection to Nature
-                        <input type="number" name="nature-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="cultural-rank">
-                    <form action="">
-                            Cultural Fulfillment
-                        <input type="number" name="cultural-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="education-rank">
-                    <form action="">
-                            Education
-                        <input type="number" name="education-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="health-rank">
-                    <form action="">
-                            Health
-                        <input type="number" name="health-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="leisure-rank">
-                    <form action="">
-                            Leisure Time
-                        <input type="number" name="leisure-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="living-rank">
-                    <form action="">
-                            Living Standards
-                        <input type="number" name="living-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="safety-rank">
-                    <form action="">
-                            Safety and Security
-                        <input type="number" name="safety-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-                <li class="social-rank">
-                    <form action="">
-                            Social Cohesion
-                        <input type="number" name="social-rank-number" min="1" max="5" value="1">
-                    </form>
-                </li>
-            </ul>
+
+        <div class="services">
+            <h3>Services</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero magni enim quaerat nihil quibusdam harum quisquam ducimus, expedita corrupti numquam fugiat neque nesciunt perferendis eum eos eius adipisci beatae sint reprehenderit! Ipsum debitis consequatur maxime quibusdam, enim saepe ex architecto laudantium totam consequuntur, excepturi sapiente, fuga nemo ratione animi laborum.</p>
+
+            <div class="service-tabs">
+                
+            </div>
+
         </div>
+
     </div>
 
     <div id="compare-tab" class="disc-body">
@@ -942,16 +954,16 @@
                 <div class="col size-1of5 compare-hwbi-score" id="compare-score-2"></div>
             </div>
             <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Built Environment</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-environment-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-environment-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-environment-2"></div>
+                <div class="col size-2of5 domain-col">Connection to Nature</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-nature-2"></div>
             </div>
             <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Community Involvement</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-community-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-community-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-community-2"></div>
+                <div class="col size-2of5 domain-col">Cultural Fulfillment</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cultural-2"></div>
             </div>
             <div class="row cols-5">
                 <div class="col size-2of5 domain-col">Education</div>
@@ -966,40 +978,28 @@
                 <div class="col size-1of5 compare-domain-score" id="compare-health-2"></div>
             </div>
             <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Environmental Resource Management</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resource-mgmt-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resource-mgmt-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resource-mgmt-2"></div>
+                <div class="col size-2of5 domain-col">Leisure Time</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-leisure-2"></div>
             </div>
             <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Hazard Vulnerability</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-hazard-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-hazard-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-hazard-2"></div>
+                <div class="col size-2of5 domain-col">Living Standards</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-living-2"></div>
             </div>
             <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Local Economy</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-economy-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-economy-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-economy-2"></div>
-            </div>
-            <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Resilience Planning</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resilience-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resilience-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-resilience-2"></div>
-            </div>
-            <div class="row cols-5">
-                <div class="col size-2of5 domain-col">Local Culture</div>
-                <div class="col size-1of5 compare-domain-score" id="compare-culture-0"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-culture-1"></div>
-                <div class="col size-1of5 compare-domain-score" id="compare-culture-2"></div>
-            </div>
-            <div class="row cols-5">
-                <div class="col size-2of5 domain-col-bottom">Safety and Security</div>
+                <div class="col size-2of5 domain-col">Safety and Security</div>
                 <div class="col size-1of5 compare-domain-score" id="compare-safety-0"></div>
                 <div class="col size-1of5 compare-domain-score" id="compare-safety-1"></div>
                 <div class="col size-1of5 compare-domain-score" id="compare-safety-2"></div>
+            </div>
+            <div class="row cols-5">
+                <div class="col size-2of5 domain-col">Social Cohesion</div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-0"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-1"></div>
+                <div class="col size-1of5 compare-domain-score" id="compare-cohesion-2"></div>
             </div>
         </div>
     </div>
