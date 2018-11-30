@@ -824,7 +824,7 @@
     <div id="customize-domains-services" class="disc-body">
         <div class="priority-rankings">
             <a href="#" class="show-baseline">Show Baseline Values</a>
-            <h3>Priority Rankings</h3>
+            <h3>Priority Rankings and Services</h3>
             <p>Use the arrows to rank the importance of domains based on your preferences. A value of 5 has more importance and a value of 1 has less importance.</p>
 
             <div id="aster">
@@ -890,12 +890,131 @@
         </div>
 
         <div class="services">
-            <h3>Services</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero magni enim quaerat nihil quibusdam harum quisquam ducimus, expedita corrupti numquam fugiat neque nesciunt perferendis eum eos eius adipisci beatae sint reprehenderit! Ipsum debitis consequatur maxime quibusdam, enim saepe ex architecto laudantium totam consequuntur, excepturi sapiente, fuga nemo ratione animi laborum.</p>
+            <nav>
+                <div class="services-nav">
+                    <ul class="services-tabs">
+                        <li id="1" class="current-tab" onclick="tabsOnClick('1')">Ecosystem</li>
+                        <li id="2" onclick="tabsOnClick('2')">Social</li>
+                        <li id="3" onclick="tabsOnClick('3')">Environment</li>
+                    </ul>
+                    <hr class="s-tabs-below">
+                </div>
+            </nav>
 
-            <div class="service-tabs">
-                
-            </div>
+            <section class="services-tabs-container">
+                <div id="tab1">
+                    <div class="row cols-2">
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Air Quality</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Food, Fiber & Fuel Provisions</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Greenspace</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Water Quality</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Water Quantity</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2">
+                    <div class="row cols-2">
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Activism</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Communication</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Community & Faith-based</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Education</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Emergency Preparedness</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Family Services</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Healthcare</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Justice</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Labor</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Public Works</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab3">
+                    <div class="row cols-2">
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Capital Investment</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Consumption</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Employment</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Finance</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                        <div class="col size-1of2">
+                        <label>
+                            <span>Innovation</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Production</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        <label>
+                            <span>Re-Distribution</span>
+                            <input class="thumb" type="range" min="0" max="100" value="50">
+                        </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
         </div>
 
