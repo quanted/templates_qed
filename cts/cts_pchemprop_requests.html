@@ -74,6 +74,10 @@ $(document).ready(function() {
         return;
     }
     else {
+        calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
+        total_calls = calls_tracker;
+        // sessionStorage.setItem('calls_tracker', calls_tracker);
+        // sessionStorage.setItem('total_calls', total_calls);
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
@@ -85,6 +89,8 @@ $(document).ready(function() {
         checkedCalcsAndProps = buildCheckedCalcsAndProps(); // from scripts_pchemprop.js
         kowPH = $('#id_kow_ph').val();
         connectToSocket();
+        calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
+        total_calls = calls_tracker;
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     });
 
@@ -222,7 +228,15 @@ function connectToSocket() {
         data = JSON.parse(data);
 
         if (workflow == 'pchemprop' && run_type == 'single') {
+            calls_tracker--;
+            batch_data.push(data);
             parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
+            console.log("calls tracker " + calls_tracker);
+            if (calls_tracker <= 0) {
+                handleGeomean(workflow, run_type);
+                calls_tracker = 0;
+                batch_data = [];
+            }
             return;
         }
 
@@ -412,9 +426,10 @@ function connectToSocket() {
             var pchemprop_option = $('#gen-select-pchem').val();
             var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
-            if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
-                displayProductData();  // cts_gentrans_tree function
-            }
+            // if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
+            //     // handleGeomean(workflow, run_type);
+            //     displayProductData();  // cts_gentrans_tree function
+            // }
 
             // For molecular info data for metabolites:
             // if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
@@ -431,11 +446,9 @@ function connectToSocket() {
             }
             var is_cheminfo = 'service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo';
             if (is_cheminfo) {
-                var new_json = st.toJSON();
-                st.loadJSON(new_json);
-                st.compute();
-                st.select(st.root);  // re-select the node to replot the tree
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
+                addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
+                redrawProductTree();  // redraws the tree (cts_gentrans_tree.html)
             }
 
             // Notify user that p-chem data is available for download for
@@ -447,12 +460,17 @@ function connectToSocket() {
 
                 blockInterface(true, blockui_message);
 
+                handleGeomean(workflow, run_type);  // calculates geomean
+
+                displayProductData();  // displays pchem and geomean data of product
+
             }
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
                 $('#export_menu').css('position', 'relative').show();
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
+                handleGeomean(workflow, run_type);
             }
 
             // TESTWS Test Page - Initially print JSON to textarea!
@@ -490,6 +508,8 @@ function connectToSocket() {
 function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
     
     if (checkedCalcsAndProps == null) { return; }
+
+    clearGeomeanColumn();  // clears geomean column of any content
 
     // var num_pchem = parseFloat($('#gen-select-pchem').val()); // number of props
     var addDataToTable = false; // whether to plot on visible pchem table or not..
@@ -625,6 +645,9 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
             if (addDataToTable) { $(tblCell).html(spinner_html); }
         }
     }
+
+    // adds spinners to geomean column:
+    // addSpinnersToGeomeanColumn();
 
 }
 
