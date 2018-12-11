@@ -458,9 +458,15 @@
                                                         <div class="col size-1of2">
                                                             <div class="row cols-1 indicator_block"
                                                                     data-title="Measures of spiritual fulfillment and connection to life itself.">
-                                                                <div class="indicator_data-title">Biophilia:</div>
-                                                                <span id="nature_biophilia_value" class="indicator_value"></span>
-                                                                <div id="nature_biophilia_slider" class="indicator_slider"></div>
+                                                                <button class="accordion-metrics indicator_data-title">Biophilia: <span id="nature_biophilia_value" class="indicator_value"></span></button>
+                                                                
+
+                                                                
+                                                                <!-- <div id="nature_biophilia_slider" class="indicator_slider"></div> -->
+                                                                <div class="metric-accordion-panel">
+                                                                    <div>Spiritual Fulfillment <input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Connection to Life <input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         
@@ -495,9 +501,15 @@
                                                             <div class="col size-1of2">
                                                                 <div class="row cols-1 indicator_block"
                                                                      data-title="Measures of individuals who participate in performing arts along with congregational adherence.">
-                                                                    <div class="indicator_data-title">Activity Participation:</div>
-                                                                    <span id="culture_activity_value" class="indicator_value"></span>
-                                                                    <div id="culture_activity_slider" class="indicator_slider"></div>
+                                                                     <button class="accordion-metrics indicator_data-title">Activity Participation: <span id="culture_activity_value" class="indicator_value"></span></button>
+                                                                     
+                                                                     
+                                                                     <!-- <div id="culture_activity_slider" class="indicator_slider"></div> -->
+                                                                     <div class="metric-accordion-panel">
+                                                                         <div>Performing Arts Attendance<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                         <div>Rate of Congregational Adherence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                     </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                             
@@ -529,22 +541,39 @@
                                                         <div class="col size-1of2">
                                                             <div class="row cols-1 indicator_block"
                                                                     data-title="Measures the percentages at or above achievement levels in the skills of mathematics, reading, and science at the 4th and 8th grade levels.">
-                                                                <div class="indicator_data-title">Basic Educational Knowledge and Skills of Youth:</div>
-                                                                <span id="education_knowledge_value" class="indicator_value"></span>
-                                                                <div id="education_knowledge_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Basic Educational Knowledge and Skills of the Youth: <span id="education_knowledge_value" class="indicator_value"></span></button>
+                                                                
+                                                                <!-- <div id="education_knowledge_slider" class="indicator_slider"></div> -->
+                                                                <div class="metric-accordion-panel">
+                                                                    <div>Mathematics Skills<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Reading Skills<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Science Skills<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                </div>
                                                             </div>
                                                             <div class="row cols-1 indicator_block"
                                                                     data-title="Measures bullying, child physical health, social relationships and emotional well-being, and preprimary education and care.">
-                                                                <div class="indicator_data-title">Social, Emotional and Developmental Aspects:</div>
-                                                                <span id="education_social_value" class="indicator_value"></span>
-                                                                <div id="education_social_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Social, Emotional and Developmental Aspects: <span id="education_social_value" class="indicator_value"></span></button>
+                                                                
+                                                                <!-- <div id="education_social_slider" class="indicator_slider"></div> -->
+                                                                <div class="metric-accordion-panel">
+                                                                    <div>Preprimary Education and Care<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Bullying<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Child Physical Health<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Social Relationships and Emotional Well-being<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                </div>
                                                             </div>
                                                         
                                                             <div class="row cols-1 indicator_block"
                                                                     data-title="Measures of adult literacy estimates, young adult participation in post-secondary education, completion of high school, and young adult completion of a bachelor's degree or higher.">
-                                                                <div class="indicator_data-title">Participation and Attainment:</div>
-                                                                <span id="education_participation_value" class="indicator_value"></span>
-                                                                <div id="education_participation_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Participation and Attainment: <span id="education_participation_value" class="indicator_value"></span></button>
+                                                                
+                                                                <!-- <div id="education_participation_slider" class="indicator_slider"></div> -->
+                                                                <div class="metric-accordion-panel">
+                                                                    <div>Adult Literacy<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Participation<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>High School Completion<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    <div>Post-Secondary Attainment<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                </div>
                                                             </div>
                                                         </div>                            
                                                     </div>
@@ -575,34 +604,69 @@
                                                             <div class="col size-1of2">
                                                                 <div class="row cols-1 indicator_block"
                                                                      data-title="Measures the percentage of the population with a regular family doctor and are generally satisfied with the quality of healthcare.">
-                                                                    <div class="indicator_data-title">Healthcare:</div>
-                                                                    <span id="health_healthcare_value" class="indicator_value"></span>
-                                                                    <div id="health_healthcare_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Healthcare: <span id="health_healthcare_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="health_healthcare_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Population with a Regular Family Doctor<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Satisfaction with Healthcare<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="row cols-1 indicator_block"
                                                                      data-title="Includes the Healthy Behaviors Index and measures of alcohol consumption, teen pregnancy, and teen smoking rates.">
-                                                                    <div class="indicator_data-title">Lifestyle and Behavior:</div>
-                                                                    <span id="health_lifestyle_value" class="indicator_value"></span>
-                                                                    <div id="health_lifestyle_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Lifestyle and Behavior: <span id="health_lifestyle_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="health_lifestyle_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Teen Smoking Rate<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Healthy Behaviors Index<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Teen Pregnancy<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Alcohol Consumption<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="row cols-1 indicator_block"
                                                                      data-title="Measures the prevalence of major disease types and health conditions such as adult asthma, childhood asthma, cancer, depression, diabetes, heart attack, coronary heart disease, obesity, and stroke.">
-                                                                    <div class="indicator_data-title">Physical and Mental Health Conditions:</div>
-                                                                    <span id="health_conditions_value" class="indicator_value"></span>
-                                                                    <div id="health_conditions_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Physical and Mental Health Conditions: <span id="health_conditions_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="health_conditions_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Diabetes Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Cancer Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Depression Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Coronary Heart Disease Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Stroke Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Heart Attack Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Adult Asthma Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Childhood Asthma Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Obesity Prevalence<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measures of mortality rates related to asthma, cancer, diabetes, heart disease, suicide. Also includes infant mortality and general life expectancy.">
-                                                                    <div class="indicator_data-title">Life Expectancy and Mortality:</div>
-                                                                    <span id="health_life_expectancy_value" class="indicator_value"></span>
-                                                                    <div id="health_life_expectancy_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Life Expectancy and Mortality: <span id="health_life_expectancy_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="health_life_expectancy_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Life Expectancy at Birth<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Cancer Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Infant Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Suicide Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Diabetes Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Heart Disease Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Asthma Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1" 
                                                                 data-title="Measures of personal happiness and life satisfaction.">
-                                                                    <div class="indicator_data-title">Personal Well-Being:</div>
-                                                                    <span id="health_personal_value" class="indicator_value"></span>
-                                                                    <div id="health_personal_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Personal Well-Being: <span id="health_personal_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="health_personal_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Perceived Health<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Life Satisfaction<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Happiness<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -633,22 +697,34 @@
                                                             <div class="col size-1of2">
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measures the number of individuals who participated in physical activities not related to work such as running, golf, and hiking or vacations away from home.">
-                                                                    <div class="indicator_data-title">Activity Participation:</div>
-                                                                    <span id="leisure_activity_value" class="indicator_value"></span>
-                                                                    <div id="leisure_activity_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Activity Participation: <span id="leisure_activity_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="leisure_activity_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Physical Activity<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Average Nights on Vacation<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of adults who actively work long hours, work standard hours, and adults who provide care to senior citizens.">
-                                                                    <div class="indicator_data-title">Working Age Adults:</div>
-                                                                    <span id="leisure_working_age_value" class="indicator_value"></span>
-                                                                    <div id="leisure_working_age_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Working Age Adults: <span id="leisure_working_age_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="leisure_working_age_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Adults Working Standard Hours<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Adults Working Long Hours<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Adults who Provide Care to Seniors<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             
                                                                 <div class="indicator_block row cols-1" 
                                                                      data-title="Measures the time spent on leisure activities.">
-                                                                    <div class="indicator_data-title">Time Spent:</div>
-                                                                    <span id="leisure_time_value" class="indicator_value"></span>
-                                                                    <div id="leisure_time_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Time Spent: <span id="leisure_time_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="leisure_time_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Leisure Activities<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -679,28 +755,45 @@
                                                             <div class="col size-1of2">
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Includes measures of housing affordability and food security.">
-                                                                    <div class="indicator_data-title">Basic Necessities:</div>
-                                                                    <span id="living_basic_value" class="indicator_value"></span>
-                                                                    <div id="living_basic_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Basic Necessities: <span id="living_basic_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="living_basic_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Housing Affordability<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Food Security<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1" 
                                                                      data-title="Measures median home value and mortgage debt.">
-                                                                    <div class="indicator_data-title">Wealth:</div>
-                                                                    <span id="living_wealth_value" class="indicator_value"></span>
-                                                                    <div id="living_wealth_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Wealth: <span id="living_wealth_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="living_wealth_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Median Home Value<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Mortgage Debt<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of personal economy, including the incidence and persistence levels of low income and median household income.">
-                                                                    <div class="indicator_data-title">Income:</div>
-                                                                    <span id="living_income_value" class="indicator_value"></span>
-                                                                    <div id="living_income_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Income: <span id="living_income_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="living_income_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Median Household Income<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Incidence of Low Income<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Persistence of Low Income<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1" 
                                                                      data-title="Measures job quality and job satisfaction.">
-                                                                    <div class="indicator_data-title">Work:</div>
-                                                                    <span id="living_work_value" class="indicator_value"></span>
-                                                                    <div id="living_work_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Work: <span id="living_work_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="living_work_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Job Quality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Job Satisfaction<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -731,22 +824,34 @@
                                                             <div class="col size-1of2">
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measures the range of property and violent crimes along with accidental or natural hazard related morbidity and mortality.">
-                                                                    <div class="indicator_data-title">Actual Safety:</div>
-                                                                    <span id="safety_actual_value" class="indicator_value"></span>
-                                                                    <div id="safety_actual_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Actual Safety: <span id="safety_actual_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="safety_actual_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Property Crime<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Violent Crime<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Loss of Human Life<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Accidental Morbidity and Mortality<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of social vulnerability to environmental factors.">
-                                                                    <div class="indicator_data-title">Risk:</div>
-                                                                    <span id="safety_risk_value" class="indicator_value"></span>
-                                                                    <div id="safety_risk_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Risk: <span id="safety_risk_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="safety_risk_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Social Vulnerability to Environmental Factors<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measures perceived overall community safety.">
-                                                                    <div class="indicator_data-title">Perceived Safety:</div>
-                                                                    <span id="safety_perceived_value" class="indicator_value"></span>
-                                                                    <div id="safety_perceived_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Perceived Safety: <span id="safety_perceived_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="safety_perceived_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Community Safety<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -777,34 +882,63 @@
                                                             <div class="col size-1of2">
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measures overall trust, city satisfaction, the action of helping others, a sense of belonging, and discrimination.">
-                                                                    <div class="indicator_data-title">Attitude Toward Others and the Community:</div>
-                                                                    <span id="social_attitude_value" class="indicator_value"></span>
-                                                                    <div id="social_attitude_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Attitude Toward Others and the Community: <span id="social_attitude_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="social_attitude_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Trust<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>City Satisfaction<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Belonging to Community<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Discrimination<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Helping Others<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of family connectedness including parent-child reading activities, the frequency of at-home meals, and measures exceeded screen time guidelines.">
-                                                                    <div class="indicator_data-title">Family Bonding:</div>
-                                                                    <span id="social_family_value" class="indicator_value"></span>
-                                                                    <div id="social_family_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Family Bonding: <span id="social_family_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="social_family_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Parent-child Reading Activities<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Exceeded Screen Time Guidelines<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Frequency of Meals at Home<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of community connectedness based on percentage of the population that have over six close friends and relatives.">
-                                                                    <div class="indicator_data-title">Social Support:</div>
-                                                                    <span id="social_support_value" class="indicator_value"></span>
-                                                                    <div id="social_support_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Social Support: <span id="social_support_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="social_support_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <input class="thumb" type="range" min="0" max="100" value="50">
+                                                                    </div>
                                                                 </div>
                                                             
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of individuals who hold interest in politics, registered voters, satisfaction with democracy, trust in the government, individuals who hold a voice in government decisions, and general voter turnout.">
-                                                                    <div class="indicator_data-title">Democratic Engagement:</div>
-                                                                    <span id="social_democratic_value" class="indicator_value"></span>
-                                                                    <div id="social_democratic_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Democratic Engagement: <span id="social_democratic_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="social_democratic_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Trust in Government<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Voter Turnout<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Interest in Politics<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Registered Voters<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Voice in Government Decisions<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Satisfaction with Democracy<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Close Family and Friends<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="indicator_block row cols-1"
                                                                      data-title="Measure of community involvement through participation in group activities, volunteering, and overall participation in organized, extracurricular activities.">
-                                                                    <div class="indicator_data-title">Social Engagement:</div>
-                                                                    <span id="social_engagement_value" class="indicator_value"></span>
-                                                                    <div id="social_engagement_slider" class="indicator_slider"></div>
+                                                                    <button class="accordion-metrics indicator_data-title">Social Engagement: <span id="social_engagement_value" class="indicator_value"></span></button>
+                                                                    
+                                                                    <!-- <div id="social_engagement_slider" class="indicator_slider"></div> -->
+                                                                    <div class="metric-accordion-panel">
+                                                                        <div>Participation in Group Activities<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Volunteering<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                        <div>Children Participating in Organized, Extracurricular Activities<input class="thumb" type="range" min="0" max="100" value="50"></div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
