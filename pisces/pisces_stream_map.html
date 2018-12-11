@@ -742,6 +742,7 @@
         var selectedHuc;
         var calc;
         var removedFishList = [];
+        var addedFishList = [];
 
         $(document).ready(function () {
 
@@ -870,12 +871,14 @@
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr).data();
                 if (this.children[0].checked) {
-                    $(this).parent().addClass('removed_fish');
-                    removedFishList.push(row["species_id"]);
-                }
-                else {
                     $(this).parent().removeClass('removed_fish');
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
+                    addedFishList.push(row["species_id"]);
+                }
+                else {
+                    $(this).parent().addClass('removed_fish');
+                    removedFishList.push(row["species_id"]);
+                    addedFishList.splice(addedFishList.indexOf(row["species_id"]), 1);
                 }
                 setTimeout(applyFilters, 10);
             });
@@ -1073,6 +1076,13 @@
                 }
             });
 
+            // Add fish from addedFishList
+            addedFishList.map(function (i){
+                if (inTable.indexOf(i) === -1){
+                    inTable.push(i);
+                }
+            });
+
             $('#filteredFishTable').DataTable().clear().draw();
             $('#calc_table').DataTable().clear().draw();
             fishTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
@@ -1089,12 +1099,18 @@
                 fishTable.rows({order: 'index'}).data().filter(function (value, index) {
                     var id = value["species_id"];
                     if (inTable.indexOf(id) >= 0) {
-                        if (removedFishList.indexOf(id) >= 0) {
+                        if (removedFishList.indexOf(id) >= 0 && addedFishList.indexOf(id) === -1) {
                             fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
                         }
                         else {
+                            var row = fishTable.row(index).node();
+                            $('input[type="checkbox"]', row).prop("checked", true);
                             fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
                         }
+                    }
+                    else{
+                        var row = fishTable.row(index).node();
+                        $('input[type="checkbox"]', row).prop("checked", false);
                     }
                 });
             }
@@ -1127,7 +1143,8 @@
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
             var filterTable = fishTable.column(minColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {
+                {#if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) < Number(cValue)) {
                     return true;
                 }
                 else {
@@ -1139,7 +1156,8 @@
                 }
             });
             var filterTable2 = fishTable.column(maxColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {
+                {#if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) > Number(cValue)) {
                     return true;
                 }
                 else {
@@ -1271,6 +1289,8 @@
                 url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
+                    removedFishList = [];
+                    addedFishList = [];
                     $('#fish_filters').closest('div').show();
                     $('#envelope_toggle').closest('div').show();
                     $('#huc_calc_toggle').closest('div').show();
@@ -1285,7 +1305,7 @@
                     return null;
                 }
             });
-{#            getTESTFishData();#}
+            {#getTESTFishData();#}
         }
 
         function getTESTFishData() {
@@ -2020,7 +2040,8 @@
                         title: "Info"
                     },
                     {
-                        title: "Remove"
+                        title: "Add/Remove",
+                        name: "add_remove"
                     },
                     {
                         data: "common_name",
@@ -2170,7 +2191,7 @@
                         'orderable': false,
                         'className': 'select-checkbox',
                         'render': function (data, type, full, meta) {
-                            return '<input type="checkbox">';
+                            return '<input type="checkbox" checked>';
                         }
                     }
                 ],
