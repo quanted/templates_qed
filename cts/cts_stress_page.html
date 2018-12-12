@@ -117,10 +117,14 @@
 			<br>
 			<br>
 			<div class="row no-download">
-				<div class="col-md-offset-8">
+				<!-- <div class="col-md-offset-8"> -->
 					<input type="button" value="start" id="start-test" class="btn btn-primary btn-large"> &nbsp;&nbsp;
 					<input type="button" value="stop" id="stop-test" class="btn btn-primary btn-large">
-				</div>
+					<br><br>
+					<div class="col-md-6" id="batch-upload-div">
+						<b>Or upload results:</b><input type="file" value="Upload results" id="upload-results-button" class="btn btn-primary" accept=".txt">
+					</div>
+				<!-- </div> -->
 			</div>
 		</div>
 	</div>
@@ -159,6 +163,7 @@
 	<div class="row no-download">
 		<input type="button" value="Download PDF" id="download-pdf-button" class="btn btn-primary btn-large">
 		<input type="button" value="Download HTML" id="download-html-button" class="btn btn-primary btn-large">
+		<input type="button" value="Download JSON" id="download-json-button" class="btn btn-primary btn-large">
 	</div>
 
 	<br><br>
