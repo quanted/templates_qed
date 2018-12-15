@@ -2,10 +2,12 @@
         </div> <!-- end mainpage -->
     </main>
     {% if electron %}
-    <script src="/external_resources/jquery.js"></script>
-    <script src="/external_resources/js.js"></script>
-    <script src="/external_resources/alert.js"></script>
     <script src="/sql.js"></script>
+
+    <script src="/node_modules/jquery-slinky/dist/slinky.min.js"></script>
+    <link rel="stylesheet" src="/node_modules/jquery-slinky/dist/slinky.min.css">  
+
+    <script src="/render.js"></script>
     <script src="/db.js"></script>
     {% else %}
     <script src="https://www.epa.gov/sites/all/libraries/template2/jquery.js"></script>
