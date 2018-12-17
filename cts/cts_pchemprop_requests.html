@@ -347,7 +347,9 @@ function connectToSocket() {
 
                                 var prod_obj = batch_chem[prod_index];
 
-                                if (prod_obj['genKey'] == data_obj_genkey && prod_obj['smiles'] == data_obj_smiles) {
+                                var chemMatch = prod_obj['smiles'] == data_obj_smiles || prod_obj['chemical'] == data_obj_smiles;
+
+                                if (prod_obj['genKey'] == data_obj_genkey && chemMatch) {
 
                                     var data_obj = {
                                         'data': data['data'],
