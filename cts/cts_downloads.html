@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     		// Sends key to backend to make likely CSV:
     		if (csvType == 'likely') {
-    			
+    			json_data['csv_type'] = csvType;
     		}
 
     	}
@@ -105,6 +105,8 @@ $(document).ready(function () {
 		    return value;
 		});
 		cache = null;  // Enable garbage collection
+
+		json_data = {};  // clears object after it's used
 
     	return json_data_string;
 	}
