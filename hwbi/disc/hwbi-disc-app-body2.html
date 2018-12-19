@@ -1042,7 +1042,7 @@
                         <a href="#">Air Quality</a>
                         <ul>
                         <li>
-                            <a href="#">Usable Air</a>
+                            <a href="#" onclick="filterSelection('usableair'); $('#s-menu-ecosystem').removeClass('show');" >Usable Air</a>
                             
                         </li>
                         
@@ -1052,15 +1052,15 @@
                         <a href="#">Food, Fiber, & Fuel Provisions</a>
                         <ul>
                         <li>
-                            <a href="#">Energy</a>
+                            <a href="#" onclick="filterSelection('energy'); $('#s-menu-ecosystem').removeClass('show');">Energy</a>
                             
                         </li>
                         <li>
-                            <a href="#">Food and Fiber</a>
+                            <a href="#" onclick="filterSelection('foodfiber'); $('#s-menu-ecosystem').removeClass('show');">Food and Fiber</a>
                             
                         </li>
                         <li>
-                            <a href="#">Raw Materials</a>
+                            <a href="#" onclick="filterSelection('rawmaterials'); $('#s-menu-ecosystem').removeClass('show');">Raw Materials</a>
                             
                         </li>
                        
@@ -1430,114 +1430,70 @@
                 </ul>
             </div>
 
-            <!-- <section class="services-tabs-container">
-                    <div id="tab1">
-                        <div class="row cols-2">
-                            <div class="col size-1of2">
+            <section class="services-tabs-container">
+                <div id="tab1">
+                <div class="row cols-2">
+                    <div class="col size-1of2">
+                    <label id="" class="filterDiv usableair">
+                        <span>Clean Air</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv rawmaterials">
+                        <span>COPPER</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv rawmaterials">
+                        <span>GOLD</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv rawmaterials">
+                        <span>LEAD</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv rawmaterials">
+                        <span>SILVER</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv rawmaterials">
+                        <span>ZINC</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv energy">
+                        <span>COALRSV</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv energy">
+                        <span>CRUDERSV</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv energy">
+                        <span>NGASRSV</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv energy">
+                        <span>URANRSV</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv foodfiber">
+                        <span>FFPROD</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv foodfiber">
+                        <span>FISHERY</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    <label id="" class="filterDiv foodfiber">
+                        <span>TIMBER</span><span></span>
+                        <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
+                    </label>
+                    </div>
+                </div>
+                </div>
+                <div id="tab2"></div>
+                <div id="tab3"></div>
+            </section>
 
-                            <div id="airqualitytest" style="display: none;">
-                                <label>
-                                    <span>Clean Air</span><span></span>
-                                    <input id="airQuality" class="thumb" type="range" min="10" max="90" value="50">
-                                </label>
-                            </div>
-
-                            <div id="foodfiberfueltest" style="display: none;">
-                                <label>
-                                    <span>COALRSV</span><span></span>
-                                    <input id="foodFiberAndFuel" class="thumb" type="range" min="32.62908483" max="48.49178319">
-                                </label>
-                                <label>
-                                    <span>CRUDERSV</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>NGASRES</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>URANRSV</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>FFPROD</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>FISHERY</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                </div>
-                                <div class="col size-1of2">
-                                <label>
-                                    <span>TIMBER</span><span></span>
-                                    <input id="waterQuality" class="thumb" type="range" min="15.95637509" max="88.22033237">
-                                </label>
-                                <label>
-                                    <span>COPPER</span><span></span>
-                                    <input id="waterQuantity" class="thumb" type="range" min="21.70976841" max="72.83447998">
-                                </label>
-                                <label>
-                                    <span>GOLD</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>LEAD</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>SILVER</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>ZINC</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                            </div>
-
-                            <div id="greenspacetest" style="display: none;">
-                                <label>
-                                    <span>LUOTHER</span><span></span>
-                                    <input id="foodFiberAndFuel" class="thumb" type="range" min="32.62908483" max="48.49178319">
-                                </label>
-                                <label>
-                                    <span>NATPARKS</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>NPSVISIT</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                <label>
-                                    <span>RURPARKS</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                </div>
-                                <div class="col size-1of2">
-                                <label>
-                                    <span>BLUESPC</span><span></span>
-                                    <input id="waterQuality" class="thumb" type="range" min="15.95637509" max="88.22033237">
-                                </label>
-                                <label>
-                                    <span>WLDHOME</span><span></span>
-                                    <input id="waterQuantity" class="thumb" type="range" min="21.70976841" max="72.83447998">
-                                </label>
-                                <label>
-                                    <span>WLDSTATE</span><span></span>
-                                    <input id="greenspace" class="thumb" type="range" min="36.11207908" max="62.03906984">
-                                </label>
-                                </div>
-                            </div>
-
-
-                            </div>
-                        </div>
-                    
-                    <div id="tab2"></div>
-                    <div id="tab3"></div>
-                </section> -->
-
-            <section class="services-tabs-container" style="display: none;">
+            <!-- <section class="services-tabs-container" style="display: none;">
                 <div id="tab1">
                     <div class="row cols-2">
                         <div class="col size-1of2">
@@ -1650,7 +1606,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
         </div>
 
