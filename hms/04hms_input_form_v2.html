@@ -8,14 +8,14 @@
         </div>
         <div class="location_input_row">
             <input type="checkbox" id="comid_weighted_spatial_avg"><label class="location_checkbox_input" for="comid_weighted_spatial_avg">Use weighted spatial average</label>
-            <input type="checkbox" id="comid_ncdc_station"><label class="location_checkbox_input" for="comid_ncdc_station">NCDC Station ID</label><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCDC station</a>
+            <input type="checkbox" id="comid_ncdc_station"><label class="location_checkbox_input" for="comid_ncdc_station">NCEI Station ID</label><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCEI station</a>
         </div>
         <div class="location_input_row">
-            <span class="notification">Note: Nearest (to the catchment centroid) NCDC Station will be used if NCDC station ID is not provided above.</span>
+            <span class="notification">Note: Nearest (to the catchment centroid) NCEI Station will be used if NCEI station ID is not provided above.</span>
         </div>
         <div class="location_input_row">
-            <input type="radio" name="primary_source" value="ncdc" id="source_ncdc"><label for="source_ncdc" class="source_label">NCDC Station ID</label>
-            <input type="text" class="location_text_input" id="location_ncdc"><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCDC station</a>
+            <input type="radio" name="primary_source" value="ncdc" id="source_ncdc"><label for="source_ncdc" class="source_label">NCEI Station ID</label>
+            <input type="text" class="location_text_input" id="location_ncdc"><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCEI station</a>
         </div>
     </div>
     <div class="temporal_locaiton_block">
@@ -52,7 +52,7 @@
     </div>
     <div class="source_location_block">
         <span class="block_title">Data Sources</span>
-        <span class="blue_notification">Select gridded data sources to be compared with observed data from NCDC weather station</span>
+        <span class="blue_notification">Select gridded data sources to be compared with observed data from NCEI weather station</span>
         <div class="sources_input_row" id="source_list">
             <input type="checkbox" id="source_nldas" value="nldas"><label class="source_input_label" for="source_nldas">NLDAS</label>
             <input type="checkbox" id="source_gldas" value="gldas"><label class="source_input_label" for="source_gldas">GLDAS</label>
