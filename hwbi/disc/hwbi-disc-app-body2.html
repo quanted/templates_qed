@@ -1241,14 +1241,14 @@
         
             <section class="services-tabs-container">{% for metricGroup in metricGroups %}
                 <div id="tab{{ forloop.counter }}">
-                    <div class="row cols-2">
-                        <div class="col size-1of2">{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
+                    <div class>
+                        <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
                             <label id="{{ indicator.grouper|slugify }}" class="filterDiv {{ indicator.grouper|slugify }}">{% for metric in metrics %}{% if metric.6 == indicator.list.0.6 %}
-                                    <span>{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span></span>
+                                    <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
 
                                 
 
-                                <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="{{ metric.9 }}" max="{{ metric.10 }}" value="50">{% endif %}{% endfor %}
+                                <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="{{ metric.9 }}" max="{{ metric.10 }}" value="50"></div>{% endif %}{% endfor %}
                             </label>{% endif %}{% endfor %}
                         </div>
                     </div>
