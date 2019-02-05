@@ -267,8 +267,8 @@ function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=n
     		if (nodeItem.genKey == "molecule 1") {
     			nodeArray.push(nodeItem);
     		}
-    		// Adds products with GA > 10%:
-    		if (nodeItem.globalAccumulation > 0.1) {
+    		// Adds products with GA > 0.1%:
+    		if (nodeItem.globalAccumulation > 0.001) {
     			nodeArray.push(nodeItem);
     		}
     	}
