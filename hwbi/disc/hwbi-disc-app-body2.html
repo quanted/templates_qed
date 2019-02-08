@@ -386,7 +386,7 @@
                                 </div>
                             </div>
                             {#            Ecosystem Service Block           #}
-                        <div id="ecosystem-block" class="domain-score-block">
+                        <!-- <div id="ecosystem-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="ecosystem_data-title" class="domain-data-title">Ecosystem:</div>
                                 <div id="ecosystem_score" class="domain-score">0.0</div>
@@ -576,7 +576,7 @@
                                     
                                     
                                 </div>
-                        </div>
+                        </div> -->
                         
                     </div>
                 </div>
@@ -637,7 +637,7 @@
                                 </a>
                                 <div id="nature-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Nature</h2>
+                                            <h2 class="modal-title">Nature <span id="nature_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                 <div id="customize_domain_details"></div>
@@ -680,7 +680,7 @@
                                 </a>
                                 <div id="cultural-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Cultural Fulfillment</h2>
+                                            <h2 class="modal-title">Cultural Fulfillment <span id="cultural_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <div id="customize_domain_details"></div>
@@ -720,7 +720,7 @@
                                 </a>
                                 <div id="education-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Education</h2>
+                                            <h2 class="modal-title">Education <span id="education_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                 <div id="customize_domain_details"></div>
@@ -783,7 +783,7 @@
                                 </a>
                                 <div id="health-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Health</h2>
+                                            <h2 class="modal-title">Health <span id="health_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <!-- <div id="customize_domain_details"></div> -->
@@ -876,7 +876,7 @@
                                 </a>
                                 <div id="leisure-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Leisure Time</h2>
+                                            <h2 class="modal-title">Leisure Time <span id="leisure_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <div id="customize_domain_details"></div>
@@ -934,7 +934,7 @@
                                 </a>
                                 <div id="living-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Living Standards</h2>
+                                            <h2 class="modal-title">Living Standards <span id="living_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <div id="customize_domain_details"></div>
@@ -1003,7 +1003,7 @@
                                 </a>
                                 <div id="safety-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Safety and Security</h2>
+                                            <h2 class="modal-title">Safety and Security <span id="safety_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <div id="customize_domain_details"></div>
@@ -1061,7 +1061,7 @@
                                 </a>
                                 <div id="social-modal" class="modal-overlay">
                                         <div class="modal">
-                                            <h2 class="modal-title">Social Cohesion</h2>
+                                            <h2 class="modal-title">Social Cohesion <span id="social_modal_score" class="domain-modal-score"></span></h2>
                                             <a href="#" class="close">&times;</a>
                                             <div class="modalcontent">
                                                     <div id="customize_domain_details"></div>
@@ -1232,7 +1232,7 @@
                         <a href="#">{{ domain.grouper }}</a>
                         <ul>{% for indicator in indicators %}{% if indicator.list.0.6 == domain.grouper %}
                             <li>
-                                <a href="#" onclick="filterSelection('{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show');">{{ indicator.grouper }}</a>
+                                <a href="#" onclick="filterSelection('{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
                             </li>{% endif %}{% endfor %}
                         </ul>
                     </li>{% endif %}{% endfor %}
@@ -1242,6 +1242,7 @@
             <section class="services-tabs-container">{% for metricGroup in metricGroups %}
                 <div id="tab{{ forloop.counter }}">
                     <div class>
+                        <h4 id="service_indicator_title"></h4>
                         <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
                             <label id="{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}">{% for metric in metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                     <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
@@ -1275,7 +1276,7 @@
                     <div class="add-community-search">
                         <input id="compare-search-0" class="compare-search-input" type="text" autocomplete="off">
                         <button class="compare-search-button" data-community="0">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="search-subtext">Enter your address, city, or county.</div>
                         <div class="compare-search-error"></div>
                     </div>
                 </div>
@@ -1289,7 +1290,7 @@
                     <div class="add-community-search">
                         <input id="compare-search-1" class="compare-search-input" type="text" autocomplete="off">
                         <button class="compare-search-button" data-community="1">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="search-subtext">Enter your address, city, or county.</div>
                         <div class="compare-search-error"></div>
                     </div>
                 </div>
@@ -1303,7 +1304,7 @@
                     <div class="add-community-search">
                         <input id="compare-search-2" class="compare-search-input" type="text" autocomplete="off">
                         <button class="compare-search-button" data-community="2">Search</button>
-                        <div class="search-subtext">Enter your address, city, state, or zip code.</div>
+                        <div class="search-subtext">Enter your address, city, or county.</div>
                         <div class="compare-search-error"></div>
                     </div>
                 </div>
