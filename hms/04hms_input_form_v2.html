@@ -8,7 +8,11 @@
         </div>
         <div class="location_input_row">
             <input type="checkbox" id="comid_weighted_spatial_avg"><label class="location_checkbox_input" for="comid_weighted_spatial_avg">Use weighted spatial average</label>
-            <input type="checkbox" id="comid_ncdc_station"><label class="location_checkbox_input" for="comid_ncdc_station">NCEI Station ID</label><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCEI station</a>
+            <input type="checkbox" id="comid_ncdc_station" onclick="toggleNCEIInput()"><label class="location_checkbox_input" for="comid_ncdc_station">NCEI Station ID</label><a href="http://gis.ncdc.noaa.gov/map/viewer" class="location_input_link" target="_blank">Use Map to locate NCEI station</a>
+        </div>
+        <div class="location_input_row" id="location_input_comid_ncdc_block">
+            <label for="location_input_comid_ncdc">NCEI Station</label>
+            <input type="text" class="location_text_input" id="location_input_comid_ncdc">
         </div>
         <div class="location_input_row">
             <span class="notification">Note: Nearest (to the catchment centroid) NCEI Station will be used if NCEI station ID is not provided above.</span>
