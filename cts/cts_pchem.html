@@ -6,7 +6,9 @@
 		<th><input class="calc_checkbox" id="id_chemaxon_select" name="chemaxon" type="checkbox">&nbsp;<p>ChemAxon</p></th>
 		<th><input class="calc_checkbox" id="id_epi_select" name="epi" type="checkbox">&nbsp;<p>EPI Suite</p></th>
 		<th><input class="calc_checkbox" id="id_test_select" name="test" type="checkbox">&nbsp;<p>TEST</p></th>
+		{% if SPARC_AVAILABLE %}
 		<th><input class="calc_checkbox" id="id_sparc_select" name="sparc" type="checkbox">&nbsp;<p>SPARC</p></th>
+		{% endif %}
 		<th>Geometric Mean</th>
 		<th><input class="calc_checkbox" id="id_measured_select" name="measured" type="checkbox">&nbsp;<p>Measured</p></th>
         <!-- <th>Average</th> -->
@@ -16,7 +18,9 @@
 		<td></td>
 		<td></td>
 		<td></td>
+		{% if SPARC_AVAILABLE %}
 		<td></td>
+		{% endif %}
 		<td></td>
 		<td></td>
 	</tr>
@@ -30,7 +34,9 @@
 		<td id="id_melting_point_ChemAxon" class="ChemCalcs_unavailable chemaxon melting_point"></td>
 		<td id="id_melting_point_EPI" class="ChemCalcs_available epi melting_point"></td>
 		<td id="id_melting_point_TEST" class="ChemCalcs_available test melting_point"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_melting_point_SPARC" class="ChemCalcs_unavailable sparc melting_point"></td>
+		{% endif %}
 		<td id="id_melting_point_geomean" class="ChemCalcs_available geomean melting_point"></td>
 		<td id="id_melting_point_Measured" class="ChemCalcs_available measured melting_point"></td>
 		</tr>
@@ -42,7 +48,9 @@
 		<td id="id_boiling_point_ChemAxon" class="ChemCalcs_unavailable chemaxon boiling_point"></td>
 		<td id="id_boiling_point_EPI" class="ChemCalcs_available epi boiling_point"></td>
 		<td id="id_boiling_point_TEST" class="ChemCalcs_available test boiling_point"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_boiling_point_SPARC" class="ChemCalcs_available sparc boiling_point"></td>
+		{% endif %}
 		<td id="id_boiling_point_geomean" class="ChemCalcs_available geomean boiling_point"></td>
 		<td id="id_boiling_point_Measured" class="ChemCalcs_available measured boiling_point"></td>
 		</tr>
@@ -54,7 +62,9 @@
 		<td id="id_water_sol_ChemAxon" class="ChemCalcs_available chemaxon water_sol"></td>
 		<td id="id_water_sol_EPI" class="ChemCalcs_available epi water_sol"></td>
 		<td id="id_water_sol_TEST" class="ChemCalcs_available test water_sol"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_water_sol_SPARC" class="ChemCalcs_available sparc water_sol"></td>
+		{% endif %}
 		<td id="id_water_sol_geomean" class="ChemCalcs_available geomean water_sol"></td>
 		<td id="id_water_sol_Measured" class="ChemCalcs_available measured water_sol"></td>
 		</tr>
@@ -66,7 +76,9 @@
 		<td id="id_vapor_press_ChemAxon" class="ChemCalcs_unavailable chemaxon vapor_press"></td>
 		<td id="id_vapor_press_EPI" class="ChemCalcs_available epi vapor_press"></td>
 		<td id="id_vapor_press_TEST" class="ChemCalcs_available test vapor_press"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_vapor_press_SPARC" class="ChemCalcs_available sparc vapor_press"></td>
+		{% endif %}
 		<td id="id_vapor_press_geomean" class="ChemCalcs_available geomean vapor_press"></td>
 		<td id="id_vapor_press_Measured" class="ChemCalcs_available measured vapor_press"></td>
 		</tr>
@@ -78,7 +90,9 @@
 		<td id="id_mol_diss_ChemAxon" class="ChemCalcs_unavailable chemaxon mol_diss"></td>
 		<td id="id_mol_diss_EPI" class="ChemCalcs_unavailable epi mol_diss"></td>
 		<td id="id_mol_diss_TEST" class="ChemCalcs_unavailable test mol_diss"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_mol_diss_SPARC" class="ChemCalcs_available sparc mol_diss"></td>
+		{% endif %}
 		<td id="id_mol_diss_geomean" class="ChemCalcs_available geomean mol_diss"></td>
 		<td id="id_mol_diss_Measured" class="ChemCalcs_unavailable measured mol_diss"></td>
 		</tr>
@@ -90,7 +104,9 @@
 		<td id="id_mol_diss_air_ChemAxon" class="ChemCalcs_unavailable chemaxon mol_diss_air"></td>
 		<td id="id_mol_diss_air_EPI" class="ChemCalcs_unavailable epi mol_diss_air"></td>
 		<td id="id_mol_diss_air_TEST" class="ChemCalcs_unavailable test mol_diss_air"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_mol_diss_air_SPARC" class="ChemCalcs_available sparc mol_diss_air"></td>
+		{% endif %}
 		<td id="id_mol_diss_air_geomean" class="ChemCalcs_available geomean mol_diss_air"></td>
 		<td id="id_mol_diss_air_Measured" class="ChemCalcs_unavailable measured mol_diss_air"></td>
 		</tr>
@@ -102,7 +118,9 @@
 		<td id="id_ion_con_ChemAxon" class="ChemCalcs_available chemaxon ion_con"></td>
 		<td id="id_ion_con_EPI" class="ChemCalcs_unavailable epi ion_con"></td>
 		<td id="id_ion_con_TEST" class="ChemCalcs_unavailable test ion_con"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_ion_con_SPARC" class="ChemCalcs_available sparc ion_con"></td>
+		{% endif %}
 		<td id="id_ion_con_geomean" class="ChemCalcs_unavailable geomean ion_con"></td>
 		<td id="id_ion_con_Measured" class="ChemCalcs_unavailable measured ion_con"></td>
 		</tr>
@@ -114,7 +132,9 @@
 		<td id="id_henrys_law_con_ChemAxon" class="ChemCalcs_unavailable chemaxon henrys_law_con"></td>
 		<td id="id_henrys_law_con_EPI" class="ChemCalcs_available epi henrys_law_con"></td>
 		<td id="id_henrys_law_con_TEST" class="ChemCalcs_unavailable test henrys_law_con"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_henrys_law_con_SPARC" class="ChemCalcs_available sparc henrys_law_con"></td>
+		{% endif %}
 		<td id="id_henrys_law_con_geomean" class="ChemCalcs_available geomean henrys_law_con"></td>
 		<td id="id_henrys_law_con_Measured" class="ChemCalcs_available measured henrys_law_con"></td>
 		</tr>
@@ -125,7 +145,9 @@
 		<td id="id_kow_no_ph_ChemAxon" class="ChemCalcs_available chemaxon kow_no_ph"></td>
 		<td id="id_kow_no_ph_EPI" class="ChemCalcs_available epi kow_no_ph"></td>
 		<td id="id_kow_no_ph_TEST" class="ChemCalcs_unavailable test kow_no_ph"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_kow_no_ph_SPARC" class="ChemCalcs_available sparc kow_no_ph"></td>
+		{% endif %}
 		<td id="id_kow_no_ph_geomean" class="ChemCalcs_available geomean kow_no_ph"></td>
 		<td id="id_kow_no_ph_Measured" class="ChemCalcs_available measured kow_no_ph"></td>
 		</tr>
@@ -136,7 +158,9 @@
 		<td id="id_koc_ChemAxon" class="ChemCalcs_unavailable chemaxon koc"></td>
 		<td id="id_koc_EPI" class="ChemCalcs_available epi koc"></td>
 		<td id="id_koc_TEST" class="ChemCalcs_unavailable test koc"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_koc_SPARC" class="ChemCalcs_unavailable sparc koc"></td>
+		{% endif %}
 		<td id="id_koc_geomean" class="ChemCalcs_available geomean koc"></td>
 		<td id="id_koc_Measured" class="ChemCalcs_unavailable measured koc"></td>
 		</tr>
@@ -146,7 +170,9 @@
 		<td id="id_koc_ChemAxon" class="ChemCalcs_unavailable chemaxon log_bcf"></td>
 		<td id="id_log_bcf_EPI" class="ChemCalcs_available epi log_bcf"></td>
 		<td id="id_log_bcf_TEST" class="ChemCalcs_available test log_bcf"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_log_bcf_SPARC" class="ChemCalcs_unavailable sparc log_bcf"></td>
+		{% endif %}
 		<td id="id_log_bcf_geomean" class="ChemCalcs_available geomean log_bcf"></td>
 		<td id="id_log_bcf_Measured" class="ChemCalcs_unavailable measured log_bcf"></td>
 		</tr>
@@ -156,7 +182,9 @@
 		<td id="id_koc_ChemAxon" class="ChemCalcs_unavailable chemaxon log_baf"></td>
 		<td id="id_log_baf_EPI" class="ChemCalcs_available epi log_baf"></td>
 		<td id="id_log_baf_TEST" class="ChemCalcs_unavailable test log_baf"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_log_baf_SPARC" class="ChemCalcs_unavailable sparc log_baf"></td>
+		{% endif %}
 		<td id="id_log_baf_geomean" class="ChemCalcs_available geomean log_baf"></td>
 		<td id="id_log_baf_Measured" class="ChemCalcs_unavailable measured log_baf"></td>
 		</tr>
@@ -175,7 +203,9 @@
 		<td id="id_kow_wph_ChemAxon" class="ChemCalcs_available chemaxon kow_wph"></td>
 		<td id="id_kow_wph_EPI" class="ChemCalcs_unavailable epi kow_wph"></td>
 		<td id="id_kow_wph_TEST" class="ChemCalcs_unavailable test kow_wph"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_kow_wph_SPARC" class="ChemCalcs_available sparc kow_wph"></td>
+		{% endif %}
 		<td id="id_kow_wph_geomean" class="ChemCalcs_available geomean kow_wph"></td>
 		<td id="id_kow_wph_Measured" class="ChemCalcs_unavailable measured kow_wph"></td>
 		</tr>
@@ -187,7 +217,9 @@
 		<td id="id_water_sol_ph_ChemAxon" class="ChemCalcs_available chemaxon water_sol_ph"></td>
 		<td id="id_water_sol_ph_EPI" class="ChemCalcs_unavailable epi water_sol_ph"></td>
 		<td id="id_water_sol_ph_TEST" class="ChemCalcs_unavailable test water_sol_ph"></td>
+		{% if SPARC_AVAILABLE %}
 		<td id="id_water_sol_ph_SPARC" class="ChemCalcs_unavailable sparc water_sol_ph"></td>
+		{% endif %}
 		<td id="id_water_sol_ph_geomean" class="ChemCalcs_available geomean water_sol_ph"></td>
 		<td id="id_water_sol_ph_Measured" class="ChemCalcs_unavailable measured water_sol_ph"></td>
 		</tr>
