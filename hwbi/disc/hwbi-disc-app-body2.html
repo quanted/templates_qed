@@ -305,7 +305,7 @@
                                 </div>
                                 <div id="safety_details" class="domain-description">
                                     <figure class="domain_image_right">
-                                        <img src="/static_qed/hwbi/disc/img/safety.jpg"
+                                        <img src="/static_qed/hwbi/disc/img/safety_and_security.jpg"
                                              alt="Safety">
                                         <figcaption>Courtesy of iStockphoto.com</figcaption>
                                     </figure>
@@ -1096,7 +1096,7 @@
                         <div class="card-wrap">
                             <div class="card card6">
                                 <a href="#safety-modal">
-                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/safety.jpg" />
+                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/safety_and_security.jpg" />
                                     <div class="card-text-overlay">Safety and Security</div>
                                 </a>
                                 <div id="safety-modal" class="modal-overlay">
@@ -1347,8 +1347,7 @@
                                     <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
 
                                 
-
-                                <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="{{ metric.9 }}" max="{{ metric.10 }}" value=""></div>{% endif %}{% endfor %}
+                                <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
                             </label>{% endif %}{% endfor %}
                         </div>
                     </div>
