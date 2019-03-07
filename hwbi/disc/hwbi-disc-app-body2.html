@@ -27,6 +27,7 @@
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
                     <div id="domain-scores">
+                        <div class="domain-blocks">
                         {#            Nature Block        #}
                         <div id="nature-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
@@ -385,102 +386,104 @@
                                     </p>
                                 </div>
                             </div>
-                            {#            Ecosystem Service Block           #}
-                            
-                            <div class="chartcontainer">
-                                <div id="chart" class="radialbar"></div>
-                                <div id="chart2" class="radialbar"></div>
-                                <div id="chart3" class="radialbar"></div>
-                            </div>
+                            </div> <!--end domain-blocks -->
 
-                            <div class="chartdesc-container">
-                                <div class="chartdesc" id="desc1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos saepe harum, architecto cumque itaque corporis aliquid, error totam et animi quibusdam, fugiat dolor ea molestias quas modi iusto sapiente odio.</div>
-                                <div class="chartdesc" id="desc2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio perspiciatis laboriosam similique quaerat numquam voluptate assumenda asperiores! Quae vel corrupti aliquid culpa sunt, unde quisquam! Itaque voluptates quos eos nemo.</div>
-                                <div class="chartdesc" id="desc3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsum provident qui eveniet dicta dolores ea, perspiciatis vero. Delectus provident similique necessitatibus officia repellendus sapiente suscipit quaerat placeat fuga rerum?</div>
-                            </div>
+                            <div class="service-blocks">
+                                <h3>Services</h3>
+                                <div class="chartcontainer">
+                                    <div id="chart" class="radialbar"></div>
+                                    <div id="chart2" class="radialbar"></div>
+                                    <div id="chart3" class="radialbar"></div>
+                                </div>
 
-                            <script>
-                            var options = {
-                                chart: {
-                                    height: 220,
-                                    type: 'radialBar',
-                                },
-                                plotOptions: {
-                                    radialBar: {
-                                        dataLabels: {
-                                            name: {
-                                                color: 'black',
-                                            },
-                                        },
-                                        hollow: {
-                                            size: '60%',
-                                        }
+                                <div class="chartdesc-container">
+                                    <div class="chartdesc" id="desc1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos saepe harum, architecto cumque itaque corporis aliquid, error totam et animi quibusdam, fugiat dolor ea molestias quas modi iusto sapiente odio.</div>
+                                    <div class="chartdesc" id="desc2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio perspiciatis laboriosam similique quaerat numquam voluptate assumenda asperiores! Quae vel corrupti aliquid culpa sunt, unde quisquam! Itaque voluptates quos eos nemo.</div>
+                                    <div class="chartdesc" id="desc3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsum provident qui eveniet dicta dolores ea, perspiciatis vero. Delectus provident similique necessitatibus officia repellendus sapiente suscipit quaerat placeat fuga rerum?</div>
+                                </div>
+
+                                <script>
+                                var options = {
+                                    chart: {
+                                        height: 220,
+                                        type: 'radialBar',
                                     },
-                                },
-                                series: [70],
-                                labels: ['Economic'],
-                            
-                            }
-                            
-
-                            var options2 = {
-                                chart: {
-                                    height: 220,
-                                    type: 'radialBar',
-                                },
-                                plotOptions: {
-                                    radialBar: {
-                                        dataLabels: {
-                                            name: {
-                                                color: 'black',
+                                    plotOptions: {
+                                        radialBar: {
+                                            dataLabels: {
+                                                name: {
+                                                    color: 'black',
+                                                },
                                             },
+                                            hollow: {
+                                                size: '60%',
+                                            }
                                         },
-                                        hollow: {
-                                            size: '60%',
-                                        }
                                     },
-                                },
-                                series: [51],
-                                labels: ['Ecosystem'],
-                            
-                            }
+                                    series: [70],
+                                    labels: ['Economic'],
+                                
+                                }
+                                
 
-                            
-                            var options3 = {
-                                chart: {
-                                    height: 220,
-                                    type: 'radialBar',
-                                },
-                                plotOptions: {
-                                    radialBar: {
-                                        dataLabels: {
-                                            name: {
-                                                color: 'black',
+                                var options2 = {
+                                    chart: {
+                                        height: 220,
+                                        type: 'radialBar',
+                                    },
+                                    plotOptions: {
+                                        radialBar: {
+                                            dataLabels: {
+                                                name: {
+                                                    color: 'black',
+                                                },
                                             },
+                                            hollow: {
+                                                size: '60%',
+                                            }
                                         },
-                                        hollow: {
-                                            size: '60%',
-                                        }
                                     },
-                                },
-                                series: [63],
-                                labels: ['Social'],
-                            
-                            }
+                                    series: [51],
+                                    labels: ['Ecosystem'],
+                                
+                                }
 
-                            var chart = new ApexCharts(
-                                document.querySelector("#chart"),
-                                options).render();
-                            var chart = new ApexCharts(
-                                document.querySelector("#chart2"),
-                                options2).render();
-                            
-                            var chart = new ApexCharts(
-                                document.querySelector("#chart3"),
-                                options3).render();
-                            
-                            </script>
-                            
+                                
+                                var options3 = {
+                                    chart: {
+                                        height: 220,
+                                        type: 'radialBar',
+                                    },
+                                    plotOptions: {
+                                        radialBar: {
+                                            dataLabels: {
+                                                name: {
+                                                    color: 'black',
+                                                },
+                                            },
+                                            hollow: {
+                                                size: '60%',
+                                            }
+                                        },
+                                    },
+                                    series: [63],
+                                    labels: ['Social'],
+                                
+                                }
+
+                                var chart = new ApexCharts(
+                                    document.querySelector("#chart"),
+                                    options).render();
+                                var chart = new ApexCharts(
+                                    document.querySelector("#chart2"),
+                                    options2).render();
+                                
+                                var chart = new ApexCharts(
+                                    document.querySelector("#chart3"),
+                                    options3).render();
+                                
+                                </script>
+                            </div> <!-- end service-blocks -->
 
                             
                         
@@ -676,7 +679,8 @@
                                 </div>
                         </div> -->
                         
-                    </div>
+                    </div> <!-- end domain scores -->
+
                 </div>
             </div>
         </div>
@@ -724,7 +728,7 @@
                     </div>
                     <div class="customize_description">
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
-                        <p>Click on a card labeled with the characteristic that your are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
+                        <p>Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
                     </div>
 
                     <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
@@ -788,8 +792,378 @@
     </div>
 
     <div id="customize-domains-services" class="disc-body">
-        
 
+        <div class="customize_description">
+            <h3>Services</h3>
+            <p>Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
+        </div>
+
+       
+        <div class="services-card-list">
+
+            <div class="services-card-wrap">
+                <div class="service-card s-card1">
+                    <a href="#ecosystem-service-modal">
+                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
+                        <div class="card-text-overlay">Ecosystem</div>
+                    </a>
+                    <div id="ecosystem-service-modal" class="modal-overlay">
+                        <div class="modal">
+                            <h2 class="modal-title">Ecosystem</h2>
+                            <a href="#" class="close">&times;</a>
+                            <div class="modalcontent">
+                                <div id="customize_service_indicators">
+                                    <div id="ecosystem-service-indicators" class="row cols-2 domain_indicator">
+
+                                        <div class="col size-1of2 description-column">
+                                            <h4 id="">Service</h4>
+                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
+                                        </div>
+
+                                        
+
+                                        <div class="col size-1of2 indicator-column">
+                                            <div class="row cols-1 indicator_block">
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="services-card-wrap">
+                <div class="service-card s-card2">
+                    <a href="#economic-service-modal">
+                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
+                        <div class="card-text-overlay">Economic</div>
+                    </a>
+                    <div id="economic-service-modal" class="modal-overlay">
+                        <div class="modal">
+                            <h2 class="modal-title">Economic</h2>
+                            <a href="#" class="close">&times;</a>
+                            <div class="modalcontent">
+                                <div id="customize_service_indicators">
+                                    <div id="economic-service-indicators" class="row cols-2 domain_indicator">
+
+                                        <div class="col size-1of2 description-column">
+                                            <h4 id="">Service</h4>
+                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
+                                        </div>
+
+                                        
+
+                                        <div class="col size-1of2 indicator-column">
+                                            <div class="row cols-1 indicator_block">
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="services-card-wrap">
+                <div class="service-card s-card3">
+                    <a href="#social-service-modal">
+                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
+                        <div class="card-text-overlay">Social</div>
+                    </a>
+                    <div id="social-service-modal" class="modal-overlay">
+                        <div class="modal">
+                            <h2 class="modal-title">Social</h2>
+                            <a href="#" class="close">&times;</a>
+                            <div class="modalcontent">
+                                <div id="customize_service_indicators">
+                                    <div id="social-service-indicators" class="row cols-2 domain_indicator">
+
+                                        <div class="col size-1of2 description-column">
+                                            <h4 id="">Service</h4>
+                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
+                                        </div>
+
+                                        
+
+                                        <div class="col size-1of2 indicator-column">
+                                            <div class="row cols-1 indicator_block">
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    <div class="metric-accordion-panel">
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+
+                                                        <span class="" title="metric description">Metric:</span>
+                                                        <span class=""></span>
+                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+
+        </div>
+        
+        
+        
 
     </div>
 
@@ -860,7 +1234,7 @@
                     </li>
                 </ul>
             </div>
-            
+
         </div>
 
     </div>
