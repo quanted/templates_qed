@@ -32,9 +32,9 @@
                         <div id="nature-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
-                                <div id="nature_score" class="domain-score">0.0</div>
-                                <div id="nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div id="connection-to-nature_score" class="domain-score">0.0</div>
+                                <div id="connection-to-nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar nature-bar" id="nature-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
@@ -90,10 +90,10 @@
                         <div id="cultural-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
-                                <div id="cultural_score" class="domain-score">0.0</div>
+                                <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
                                 <div id="cultural_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="cultural_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar cultural-bar" id="cultural-score-bar"></div>
+                                <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -195,10 +195,10 @@
                         <div id="leisure-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
-                                <div id="leisure_score" class="domain-score">0.0</div>
+                                <div id="leisure-time_score" class="domain-score">0.0</div>
                                 <div id="leisure_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="leisure_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar leisure-bar" id="leisure-score-bar"></div>
+                                <div id="leisure-time_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar leisure-bar" id="leisure-time-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -242,10 +242,10 @@
                         <div id="living-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="living_data-title" class="domain-data-title">Living Standards:</div>
-                                <div id="living_score" class="domain-score">0.0</div>
+                                <div id="living-standards_score" class="domain-score">0.0</div>
                                 <div id="living_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="living_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar living-bar" id="living-score-bar"></div>
+                                <div id="living-standards_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar living-bar" id="living-standards_score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -292,10 +292,10 @@
                         <div id="safety-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
-                                <div id="safety_score" class="domain-score">0.0</div>
+                                <div id="safety-and-security_score" class="domain-score">0.0</div>
                                 <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="safety_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar safety-bar" id="safety-score-bar"></div>
+                                <div id="safety-and-security_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar safety-bar" id="safety-and-security_score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -338,10 +338,10 @@
                         <div id="cohesion-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
-                                <div id="cohesion_score" class="domain-score">0.0</div>
+                                <div id="social-cohesion_score" class="domain-score">0.0</div>
                                 <div id="cohesion_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
-                                <div id="cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar cohesion-bar" id="cohesion-score-bar"></div>
+                                <div id="social-cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cohesion-bar" id="social-cohesion_score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -756,7 +756,7 @@
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
                                                                 <span class=""></span>
-                                                                <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}">
+                                                                <input id="{{ metric.0|slugify }}" class="thumb customize-metrics" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}">
                                     {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
@@ -785,7 +785,7 @@
                 <div class="metric-accordion-panel">
                     <span class="" title="metric description">Metric:</span>
                     <span class=""></span>
-                    <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                    <input id="" type="range" class="" min="0.0" max="1.0" step="0.01" value="">
                 </div>
             </div>
         </div>
@@ -1186,50 +1186,42 @@
                 <ul class="rankinglist">
                     <li class="nature-rank">
                         <form action="">
-                                Connection to Nature
-                            <input type="number" name="nature-rank-number" min="1" max="8" value="1">
+                            <label>Connection to Nature<input type="number" name="nature-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="cultural-rank">
                         <form action="">
-                                Cultural Fulfillment
-                            <input type="number" name="cultural-rank-number" min="1" max="8" value="1">
+                                <label>Cultural Fulfillment<input type="number" name="cultural-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="education-rank">
                         <form action="">
-                                Education
-                            <input type="number" name="education-rank-number" min="1" max="8" value="1">
+                                <label>Education<input type="number" name="education-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="health-rank">
                         <form action="">
-                                Health
-                            <input type="number" name="health-rank-number" min="1" max="8" value="1">
+                                <label>Health<input type="number" name="health-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="leisure-rank">
                         <form action="">
-                                Leisure Time
-                            <input type="number" name="leisure-rank-number" min="1" max="8" value="1">
+                                <label>Leisure Time<input type="number" name="leisure-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="living-rank">
                         <form action="">
-                                Living Standards
-                            <input type="number" name="living-rank-number" min="1" max="8" value="1">
+                                <label>Living Standards<input type="number" name="living-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="safety-rank">
                         <form action="">
-                                Safety and Security
-                            <input type="number" name="safety-rank-number" min="1" max="8" value="1">
+                                <label>Safety and Security<input type="number" name="safety-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                     <li class="social-rank">
                         <form action="">
-                                Social Cohesion
-                            <input type="number" name="social-rank-number" min="1" max="8" value="1">
+                                <label>Social Cohesion<input type="number" name="social-rank-number" min="1" max="8" value="1"></label>
                         </form>
                     </li>
                 </ul>
@@ -1244,8 +1236,8 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore veniam consequuntur omnis soluta quidem atque enim. Vitae quis deleniti aut cum, delectus molestias alias commodi incidunt magni, temporibus voluptatem aperiam ea sint. Commodi ratione dolore, quam perferendis esse consequuntur. Pariatur</p>
 
         <div id="aster">
-            <script src="http://d3js.org/d3.v3.min.js"></script>
-            <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+            <script src="https://d3js.org/d3.v3.min.js"></script>
+            <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         
             <script src="draw.js" ></script>
         </div>
