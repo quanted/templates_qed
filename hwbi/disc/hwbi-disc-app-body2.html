@@ -1234,57 +1234,112 @@
     <div id="scenarios-tab" class="disc-body">
         <h3>Scenario Builder</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore veniam consequuntur omnis soluta quidem atque enim. Vitae quis deleniti aut cum, delectus molestias alias commodi incidunt magni, temporibus voluptatem aperiam ea sint. Commodi ratione dolore, quam perferendis esse consequuntur. Pariatur</p>
+        <div class="row cols-2 scenario-cols">
 
-        <div id="aster">
-            <script src="https://d3js.org/d3.v3.min.js"></script>
-            <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-        
-            <script src="draw.js" ></script>
-        </div>
+            <div class="col size-1of2">
 
-        <div class="services">
-                <nav>
-                    <div class="services-nav">
-                        <ul class="services-tabs">
-                            <li id="1" onclick="tabsOnClick('1')">Economic</li>
-                            <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
-                            <li id="3" onclick="tabsOnClick('3')">Social</li>
-                        </ul>
-                        <hr class="s-tabs-below">
-                    </div>
-                </nav><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 6 as domains %}{% regroup service_metrics by 7 as indicators %}{% regroup service_metrics by 8 as metricGroups %}{% for metricGroup in metricGroups %}
-                
-                <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="slinky-menu" style="display: none;">
-                    <ul>{% for domain in domains %}{% if domain.list.0.8 == metricGroup.grouper %}
-                        <li>
-                            <a href="#">{{ domain.grouper }}</a>
-                            <ul>{% for indicator in indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                <div class="services">
+                        <nav>
+                            <div class="services-nav">
+                                <ul class="services-tabs">
+                                    <li id="1" onclick="tabsOnClick('1')">Economic</li>
+                                    <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
+                                    <li id="3" onclick="tabsOnClick('3')">Social</li>
+                                </ul>
+                                <hr class="s-tabs-below">
+                            </div>
+                        </nav><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 6 as domains %}{% regroup service_metrics by 7 as indicators %}{% regroup service_metrics by 8 as metricGroups %}{% for metricGroup in metricGroups %}
+                        
+                        <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="slinky-menu" style="display: none;">
+                            <ul>{% for domain in domains %}{% if domain.list.0.8 == metricGroup.grouper %}
                                 <li>
-                                    <a href="#" onclick="filterSelection('{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
+                                    <a href="#">{{ domain.grouper }}</a>
+                                    <ul>{% for indicator in indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                        <li>
+                                            <a href="#" onclick="filterSelection('{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
+                                        </li>{% endif %}{% endfor %}
+                                    </ul>
                                 </li>{% endif %}{% endfor %}
                             </ul>
-                        </li>{% endif %}{% endfor %}
-                    </ul>
-                </div>{% endfor %}
-            
-                <section class="services-tabs-container">{% for metricGroup in metricGroups %}
-                    <div id="tab{{ forloop.counter }}">
-                        <div class>
-                            
-                            <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
-                                <label id="{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
-                                        <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
-    
+                        </div>{% endfor %}
+                    
+                        <section class="services-tabs-container">{% for metricGroup in metricGroups %}
+                            <div id="tab{{ forloop.counter }}">
+                                <div class>
                                     
-                                    <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
-                                </label>{% endif %}{% endfor %}
-                            </div>
-                        </div>
-                    </div>{% endfor %}
-                </section>
+                                    <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
+                                        <label id="{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
+                                                <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
+            
+                                            
+                                            <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
+                                        </label>{% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                            </div>{% endfor %}
+                        </section>
+                    </div>
+
+                </div>
+
+            <div class="col size-2of2" style="width: 45%;">
+                <div id="aster">
+                    <script src="https://d3js.org/d3.v3.min.js"></script>
+                    <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+                
+                    <script src="draw.js" ></script>
+                </div>
+
+                <div class="ranking-list-container">
+                    <ul class="rankinglist">
+                        <h3 style="text-align: center;">Priority Rankings</h3>
+                        <li class="nature-rank">
+                            <form action="">
+                                <label>Connection to Nature<input type="number" name="nature-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="cultural-rank">
+                            <form action="">
+                                    <label>Cultural Fulfillment<input type="number" name="cultural-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="education-rank">
+                            <form action="">
+                                    <label>Education<input type="number" name="education-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="health-rank">
+                            <form action="">
+                                    <label>Health<input type="number" name="health-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="leisure-rank">
+                            <form action="">
+                                    <label>Leisure Time<input type="number" name="leisure-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="living-rank">
+                            <form action="">
+                                    <label>Living Standards<input type="number" name="living-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="safety-rank">
+                            <form action="">
+                                    <label>Safety and Security<input type="number" name="safety-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                        <li class="social-rank">
+                            <form action="">
+                                    <label>Social Cohesion<input type="number" name="social-rank-number" min="1" max="8" value="1"></label>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
 
             
+            </div>
 
     </div>
 
