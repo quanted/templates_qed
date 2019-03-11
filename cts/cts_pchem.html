@@ -9,6 +9,7 @@
 		{% if SPARC_AVAILABLE %}
 		<th><input class="calc_checkbox" id="id_sparc_select" name="sparc" type="checkbox"><br><p>SPARC</p></th>
 		{% endif %}
+		<th><input class="calc_checkbox" id="id_opera_select" name="opera" type="checkbox"><br><p>OPERA</p></th>
 		<th>Geometric Mean</th>
 		<th><input class="calc_checkbox" id="id_measured_select" name="measured" type="checkbox"><br><p>Measured</p></th>
         <!-- <th>Average</th> -->
@@ -21,6 +22,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td></td>
 		{% endif %}
+		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -37,6 +39,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_melting_point_SPARC" class="ChemCalcs_unavailable sparc melting_point"></td>
 		{% endif %}
+		<td id="id_melting_point_OPERA" class="ChemCalcs_available opera melting_point"></td>
 		<td id="id_melting_point_geomean" class="ChemCalcs_available geomean melting_point"></td>
 		<td id="id_melting_point_Measured" class="ChemCalcs_available measured melting_point"></td>
 		</tr>
@@ -51,6 +54,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_boiling_point_SPARC" class="ChemCalcs_available sparc boiling_point"></td>
 		{% endif %}
+		<td id="id_boiling_point_OPERA" class="ChemCalcs_available opera boiling_point"></td>
 		<td id="id_boiling_point_geomean" class="ChemCalcs_available geomean boiling_point"></td>
 		<td id="id_boiling_point_Measured" class="ChemCalcs_available measured boiling_point"></td>
 		</tr>
@@ -65,6 +69,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_water_sol_SPARC" class="ChemCalcs_available sparc water_sol"></td>
 		{% endif %}
+		<td id="id_water_sol_OPERA" class="ChemCalcs_available opera water_sol"></td>
 		<td id="id_water_sol_geomean" class="ChemCalcs_available geomean water_sol"></td>
 		<td id="id_water_sol_Measured" class="ChemCalcs_available measured water_sol"></td>
 		</tr>
@@ -79,6 +84,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_vapor_press_SPARC" class="ChemCalcs_available sparc vapor_press"></td>
 		{% endif %}
+		<td id="id_vapor_press_OPERA" class="ChemCalcs_available opera vapor_press"></td>
 		<td id="id_vapor_press_geomean" class="ChemCalcs_available geomean vapor_press"></td>
 		<td id="id_vapor_press_Measured" class="ChemCalcs_available measured vapor_press"></td>
 		</tr>
@@ -93,6 +99,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_mol_diss_SPARC" class="ChemCalcs_available sparc mol_diss"></td>
 		{% endif %}
+		<td id="id_mol_diss_OPERA" class="ChemCalcs_unavailable opera mol_diss"></td>
 		<td id="id_mol_diss_geomean" class="ChemCalcs_available geomean mol_diss"></td>
 		<td id="id_mol_diss_Measured" class="ChemCalcs_unavailable measured mol_diss"></td>
 		</tr>
@@ -107,6 +114,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_mol_diss_air_SPARC" class="ChemCalcs_available sparc mol_diss_air"></td>
 		{% endif %}
+		<td id="id_mol_diss_air_OPERA" class="ChemCalcs_unavailable opera mol_diss_air"></td>
 		<td id="id_mol_diss_air_geomean" class="ChemCalcs_available geomean mol_diss_air"></td>
 		<td id="id_mol_diss_air_Measured" class="ChemCalcs_unavailable measured mol_diss_air"></td>
 		</tr>
@@ -121,6 +129,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_ion_con_SPARC" class="ChemCalcs_available sparc ion_con"></td>
 		{% endif %}
+		<td id="id_ion_con_OPERA" class="ChemCalcs_available opera ion_con"></td>
 		<td id="id_ion_con_geomean" class="ChemCalcs_unavailable geomean ion_con"></td>
 		<td id="id_ion_con_Measured" class="ChemCalcs_unavailable measured ion_con"></td>
 		</tr>
@@ -135,6 +144,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_henrys_law_con_SPARC" class="ChemCalcs_available sparc henrys_law_con"></td>
 		{% endif %}
+		<td id="id_henrys_law_con_OPERA" class="ChemCalcs_available opera henrys_law_con"></td>
 		<td id="id_henrys_law_con_geomean" class="ChemCalcs_available geomean henrys_law_con"></td>
 		<td id="id_henrys_law_con_Measured" class="ChemCalcs_available measured henrys_law_con"></td>
 		</tr>
@@ -148,6 +158,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_kow_no_ph_SPARC" class="ChemCalcs_available sparc kow_no_ph"></td>
 		{% endif %}
+		<td id="id_kow_no_ph_OPERA" class="ChemCalcs_available opera kow_no_ph"></td>
 		<td id="id_kow_no_ph_geomean" class="ChemCalcs_available geomean kow_no_ph"></td>
 		<td id="id_kow_no_ph_Measured" class="ChemCalcs_available measured kow_no_ph"></td>
 		</tr>
@@ -161,6 +172,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_koc_SPARC" class="ChemCalcs_unavailable sparc koc"></td>
 		{% endif %}
+		<td id="id_koc_OPERA" class="ChemCalcs_available opera koc"></td>
 		<td id="id_koc_geomean" class="ChemCalcs_available geomean koc"></td>
 		<td id="id_koc_Measured" class="ChemCalcs_unavailable measured koc"></td>
 		</tr>
@@ -173,6 +185,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_log_bcf_SPARC" class="ChemCalcs_unavailable sparc log_bcf"></td>
 		{% endif %}
+		<td id="id_log_bcf_OPERA" class="ChemCalcs_available opera log_bcf"></td>
 		<td id="id_log_bcf_geomean" class="ChemCalcs_available geomean log_bcf"></td>
 		<td id="id_log_bcf_Measured" class="ChemCalcs_unavailable measured log_bcf"></td>
 		</tr>
@@ -185,6 +198,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_log_baf_SPARC" class="ChemCalcs_unavailable sparc log_baf"></td>
 		{% endif %}
+		<td id="id_log_baf_OPERA" class="ChemCalcs_unavailable opera log_baf"></td>
 		<td id="id_log_baf_geomean" class="ChemCalcs_available geomean log_baf"></td>
 		<td id="id_log_baf_Measured" class="ChemCalcs_unavailable measured log_baf"></td>
 		</tr>
@@ -206,6 +220,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_kow_wph_SPARC" class="ChemCalcs_available sparc kow_wph"></td>
 		{% endif %}
+		<td id="id_kow_wph_OPERA" class="ChemCalcs_available opera kow_wph"></td>
 		<td id="id_kow_wph_geomean" class="ChemCalcs_available geomean kow_wph"></td>
 		<td id="id_kow_wph_Measured" class="ChemCalcs_unavailable measured kow_wph"></td>
 		</tr>
@@ -220,6 +235,7 @@
 		{% if SPARC_AVAILABLE %}
 		<td id="id_water_sol_ph_SPARC" class="ChemCalcs_unavailable sparc water_sol_ph"></td>
 		{% endif %}
+		<td id="id_water_sol_ph_OPERA" class="ChemCalcs_unavailable opera water_sol_ph"></td>
 		<td id="id_water_sol_ph_geomean" class="ChemCalcs_available geomean water_sol_ph"></td>
 		<td id="id_water_sol_ph_Measured" class="ChemCalcs_unavailable measured water_sol_ph"></td>
 		</tr>
