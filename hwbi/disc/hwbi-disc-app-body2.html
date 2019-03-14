@@ -9,7 +9,7 @@
                             <span class="score_indicator" id="score_indicator_span"></span>
                             <p id="wellbeing-score">0</p>
                             <p id="wellbeing-score-scale"><b>DISC Score</b><br>(Scale: 0 - 100)</p>
-                            <!-- <p id="wellbeing-score-location">Nation: xx.x State: xx.x</p> -->
+                            <p id="wellbeing-score-location">Nation: <span id="disc_national_score"></span>, State: <span id="disc_state_score"></span></p>
                         </div>
                         <div id="hwbi-info">
                             <h4>DISC Score</h4>
@@ -34,7 +34,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
                                 <div id="connection-to-nature_score" class="domain-score">0.0</div>
-                                <div id="connection-to-nature_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="connection-to-nature_location" class="domain-location">Nation: <span id="connection-to-nature_national_score"></span>, State: <span id="connection-to-nature_state_score"></span></div>
                                 <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar nature-bar" id="nature-score-bar"></div>
                                 </div>
@@ -92,7 +92,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
                                 <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
-                                <div id="cultural_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="cultural_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
                                 <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
                                 </div>
@@ -136,7 +136,7 @@
                             <button class="accordion domain-expand"></button>
                             <div id="education_data-title" class="domain-data-title">Education:</div>
                             <div id="education_score" class="domain-score">0.0</div>
-                            <div id="education_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="education_location" class="domain-location">Nation: <span id="education_national_score"></span>, State: <span id="education_state_score"></span></div>
                             
                             <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar education-bar" id="education-score-bar"></div>
@@ -167,7 +167,7 @@
                             <button class="accordion domain-expand"></button>
                             <div id="health_data-title" class="domain-data-title">Health:</div>
                             <div id="health_score" class="domain-score">0.0</div>
-                            <div id="health_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                            <div id="health_location" class="domain-location">Nation: <span id="health_national_score"></span>, State: <span id="health_state_score"></span></div>
                             <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                 <div class="score-bar health-bar" id="health-score-bar"></div>
                             </div>
@@ -197,7 +197,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
                                 <div id="leisure-time_score" class="domain-score">0.0</div>
-                                <div id="leisure_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="leisure_location" class="domain-location">Nation: <span id="leisure-time_national_score"></span>, State: <span id="leisure-time_state_score"></span></div>
                                 <div id="leisure-time_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar leisure-bar" id="leisure-time-score-bar"></div>
                                 </div>
@@ -244,7 +244,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="living_data-title" class="domain-data-title">Living Standards:</div>
                                 <div id="living-standards_score" class="domain-score">0.0</div>
-                                <div id="living_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="living_location" class="domain-location">Nation: <span id="living-standards_national_score"></span>, State: <span id="living-standards_state_score"></span></div>
                                 <div id="living-standards_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar living-bar" id="living-standards_score-bar"></div>
                                 </div>
@@ -294,7 +294,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
                                 <div id="safety-and-security_score" class="domain-score">0.0</div>
-                                <div id="safety_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="safety_location" class="domain-location">Nation: <span id="safety-and-security_national_score"></span>, State: <span id="safety-and-security_state_score"></span></div>
                                 <div id="safety-and-security_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar safety-bar" id="safety-and-security_score-bar"></div>
                                 </div>
@@ -340,7 +340,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
                                 <div id="social-cohesion_score" class="domain-score">0.0</div>
-                                <div id="cohesion_location" class="domain-location">[Nation: xx.x, State: xx.x]</div>
+                                <div id="cohesion_location" class="domain-location">Nation: <span id="social-cohesion_national_score"></span>, State: <span id="social-cohesion_state_score"></span></div>
                                 <div id="social-cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar cohesion-bar" id="social-cohesion_score-bar"></div>
                                 </div>
@@ -763,7 +763,7 @@
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
                                                                 <span class=""></span>
-                                                                <input id="{{ metric.0|slugify }}" class="thumb customize-metrics" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}">
+                                                                <input id="{{ metric.0|slugify }}" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}">
                                     {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
@@ -808,370 +808,50 @@
        
         <div class="services-card-list">
 
-            <div class="services-card-wrap">
-                <div class="service-card s-card1">
-                    <a href="#ecosystem-service-modal">
+            <div class="services-card-wrap">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}{% for metric_group in service_metric_groups %}
+                <div class="service-card s-card{{ forloop.counter }}">
+                    <a href="#{{ metric_group.grouper|slugify }}-service-modal">
                         <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
-                        <div class="card-text-overlay">Ecosystem</div>
+                        <div class="card-text-overlay">{{ metric_group.grouper }}</div>
                     </a>
-                    <div id="ecosystem-service-modal" class="modal-overlay">
+                    <div id="{{ metric_group.grouper|slugify }}-service-modal" class="modal-overlay">
                         <div class="modal">
-                            <h2 class="modal-title">Ecosystem</h2>
+                            <h2 class="modal-title">{{ metric_group.grouper }}</h2>
                             <a href="#" class="close">&times;</a>
                             <div class="modalcontent">
                                 <div id="customize_service_indicators">
-                                    <div id="ecosystem-service-indicators" class="row cols-2 domain_indicator">
-
+                                    <div id="{{ metric_group.grouper|slugify }}-service-indicators" class="row cols-2 domain_indicator">
                                         <div class="col size-1of2 description-column">
                                             <h4 id="">Service</h4>
                                             <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
                                         </div>
-
-                                        
-
                                         <div class="col size-1of2 indicator-column">
                                             <div class="row cols-1 indicator_block">
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
+                                                {% for domain in service_domains %}
+                                                <button class="accordion-metrics indicator_data-title">{{ domain.grouper }}<span id="domain_indicator_value" class="indicator_value"></span></button>
                                                 <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
+                                                    {% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                                    <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}</button>
                                                     <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
+                                                        {% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
+                                                        <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
                                                         <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
+                                                        <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" value="">
+                                                        {% endif %}{% endfor %}
                                                     </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
+                                                    {% endif %}{% endfor %}
                                                 </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>{% endfor %}
             </div>
-            <div class="services-card-wrap">
-                <div class="service-card s-card2">
-                    <a href="#economic-service-modal">
-                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
-                        <div class="card-text-overlay">Economic</div>
-                    </a>
-                    <div id="economic-service-modal" class="modal-overlay">
-                        <div class="modal">
-                            <h2 class="modal-title">Economic</h2>
-                            <a href="#" class="close">&times;</a>
-                            <div class="modalcontent">
-                                <div id="customize_service_indicators">
-                                    <div id="economic-service-indicators" class="row cols-2 domain_indicator">
-
-                                        <div class="col size-1of2 description-column">
-                                            <h4 id="">Service</h4>
-                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
-                                        </div>
-
-                                        
-
-                                        <div class="col size-1of2 indicator-column">
-                                            <div class="row cols-1 indicator_block">
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="services-card-wrap">
-                <div class="service-card s-card3">
-                    <a href="#social-service-modal">
-                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
-                        <div class="card-text-overlay">Social</div>
-                    </a>
-                    <div id="social-service-modal" class="modal-overlay">
-                        <div class="modal">
-                            <h2 class="modal-title">Social</h2>
-                            <a href="#" class="close">&times;</a>
-                            <div class="modalcontent">
-                                <div id="customize_service_indicators">
-                                    <div id="social-service-indicators" class="row cols-2 domain_indicator">
-
-                                        <div class="col size-1of2 description-column">
-                                            <h4 id="">Service</h4>
-                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
-                                        </div>
-
-                                        
-
-                                        <div class="col size-1of2 indicator-column">
-                                            <div class="row cols-1 indicator_block">
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <button class="accordion-metrics indicator_data-title">Domain <span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    <button class="accordion-metrics indicator_data-title">Indicator</button>
-                                                    <div class="metric-accordion-panel">
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-
-                                                        <span class="" title="metric description">Metric:</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb" min="0.0" max="1.0" step="0.01" value="">
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                </div>
-            </div>
-
         </div>
-        
-        
-        
-
     </div>
 
     <div id="customize-ranking" class="disc-body">
@@ -1279,7 +959,7 @@
                                                 <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
             
                                             
-                                            <input id="{{ metric.0|slugify }}" class="thumb" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
+                                            <input id="{{ metric.0|slugify }}" class="thumb {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
                                         </label>{% endif %}{% endfor %}
                                     </div>
                                 </div>
