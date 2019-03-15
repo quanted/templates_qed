@@ -76,8 +76,6 @@ $(document).ready(function() {
     else {
         calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
         total_calls = calls_tracker;
-        // sessionStorage.setItem('calls_tracker', calls_tracker);
-        // sessionStorage.setItem('total_calls', total_calls);
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
@@ -249,7 +247,6 @@ function connectToSocket() {
             calls_tracker = parseInt(sessionStorage.getItem('calls_tracker'));
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
 
-            // if (workflow == 'gentrans') {
             if (data['workflow'] == 'gentrans' || data['request_post']['workflow'] == 'gentrans') {
                 // workflow global var was getting set to false during
                 // gentrans batch, oddly enough...
@@ -284,7 +281,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -388,7 +384,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -404,7 +399,9 @@ function connectToSocket() {
         else {
             batch_data.push(data);
 
-            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data && data['service'] == 'getChemInfo') {
+            if (data.request_post && data.request_post.service == 'getChemInfo') {
                 // add data to node object of products tree:
                 for (var index in st.graph.nodes) {
                     if (data['request_post']['genKey'] == st.graph.nodes[index]['data']['genKey']) {
@@ -428,13 +425,7 @@ function connectToSocket() {
             var pchemprop_option = $('#gen-select-pchem').val();
             var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
-            // if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
-            //     // handleGeomean(workflow, run_type);
-            //     displayProductData();  // cts_gentrans_tree function
-            // }
-
             // For molecular info data for metabolites:
-            // if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
             if (is_gentrans_single && data['prop'] == 'products') {
                 // initiate space tree with incoming socket data:
                 nodeHeight = 114
@@ -446,7 +437,7 @@ function connectToSocket() {
                 $('#total-products').html(total_products_html);
 
             }
-            var is_cheminfo = 'service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo';
+            var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
             if (is_cheminfo) {
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
                 addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
@@ -479,7 +470,6 @@ function connectToSocket() {
             // TODO: CSV download using current csv code in CTS
             if(window.location.href.indexOf('testws') > -1) {
                 // all calls complete, display batch_data as formatted json:
-                // var output_data = JSON.stringify()
                 $('#testws-response').val(JSON.stringify(batch_data, undefined, 4));
             }
 
