@@ -763,7 +763,7 @@
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
                                                                 <span class=""></span>
-                                                                <input id="{{ metric.0|slugify }}" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}">
+                                                                <input id="{{ metric.0|slugify }}" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}">
                                     {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
@@ -836,7 +836,7 @@
                                                         {% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                         <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
                                                         <span class=""></span>
-                                                        <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" value="">
+                                                        <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" value="">
                                                         {% endif %}{% endfor %}
                                                     </div>
                                                     {% endif %}{% endfor %}
@@ -959,7 +959,7 @@
                                                 <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
             
                                             
-                                            <input id="{{ metric.0|slugify }}" class="thumb {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}"></div>{% endif %}{% endfor %}
+                                            <input id="{{ metric.0|slugify }}" class="thumb {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}"></div>{% endif %}{% endfor %}
                                         </label>{% endif %}{% endfor %}
                                     </div>
                                 </div>
