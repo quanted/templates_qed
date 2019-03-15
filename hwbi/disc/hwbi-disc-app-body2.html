@@ -827,7 +827,7 @@
                                         </div>
                                         <div class="col size-1of2 indicator-column">
                                             <div class="row cols-1 indicator_block">
-                                                {% for domain in service_domains %}
+                                                {% for domain in service_domains %}{% if domain.list.0.8 == metric_group.grouper %}
                                                 <button class="accordion-metrics indicator_data-title">{{ domain.grouper }}<span id="domain_indicator_value" class="indicator_value"></span></button>
                                                 <div class="metric-accordion-panel">
                                                     {% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
@@ -841,7 +841,7 @@
                                                     </div>
                                                     {% endif %}{% endfor %}
                                                 </div>
-                                                {% endfor %}
+                                                {% endif %}{% endfor %}
                                             </div>
                                         </div>
                                     </div>
