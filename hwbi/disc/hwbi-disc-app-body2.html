@@ -403,7 +403,6 @@
                                     <div class="chartdesc" id="desc2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio perspiciatis laboriosam similique quaerat numquam voluptate assumenda asperiores! Quae vel corrupti aliquid culpa sunt, unde quisquam! Itaque voluptates quos eos nemo.</div>
                                     <div class="chartdesc" id="desc3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsum provident qui eveniet dicta dolores ea, perspiciatis vero. Delectus provident similique necessitatibus officia repellendus sapiente suscipit quaerat placeat fuga rerum?</div>
                                 </div> -->
-
                                 <script>
                                 var options = {
                                     chart: {
@@ -416,6 +415,12 @@
                                                 name: {
                                                     color: 'black',
                                                 },
+                                                value: {
+                                                show: true,
+                                                formatter: function (val) {
+                                                        return val
+                                                    }
+                                                },
                                             },
                                             hollow: {
                                                 size: '60%',
@@ -424,9 +429,7 @@
                                     },
                                     series: [70],
                                     labels: ['Economic'],
-                                
                                 }
-                                
 
                                 var options2 = {
                                     chart: {
@@ -439,6 +442,12 @@
                                                 name: {
                                                     color: 'black',
                                                 },
+                                                value: {
+                                                show: true,
+                                                formatter: function (val) {
+                                                        return val
+                                                    }
+                                                },
                                             },
                                             hollow: {
                                                 size: '60%',
@@ -447,10 +456,8 @@
                                     },
                                     series: [51],
                                     labels: ['Ecosystem'],
-                                
                                 }
 
-                                
                                 var options3 = {
                                     chart: {
                                         height: 220,
@@ -462,6 +469,12 @@
                                                 name: {
                                                     color: 'black',
                                                 },
+                                                value: {
+                                                show: true,
+                                                formatter: function (val) {
+                                                        return val
+                                                    }
+                                                },
                                             },
                                             hollow: {
                                                 size: '60%',
@@ -470,20 +483,22 @@
                                     },
                                     series: [63],
                                     labels: ['Social'],
-                                
                                 }
 
-                                var chart = new ApexCharts(
+                                var econChart = new ApexCharts(
                                     document.querySelector("#chart"),
-                                    options).render();
-                                var chart = new ApexCharts(
+                                    options);
+                                econChart.render();
+
+                                var ecoChart = new ApexCharts(
                                     document.querySelector("#chart2"),
-                                    options2).render();
-                                
-                                var chart = new ApexCharts(
+                                    options2);
+                                ecoChart.render();
+
+                                var socialChart = new ApexCharts(
                                     document.querySelector("#chart3"),
-                                    options3).render();
-                                
+                                    options3);
+                                socialChart.render();
                                 </script>
                             </div> <!-- end service-blocks -->
 
