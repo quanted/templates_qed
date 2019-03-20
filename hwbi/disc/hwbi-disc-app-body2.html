@@ -778,7 +778,7 @@
                                                         </form></div>
                                                     </div>
                                                     <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.6 == domain.grouper %}
-                                                        <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.1}}">
+                                                        <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.14}}">
                                                             <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}: <span id="{{ domain.grouper|slugify }}_{{indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
