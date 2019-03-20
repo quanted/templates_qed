@@ -25,6 +25,7 @@
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
                     <!-- <button type="button" id="rank_btn" onclick="priorityText()"><b>Rank Priority</b></button> -->
+                    <!-- <button id="snapshot-btn" onclick="generateSnapshot();">Create Snapshot</button> -->
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
                     <div id="domain-scores">
@@ -842,8 +843,8 @@
                                 <div id="customize_service_indicators">
                                     <div id="{{ metric_group.grouper|slugify }}-service-indicators" class="row cols-2 domain_indicator">
                                         <div class="col size-1of2 description-column">
-                                            <h4 id="">Service</h4>
-                                            <div id="domain_indicators_description"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab ipsam porro quos maxime officia possimus, eveniet omnis eligendi quis aliquid. </div>
+                                            <h4 id="{{ metric_group.grouper|slugify }}_indicators_title"></h4>
+                                            <div id="{{ metric_group.grouper|slugify }}_indicators_description"></div>
                                         </div>
                                         <div class="col size-1of2 indicator-column">
                                             <div class="row cols-1 indicator_block">
