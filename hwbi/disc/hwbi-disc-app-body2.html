@@ -762,7 +762,6 @@
                                 </a>
                                 <div id="{{ domain.grouper|slugify }}-modal" class="modal-overlay">
                                     <div class="modal">
-                                        
                                         <h2 class="modal-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
                                         <a href="#" class="close">&times;</a>
@@ -785,7 +784,7 @@
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
                                                                 <span class=""></span>
                                                                 <input id="{{ metric.0|slugify }}" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}">
-                                    {% endif %}{% endfor %}</div>
+                                                            {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
                                                 </div>
@@ -820,16 +819,12 @@
     </div> -->
 
     <div id="customize-domains-services" class="disc-body">
-
         <div class="customize_description">
             <h3>Services</h3>
             <p>Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
         </div>
-
-       
-        <div class="services-card-list">
-
-            <div class="services-card-wrap">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}{% for metric_group in service_metric_groups %}
+        <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
+            <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
                 <div class="service-card s-card{{ forloop.counter }}">
                     <a href="#{{ metric_group.grouper|slugify }}-service-modal">
                         <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
@@ -843,35 +838,31 @@
                                 <div id="customize_service_indicators">
                                     <div id="{{ metric_group.grouper|slugify }}-service-indicators" class="row cols-2 domain_indicator">
                                         <div class="col size-1of2 description-column">
-                                            <h4 id="{{ metric_group.grouper|slugify }}_indicators_title"></h4>
-                                            <div id="{{ metric_group.grouper|slugify }}_indicators_description"></div>
+                                            <h4 id="{{ metric_group.grouper|slugify }}-service-indicators_title"></h4>
+                                            <div id="{{ metric_group.grouper|slugify }}-service-indicators_description"></div>
                                         </div>
-                                        <div class="col size-1of2 indicator-column">
-                                            <div class="row cols-1 indicator_block">
-                                                {% for domain in service_domains %}{% if domain.list.0.8 == metric_group.grouper %}
-                                                <button class="accordion-metrics indicator_data-title">{{ domain.grouper }}<span id="domain_indicator_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">
-                                                    {% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
-                                                    <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}</button>
-                                                    <div class="metric-accordion-panel">
-                                                        {% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
-                                                        <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
-                                                        <span class=""></span>
-                                                        <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" value="">
-                                                        {% endif %}{% endfor %}
-                                                    </div>
-                                                    {% endif %}{% endfor %}
+                                        <div class="col size-1of2 indicator-column">{% for domain in service_domains %}{% if domain.list.0.8 == metric_group.grouper %}
+                                            <div class="row cols-1 indicator_block" data-title="{{domain.list.0.15}}">
+                                                <button class="accordion-metrics indicator_data-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_{{ indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">{% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                                    <span data-title="{{indicator.list.0.14}}">
+                                                        <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}</button>
+                                                        <div class="metric-accordion-panel">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
+                                                            <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
+                                                            <span class=""></span>
+                                                            <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" value="">
+                                                        {% endif %}{% endfor %}</div>
+                                                    </span>{% endif %}{% endfor %}
                                                 </div>
-                                                {% endif %}{% endfor %}
                                             </div>
-                                        </div>
+                                        {% endif %}{% endfor %}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>{% endfor %}
-            </div>
+                </div>
+            {% endfor %}</div>
         </div>
     </div>
 
