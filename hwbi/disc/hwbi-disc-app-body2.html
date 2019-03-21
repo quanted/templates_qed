@@ -844,14 +844,16 @@
                                         <div class="col size-1of2 indicator-column">{% for domain in service_domains %}{% if domain.list.0.8 == metric_group.grouper %}
                                             <div class="row cols-1 indicator_block" data-title="{{domain.list.0.15}}">
                                                 <button class="accordion-metrics indicator_data-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_{{ indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel" data-title="{{indicator.list.0.14}}">{% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                                <div class="metric-accordion-panel">{% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                                    <span data-title="{{indicator.list.0.14}}">
                                                         <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}</button>
                                                         <div class="metric-accordion-panel">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                             <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
                                                             <span class=""></span>
                                                             <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.0|slugify }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" value="">
                                                         {% endif %}{% endfor %}</div>
-                                                {% endif %}{% endfor %}</div>
+                                                    </span>{% endif %}{% endfor %}
+                                                </div>
                                             </div>
                                         {% endif %}{% endfor %}</div>
                                     </div>
