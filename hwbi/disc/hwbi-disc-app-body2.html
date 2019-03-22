@@ -772,10 +772,10 @@
                                                     <div class="col size-1of2 description-column">
                                                         <h4 id="{{ domain.grouper|slugify }}_indicators_title"></h4>
                                                         <div id="{{ domain.grouper|slugify }}_indicators_description"></div>
-                                                        <hr class="priorityhr">
+                                                        <!-- <hr class="priorityhr">
                                                         <div id="{{ domain.grouper|slugify }}_priority_ranking" class="rankinglist-modal"><form action="">
                                                             <label><span title="Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.">Priority Ranking:</span> <input type="number" name="nature-rank-number" min="1" max="8" value="1" data-domain="{{domain.grouper}}"></label>
-                                                        </form></div>
+                                                        </form></div> -->
                                                     </div>
                                                     <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.6 == domain.grouper %}
                                                         <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.14}}">
@@ -987,7 +987,7 @@
                     <script src="/static_qed/hwbi/disc/js/draw.js" ></script>
                 </div>
 
-                <div class="ranking-list-container">
+                <!-- <div class="ranking-list-container">
                     <ul class="rankinglist">
                         <h3 style="text-align: center;">Priority Rankings</h3>
                         <li class="nature-rank">
@@ -1031,7 +1031,7 @@
                             </form>
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
 
