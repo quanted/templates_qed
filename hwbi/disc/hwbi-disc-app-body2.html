@@ -24,10 +24,10 @@
                 </div>
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
-                    <!-- <button type="button" id="rank_btn" onclick="priorityText()"><b>Rank Priority</b></button> -->
+                    <button type="button" id="rank_btn" onclick="priorityText()">&bull; &bull; &bull;</button>
                     <!-- <button id="snapshot-btn" onclick="generateSnapshot();">Create Snapshot</button> -->
                     <br><br>
-                    <div id="priorityexplanation" style="display: none;">The relative importance of domains may vary for each community. Use the range sliders to rank the importance of domains based on your community preferences.</div>
+                    <div id="priorityexplanation" style="display: none;">Well-being and resilience measures are often used to characterize the drivers that influence human behavior and affect the human condition. These quality of life attributes are multi-dimensional that are best described using a host of metrics that respond to the changing environment in which people live. A synthesis of this knowledge helps shape our understanding about people and their needs, both actual and perceived.</div>
                     <div id="domain-scores">
                         <div class="domain-blocks">
                         {#            Nature Block        #}
@@ -48,44 +48,16 @@
                                 </div>
                                 <div id="nature_details" class="domain-description">
                                     <p>
-                                        Humans' connection with nature is a subjective trait most easily explained by the
-                                        biophilia hypothesis. Biophilia is a term coined by prominent evolutionary biologist
-                                        and entomologist, Edward O. Wilson, who defined it as the "innately emotional
-                                        affiliation of human beings to other living organisms" and hypothesized that this
-                                        psychological, and possibly genetic, phenomena arose due to humans' long time
-                                        interaction with the natural environment. Biophilia is most evident by the
-                                        popularity of zoos and outdoor activities and in people who have non-economic
-                                        motivations for the protection of natural areas and biodiversity, such as positive
-                                        experiences of an area, solastalgia, and having affection or sympathy for non-human
-                                        species.
+                                        The Connection to Nature domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
+                                        More . . .
+
                                     </p>
-                                    <figure class="domain_image_left">
+                                    <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/connection-to-nature.jpg"
                                              alt="Connection to Nature">
                                         <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
-                                    </figure>
-                                    <p>
-                                        Biophilia is also evident in other domains of well-being such as spiritual and
-                                        cultural fulfillment, education, health, and leisure time. Humans, however, are
-                                        experiencing an increasing disconnection with nature through urban development and
-                                        technology&mdash;especially noted in children&mdash;as the "nature-deficit disorder" and
-                                        coincides with rising trends in obesity, attention deficit disorder, and depression.
-                                        An attempt to correct this growing disconnection and to incorporate the health of
-                                        the environment in land use planning is through "biophilic design", which aims to
-                                        enhance human physical health, psychological benefits, and productivity by fostering
-                                        a human-nature connection. Although our detachment with nature will never completely
-                                        rid us of the desire to associate with nature, it can weaken our appreciation for
-                                        nature and decrease our well-being.
-                                    </p>
-                                    <p>
-                                        Economic and social services have significant direct and indirect effects on the
-                                        connection to nature domain. For example, economic programs and funding can increase
-                                        or decrease natural areas, either by putting aside more areas or decreasing those
-                                        areas through capital investment. Additionally, social services such as activism,
-                                        community and faith-based initiatives, justice (e.g., environmental justice), and
-                                        public works can affect policies that support ecosystems or can possibly be used as
-                                        indirect measures of our connection to nature.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                         {#            Cultural Block         #}
@@ -106,30 +78,15 @@
                                 </div>
                                 <div id="cultural_details" class="domain-description">
                                     <p>
-                                        This domain captures metrics that measure opportunities that afford people and
-                                        communities access to fulfilling their cultural needs. Indicators are multi-faceted
-                                        and may represent cultural interests, cultural identity, and/or connection to nature
-                                        (i.e., visits to national parks). Cultural indicators encompass values-driven
-                                        metrics that examine the concepts of the "self" that centers around vital
-                                        interconnections with others and the environment.
+                                        The Cultural Fulfillment domain describes people's cultural involvement. measures include how often people participate in the arts and spiritual activities. 
+                                        More . . .
                                     </p>
-                                    <figure class="domain_image_left">
+                                    <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/cultural-fulfillment.jpg"
                                              alt="Cultural Fulfillment">
                                         <figcaption>Courtesy of iStockphoto</figcaption>
-                                    </figure>
-                                    <p>
-                                        While there are many variations of the specific definition, few would argue the
-                                        important role of spirituality and culture within populations. Cultural values are
-                                        in many ways integral to vital communities, yet are rarely considered in most
-                                        well-being indices. Investment in museums, cultural centers, and other similar
-                                        gathering places offer educational opportunities to help mitigate inequities typical
-                                        of cultural exclusion. Faith- and community-based activities, such as festivals,
-                                        concerts, arts and crafts shows, etc., further strengthen social cohesion by
-                                        preserving cultural and spiritual heritage. Moreover, it is the environmental
-                                        culture that is often the harmonizing factor that supports community vitality when
-                                        obvious economic disparity would otherwise cause discord.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                         {#            Education Block           #}
@@ -150,17 +107,16 @@
                                 <span class="right-slider-legend">More</span>
                             </div>
                             <div id="education_details" class="domain-description">
-                                
+                                <p>
+                                    The Education domain covers basic skills in reading, math and science. measures of student safety and health are also included. 
+                                    More . . .
+                                </p>
                                 <!-- <figure class="domain_image_right">
                                     <img src="/static_qed/hwbi/disc/img/education.jpg"
                                          alt="Education">
                                     <figcaption>Courtesy of U.S. FWS</figcaption>
                                 </figure> -->
-                                <p>
-                                    The Education domain characterizes the educational achievement and attainment of a community's 
-                                    youth and young adults. Basic reading, math and science skills and educational environement 
-                                    are among those measures used to describe this domain.
-                                </p>
+                                
                             </div>
                         </div>
                         {#            Health Block           #}
@@ -180,17 +136,17 @@
                                 <span class="right-slider-legend">More</span>
                             </div>
                             <div id="health_details" class="domain-description">
-                                
+                                <p>
+                                    The Health domain describes people's involvement in healthy behaviors, prevalence of illness, access to healthcare, mortality and life expectancy. 
+                                    More . . .
+
+                                </p>
                                 <!-- <figure class="domain_image_left">
                                     <img src="/static_qed/hwbi/disc/img/health.jpg"
                                          alt="Health">
                                     <figcaption>Courtesy of iStockphoto</figcaption>
                                 </figure> -->
-                                <p>
-                                    The Health domain characterizes the physical and emotional health of the people living in a 
-                                    community. Measures of healthy behaviors, access to healthcare and prevalence of major 
-                                    illness are among the measures used to represent this domain.
-                                </p>
+                                
                             </div>
                         </div>
                         {#            Leisure Block           #}
@@ -211,33 +167,14 @@
                                 </div>
                                 <div id="leisure_details" class="domain-description">
                                     <p>
-                                        Leisure time is time that individuals have to voluntarily engage in pleasurable
-                                        activities when they are free from the demands of work or other responsibilities. It
-                                        is commonly deemed as necessary for basic survival and has increasingly been
-                                        referred to as a domain of the "good life". Suggested metrics of this domain are the
-                                        amount of time spent on specific leisure activities, types of activities, frequency
-                                        of participation, and expenditures on leisure activities. Measures of work hours and
-                                        continuous sleep time can be used as surrogate measures indicating the amount of
-                                        time available for leisure activities. Enjoyable activities may also act as
-                                        "restorers" that facilitate the individual's recovery from stress as the result of
-                                        positive social interactions or relaxation that lead to increased positive emotions.
+                                        The Leisure Time domain describes how our time is spent including: employment, care for seniors and activities that people partake in for personal enjoyment. a higher score may represent a positive or a negative characteristic in context of other domain indicators. More . . .
                                     </p>
-                                    <figure class="domain_image_left">
+                                    <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/leisure-time.jpg"
                                              alt="Leisure Time">
                                         <figcaption>Courtesy of U.S. EPA</figcaption>
-                                    </figure>
-                                    <p>
-                                        Participation in leisure time activities has been positively linked to both physical
-                                        and mental health measures. Leisure time also provides for psychological detachment
-                                        from work which in turn promotes well-being and productivity. Leisure time
-                                        activities also provide opportunities for social interactions through group
-                                        participation (e.g., clubs, sports, religious organizations) and expand the size of
-                                        social networks, enhancing social cohesion. Higher income has been positively
-                                        associated with increased leisure time as it relates to more disposable income;
-                                        however, in the U.S. the cost of the loss of leisure time due to increased work
-                                        hours has continued to rise since the 1950s.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                         {#            Living Standards Block           #}
@@ -258,36 +195,15 @@
                                 </div>
                                 <div id="living_details" class="domain-description">
                                     <p>
-                                        In the simplest of terms, living standards may be best described as "the physical
-                                        circumstances in which people live, the goods and services they are able to consume
-                                        and the economic resources to which they have access". Living standard indicators
-                                        tend to be largely economic in nature, characterized by demography and geography.
-                                        Income level is the most dominate class of metrics used for evaluating standard of
-                                        living followed by living conditions which includes housing status, household
-                                        crowding (rooms per person), and state of housing repair. Home ownership, household
-                                        assets, and other measures of material affluence were used to evaluate wealth.
+                                        The Living Standards domain contains information about lifestyles. it includes measure of basic necessities, wealth and income. 
+                                        More . . .
                                     </p>
-                                    <figure class="domain_image_left">
+                                    <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/living-standards.jpg"
                                              alt="Living Standards">
                                         <figcaption>Courtesy of Microsoft.com</figcaption>
-                                    </figure>
-                                    <p>
-                                        Economic and social services aim to improve the living standards of a population.
-                                        Economic services provide a means to accumulate and distribute wealth, while many
-                                        social services help to improve living conditions among the most impoverished within
-                                        the community.
-                                        Poverty metrics (e.g., income- and housing-related) figure prominently in living
-                                        standard assessments because there is a close relationship between standards of
-                                        living and attainment of basic human needs. However, wealth disparity alone cannot
-                                        fully account for standards of living. Current research suggests that
-                                        conceptualizing basic human needs in light of multi-dimensional well-being may
-                                        provide a more comprehensive picture relative to living standards. For example,
-                                        indices that exclude time use measures may be missing non-market activities that may
-                                        enhance standards of living without significantly contributing to household income.
-                                        Further, the perception of living standards is often an overlooked influence on a
-                                        population's overall well-being.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                         {#            Safety Block           #}
@@ -307,33 +223,16 @@
                                     <span class="right-slider-legend">More</span>
                                 </div>
                                 <div id="safety_details" class="domain-description">
-                                    <figure class="domain_image_right">
+                                    <p>
+                                        The Safety and Security domain includes information about perceived safety, actual safety and potential for danger. 
+                                        More . . .
+                                    </p>
+                                    <!-- <figure class="domain_image_right">
                                         <img src="/static_qed/hwbi/disc/img/safety-and-security.jpg"
                                              alt="Safety">
                                         <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                    </figure>
-                                    <p>
-                                        Based on Maslow's hierarchy of basic human needs, once physical needs are relatively
-                                        satisfied, safety needs take precedence. Personal security can be linked to
-                                        unemployment, poverty, education level and social cohesion, and is most often
-                                        evaluated using crime rates, number of accident-related injuries and deaths, and
-                                        perceived safety. In basic terms, safety and security can be described as freedom
-                                        from harm (physical security&mdash;personal and national) but is also described by
-                                        measures related to financial security. Economic security is evaluated in the event
-                                        of unemployment, sickness, widowhood, old age and disability. These measures can be
-                                        linked to economic services of employment and income and heavily associated with
-                                        social nets provided through the provisioning of social services&mdash;particularly
-                                        financial assistance and healthcare. Our sense of safety and security can be altered
-                                        in the wake of technological and natural disasters due to degradation of ecosystems,
-                                        economic loss, and increased reliance on social safety nets and recovery services.
-                                        From the ecosystem services perspective, clean water and air, sufficient food
-                                        production, and natural hazard protection significantly contribute to our sense of
-                                        safety and security through direct relationships to our health via exposure to
-                                        pathogens and contaminants, food supply, and prevention of loss of life and
-                                        property. Additionally, there is a comfort derived from knowing that we are not on
-                                        the brink of environmental problems and that a natural system will be conserved for
-                                        future generations.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                         {#            Social Cohesion Block           #}
@@ -354,45 +253,22 @@
                                 </div>
                                 <div id="cohesion_details" class="domain-description">
                                     <p>
-                                        The ties that bind humans together in society have a large bearing on our personal
-                                        well-being and the well- being of our community. A social network propagates
-                                        opportunities to enhance the quality of life to all of its members, and creates a
-                                        safety net for difficult times. A cohesive community allows open discussion and
-                                        resolution of difficult problems, and gives its members a sense of identity.
+                                        Social Cohesion	The Social Cohesion domain describes people's connection to each other and their community by measuring involvement in family, democracy, and the community as a whole. More . . .
                                     </p>
-                                    <figure class="domain_image_left">
+                                    <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/social-cohesion.jpg"
                                              alt="Social Cohesion">
                                         <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                    </figure>
-                                    <p>
-                                        Social participation of all concerned citizens is essential to obtaining
-                                        environmental well-being. Indicators of social cohesion vary greatly, with the most
-                                        common indicator being volunteering rates.
-                                        <br>
-                                        Measures of the health of one's social network typically revolved around qualitative
-                                        assessments of existing relationships and quantitative assessments of the size of
-                                        the network. Feelings and behaviors associated with trust and reciprocity are often
-                                        used as a proxy for community cohesion. Divorce rates, migration patterns, family
-                                        demographics, and charitable contributions were some of the more objective measures
-                                        used to measure cohesiveness.
-                                    </p>
-                                    <p>
-                                        Social services can establish social norms that promote cohesion, repair and
-                                        strengthen family cohesion, and provide safe, equitable working environments which
-                                        foster healthy coworker relationship development.
-                                        Economic services impact social cohesion by creating equitable wages and
-                                        redistributing wealth, thereby relieving tensions between different social-economic
-                                        classes, and they allow businesses to generate excess revenue to be given back to
-                                        the community.
-                                    </p>
+                                    </figure> -->
+                                    
                                 </div>
                             </div>
                             </div> <!--end domain-blocks -->
 
                             <div class="service-blocks">
+                                <button type="button" id="servicedesc_btn" onclick="serviceText();">&bull; &bull; &bull;</button>
                                 <h3>Services</h3>
-                                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos saepe harum, architecto cumque itaque corporis aliquid, error totam et animi quibusdam, fugiat dolor ea molestias quas modi iusto sapiente odio.</div>
+                                <div id="service-explanation" style="display: none;">There exists a myriad of currencies that frame the underpinnings of a thriving society-not all are dollars and cents. The wants and needs of people are met through the availability of items (i.e., goods) and delivery of assistance (i.e., services). The availability and flow of economic, social and ecosystem services serve many purposes within a community-everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources is the conduit for introducing change that influence quality of life outcomes.</div>
                                 <div class="chartcontainer">
                                     <div id="chart" class="radialbar"></div>
                                     <div id="chart2" class="radialbar"></div>
@@ -1193,130 +1069,206 @@
     <div id="resources-tab" class="disc-body">
             <button id="report_pdf" class="report_pdf_button" type="button" onclick="newDISC(); domainChange(); indicatorChange();">PDF Report</button>
             <h3>Economy</h3>
-            <h4>Business Development</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox"><a href="https://www.sba.gov/funding-programs">US Small Business Administration (SBA) funding programs</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-development-grants">USDA link to rural business development grants</a></li>
-            </ul>
+            <button class="accordion-metrics">Business Development</button>
+            <div class="metric-accordion-panel">
+                <div>A healthy local economy is key not only to improving living standards of a community, but the ability of a commmunity to be sustainable ifor all aspects of human well being.  Different government agencies provide unique perspectives on resources necessary to support community business development.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><a href="https://www.sba.gov/funding-programs">US Small Business Administration (SBA) funding programs</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-development-grants">USDA link to rural business development grants</a></li>
+                </ul>
+            </div>
 
-            <h4>Employment Rate</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
-            </ul>
-            <h4>Poverty Rate</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.careeronestop.org/Toolkit/Training/find-certifications.aspx">US Department of Labor (USDL) information on how to get gertifications </a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">Links to food assistance programs across US government</a></li>
-            </ul>
+            <button class="accordion-metrics">Employment Rate</button>
+            <div class="metric-accordion-panel">
+                <div>Information concerning employment rates in different communities, and US Department of Labor's Adult Services workforce investment programs and initiatives that to provide adult workers with workforce preparation and career development, and help employers find  skilled workers.  Employment rate also is especially key to social aspects of well being/</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Poverty Rate</button> 
+            <div class="metric-accordion-panel">
+                <div>lack of financial resources can affect all aspects of an individual's and family's economic and social well being.   Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society.  Links are provided to information on poverty and services to provide needed resources.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.careeronestop.org/Toolkit/Training/find-certifications.aspx">US Department of Labor (USDL) information on how to get certifications </a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">Links to food assistance programs across US government</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Farm Development</button> 
+            <div class="metric-accordion-panel">
+                <div>The health of surrounding farms is key to economic success or small, rural communities.  Healthy farms provide not only economic benefits to a community, but also social and ecosystem benefits.  The USDA especially provides resources to foster the success of farmers in local environments. </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/ric/small-farm-funding-resources">USDA resources for small farmers and those starting small farms</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/grants-and-loans-farmers">USDA grants and loans for farmers</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/energy-funding">USDA links to sources of funding for farm or home-based renewable energy projects</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
+                </ul>
+            </div>
+
             <h3>Ecosystem</h3>
-            <h4>Brownfields Development</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/types-brownfields-grant-funding">US EPA links to Brownfield grant funding opportunities</a></li>
-            </ul>
-            <h4>Greenhouse Gas Emissions from Auto Use</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
-            </ul>
-            <h4>Environmentally Sound Waste Reduction</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.recyclebank.com/about-us/">Private organization, RecycleBank, works with communities to implement an online rewards program for recycling</a></li>
-            </ul>
-            <h4>Energy Use Strategies (Energy Consumption per Household)</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">US EPA program providing resources concerning energy strategies for states, communities and tribes</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://smartcitiescouncil.com/article/how-can-i-reduce-energy-use-my-city">Information on how different cities cut their energy use</a></li>
-            </ul>
-            <h4>Drinking Water Quality</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/fedfunds">US EPA program offering federal funding for water and wastewater systems after national disasters and other incidents that disrupt services.</a></li>
-            </ul>
+            
+            <button class="accordion-metrics">Brownfields Development</button> 
+            <div class="metric-accordion-panel">
+                <div>Brownfields are properties whose the expansion, redevelopment, or reuse maybe affected by the presence or potential presence of a hazardous substance, pollutant, or contaminant. Redevelopment and reuse of these properties would have economic and social benefits to a community, while alleviating an ecosystem problem.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/types-brownfields-grant-funding">US EPA links to Brownfield grant funding opportunities</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Reducing Energy Emissions</button> 
+            
+            <div class="metric-accordion-panel">
+                <div>Investing in energy strategies that lower emissions can be an effective way for state, local and tribal governments to achieve ecosytem, economica and social goals to improve air quality and public health, strengthen their energy systems, reduce greenhouse gas emissions and save money. </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Environmentally Sound Waste Reduction</button> 
+            <div class="metric-accordion-panel">
+                <div>Disposal of solid waste is a major service communities provide for their citizens.   Disposal must be follow environmentally sound practices to protect human heath and ecosystem services  in an economicaly sound manner.  These practices range from individual actions, to local activities such as waste reduction in school lunch programs, to large-scale changes in community waste practices.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.recyclebank.com/about-us/">Private organization, RecycleBank, works with communities to implement an online rewards program for recycling</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Reducing Energy Emissions</button> 
+            <div class="metric-accordion-panel">
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://smartcitiescouncil.com/article/how-can-i-reduce-energy-use-my-city">Information on how different cities cut their energy use</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Drinking Water Quality</button> 
+            <div class="metric-accordion-panel">
+                <div>Safe drinking water for a community is critical to the health of its members.  Safe drinking water depends on resources to effectivly control human wastes entering water bodies, while insureing the cleanliness of water entering a community through its' drinking water system.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/fedfunds">US EPA program offering federal funding for water and wastewater systems after national disasters and other incidents that disrupt services.</a></li>
+                </ul>
+            </div>
 
             <h3>Social</h3>
-            <h4>Voting Guide</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eac.gov/voters/voters-guide-to-federal-elections/">US Election Assistance Commission guide to voting in federal elections</a></li>
-            </ul>
 
-            <h4>Elementary Reading Proficiency</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://marionpubliclibrary.org/events/book-trip-across-america/book-trip-teen-edition">Suggestions  to improve reading skills and interest </a></li>
-            </ul>
-            
-            <h4>Environmental Justice, Risk, and Exposure</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-small-grants-program">US EPA Environmental Justice program grants for community-based organizations, and local and tribal organizations concerning environmental justice issues</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmental-justice/environmental-justice-collaborative-problem-solving-cooperative-agreement-0">US EPA Environmental Justice program providing assistance to organizations concerning local environmental and/or public health issues.</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-showcase-communities-region">US EPA examples of environmental Justice using Environmental Justice Showcase Communities for the different EPA regions</a></li>
-            </ul>
-            <h4>Food Security</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">US federal government nationwide food assistance programs</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/webdocs/publications/43164/15824_efan02013_1_.pdf?v=41063">USDA report providing a toolkit of measurement tools for assessing community food security.</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/data-products/food-environment-atlas/.aspx">USDA Food Environment Atlas, a mapping tool for county level data on access and proximity to food as well as socioeconomic characteristics</a></li>
-            </ul>
-            <h4>Access to Healthy Food</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://healthyfoodaccess.org/">Resources to provide better access to healthy food</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdfifund.gov/programs-training/Programs/new-markets-tax-credit/Pages/default.aspx?utm_source=HUD+Exchange+Mailing+List&utm_campaign=b64b94e191-Promise_Zones_Update_10_27_2015&utm_medium=email&utm_term=0_f32b935a5f-b64b94e191-19340809">US Department of the Treasury new markets tax credits program which enhances community development and economic growth through tax credits to attract private investment to distressed communities.</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/about">The Rural Health Information Hub, funded by the Federal Office of Rural Health Policy, is a national clearinghouse relating to rural health issues to be a national clearinghouse on rural health issues.</a></li>
-            </ul>
-            
-            <h4>Park Space within Walking Distance</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/smart-growth-small-towns-and-rural-communities">US EPA guide to Smart Growth in Small Towns and Rural Communities</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
-            </ul>
+            <button class="accordion-metrics">Voting</button>
+            <div class="metric-accordion-panel">
+                <div>Accessible, accurate and secure elections are necessary for American citizens to have a voice in governmental laws and policies that affect all aspects of their economic, social and ecosystem well-being.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eac.gov/voters/voters-guide-to-federal-elections/">US Election Assistance Commission guide to voting in federal elections</a></li>
+                </ul>
+            </div>
 
-            <h4>Number of Children with Asthma</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.labreathmobile.com/">Suggestions for helping children with astha from the Los Angeles Breathmobile Program</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
-            </ul>
-            <h4>Obesity</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ahrq.gov/sites/default/files/publications/files/obesity-pcpresources.pdf">Resources to Manage Obesity for Oregon</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/toolkits/obesity">Resources to help prevent obesity in rural areas. </a></li>
-            </ul>
-            <h4>Air Quality</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/">US EPA site.  "My Community" indicates current air quality, air polluting facilities and UV light index for your community</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://archive.epa.gov/airquality/community/web/html/index.html">US EPA guidelines to identify and reduce air pollutants, including approximate costs to implement and maintain changes</a></li>
-            </ul>
+            <button class="accordion-metrics">Education</button> 
+            <div class="metric-accordion-panel">
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://marionpubliclibrary.org/events/book-trip-across-america/book-trip-teen-edition">Suggestions  to improve reading skills and interest </a></li>
+                </ul>
+            </div>
             
-            <h4>Housing and Transportation Costs</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/all-programs/single-family-housing-programs">USDA assistance for single familiy homes</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ebenefits.va.gov/ebenefits/apply">VA assistance for single familiy homes and other benefits</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn/gnndabot">US HUD "Good Neighbor Next Door Program" to assist homeowning in community revalization areas</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.va.gov/homeloans/nadl.asp">US HUD Direct home loan program for Native Americans</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/buying/loans">US HUD general home loan program</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/funding/grants/rural-transportation-assistance-program-5311b3">Federal Transit Administration program for rural transportation assistance</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering nationa rural transit resources </a></li>
-            </ul>
-            <h4>Transportation Safety</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transportation.gov/pedestrian-bicycle-safety">US DOT information on pedestrian and bicycle safety</a></li>
-            </ul>
-            <h4>Access to Bike and Pedestrian Trails</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/sites/fta.dot.gov/files/docs/funding/grants/40621/5311-rural-program-fact-sheet-fast.pdf">US DOT transportation grants for rural areas</a></li>
-            </ul>
-        
-            <h4>Walkability</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rural-design.org/about">Citizens' Institute on Rural Design resources for small rural community development</a></li>
-            </ul>
+            <button class="accordion-metrics">Environmental Justice</button> 
+            <div class="metric-accordion-panel">
+                <div>Environmental justice is the fair treatment and meaningful involvement of all people regardless of race, color, national origin, or income, with respect to the development, implementation, and enforcement of environmental laws, regulations, and policies. This goal is for all Americans to have  the same degree of protection from environmental and health hazards, and equal access to the decision-making process to insure they have a healthy environment.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-small-grants-program">US EPA Environmental Justice program grants for community-based organizations, and local and tribal organizations concerning environmental justice issues</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmental-justice/environmental-justice-collaborative-problem-solving-cooperative-agreement-0">US EPA Environmental Justice program providing assistance to organizations concerning local environmental and/or public health issues.</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-showcase-communities-region">US EPA examples of environmental Justice using Environmental Justice Showcase Communities for the different EPA regions</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Food Security</button> 
+            <div class="metric-accordion-panel">
+                <div>Food security means access by all people at all times to enough food for an active, healthy life, affecting all aspects of their economic and social well beign.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">US federal government nationwide food assistance programs</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/webdocs/publications/43164/15824_efan02013_1_.pdf?v=41063">USDA report providing a toolkit of measurement tools for assessing community food security.</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/data-products/food-environment-atlas/.aspx">USDA Food Environment Atlas, a mapping tool for county level data on access and proximity to food as well as socioeconomic characteristics</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://healthyfoodaccess.org/">Resources to provide better access to healthy food</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdfifund.gov/programs-training/Programs/new-markets-tax-credit/Pages/default.aspx?utm_source=HUD+Exchange+Mailing+List&utm_campaign=b64b94e191-Promise_Zones_Update_10_27_2015&utm_medium=email&utm_term=0_f32b935a5f-b64b94e191-19340809">US Department of the Treasury new markets tax credits program which enhances community development and economic growth through tax credits to attract private investment to distressed communities.</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/about">The Rural Health Information Hub, funded by the Federal Office of Rural Health Policy, is a national clearinghouse relating to rural health issues to be a national clearinghouse on rural health issues.</a></li>
+                </ul>
+            </div>
             
-            <h4>Farm Development</h4>
-            <ul>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/ric/small-farm-funding-resources">USDA resources for small farmers and those starting small farms</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/grants-and-loans-farmers">USDA grants and loans for farmers</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/energy-funding">USDA links to sources of funding for farm or home-based renewable energy projects</a></li>
-                <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
-            </ul>
+            <button class="accordion-metrics">Walking and Biking</button> 
+            <div class="metric-accordion-panel">
+                <div>Policies that support walking, biking, and public transit help reduce air pollution from vehicles while saving people money.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/smart-growth-small-towns-and-rural-communities">US EPA guide to Smart Growth in Small Towns and Rural Communities</a></li>
+                </ul>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transportation.gov/pedestrian-bicycle-safety">US DOT transportation on pedestrian and bicycle safety</a></li>
+                </ul>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/sites/fta.dot.gov/files/docs/funding/grants/40621/5311-rural-program-fact-sheet-fast.pdf">US DOT transportation grants for rural areas</a></li>
+                </ul>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rural-design.org/about">Citizens' Institute on Rural Design resources for small rural community development</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Parks</button> 
+            <div class="metric-accordion-panel">
+                <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and connection to nature.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Children with Asthma</button> 
+            <div class="metric-accordion-panel">
+                <div>Asthma causing wheezing, difficulty breathing, and coughing and can cause permanent lung damage over a lifetime. Children, especially black children, are some of the most susceptible people in a community. Resources are availble to address the scope of the problem and make suggestions for asthma management.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.labreathmobile.com/">Suggestions for helping children with astha from the Los Angeles Breathmobile Program</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Obesity</button>
+            <div class="metric-accordion-panel">
+                <div>Overweight and obesity can pose a social problem in a commun, affecting health and welfare of its' citizens.   Policy and environmental strategies are availability to make healthy eating and active living accessible and affordable.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ahrq.gov/sites/default/files/publications/files/obesity-pcpresources.pdf">Resources to Manage Obesity for Oregon</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/toolkits/obesity">Resources to help prevent obesity in rural areas. </a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Air Quality</button> 
+            <div class="metric-accordion-panel">
+                <div>Air quality is a measure of  how clean or polluted air.  Polluted air and affect  health, especially of sensitive populations; as well as affect visibility and ecosystems.   Real time data on air quality are available for cities, as well as information as to responses of individual to adverse air quality episode, and how  improve air quality.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/">US EPA site.  "My Community" indicates current air quality, air polluting facilities and UV light index for your community</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://archive.epa.gov/airquality/community/web/html/index.html">US EPA guidelines to identify and reduce air pollutants, including approximate costs to implement and maintain changes</a></li>
+                </ul>
+            </div>
+            
+            <button class="accordion-metrics">Housing</button> 
+            <div class="metric-accordion-panel">
+                <div>Housed availability and affordability are important factors affecting the economic and social well-being of communities.  Thus US Department of Housing and Urban Development, and other government agenies have programs to help provide for adequate, affordable housing.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/all-programs/single-family-housing-programs">USDA assistance for single familiy homes</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ebenefits.va.gov/ebenefits/apply">VA assistance for single familiy homes and other benefits</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn/gnndabot">US HUD "Good Neighbor Next Door Program" to assist homeowning in community revalization areas</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.va.gov/homeloans/nadl.asp">US HUD Direct home loan program for Native Americans</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/buying/loans">US HUD general home loan program</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/funding/grants/rural-transportation-assistance-program-5311b3">Federal Transit Administration program for rural transportation assistance</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering nationa rural transit resources </a></li>
+                </ul>
+            </div>
+
+            <button class="accordion-metrics">Transportation</button> 
+            <div class="metric-accordion-panel">
+                <div>Transportation availability and affordability, especially of mass transportation systems, has economic and social impacts on communities; and can affect air quality and ecosystem health.  The US Department of Transportation has developed resources to assist communities in their transportation goals. </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/funding/grants/rural-transportation-assistance-program-5311b3">Federal Transit Administration program for rural transportation assistance</a></li>
+                </ul>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering national rural transit resources </a></li>
+                </ul>
+            </div>
+
+
             <div id="printable">
                 <table class="summary" id="table">
                     <thead>
