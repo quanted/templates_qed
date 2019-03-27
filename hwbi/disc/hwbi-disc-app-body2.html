@@ -1067,11 +1067,12 @@
         </div>
     </div>
     <div id="resources-tab" class="disc-body">
-            <button id="report_pdf" class="report_pdf_button" type="button" onclick="newDISC(); domainChange(); indicatorChange();">PDF Report</button>
+        <div class="resources-body">
+            <button id="report_pdf" class="report_pdf_button" type="button" onclick="newDISC(); domainChange(); indicatorChange(); copyDivs();">PDF Report</button>
             <h3>Economy</h3>
             <button class="accordion-metrics">Business Development</button>
             <div class="metric-accordion-panel">
-                <div>A healthy local economy is key not only to improving living standards of a community, but the ability of a commmunity to be sustainable ifor all aspects of human well being.  Different government agencies provide unique perspectives on resources necessary to support community business development.</div>
+                <div>A healthy local economy is key not only to improving living standards of a community, but the ability of a commmunity to be sustainable for all aspects of human well being.  Different government agencies provide unique perspectives on resources necessary to support community business development.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox"><a href="https://www.sba.gov/funding-programs">US Small Business Administration (SBA) funding programs</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
@@ -1081,7 +1082,7 @@
 
             <button class="accordion-metrics">Employment Rate</button>
             <div class="metric-accordion-panel">
-                <div>Information concerning employment rates in different communities, and US Department of Labor's Adult Services workforce investment programs and initiatives that to provide adult workers with workforce preparation and career development, and help employers find  skilled workers.  Employment rate also is especially key to social aspects of well being/</div>
+                <div>Information concerning employment rates in different communities, and US Department of Labor's Adult Services workforce investment programs and initiatives that to provide adult workers with workforce preparation and career development, and help employers find  skilled workers.  Employment rate also is especially key to social aspects of well being.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
                 </ul>
@@ -1120,7 +1121,7 @@
             <button class="accordion-metrics">Reducing Energy Emissions</button> 
             
             <div class="metric-accordion-panel">
-                <div>Investing in energy strategies that lower emissions can be an effective way for state, local and tribal governments to achieve ecosytem, economica and social goals to improve air quality and public health, strengthen their energy systems, reduce greenhouse gas emissions and save money. </div>
+                <div>Investing in energy strategies that lower emissions can be an effective way for state, local and tribal governments to achieve ecosytem, economica and social goals to improve air quality and public health, strengthen their energy systems, reduce greenhouse gas emissions and save money.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
                 </ul>
@@ -1267,10 +1268,11 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering national rural transit resources </a></li>
                 </ul>
             </div>
+            </div>
 
 
             <div id="printable">
-                <table class="summary" id="table">
+                <!-- <table class="summary" id="table">
                     <thead>
                         <tr>
                             <th colspan="8" id="reportlocation"></th>
@@ -1291,7 +1293,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="report-domains"> <!-- built environment -->
+                        <tr class="report-domains"> 
                             <th rowspan="5">Built Environment</th>
                             <td>Communication Infrastructure</td>
                             <td id="communication_infrastructure" class="baselineindicator"></td>
@@ -1325,7 +1327,7 @@
                             <td id="vacant_structures_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- community involvement -->
+                        <tr class="report-domains"> 
                             <th rowspan="5">Community Involvement</th>
                             <td>Attitudes Towards Others and the Community</td>
                             <td id="attitudes" class="baselineindicator"></td>
@@ -1359,7 +1361,7 @@
                             <td id="social_support_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- education -->
+                        <tr class="report-domains">
                             <th rowspan="3">Education</th>
                             <td>Basic Educational Knowledge and Skills of Youth</td>
                             <td id="educational_knowledge" class="baselineindicator"></td>
@@ -1381,7 +1383,7 @@
                             <td id="social_emotional_developmental_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- health -->
+                        <tr class="report-domains"> 
                             <th rowspan="6">Health</th>
                             <td>Healthcare</td>
                             <td id="healthcare" class="baselineindicator"></td>
@@ -1421,7 +1423,7 @@
                             <td id="social_services_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- env resource mgmt-->
+                        <tr class="report-domains">
                             <th rowspan="2">Environmental Resource Management</th>
                             <td>Condition</td>
                             <td id="condition" class="baselineindicator"></td>
@@ -1437,7 +1439,7 @@
                             <td id="ecosystem_types_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- hazard vulnerability-->
+                        <tr class="report-domains"> 
                             <th rowspan="2">Hazard Vulnerability</th>
                             <td>Exposure</td>
                             <td id="exposure" class="baselineindicator"></td>
@@ -1453,7 +1455,7 @@
                             <td id="loss_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- local economy -->
+                        <tr class="report-domains"> 
                             <th rowspan="5">Local Economy</th>
                             <td>Basic Necessities</td>
                             <td id="basic_necessities" class="baselineindicator"></td>
@@ -1487,7 +1489,7 @@
                             <td id="work_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- resilience planning -->
+                        <tr class="report-domains"> 
                             <th rowspan="3">Resilience Planning</th>
                             <td>Community Preparedness</td>
                             <td id="community_preparedness" class="baselineindicator"></td>
@@ -1509,7 +1511,7 @@
                             <td id="personal_preparedness_adj" class="updatedindicator">-</td>
                             <td class="separator">-</td>
                         </tr>
-                        <tr class="report-domains"> <!-- local culture -->
+                        <tr class="report-domains"> 
                             <th rowspan="4">Local Culture</th>
                             <td>Activity Participation</td>
                             <td id="activity_participation" class="baselineindicator"></td>
@@ -1538,7 +1540,7 @@
                             <td class="separator">-</td>
             
                         </tr>
-                        <tr class="report-domains"> <!-- safety and security -->
+                        <tr class="report-domains"> 
                             <th rowspan="3">Safety and Security</th>
                             <td>Actual Safety</td>
                             <td id="actual_safety" class="baselineindicator"></td>
@@ -1565,6 +1567,6 @@
                             <td colspan="3" class="newdiscscore">New DISC Score: <span id="report-wellbeing-score-new"></span> </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
