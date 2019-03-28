@@ -293,8 +293,8 @@
                                                     color: 'black',
                                                 },
                                                 value: {
-                                                show: true,
-                                                formatter: function (val) {
+                                                    show: true,
+                                                    formatter: function (val) {
                                                         return val
                                                     }
                                                 },
@@ -745,19 +745,10 @@
     <div id="customize-ranking" class="disc-body">
 
         <div class="priority-rankings">
-            <a href="#" class="show-baseline">Show Baseline Values</a>
             <h3>Priority Rankings and Services</h3>
             <p>Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
-
-            <!-- <div id="aster">
-                <script src="http://d3js.org/d3.v3.min.js"></script>
-                <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-            
-                <script src="draw.js" ></script>
-            </div> -->
-            
-            
             <div class="ranking-list-container">
+                <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
                 <ul class="rankinglist">
                     <li class="nature-rank">
                         <form action="">
@@ -801,6 +792,7 @@
                     </li>
                 </ul>
             </div>
+            <div id="ranking-chart"></div>
 
         </div>
 
