@@ -1238,7 +1238,10 @@
                 data: ptIndexParams,
                 async: false,
                 success: function (data, status, jqXHR) {
-                    var streamData = JSON.parse(data);
+                    var streamData = data;
+                    if(!typeof(data) === "object") {
+                        streamData = JSON.parse(data);
+                    }
                     var huc8ID = streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(huc8ID);
