@@ -379,6 +379,17 @@
                                     document.querySelector("#chart3"),
                                     options3);
                                 socialChart.render();
+
+                                document.querySelector('#community-snapshot-tab-link').addEventListener('click', function(e) {
+                                    
+                                     socialChart.destroy();
+                                     ecoChart.destroy();
+                                     econChart.destroy();
+                                     socialChart.render();
+                                     ecoChart.render();
+                                     econChart.render();
+                                    
+                                }, false);
                                 </script>
                             </div> <!-- end service-blocks -->
 
