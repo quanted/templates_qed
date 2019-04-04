@@ -24,10 +24,11 @@
                 </div>
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
+                    
                     <button type="button" id="rank_btn" onclick="priorityText()">&bull; &bull; &bull;</button>
-                    <!-- <button id="snapshot-btn" onclick="generateSnapshot();">Create Snapshot</button> -->
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">Well-being and resilience measures are often used to characterize the drivers that influence human behavior and affect the human condition. These quality of life attributes are multi-dimensional that are best described using a host of metrics that respond to the changing environment in which people live. A synthesis of this knowledge helps shape our understanding about people and their needs, both actual and perceived.</div>
+                    <button id="snapshot-btn" onclick="generateSnapshot();" style="float: right;">Create Snapshot</button>
                     <div id="domain-scores">
                         <div class="domain-blocks">
                         {#            Nature Block        #}
@@ -65,7 +66,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
                                 <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
-                                <div id="cultural_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
+                                <div id="cultural-fulfillment_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
                                 <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
                                 </div>
@@ -154,7 +155,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
                                 <div id="leisure-time_score" class="domain-score">0.0</div>
-                                <div id="leisure_location" class="domain-location">Nation: <span id="leisure-time_national_score"></span>, State: <span id="leisure-time_state_score"></span></div>
+                                <div id="leisure-time_location" class="domain-location">Nation: <span id="leisure-time_national_score"></span>, State: <span id="leisure-time_state_score"></span></div>
                                 <div id="leisure-time_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar leisure-bar" id="leisure-time-score-bar"></div>
                                 </div>
@@ -182,7 +183,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="living_data-title" class="domain-data-title">Living Standards:</div>
                                 <div id="living-standards_score" class="domain-score">0.0</div>
-                                <div id="living_location" class="domain-location">Nation: <span id="living-standards_national_score"></span>, State: <span id="living-standards_state_score"></span></div>
+                                <div id="living-standards_location" class="domain-location">Nation: <span id="living-standards_national_score"></span>, State: <span id="living-standards_state_score"></span></div>
                                 <div id="living-standards_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar living-bar" id="living-standards_score-bar"></div>
                                 </div>
@@ -211,7 +212,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
                                 <div id="safety-and-security_score" class="domain-score">0.0</div>
-                                <div id="safety_location" class="domain-location">Nation: <span id="safety-and-security_national_score"></span>, State: <span id="safety-and-security_state_score"></span></div>
+                                <div id="safety-and-security_location" class="domain-location">Nation: <span id="safety-and-security_national_score"></span>, State: <span id="safety-and-security_state_score"></span></div>
                                 <div id="safety-and-security_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar safety-bar" id="safety-and-security_score-bar"></div>
                                 </div>
@@ -240,7 +241,7 @@
                                 <button class="accordion domain-expand"></button>
                                 <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
                                 <div id="social-cohesion_score" class="domain-score">0.0</div>
-                                <div id="cohesion_location" class="domain-location">Nation: <span id="social-cohesion_national_score"></span>, State: <span id="social-cohesion_state_score"></span></div>
+                                <div id="social-cohesion_location" class="domain-location">Nation: <span id="social-cohesion_national_score"></span>, State: <span id="social-cohesion_state_score"></span></div>
                                 <div id="social-cohesion_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar cohesion-bar" id="social-cohesion_score-bar"></div>
                                 </div>
