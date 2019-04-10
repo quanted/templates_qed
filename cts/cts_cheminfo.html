@@ -33,3 +33,10 @@
 		{% endfor %}
 	</table>
 </div>
+
+<script>
+$(document).ready(function () {
+	// Sets Jchem Web Services URL for MarvinSketchJS:
+	initiateMarvinInstance("{{jchem_server}}");
+});
+</script>
