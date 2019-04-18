@@ -671,7 +671,7 @@
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
                                                                 <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
                                                                 <span class=""></span>
-                                                                <input id="{{ metric.16 }}" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}">
+                                                                <input id="" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.16 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}">
                                                             {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
