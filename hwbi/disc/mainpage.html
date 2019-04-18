@@ -15,32 +15,36 @@
                     
 
                     <h3 class="searchtitle">What is the <strong>DISC</strong> profile of your <strong>community?</strong></h3>
-                    
-                    <form class="search-container">
-                        
-                        <span class="search-icon-home"><img src="../../static_qed/hwbi/disc/img/searchdark.png" alt="" ></span>
-                        
-                        <input type="text" id="search_field" class="search-bar" placeholder="Search">
-                        
-                        
-                    </form>
 
-                    <h4 class="searchbelow">Enter your address, city, or county.</h4>
+                    <div class="autocomplete-container">
+                    
+                        <form class="search-container">
+                            
+                            <span class="search-icon-home"><img src="../../static_qed/hwbi/disc/img/searchdark.png" alt="" ></span>
+                            
+                            <input type="text" id="search_field" class="search-bar" placeholder="Search">
+                            
+                            
+                        </form>
+
+                        <h4 class="searchbelow">Enter your city or county or <a href="#" onclick="toggleSearchType(event)">select your state and county.</a></h4>
+
+                    </div>
 
                     <div id="statecounty" hidden>
                         <form id="stateform">
-                            <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br />
+                            <!-- <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br /> -->
                             <div id="county-state-select">
-                                <select name="optone" id="stateSel" class="form-select">
+                                <select name="optone" class="stateSel form-select">
                                     <option value="" selected="selected">select state</option>
                                 </select>
-                                <select name="opttwo" id="countySel" class="form-select">
+                                <select name="opttwo" class="countySel form-select">
                                     <option value="" selected="selected">select county</option>
                                 </select>
                             </div>
-                            <label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your address, city, or county</a>.</label>
-                            <label id="search_error_notification">Your search could not be completed. Please try another
-                                location.</label>
+                            <h4><label for="stateform" id="stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city or county</a>.</label></h4>
+                            <!-- <label id="search_error_notification">Your search could not be completed. Please try another
+                                location.</label> -->
                         </form>
                     </div>
 
@@ -71,12 +75,34 @@
 
             <header class="main-header">
                 <a href="#" class="logo"><img src="/static_qed/hwbi/disc/img/epawhite.png" alt="EPA logo"></a>
-        
+                <div id="connection-icons" onclick="toggleMainpageSearchType(event)">
+                    <span><img src="/static_qed/hwbi/disc/img/no-internet.png" alt=""></span>
+                    <span style="display: none;"><img src="/static_qed/hwbi/disc/img/connected.png" alt=""></span>
+                </div>
                 <div class="search">
                     <form action="#">
-                        <input type="search" id="top-search-bar" placeholder="Enter your address, city, state, or zip code"><img class="search-icon" src="/static_qed/hwbi/disc/img/searchwhite.png">
+                        <input type="search" id="top-search-bar" placeholder="Enter your city or county"><img class="search-icon" src="/static_qed/hwbi/disc/img/searchwhite.png">
+                        
                     </form>
+
+                    
                 </div>
+                <div id="mainpage-statecounty" hidden>
+                        <form id="mainpage-stateform">
+                            <!-- <label for="stateform" id="stateform_label">What is the <b>DISC</b> profile of your <b>community?</b></label><br /> -->
+                            <div id="mainpage-county-state-select">
+                                <select name="main-optone" class="stateSel-2 form-select">
+                                    <option value="" selected="selected">select state</option>
+                                </select>
+                                <select name="main-opttwo" class="countySel-2 form-select">
+                                    <option value="" selected="selected">select county</option>
+                                </select>
+                            </div>
+                            <!-- <h4><label for="stateform" id="mainpage-stateform_placeholder">Select your state and county or <a href="#" onclick="toggleSearchType(event)">enter your city or county</a>.</label></h4> -->
+                            <!-- <label id="search_error_notification">Your search could not be completed. Please try another
+                                location.</label> -->
+                        </form>
+                    </div>
             </header>
 
             <nav class="sidenav">
