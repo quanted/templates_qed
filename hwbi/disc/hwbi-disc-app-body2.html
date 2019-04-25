@@ -715,7 +715,7 @@
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
                 <div class="service-card s-card{{ forloop.counter }}">
                     <a href="#{{ metric_group.grouper|slugify }}-service-modal">
-                        <img src="../../../static_qed/hwbi/disc/img/connection-to-nature.jpg" alt="" class="cardimgcover">
+                        <img src="../../../static_qed/hwbi/disc/img/{{ metric_group.grouper|slugify }}.jpg" alt="" class="cardimgcover">
                         <div class="card-text-overlay">{{ metric_group.grouper }}</div>
                     </a>
                     <div id="{{ metric_group.grouper|slugify }}-service-modal" class="modal-overlay">
@@ -1082,6 +1082,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-development-grants">USDA link to rural business development grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/federal-contracting ">SBA contracting guide, contracting assistance programs, counseling and help</a></li>
+                    
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1092,17 +1095,23 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bls.gov/lau/">US Department of Labor, Bureau of Labor Statistics Employment Data for cities of 25,000 or more and selected other communities</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Poverty Rate</button> 
             <div class="metric-accordion-panel">
-                <div>lack of financial resources can affect all aspects of an individual's and family's economic and social well being.   Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society.  Links are provided to information on poverty and services to provide needed resources.</div>
+                <div>Lack of financial resources can affect all aspects of an individual's and family's economic and social well being.   Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society.  Links are provided to information on poverty and services to provide needed resources.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.careeronestop.org/Toolkit/Training/find-certifications.aspx">US Department of Labor (USDL) information on how to get certifications </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">Links to food assistance programs across US government</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://aspe.hhs.gov/2019-poverty-guidelines">US Department of Health and Human Services 2019 Poverty Guidelines</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1115,12 +1124,15 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/energy-funding">USDA links to sources of funding for farm or home-based renewable energy projects</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/">USDA annual census providing data on farms and agriculture</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Internet Access</button> 
             <div class="metric-accordion-panel">
-                <div>Internet access description</div>
+                <div>Internet access is the ability to connect to the Internet. Underserved communities have little to no access to the Internet, which may confound social disadvantages.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/files/508_RDeConnectivityToolkit121918.pdf"> USDA toolkit of resources for broadband development in rural areas.</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/grants-and-loans-farmers">USDA grants and loans for farmers</a></li>
@@ -1129,17 +1141,21 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.oregon.gov/Broadband/pages/index.aspx">Oregon State resource for information on availability of broadband Internet services, planning activities, and maps </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-connect-grants">Grants for broadband deployment into rural communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ntia.doc.gov/category/grants ">Grants for broadband deployment in America</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     
                 </ul>
             </div>
 
             <button class="accordion-metrics">Infrastructure Improvement</button> 
             <div class="metric-accordion-panel">
-                <div>Infrastructure Improvement description</div>
+                <div>Infrastructure is important for the economic development and prosperity of a community.  Infrastructure improvements help provide more opportunities to communities and helps create a healthier economy.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community facilities direct loan program to help rural communities to make infrastructure improvements</a></li>
                     
-                    
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1155,6 +1171,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/brownfields-and-land-revitalization-washington-idaho-oregon-and-alaska">EPA Region brownfield assessment programs</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-09/documents/bf_urban_ag.pdf">US EPA guidelines for urban gardening on brownfields</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/brownfield-grantee-success-stories ">US EPA map of Brownfields success stories </a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1165,6 +1184,9 @@
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://smartcitiescouncil.com/article/how-can-i-reduce-energy-use-my-city">Information on how different cities cut their energy use</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1174,6 +1196,9 @@
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.recyclebank.com/about-us/">Private organization, RecycleBank, works with communities to implement an online rewards program for recycling</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1185,12 +1210,16 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="www.epa.gov/nutrient-policy-data/collaborative-approaches-reducing-excess-nutrients">Trading Programs to Improve Water Quality</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="www.epa.gov/watershedacademy">US EPA's Watershed Academy training and information on implementing watershed approaches for water quality issues</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Emergency Preparedness</button> 
             <div class="metric-accordion-panel">
-                <div>Emergency preparedness description</div>
+                <div>Emergency prepardness is important in the community in the event that a disaster may happen. The community will need to be prepared ahead of time in order to mitigate any harm to human health.
+                </div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/got-problem#">Answers to questions or issues about flood related problems</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.floodsmart.gov/why/all-about-flood-maps">FEMA Flood Maps to Know Your Flood Risk</a></li>
@@ -1200,13 +1229,16 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.oregon.gov/Broadband/pages/index.aspx">Why You Need Flood Insurance</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/flood-mitigation-assistance-grant-program">FEMA NFIP Grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribal Communities</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://iopscience.iop.org/article/10.1088/1748-9326/10/9/095010">A study done on flood risk in Miami, FL looks at the risk that minority or at-risk communities face in flood-prone areas. Social inequity puts these communities at greater risk when local governments do not invest in mitigation plans or subsidized flood insurance for these renters or homeowners. The results in the study below highlight the need for affordable flood insurance for a community's most vulnerable residents. </a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Superfund Sites</button> 
             <div class="metric-accordion-panel">
-                <div>Superfund sites description</div>
+                <div>Superfund sites are contaminated sites designated for cleanup  that exist due to hazardous waste dumping and pollution at these locations.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/superfund">EPA Superfund Information</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/superfund/superfund-cleanup-process">Superfund Cleanup Process</a></li>
@@ -1222,29 +1254,38 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href=" https://www.epa.gov/superfund/technical-assistance-grant-tag-program">Technical Assistance Grant Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://tools.niehs.nih.gov/srp/programs/index.cfm">National Institute of Environmental Health Sciences Superfund Research Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hanford.gov/page.cfm/HanfordStory">The Hanford Site, adjacent to the Columbia River in the Pacific Northwest, is one of the largest Superfund sites in the US. The EPA Superfund Site Program invests $2 billion a year to clean up the area. To date, 939 waste sites have been cleaned up, 428 facilities were removed, and over 17 million tons of waste were removed. More than 12 billion gallons of groundwater have treated by removing over 157 tons of contamination. This has led to an improvement in the environmental condition and stimulated the economy of the Tri-Cities area of Washington State. To learn more, please visit the Hanford Site page.</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Noise Pollution</button> 
             
             <div class="metric-accordion-panel">
-                <div>Noise pollution description</div>
+                <div>Noise pollution is regular exposure to non-natural elevated sound levels that are disruptive to people's lives. Long-term exposure to noise pollution interferes and diminishes quality of life.  Noise pollution adversely affects the health of millions of people such as stress-related illnesses, high blood pressure, speech intereference, hearing loss, sleep disruption, and lost productivity.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/sound/soundmap.htm">National Park Service Map of Noise Pollution in the US</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/clean-air-act-overview/clean-air-act-title-iv-noise-pollution">US EPA Information and Resources for Noise Pollution</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/niosh/topics/noise/reducenoiseexposure/default.html ">CDC Reducing Noise Exposure</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://publicaccess.zendesk.com/hc/en-us/articles/211393078-Does-the-EPA-regulate-noise-Where-can-I-find-resources-about-noise-pollution">US EPA Environmental Knowledgebase Resources about Noise Pollution</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Light Pollution</button> 
             
             <div class="metric-accordion-panel">
-                <div>Light pollution description</div>
+                <div>Light pollution is the introduction of artificial light into the natural environment.  Light pollution greatly diminishes human quality of life and is a symptom of increased energy usage. It is the brightening of the night sky from non-natural sources of light scattering into the atmosphere. Light pollution has pronounced ecological effects and has the potential to influence human circadian rhythms.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/nightskies/skymap.htm ">National Park Service Night Sky Monitoring Database </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/nightskies/skydata.htm">National Park Service Night Sky Monitoring Report Metrics & Glossary of Terms</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nightsky.jpl.nasa.gov/news-display.cfm?News_ID=745">JPL NASA Resource on How to Reduce Light Pollution</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1255,11 +1296,15 @@
                 <div>Accessible, accurate and secure elections are necessary for American citizens to have a voice in governmental laws and policies that affect all aspects of their economic, social and ecosystem well-being.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eac.gov/voters/voters-guide-to-federal-elections/">US Election Assistance Commission guide to voting in federal elections</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Education</button> 
             <div class="metric-accordion-panel">
+                <div>Education is an important service that provides knowledge and skill for citizens in a community. Education can have a great impact on a community's growth and development.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://marionpubliclibrary.org/events/book-trip-across-america/book-trip-teen-edition">Suggestions  to improve reading skills and interest </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/youth">USDA resources to engage young people in agriculture</a></li>
@@ -1270,6 +1315,10 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://k12education.gatesfoundation.org/about/">Bill and Melinda Gates Foundation Grants and Resources</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gatesfoundation.org/Media-Center/Press-Releases/2003/02/Grant-to-Support-Nationwide-High-School-Network">Portland Community College in Portland, OR received $4.85 mil from Bill and Melinda Gates Foundation's K-12 education sector to develop 8 new high schools in the area. Last year, Portland Community College's alternative high school programs served almost 1,500 students. The college has built strong partnerships with K-12 school districts and highly values its collaboration with local high schools and middle schools to help ensure success for all students. PCC President Jesus "Jess" Carreon said: "We are extremely pleased to receive this grants from the Bill and Melinda Gates Foundation. Access and opportunity for post-secondary education are priorities for PCC. The grant will allow us to expand our goal of preparing high school students for college".</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/funding/">Institute of Education Sciences Funding</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/">US Department of Education source for  education research, evaluation and statistics</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     
                 </ul>
             </div>
@@ -1285,6 +1334,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.wkkf.org/grantseekers">Information, contacts, and funding opportunities for community revitalization and engagement projects</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-small-grants-program">US EPA Funding for Community-based, Local, and Tribal Organizations that Face Environmental Justice Issues</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/newsreleases/two-rhode-island-groups-awarded-epa-grant-help-local-environment">The EPA Small Community Grant Program offered the town of Pawtucket, RI the chance to form a Youth-Led Planning Group to enhance community greening. Students who participate conduct outreach to their community and work with professional landscape architects, urban planners, and other designers to develop green infrastructure projects. This organization not only gets community youth involved, but other residents have a voice in community improvement.</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1306,6 +1358,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nifa.usda.gov/program/hunger-food-security-programs">USDA Food Security Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/funding/topics/food-security-and-nutrition">Rural Food Security Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/project-examples/897">Wholesome Rx is a program that provides access to affordable, healthy food for healthcare recipients. Physicians are able to provide prescriptions for healthy foods in the form of vouchers to local grocery stores. This program could be utilized to increase healthy foods in the form of vouchers to local grocery stores. This program could be utilized to increase healthy food for community residents. For more information, and models to get your community started, please visit this link.</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
             
@@ -1320,6 +1375,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/sites/fta.dot.gov/files/docs/funding/grants/40621/5311-rural-program-fact-sheet-fast.pdf">US DOT transportation grants for rural areas</a></li>
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rural-design.org/about">Citizens' Institute on Rural Design resources for small rural community development</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1328,6 +1386,9 @@
                 <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and connection to nature.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1338,15 +1399,21 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.labreathmobile.com/">Suggestions for helping children with astha from the Los Angeles Breathmobile Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/vitalsigns/childhood-asthma/index.html">CDC Vital Signs information and resources for childhood asthmas</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Obesity</button>
             <div class="metric-accordion-panel">
-                <div>Overweight and obesity can pose a social problem in a commun, affecting health and welfare of its' citizens.   Policy and environmental strategies are availability to make healthy eating and active living accessible and affordable.</div>
+                <div>Overweight and obesity can pose a social problem in a commun, affecting health and welfare of its' citizens. Policy and environmental strategies are availability to make healthy eating and active living accessible and affordable.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ahrq.gov/sites/default/files/publications/files/obesity-pcpresources.pdf">Resources to Manage Obesity for Oregon</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/toolkits/obesity">Resources to help prevent obesity in rural areas. </a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1372,7 +1439,10 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://cleancities.energy.gov/funding-opportunities/">US Dept. of Energy Funding Opportunities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/programs/financial/air/?cid=nrcs143_008546">EQIP Air Quality Initiative Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/research-grants/air-research-grants ">Air Research Grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sciencematters/epa-grants-fund-researchers-working-communities-monitor-air-pollution-washington-and">The EPA awared a STAR (Science to Achieve Results) grant to the University of Washington to study the use of low-cost air pollution sensors in diverse communities. By working with the Heritage University, students who represent Yakima Nation, other Native American trives, and Latino immigrant families are able to participate and learn and share air quality infomation with their communities. They will study the accuracy and performance over time of these low-cost monitors. Issues like reducing fine particle pollution are being addressed in the research so inclusive policies can be developed to improve local air quality. </a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/aboutepa/about-office-air-and-radiation-oar#oaqps">EPA Office of Air and Radiation Information</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
             
@@ -1388,6 +1458,9 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/funding/grants/rural-transportation-assistance-program-5311b3">Federal Transit Administration program for rural transportation assistance</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering nationa rural transit resources </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1400,16 +1473,22 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering national rural transit resources </a></li>
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Drug Addiction</button> 
             <div class="metric-accordion-panel">
-                <div>Drug addiction description</div>
+                <div>Drug addiction is a chronic disease afflicting millions in the United States. It is characterized by compulsive desire for drug seeking and use despite harmful consequences.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.opioidmisusetool.norc.org/">Tool to visualize opioid misuse in the US at the county scale.  From NORC (formerly National Opinion Research Center) at the Unversity of Chicago.</a></li>
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/distance-learning-telemedicine-grants">USDA Grants to Address Rural Opiod Crisis</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1420,12 +1499,16 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.orton.org/build-your-community/">Tools and resources to build a community through participation and engagement</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.orton.org/wp-content/uploads/2017/03/community-network-analysis-tool.pdf">Tools for community involvement</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.orton.org/wp-content/uploads/2017/03/public-engagement-methods.pdf">Resources for public engagement</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
             <button class="accordion-metrics">Healthcare</button>
             <div class="metric-accordion-panel">
-                <div>healthcare description</div>
+                <div>Healthcare access is important to the overall well-being of a community. Underserved communities that do not have access to healthcare are at risk for reduced quality of life. 
+                </div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/childcare">Resources for health in child care facilities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/topics/healthcare-access">Rural Health Guide to Healthcare Access</a></li>
@@ -1438,8 +1521,287 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/topics/healthcare-access/funding">Rural Healthcare Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.commonwealthfund.org/publications/newsletter-article/2017/mar/focus-reimagining-rural-health-care">The Commonwealth Fund information on healthcare</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="www.ruralhealthinfo.org/project-examples/770">The Remote Area Medical clinics provide free, mobile medical clinics in isolated, impoverished, and underserved areas. Community members are provided with healthcare and education at no cost to the patients or taxpayers. The website provided will ink to resources and a toolkit to get started in your community!</a></li>
+
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
+
+
+            <h3>Additional Resources</h3> <!-- ________________________________________________________ -->
+
+            <hr style="margin: .5em 0 1em; background: #aaa;">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus provident quis voluptatum sapiente dolores similique maiores culpa libero explicabo repellendus!</p>
+
+            <h4 class="resources-subhead">Economic</h4>
+
+            <button class="accordion-metrics">Internet Access</button>
+            <div class="metric-accordion-panel">
+                <div>Internet access is the ability to connect to the Internet. Underserved communities have little to no access to the Internet, which may confound social disadvantages.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Education Superhighway has information about upgrading internet access to public schools  in America and on districts in need of bandwidth and fiber.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Rural Fiber Works provides service to increase broadband in small and rural communities</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>The National Rural Telecommunications Council provides rural utility service to rural communities</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Community Networks provides Internet infrastructure information</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label  >For more information about rural broadband in Washington, contact the WA State Department of Commerce CERB Rural Broadband Program Director & Tribal Liaison</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Poverty Rate</button>
+            <div class="metric-accordion-panel">
+                <div>Lack of financial resources can affect all aspects of an individual's and family's economic and social well being. Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society. Links are provided to information on poverty and services to provide needed resources.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Education</button>
+            <div class="metric-accordion-panel">
+                <div>Education is an important service that provides knowledge and skill for citizens in a community. Education can have a great impact on a community's growth and development.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Social Engagement</button>
+            <div class="metric-accordion-panel">
+                <div>Accessible, accurate and secure elections are necessary for American citizens to have a voice in governmental laws and policies that affect all aspects of their economic, social and ecosystem well-being.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Local Economy</button>
+            <div class="metric-accordion-panel">
+                <div>Local economy is the economic system and range of economic activity in a local area that serves a local population.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon Institute for Policy Research and Engagement Resources provides "planning and technical assistance to help solve local issues and improve the quality of life" in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            
+
+
+            <h4 class="resources-subhead">Environment</h4>
+
+            <button class="accordion-metrics">Invasive Species</button>
+            <div class="metric-accordion-panel">
+                <div>An invasive species is defined as an organism that is non-native to the ecosystem in which it is found that is likely to cause harm to the environment, economy, or human health. Invasive species pose a threat due to their ability to spread rapidly and cause widespread damage. </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>National Invasive Species Awareness Week has tools to evalatuate local invasive species control</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Emergency Preparedness</button>
+            <div class="metric-accordion-panel">
+                <div>Emergency prepardness is important in the community in the event that a disaster may happen. The community will need to be prepared ahead of time in order to mitigate any harm to human health.
+                </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Light Pollution</button>
+            <div class="metric-accordion-panel">
+                <div>Light pollution is the introduction of artificial light into the natural environment. Light pollution greatly diminishes human quality of life and is a symptom of increased energy usage. It is the brightening of the night sky from non-natural sources of light scattering into the atmosphere. Light pollution has pronounced ecological effects and has the potential to influence human circadian rhythms.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>JPL NASA Resource on How to Reduce Light Pollution</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Lightpollutionmap.info provides an interactive map to visualize light pollution levels in your community</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                    
+                </ul>
+
+            </div>
+
+
+            
+
+            <h4 class="resources-subhead">Social</h4>
+
+            <button class="accordion-metrics">Education</button>
+            <div class="metric-accordion-panel">
+                <div>Education is an important service that provides knowledge and skill for citizens in a community. Education can have a great impact on a community's growth and development.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>For state contacts, visit the U.S. Department of Education website.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Best Buy provides Grants for Organizations Focused on Youth in Educational, Technologically Driven Community Projects</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Social Engagement</button>
+            <div class="metric-accordion-panel">
+                <div>Social engagement is the degree that an individual participates in a community.  High social engagement has been correlated with increase in happiness, health, and well-being.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>The Community Tool Box by the University of Kansas provides a toolkit to increase community participation and action.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Healthcare</button>
+            <div class="metric-accordion-panel">
+                <div>Healthcare access is important to the overall well-being of a community. Underserved communities that do not have access to healthcare are at risk for reduced quality of life. </div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in America, contact the National Rural Health Association</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Washington, contact the Washington Office of Rural Health</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Oregon, contact the Oregon Office of Rural Health</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Idaho, contact the Idaho Office of Rural Health</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Alaska, contact the Alaska Office of Rural Health</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The National Rural Health Association provides more information about rural healthcare.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Modern Healthcare provides more information about rural healthcare.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more toolkits and resources for rural healthcare, visit Washington State Hospital Association website</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The Universal Service Administrative Co. has information about the FCC Healthcare Connect Fund</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Food Security</button>
+            <div class="metric-accordion-panel">
+                <div>Food security means access by all people at all times to enough food for an active, healthy life, affecting all aspects of their economic and social well being.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security, contact the USDA National Institute of Food and Agriculture</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security in rural communities, contact the Rural Health Information Hub</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Hunger+Health Feeding America has more information on food insecurity</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>For more resources on how to eat more sustainably, visit FoodPrint's website</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+            <button class="accordion-metrics">Poverty Rate</button>
+            <div class="metric-accordion-panel">
+                <div>Lack of financial resources can affect all aspects of an individual's and family's economic and social well being. Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society. Links are provided to information on poverty and services to provide needed resources.</div>
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
+
+                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
+                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
+                </ul>
+
+            </div>
+
+
 
             </div>
 
