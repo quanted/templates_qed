@@ -660,10 +660,6 @@
                                                     <div class="col size-1of2 description-column">
                                                         <h4 id="{{ domain.grouper|slugify }}_indicators_title"></h4>
                                                         <div id="{{ domain.grouper|slugify }}_indicators_description"></div>
-                                                        <!-- <hr class="priorityhr">
-                                                        <div id="{{ domain.grouper|slugify }}_priority_ranking" class="rankinglist-modal"><form action="">
-                                                            <label><span title="Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.">Priority Ranking:</span> <input type="number" name="nature-rank-number" min="1" max="8" value="1" data-domain="{{domain.grouper}}"></label>
-                                                        </form></div> -->
                                                     </div>
                                                     <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.6 == domain.grouper %}
                                                         <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.14}}">
@@ -762,46 +758,14 @@
             <div class="ranking-list-container">
                 <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
                 <ul class="rankinglist">
-                    <li class="nature-rank">
+
+                    {% for domain in hwbi_domains %}
+                    <li class="{{domain.grouper|slugify}}-rank">
                         <form action="">
-                            <label>Connection to Nature<input type="number" name="nature-rank-number" min="1" max="8" value="1" data-did="1"></label>
+                            <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="8" value="1" data-did="{{ domain.list.0.17 }}"></label>
                         </form>
                     </li>
-                    <li class="cultural-rank">
-                        <form action="">
-                                <label>Cultural Fulfillment<input type="number" name="cultural-rank-number" min="1" max="8" value="1" data-did="2"></label>
-                        </form>
-                    </li>
-                    <li class="education-rank">
-                        <form action="">
-                                <label>Education<input type="number" name="education-rank-number" min="1" max="8" value="1" data-did="15"></label>
-                        </form>
-                    </li>
-                    <li class="health-rank">
-                        <form action="">
-                                <label>Health<input type="number" name="health-rank-number" min="1" max="8" value="1" data-did="4"></label>
-                        </form>
-                    </li>
-                    <li class="leisure-rank">
-                        <form action="">
-                                <label>Leisure Time<input type="number" name="leisure-rank-number" min="1" max="8" value="1" data-did="5"></label>
-                        </form>
-                    </li>
-                    <li class="living-rank">
-                        <form action="">
-                                <label>Living Standards<input type="number" name="living-rank-number" min="1" max="8" value="1" data-did="6"></label>
-                        </form>
-                    </li>
-                    <li class="safety-rank">
-                        <form action="">
-                                <label>Safety and Security<input type="number" name="safety-rank-number" min="1" max="8" value="1" data-did="7"></label>
-                        </form>
-                    </li>
-                    <li class="social-rank">
-                        <form action="">
-                                <label>Social Cohesion<input type="number" name="social-rank-number" min="1" max="8" value="1" data-did="8"></label>
-                        </form>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div id="ranking-chart"></div>
@@ -858,7 +822,6 @@
                             </div>{% endfor %}
                         </section>
                     </div>
-
                 </div>
 
             <div class="col size-2of2" style="width: 45%;">
@@ -866,58 +829,8 @@
                 <div id="aster">
                     <script src="/static_qed/hwbi/disc/js/draw.js" ></script>
                 </div>
-
-                <!-- <div class="ranking-list-container">
-                    <ul class="rankinglist">
-                        <h3 style="text-align: center;">Priority Rankings</h3>
-                        <li class="nature-rank">
-                            <form action="">
-                                <label>Connection to Nature<input type="number" name="nature-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="cultural-rank">
-                            <form action="">
-                                    <label>Cultural Fulfillment<input type="number" name="cultural-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="education-rank">
-                            <form action="">
-                                    <label>Education<input type="number" name="education-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="health-rank">
-                            <form action="">
-                                    <label>Health<input type="number" name="health-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="leisure-rank">
-                            <form action="">
-                                    <label>Leisure Time<input type="number" name="leisure-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="living-rank">
-                            <form action="">
-                                    <label>Living Standards<input type="number" name="living-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="safety-rank">
-                            <form action="">
-                                    <label>Safety and Security<input type="number" name="safety-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                        <li class="social-rank">
-                            <form action="">
-                                    <label>Social Cohesion<input type="number" name="social-rank-number" min="1" max="8" value="1"></label>
-                            </form>
-                        </li>
-                    </ul>
-                </div> -->
-
             </div>
-
-            
             </div>
-
     </div>
 
     <div id="compare-tab" class="disc-body">
