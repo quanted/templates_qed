@@ -661,7 +661,7 @@
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
                         <p>Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
                     </div>
-
+                    <button id="reset-hwbi-domains">Reset</button>
                     <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
                             <div class="card card{{ forloop.counter }}">
@@ -729,6 +729,7 @@
             <h3>Services</h3>
             <p>Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
         </div>
+        <button id="reset-service-btn">Reset</button>
         <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
                 <div class="service-card s-card{{ forloop.counter }}">
