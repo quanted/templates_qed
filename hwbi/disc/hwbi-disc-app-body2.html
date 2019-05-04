@@ -672,6 +672,7 @@
                                 <div id="{{ domain.grouper|slugify }}-modal" class="modal-overlay">
                                     <div class="modal">
                                         <h2 class="modal-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
+                                        <button class="reset-hwbi-custom-btn" data-id="{{ domain.list.0.17 }}">Reset</button>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
                                         <a href="#" class="close">&times;</a>
                                         <div class="modalcontent">
@@ -739,6 +740,7 @@
                         <div class="modal">
                             <h2 class="modal-title">{{ metric_group.grouper }}</h2>
                             <a href="#" class="close">&times;</a>
+                            <button class="reset-service-custom-btn" data-type="{{ metric_group.grouper }}">Reset</button>
                             <div class="modalcontent">
                                 <div id="customize_service_indicators">
                                     <div id="{{ metric_group.grouper|slugify }}-service-indicators" class="row cols-2 domain_indicator">
@@ -846,7 +848,10 @@
                 </div>
 
             <div class="col size-2of2" style="width: 45%;">
-                <div><button onclick="loadMetricValues('custom_val');" style="float: right;">Load Customized Metric Values</button></div>
+                <div id="scenario-btns">
+                    <button id="reset-scenario-builder-btn">Reset Scenario</button>
+                    <button onclick="loadMetricValues('custom_val');">Load Custom Metrics</button>
+                </div>
                 <div id="aster">
                     <script src="/static_qed/hwbi/disc/js/draw.js" ></script>
                 </div>
