@@ -658,10 +658,10 @@
                         <div id="customize_domain_bar"></div>
                     </div>
                     <div class="customize_description">
+                        <button id="reset-hwbi-domains">Reset</button>
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
                         <p>Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
                     </div>
-                    <button id="reset-hwbi-domains">Reset</button>
                     <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
                             <div class="card card{{ forloop.counter }}">
@@ -726,10 +726,10 @@
 
     <div id="customize-domains-services" class="disc-body">
         <div class="customize_description">
+            <button id="reset-service-btn">Reset</button>
             <h3>Services</h3>
             <p>Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
         </div>
-        <button id="reset-service-btn">Reset</button>
         <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
                 <div class="service-card s-card{{ forloop.counter }}">
@@ -777,10 +777,10 @@
     <div id="customize-ranking" class="disc-body">
 
         <div class="priority-rankings">
+            <button id="riv-reset-btn">Reset</button>
             <h3>Priority Rankings and Services</h3>
             <p>Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
             <div class="ranking-list-container">
-                <button id="riv-reset-btn">Reset</button>
                 <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
                 <ul class="rankinglist">
 
@@ -1059,9 +1059,7 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-development-grants">USDA link to rural business development grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/federal-contracting ">SBA contracting guide, contracting assistance programs, counseling and help</a></li>
-                    
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
+
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/as-ia/ieed/division-economic-development/nabdi">Native American Business Development Institute (NABDI) Grant</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/sites/default/files/ONAA_resource_guide.pdf">Tribal Communities: US SBA Resource Guide</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://business.defense.gov/Programs/Indian-Incentive-Program/How-to-Participate/">Tribal Communities: US Department of Defense Indian Incentive Program </a></li>
@@ -1076,8 +1074,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bls.gov/lau/">US Department of Labor, Bureau of Labor Statistics Employment Data for cities of 25,000 or more and selected other communities</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for job training, readiness, and employment activities</a></li>
                 </ul>
             </div>
@@ -1090,9 +1086,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">Links to food assistance programs across US government</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://aspe.hhs.gov/2019-poverty-guidelines">US Department of Health and Human Services 2019 Poverty Guidelines</a></li>
-
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
 
                     <h4>Additional Resources*</h4>
                     <hr>
@@ -1118,9 +1111,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/">USDA annual census providing data on farms and agriculture</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
-
                     <h4>Additional Resources*</h4>
                     <hr>
 
@@ -1141,8 +1131,7 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.oregon.gov/Broadband/pages/index.aspx">Oregon State resource for information on availability of broadband Internet services, planning activities, and maps </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-connect-grants">Grants for broadband deployment into rural communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ntia.doc.gov/category/grants ">Grants for broadband deployment in America</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
+
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-broadband-access-loan-and-loan-guarantee">USDA-RD Rural Broadband Access Loan and Loan Guarantee</a></li>
 
                     <h4>Additional Resources*</h4>
@@ -1169,9 +1158,7 @@
                 <div>Infrastructure is important for the economic development and prosperity of a community.  Infrastructure improvements help provide more opportunities to communities and helps create a healthier economy.</div>
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community facilities direct loan program to help rural communities to make infrastructure improvements</a></li>
-                    
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
+
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/telecommunications-infrastructure-loans-loan-guarantees">USDA-RD Telecommunications Infrastructure Loans & Loan Guarantees</a></li>
                 </ul>
             </div>
@@ -1208,8 +1195,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-09/documents/bf_urban_ag.pdf">US EPA guidelines for urban gardening on brownfields</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/brownfield-grantee-success-stories ">US EPA map of Brownfields success stories </a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/state-and-tribal-response-program-grant-funding-guidance-resources">Tribal Communities: US EPA Brownfield grants</a></li>
                 </ul>
             </div>
@@ -1222,8 +1207,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://smartcitiescouncil.com/article/how-can-i-reduce-energy-use-my-city">Information on how different cities cut their energy use</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1234,8 +1217,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sustainable-management-food/washington-school-food-share-program-toolkit">US EPA program in Washington state to direct usable food from schools to community food banks.</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.recyclebank.com/about-us/">Private organization, RecycleBank, works with communities to implement an online rewards program for recycling</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/solid-waste-management-grants">USDA-RD Solid Waste Management Grants</a></li>
                 </ul>
             </div>
@@ -1249,8 +1230,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="www.epa.gov/watershedacademy">US EPA's Watershed Academy training and information on implementing watershed approaches for water quality issues</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-106-tribal-program-funding">Tribal Communities: Region 10 Clean Water Act Section 106 Tribal Program Funding for water pollution control</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-319-tribal-program-funding">Tribal Communities: Region 10 Clean Water Act Section 319 Tribal Program Funding for nonpoint source pollution problems and threats</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-tribal-programs">Other Tribal Community Programs and Resources for EPA Region 10</a></li>
@@ -1271,8 +1250,7 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/flood-mitigation-assistance-grant-program">FEMA NFIP Grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribal Communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
+
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribal Communities: Emergency preparedness training provided by FEMA</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/tribal-homeland-security-grant-program">Tribal Homeland Security Grant Program provided by FEMA</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribal Community preparedness resources</a></li>
@@ -1318,8 +1296,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://tools.niehs.nih.gov/srp/programs/index.cfm">National Institute of Environmental Health Sciences Superfund Research Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hanford.gov/page.cfm/HanfordStory">Superfund site cleanup case study: the Hanford, Washington site.</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/toxics-release-inventory-tri-program/tri-tribal-communities">Tribal Communities: US EPA Toxic Release Inventory (TRI) Program</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toxmap.nlm.nih.gov/toxmap/app/">Search for Toxic Release Inventory (TRI) Sites near your community</a></li>
                 </ul>
@@ -1335,8 +1311,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/niosh/topics/noise/reducenoiseexposure/default.html ">CDC Reducing Noise Exposure</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://publicaccess.zendesk.com/hc/en-us/articles/211393078-Does-the-EPA-regulate-noise-Where-can-I-find-resources-about-noise-pollution">US EPA Environmental Knowledgebase Resources about Noise Pollution</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1349,8 +1323,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/nightskies/skydata.htm">National Park Service Night Sky Monitoring Report Metrics & Glossary of Terms</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nightsky.jpl.nasa.gov/news-display.cfm?News_ID=745">JPL NASA Resource on How to Reduce Light Pollution</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/nightskies/sources.htm">NPS information about light pollution sources and how to reduce light pollution</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/subjects/nightskies/practices.htm">NPS information on solutions to light pollution</a></li>
 
@@ -1463,8 +1435,6 @@
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eac.gov/voters/voters-guide-to-federal-elections/">US Election Assistance Commission guide to voting in federal elections</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1483,8 +1453,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/funding/">Institute of Education Sciences Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/">US Department of Education source for  education research, evaluation and statistics</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indiandemo/index.html">Tribal Communities: US Department of Education discretionary/competitive grants for students</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indianformula/index.html">Tribal Communities: US Department of Education formula grants for students</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for educational activities</a></li>
@@ -1519,8 +1487,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-small-grants-program">US EPA Funding for Community-based, Local, and Tribal Organizations that Face Environmental Justice Issues</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/newsreleases/two-rhode-island-groups-awarded-epa-grant-help-local-environment">Enviromental justice case study: The EPA Small Community Grant Program to form a Youth-Led Planning Group to enhance community greening in Pawtucket, RI.</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1543,8 +1509,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/funding/topics/food-security-and-nutrition">Rural Food Security Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/project-examples/897">The Wholesome Rx program to provide affordable, healthy food for healthcare recipients.</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fns.usda.gov/fdpir/food-distribution-program-indian-reservations-fdpir">Tribal Communities: USDA Food distribution program for low-income households</a></li>
 
                     <h4>Additional Resources*</h4>
@@ -1577,8 +1541,6 @@
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rural-design.org/about">Citizens' Institute on Rural Design resources for small rural community development</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1588,8 +1550,6 @@
                 <ul>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1601,8 +1561,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/vitalsigns/childhood-asthma/index.html">CDC Vital Signs information and resources for childhood asthmas</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/indoor-air-quality-iaq/indoor-air-quality-tools-tribal-communities">Tribal Communities: US EPA indoor air quality tools</a></li>
                 </ul>
             </div>
@@ -1614,8 +1572,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ahrq.gov/sites/default/files/publications/files/obesity-pcpresources.pdf">Resources to Manage Obesity for Oregon</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/toolkits/obesity">Resources to help prevent obesity in rural areas. </a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1643,8 +1599,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/research-grants/air-research-grants ">Air Research Grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/aboutepa/about-office-air-and-radiation-oar#oaqps">EPA Office of Air and Radiation Information</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-tribal-programs">Other Tribal Community Programs and Resources for EPA Region 10</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-air-act-tribal-program-funding">Tribal Communities: Region 10 Clean Air Act Tribal Program Funding for air quality management</a></li>
                 </ul>
@@ -1663,8 +1617,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering nationa rural transit resources </a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.gov/benefit/798">Tribal Communities: Housing Improvement Program for home repair, renovation, replacement, and new housing grants</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/green-building-tools-tribes/funding-opportunities-tribal-green-building#epa">Tribal Communities: US EPA funding opportunities for green building</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/grants/ihbg">Tribal Communities: US HUD Indian Housing Block Grant Program</a></li>
@@ -1681,8 +1633,6 @@
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fortress.wa.gov/doh/wtn/WTNIBL">Washington Map of Environmental Risk Facts for Community Health</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -1694,8 +1644,6 @@
 
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/distance-learning-telemedicine-grants">USDA Grants to Address Rural Opiod Crisis</a></li>
 
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/resources/substance-use-disorders">Tribal Communities: Substance Abuse and Mental Health Services Administration (SAMHSA) substance use disorders resources</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/tribal-training-technical-assistance">Tribal Communities: SAMHSA training and technical assistance</a></li>
                 </ul>
@@ -1708,9 +1656,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.orton.org/build-your-community/">Tools and resources to build a community through participation and engagement</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.orton.org/wp-content/uploads/2017/03/community-network-analysis-tool.pdf">Tools for community involvement</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.orton.org/wp-content/uploads/2017/03/public-engagement-methods.pdf">Resources for public engagement</a></li>
-
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
 
                     <h4>Additional Resources*</h4>
                     <hr>
@@ -1743,9 +1688,6 @@
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/topics/healthcare-access/funding">Rural Healthcare Funding</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.commonwealthfund.org/publications/newsletter-article/2017/mar/focus-reimagining-rural-health-care">The Commonwealth Fund information on healthcare</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="www.ruralhealthinfo.org/project-examples/770">The Remote Area Medical Clinic program to provide free, mobile medical clinics to underserved areas.</a></li>
-
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
-                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                     <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cms.gov/Outreach-and-Education/American-Indian-Alaska-Native/AIAN/CMS-Tribal-Products.html">Tribal Communities: US CMS healthcare resources</a></li>
 
                     <h4>Additional Resources*</h4>
@@ -1767,6 +1709,15 @@
                     <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
 
                     <p><i>*Resources without links are provided as such because EPA is unable to link to sites with donation areas.</i></p>
+                </ul>
+            </div>
+
+            <h3>Additional Resources</h3>
+            <button class="accordion-metrics">General Resources</button>
+            <div class="metric-accordion-panel">
+                <ul>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov">Access to all US government grants</a></li>
+                    <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/care_measurement_tips.pdf">US EPA's CARE Program for local partnerships and healthy communities</a></li>
                 </ul>
             </div>
 
@@ -2044,7 +1995,7 @@
 
             </div> -->
 
-
+                <a href="#" class="returntop">back to top &uarr;</a>
 
             </div>
 
