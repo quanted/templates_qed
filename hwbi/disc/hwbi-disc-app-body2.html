@@ -266,22 +266,22 @@
                                 </div>
                             </div>
                             {#            Resilience Block           #}
-                            <div id="resilience-block" class="domain-score-block">
+                            <div id="basic-resilience-block" class="domain-score-block">
                                     <button class="accordion domain-expand"></button>
-                                    <div id="resilience_data-title" class="domain-data-title">Resilience:</div>
-                                    <div id="resilience_score" class="domain-score">0.0</div>
-                                    <div id="resilience_location" class="domain-location">Nation: <span id="resilience_national_score"></span>, State: <span id="resilience_state_score"></span></div>
-                                    <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                        <div class="score-bar resilience-bar" id="resilience_score-bar"></div>
+                                    <div id="basic-resilience_data-title" class="domain-data-title">Basic Resilience:</div>
+                                    <div id="basic-resilience_score" class="domain-score">0.0</div>
+                                    <div id="basic-resilience_location" class="domain-location">Nation: <span id="basic-resilience_national_score"></span>, State: <span id="basic-resilience_state_score"></span></div>
+                                    <div id="basic-resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                        <div class="score-bar resilience-bar" id="basic-resilience_score-bar"></div>
                                     </div>
                                     <div class="slider-block">
                                         <span class="left-slider-legend">Less</span>
                                         <div class="slider-container">
-                                            <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
+                                            <div id="basic-resilience-slider-bar" class="rank-slider resilience-slider"></div>
                                         </div>
                                         <span class="right-slider-legend">More</span>
                                     </div>
-                                    <div id="resilience_details" class="domain-description">
+                                    <div id="basic-resilience_details" class="domain-description">
                                         <p>
                                             The Resilience domain describes a community's core ability to withstand and recover from an adverse natural hazard event in the context of potential natural hazard exposures and local resilience governance. More . . .
                                         </p>
@@ -789,6 +789,41 @@
                                 </div>
                             </div>
                         </div>{% endfor %}
+                        <div class="card-wrap">
+                            <div class="card card9">
+                                <a href="#basic-resilience-modal">
+                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/basic-resilience.jpg" />
+                                    <div class="card-text-overlay">Basic Resilience</div>
+                                </a>
+                                <div id="basic-resilience-modal" class="modal-overlay">
+                                    <div class="modal">
+                                        <h2 class="modal-title">Basic Resilience <span id="basic-resilience_modal_score" class="domain-modal-score"></span></h2>
+                                        <!-- <button class="reset-hwbi-custom-btn" data-id="34">Reset</button> -->
+                                        <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
+                                        <a href="#" class="close">&times;</a>
+                                        <div class="modalcontent">
+                                            <div id="customize_domain_details"></div>
+                                            <div id="customize_domain_indicators">
+                                                <div id="basic-resilience_indicators" class="row cols-2 domain_indicator">
+                                                    <div class="col size-1of2 description-column">
+                                                        <h4 id="basic-resilience_indicators_title"></h4>
+                                                        <div id="basic-resilience_indicators_description"></div>
+                                                    </div>
+                                                    <div class="col size-1of2 indicator-column">
+                                                        <div class="row cols-1 indicator_block" data-title="Governance">
+                                                            <button class="accordion-metrics indicator_data-title">Governance: <span id="basic-resilience_governance_value" class="indicator_value"></span></button>
+                                                        </div>
+                                                        <div class="row cols-1 indicator_block" data-title="RISK">
+                                                            <button class="accordion-metrics indicator_data-title">RISK: <span id="basic-resilience_risk_value" class="indicator_value"></span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 
                     </div>
