@@ -5,7 +5,7 @@ $(document).ready(function () {
 	var run_data = {{run_data}};
 	var json_data = {};
 
-	function parseOutputForCSV() {
+	function parseOutputForCSV(csvType=null) {
 		var workflow = getWorkflow(); // get current workflow name
 
 		json_data['workflow'] = workflow;
@@ -48,26 +48,48 @@ $(document).ready(function () {
 	    				}
 	    			}
 	    		}
+
+	    		json_data['geomeanDict'] = geomeanDict;  // gets global geomean for p-chem properties
+
     		}
     		else {
     			json_data['batch_data'] = batch_data;
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['batch_chems'] = batch_chems;
+    			json_data['geomeanDict'] = geomeanDict;
     		}
 
     		
     	}
     	else if (workflow == "gentrans") {
     		if (run_type == 'batch') {
-    			json_data['batch_data'] = batch_data;
+    			if (csvType == 'likely') {
+    				// Makes array of products that are likely:
+    				var newBatchData = [];
+    				for (var chemInd in batch_data) {
+    					var likelyProducts = buildMetabolitesArray("likely", "batch", batch_data[chemInd]);
+    					newBatchData.push(likelyProducts);
+    				}
+    				json_data['batch_data'] = newBatchData;
+    			}
+    			else {
+    				json_data['batch_data'] = batch_data;
+    			}
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['batch_chems'] = batch_chems;
+    			json_data['geomeanDict'] = geomeanDict;
     		}
     		else {
-    			// buildMetabolitesArray() is for spacetree (i.e., not batch mode)
-    			json_data['data'] = buildMetabolitesArray();
+    			json_data['data'] = buildMetabolitesArray(csvType);
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
+    			json_data['geomeanDict'] = geomeanDict;  // gets global geomean for p-chem properties
     		}
+
+    		// Sends key to backend to make likely CSV:
+    		if (csvType == 'likely') {
+    			json_data['csv_type'] = csvType;
+    		}
+
     	}
 
     	json_data['run_data'] = run_data;
@@ -83,6 +105,8 @@ $(document).ready(function () {
 		    return value;
 		});
 		cache = null;  // Enable garbage collection
+
+		json_data = {};  // clears object after it's used
 
     	return json_data_string;
 	}
@@ -144,24 +168,6 @@ $(document).ready(function () {
 	$('#pdfExport').click(function () {
 		parseOutput('pdf');
 		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
-		
-		// var html = $('form.post_form');
-
-		// var html_string = $('form.post_form')[0];
-		// var html_string = parseOutput('pdf');
-
-  // 		// This method may need to have all svgs removed, and use
-  // 		// the "popup" png images instead.
-  // 		var objects_for_pdf = $('.articles_output').css({'backgroundColor': 'white'});  // fix background from defaulting to black
-
-  // 		var pdf = new jsPDF();
-		// var options = {
-		// 	pagesplit: true
-		// };
-		// pdf.addHTML(objects_for_pdf, 0, 0, options, function(){
-		//     pdf.save("test.pdf");
-		// });
-
 	});
 
 	$('#htmlExport').click(function () {
@@ -169,9 +175,18 @@ $(document).ready(function () {
 		$('form.post_form').attr({'action': 'html', 'method': 'POST'}).submit();
 	});
 
-	$('#csvExport').click(function () {
+	$('#csvExport').click(function (evt) {
 
-        var jsonData = parseOutputForCSV();
+		var csvType = evt.target.id;
+		var jsonData;
+
+		if (csvType == "gentrans-likely-csv") {
+			// Returns global accumulation CSV instead of default tree CSV.
+			jsonData = parseOutputForCSV("likely");
+		}
+		else {
+			jsonData = parseOutputForCSV();
+		}
 
 		$('table.getpdf').html("");
 		$('<tr style="display:none"><td><input type="hidden" name="run_data"></td></tr>')
@@ -184,11 +199,9 @@ $(document).ready(function () {
 
 	});
 
-
 	$('#csv_batch').click(function () {
 		$('#csvExport').trigger('click');
 	});
-
 
 	$('#fadeExport_pdf').append('<span class="hover"></span>').each(function () {
 		var $span = $('> span.hover', this).css('opacity', 0);
@@ -220,17 +233,54 @@ $(document).ready(function () {
 });
 
 
-function buildMetabolitesArray() {
+function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=null) {
 	// calls cts_gentrans_tree function getSpaceTree()
-	var canvasNodes = getSpaceTree().graph.nodes;
-    var nodeArray = [];
-    for (var node in canvasNodes) {
-        if (canvasNodes.hasOwnProperty(node)) {
-            var nodeItem = canvasNodes[node]['data'];
-            nodeArray.push(nodeItem);
-        }
+	
+	var nodeArray = [];
+
+	// Gets products from tree if in single mode:
+	if (run_type == 'single') {
+		productNodes = getSpaceTree().graph.nodes;
+	}
+
+	// // Converts productNodes to object if it's a list (e.g., batch mode):
+	// if (Array.isArray(productNodes)) {
+	// 	productNodes = Object.assign({}, productNodes);
+	// }
+
+    for (var node in productNodes) {
+
+    	if (!productNodes.hasOwnProperty(node)) { continue; }
+
+    	var nodeItem;
+    	if (run_type == 'single') {
+			nodeItem = productNodes[node]['data'];    		
+    	}
+    	else if (run_type == 'batch') {
+    		nodeItem = productNodes[node];
+    	}
+
+    	if (csvType == "likely") {
+    		// Builds "likely" csv with nodes with globalAccumulation > 10%
+    		var genNum = nodeItem.genKey
+    		// Assumes genKeys with integer values are parents (e.g., 1, 2, etc.)
+    		if (nodeItem.genKey == "molecule 1") {
+    			nodeArray.push(nodeItem);
+    		}
+    		// Adds products with GA > 0.1%:
+    		if (nodeItem.globalAccumulation > 0.001) {
+    			nodeArray.push(nodeItem);
+    		}
+    	}
+    	else {
+    		// Builds full node tree for all other CSV types:
+    		nodeArray.push(nodeItem);
+    	}
+
     }
+
     return nodeArray;
+
 }
 
 

@@ -74,6 +74,8 @@ $(document).ready(function() {
         return;
     }
     else {
+        calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
+        total_calls = calls_tracker;
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
@@ -85,6 +87,8 @@ $(document).ready(function() {
         checkedCalcsAndProps = buildCheckedCalcsAndProps(); // from scripts_pchemprop.js
         kowPH = $('#id_kow_ph').val();
         connectToSocket();
+        calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
+        total_calls = calls_tracker;
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     });
 
@@ -222,7 +226,15 @@ function connectToSocket() {
         data = JSON.parse(data);
 
         if (workflow == 'pchemprop' && run_type == 'single') {
+            calls_tracker--;
+            batch_data.push(data);
             parseResponseToPchemTable(data, data_node, false, addDataToTable_tracker);
+            console.log("calls tracker " + calls_tracker);
+            if (calls_tracker <= 0) {
+                handleGeomean(workflow, run_type);
+                calls_tracker = 0;
+                batch_data = [];
+            }
             return;
         }
 
@@ -235,7 +247,6 @@ function connectToSocket() {
             calls_tracker = parseInt(sessionStorage.getItem('calls_tracker'));
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
 
-            // if (workflow == 'gentrans') {
             if (data['workflow'] == 'gentrans' || data['request_post']['workflow'] == 'gentrans') {
                 // workflow global var was getting set to false during
                 // gentrans batch, oddly enough...
@@ -270,7 +281,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -333,7 +343,9 @@ function connectToSocket() {
 
                                 var prod_obj = batch_chem[prod_index];
 
-                                if (prod_obj['genKey'] == data_obj_genkey && prod_obj['smiles'] == data_obj_smiles) {
+                                var chemMatch = prod_obj['smiles'] == data_obj_smiles || prod_obj['chemical'] == data_obj_smiles;
+
+                                if (prod_obj['genKey'] == data_obj_genkey && chemMatch) {
 
                                     var data_obj = {
                                         'data': data['data'],
@@ -372,7 +384,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -388,7 +399,9 @@ function connectToSocket() {
         else {
             batch_data.push(data);
 
-            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data && data['service'] == 'getChemInfo') {
+            if (data.request_post && data.request_post.service == 'getChemInfo') {
                 // add data to node object of products tree:
                 for (var index in st.graph.nodes) {
                     if (data['request_post']['genKey'] == st.graph.nodes[index]['data']['genKey']) {
@@ -412,12 +425,7 @@ function connectToSocket() {
             var pchemprop_option = $('#gen-select-pchem').val();
             var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
-            if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
-                displayProductData();  // cts_gentrans_tree function
-            }
-
             // For molecular info data for metabolites:
-            // if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
             if (is_gentrans_single && data['prop'] == 'products') {
                 // initiate space tree with incoming socket data:
                 nodeHeight = 114
@@ -429,13 +437,11 @@ function connectToSocket() {
                 $('#total-products').html(total_products_html);
 
             }
-            var is_cheminfo = 'service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo';
+            var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
             if (is_cheminfo) {
-                var new_json = st.toJSON();
-                st.loadJSON(new_json);
-                st.compute();
-                st.select(st.root);  // re-select the node to replot the tree
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
+                addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
+                redrawProductTree();  // redraws the tree (cts_gentrans_tree.html)
             }
 
             // Notify user that p-chem data is available for download for
@@ -447,19 +453,23 @@ function connectToSocket() {
 
                 blockInterface(true, blockui_message);
 
+                handleGeomean(workflow, run_type);  // calculates geomean
+
+                displayProductData();  // displays pchem and geomean data of product
+
             }
 
             // if batch, display link for CSV:
             if (window.location.href.indexOf('batch') > -1) {
                 $('#export_menu').css('position', 'relative').show();
                 $('#export_menu').prepend('<h3>Batch results ready for download</h3>');
+                handleGeomean(workflow, run_type);
             }
 
             // TESTWS Test Page - Initially print JSON to textarea!
             // TODO: CSV download using current csv code in CTS
             if(window.location.href.indexOf('testws') > -1) {
                 // all calls complete, display batch_data as formatted json:
-                // var output_data = JSON.stringify()
                 $('#testws-response').val(JSON.stringify(batch_data, undefined, 4));
             }
 
@@ -490,6 +500,8 @@ function connectToSocket() {
 function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
     
     if (checkedCalcsAndProps == null) { return; }
+
+    clearGeomeanColumn();  // clears geomean column of any content
 
     // var num_pchem = parseFloat($('#gen-select-pchem').val()); // number of props
     var addDataToTable = false; // whether to plot on visible pchem table or not..
@@ -625,6 +637,9 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
             if (addDataToTable) { $(tblCell).html(spinner_html); }
         }
     }
+
+    // adds spinners to geomean column:
+    // addSpinnersToGeomeanColumn();
 
 }
 
@@ -769,34 +784,37 @@ function parseResponseToPchemTable(response, node, hasData, addDataToTable) {
 }
 
 
+
 function organizeData(calc, prop, data) {
     // formats data for pchem table
-
-    if (typeof data === "number") {
-        var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
-                            "henrys_law_con","water_sol_ph"];
-        // if (prop == "water_sol" || prop == "vapor_press" || prop == "mol_diss" || prop == "henrys_law_con" || prop == "water_sol_ph") {
-        if (roundList.indexOf(prop) > -1) {
-            if (calc == "test" && prop == "vapor_press") { 
-                data = Math.pow(10, data);
-            }
-            return data.toExponential(2);
-        }
-        else {
-            return data.toFixed(2);
-        }
+    if (!Number(data) && Number(data) != 0 && typeof data == "string") {
+        return data;  // doesn't do anything if it isn't a number (e.g., "N/A")
+    }
+    else if (typeof data == "object" && prop == "ion_con") {
+        return organizePkaData(data);
+    }
+    else {
+        data = Number(data); // makes sure data is Number before rounding
     }
 
-    if (typeof data === "string") {
-        return data;
+    var roundList = ["water_sol", "vapor_press", "mol_diss", "mol_diss_air",
+                        "henrys_law_con","water_sol_ph"];
+
+    if (roundList.indexOf(prop) > -1) {
+        return data.toExponential(2);
     }
+    else {
+        return data.toFixed(2);
+    }
+}
 
-    // For multiple pKa values in a cell..
 
+
+function organizePkaData(data) {
+    // For multiple pKa values in a cell:
     if (data == null ) {
         return "none";  // return "none" to pchem table cell
     }
-
     var parsedData = "";
     for (item in data) {
         var itemVals = data[item];
@@ -815,6 +833,7 @@ function organizeData(calc, prop, data) {
     }
     return parsedData;
 }
+
 
 
 function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
@@ -839,10 +858,18 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
                     else { num_props += 1; }
                 }
                 else if (calc == "epi") {
-                    if (prop == "water_sol" || prop == "log_bcf") {
-                        num_props += 2;  // epi's water_sol and log_bcf has 2 methods
+                    if (prop == "water_sol" || prop == "log_bcf" || prop == "koc") {
+                        num_props += 2;  // epi's water_sol, log_bcf, and koc has 2 methods
                     }
                     else { num_props += 1; }
+                }
+                else if (calc == "test") {
+                    if (prop == "log_bcf") {
+                        num_props += 4;  // bcf has 4 methods
+                    }
+                    else {
+                        num_props += 3;  // TESTWS has 3 methods
+                    }
                 }
                 else { num_props += 1; }
             }
@@ -851,6 +878,7 @@ function calculateTotalCalls(nodes_list, checkedCalcsAndProps) {
     var total_calls = num_nodes * num_props;
     return total_calls;
 }
+
 
 
 function jsonRepack(jsonobj) {
