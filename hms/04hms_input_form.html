@@ -14,14 +14,24 @@
     {% endfor %}
 {% endif %}
 
-  <tbody>
-  {% for field in FORM %}
-    <tr>
-        <td>{{ field.label_tag }}</td>
-        <td>{{ field }}</td>
-	</tr>
-  {% endfor %}
-  </tbody>
-
-
+<div class="input_table">
+    <div class="input_table_row table_header">
+        <div class="input_table_key">Input</div>
+        <div class="input_table_value">Value</div>
+    </div>
+    {% for field in FORM %}
+        <div class="input_table_row">
+            <div class="input_table_key">{{ field.label_tag }}</div>
+            <div class="input_table_value">{{ field }}</div>
+        </div>
+    {% endfor %}
+</div>
+<div class="input_nav">
+    <div class="input_right">
+        <div class="submit_data_request_loader"></div>
+        <ul>
+            <li><input class="submit form-submit input_button submit_data_request" type="submit" value="Submit"/></li>
+        </ul>
+    </div>
+</div>
 <!--end 04hms_input_form-->

@@ -35,8 +35,8 @@ $(document).ready(function() {
         <p class="intro-text">Select (right-click) a metabolite to view its molecular information.</p>
         <br>
         <div class="nodeWrapDiv"></div>
-        <table class="mol-info-table ctsTableStylin">
-        </table>
+        <table class="mol-info-table ctsTableStylin"></table>
+        <input type="button" id="node-as-parent-button" value="Get transformation products" style="display:none;" />
     </div>
 
     <br>
@@ -60,6 +60,7 @@ $(document).ready(function() {
         <br>
         <p class="gentransError">Must right-click a metabolite first</p>
         <p class="selectNodeForData">Select (right-click) a node to view its physicochemical properties</p>
+        <p class="pchemSelectError">Must select at least one calculator and available property first</p>
     </div>
 
 </div>
