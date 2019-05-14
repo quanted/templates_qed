@@ -1143,8 +1143,8 @@
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
             var filterTable = fishTable.column(minColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {
-                {#if (Number(value) < Number(cValue)) {#}
+                {#if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) < Number(cValue)) {
                     return true;
                 }
                 else {
@@ -1156,8 +1156,8 @@
                 }
             });
             var filterTable2 = fishTable.column(maxColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {
-                {#if (Number(value) > Number(cValue)) {#}
+                {#if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) > Number(cValue)) {
                     return true;
                 }
                 else {
