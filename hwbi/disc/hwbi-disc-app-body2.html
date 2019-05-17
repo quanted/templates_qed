@@ -940,7 +940,7 @@
                                 </ul>
                                 <hr class="s-tabs-below">
                             </div>
-                        </nav><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 6 as domains %}{% regroup service_metrics by 7 as indicators %}{% regroup service_metrics by 8 as metricGroups %}{% for metricGroup in metricGroups %}
+                        </nav><a href="#" class="back container-back" onclick="serviceTabContainerReturn();"></a><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 6 as domains %}{% regroup service_metrics by 7 as indicators %}{% regroup service_metrics by 8 as metricGroups %}{% for metricGroup in metricGroups %}
                         
                         <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="slinky-menu" style="display: none;">
                             <ul>{% for domain in domains %}{% if domain.list.0.8 == metricGroup.grouper %}
@@ -956,7 +956,9 @@
                         </div>{% endfor %}
                     
                         <section class="services-tabs-container">{% for metricGroup in metricGroups %}
+                            
                             <div id="tab{{ forloop.counter }}">
+                                
                                 <div class>
                                     
                                     <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
