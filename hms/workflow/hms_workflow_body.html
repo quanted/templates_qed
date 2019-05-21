@@ -28,7 +28,7 @@
             The user chooses a stream system either by HUC ID or COMID then chooses a start and end date. A runoff
             algorithm is chosen to calculate the amount of precipitation that is converted to surface runoff. The NLDAS,
             GLDAS or Curve number runoff method can be simulated. A precipitation source needs to be chosen from NLDAS,
-            GLDAS, DAYMET, NCDC, PRISM, or WGEN a stochastic weather generator to initialize the simulation. The final
+            GLDAS, DAYMET, NCEI, PRISM, or WGEN a stochastic weather generator to initialize the simulation. The final
             input needed is a flow routing algorithm calculated by the constant volume, changing volume, or the
             Kinematic wave technique.
             The results give the amount of precipitation, surface runoff, and the percent of subsurface flow as well as
@@ -144,9 +144,10 @@
                     <option selected value="nldas">NLDAS</option>
                     <option value="gldas">GLDAS</option>
                     <option value="daymet">Daymet</option>
-                    <option value="ncdc">NCDC</option>
+                    <option value="ncei">NCEI</option>
                     <option value="prism">PRISM</option>
                     <option value="wgen">WGEN</option>
+                    <option value="nwm">NWM</option>
                 </select>
                 <br>
                 <br>
@@ -163,6 +164,7 @@
                     <option selected value="constantvolume">Constant Volume</option>
                     <option value="changingvolume">Changing Volume</option>
                     <option value="kinematicwave">Kinematic Wave</option>
+                    <option value="nwm">National Water Model</option>
                 </select>
                 <br>
                 <br>
