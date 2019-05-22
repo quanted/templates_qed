@@ -23,5 +23,35 @@
             return false;
         }
     </script>
+    <!-- function that controls the steps for the initial start of the tutorial -->
+    <script type="text/javascript">
+        function startIntro() {
+            var intro = introJs();
+            intro.setOptions({
+            steps: [
+                {
+                    intro: "This is the Community Snapshot page. Here you can view your DISC score and how it's broken down."
+                },
+                {
+                    element: document.querySelector('.main-header'),
+                    intro: "This is another search bar. You can use it instead of going back to the home screen to search for another location."
+                },
+                {
+                    element: document.querySelector('.sidenav'),
+                    intro: "This is the navigation pane. You can switch between the different pages here."
+                },
+                {
+                    element: document.querySelector('#snapshot-btn'),
+                    intro: "This is the snapshot button. This lets you create a static snapshot of this page, which opens in a new window."
+                }
+                ]
+            });
+            intro.setOption('showStepNumbers', false).setOption('disableInteraction', true).start().oncomplete(function() {
+                $('#compare-tab-link').trigger('click');
+                setTimeout(startCompareIntro, 500);
+            });
+        }
+        
+    </script>
 </body>
 </html>
