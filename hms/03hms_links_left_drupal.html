@@ -19,6 +19,10 @@
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "temperature" and valueValue == "meteorology/temperature/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Temperature</a></li>
+            {% elif MODEL == "meteorology" and SUBMODEL == "wind" and valueValue == "meteorology/wind/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Wind</a></li>
+            {% elif MODEL == "meteorology" and SUBMODEL == "humidity" and valueValue == "meteorology/humidity/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Humidity</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "solarcalculator" and valueValue == "meteorology/solarcalculator/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Solar Calculator</a></li>
             {% elif MODEL == "hydrology" and SUBMODEL == "streamflow" and valueValue == "hydrology/streamflow/" %}
