@@ -298,12 +298,12 @@ function connectToSocket() {
                         var pchem_data = {
                             'chemical': data.data['chemical'],
                             'ph': kowPH,
-                            // 'nodes': product_data,
                             'pchem_request': checkedCalcsAndProps,
                             'run_type': run_type,
                             'workflow': 'gentrans',
                             'genKey': data.request_post['genKey'],
-                            'mass': data.data['mass']
+                            'mass': data.data['mass'],
+                            'request_post': {'service': null}
                         };
 
                         var cache = [];

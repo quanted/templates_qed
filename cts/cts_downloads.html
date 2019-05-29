@@ -94,6 +94,8 @@ $(document).ready(function () {
 
     	json_data['run_data'] = run_data;
 
+    	// removeImageData();  // removes 'node_image' and 'popup_image' from batch_chems and batch_data global objects
+
 		var cache = [];
 		var json_data_string = JSON.stringify(json_data, function(key, value) {
 		    if (typeof value === 'object' && value !== null) {
@@ -390,6 +392,50 @@ function pickOutPka(html_string) {
 		pka_obj[key_val_array[0]] = key_val_array[1];
 	});
 	return pka_obj;
+}
+
+
+function removeImageData() {
+	/*
+	Removes image data (node_image, popup_image) from
+	batch_data and batch_chems objects.
+	*/
+	for (var chemInd in batch_data) {
+		var chemObj = batch_data[chemInd];
+		var nodeData = batch_data[chemInd]['node'];
+		if ('node_image' in chemObj) {
+			// remove key:
+			delete chemObj['node_image'];
+		}
+		if ('popup_image' in chemObj) {
+			// remove key:
+			delete chemObj['popup_image'];
+		}
+		if ('node_image' in nodeData) {
+			// remove key:
+			delete nodeData['node_image'];
+		}
+		if ('popup_image' in nodeData) {
+			// remove key:
+			delete nodeData['popup_image'];
+		}
+		if ('structureData' in nodeData) {
+			// delete nodeData['structureData'];
+			nodeData['structureData'] = {};  // clears structureData object
+			chemObj['structureData'] = {};
+		}
+	}
+	for (var chemInd in batch_chems) {
+		var chemObj = batch_chems[chemInd];
+		if ('node_image' in chemObj) {
+			// remove key:
+			delete chemObj['node_image'];
+		}
+		if ('popup_image' in chemObj) {
+			// remove key:
+			delete chemObj['popup_image'];
+		}	
+	}
 }
 
 </script>
