@@ -403,6 +403,7 @@ function removeImageData() {
 	for (var chemInd in batch_data) {
 		var chemObj = batch_data[chemInd];
 		var nodeData = batch_data[chemInd]['node'];
+		if (!nodeData) { continue; }
 		if ('node_image' in chemObj) {
 			// remove key:
 			delete chemObj['node_image'];
