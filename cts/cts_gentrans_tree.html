@@ -9,8 +9,36 @@
 <script type="text/javascript" src="/static_qed/cts/js/jquery-ui.js"></script>
 <!-- <script type="text/javascript" src="/static_qed/cts/js/scripts_jchem.js"></script> -->
 
+<script type="text/javascript" src="/static_qed/cts/js/reaction_pathways_link.js"></script>
+
 <script>
 var labelType, useGradients, nativeTextSupport, animate;
+
+var reactionMap = {
+    'Halogenated Aliphatics: Nucleophilic Substitution': 'Scheme_1',
+    'Halogenated Aliphatics: Elimination': 'Scheme_2',
+    'Epoxide Hydrolysis': 'Scheme_3',
+    'Organophosphorus Ester Hydrolysis 1': 'Scheme_4',
+    'Organophosphorus Ester Hydrolysis 2': 'Scheme_5',
+    'Carboxylic Acid Ester Hydrolysis': 'Scheme_6',
+    'Lactone Hydrolysis': 'Scheme_7',
+    'Carbonate Hydrolysis': 'Scheme_8',
+    'Anhydride Hydrolysis': 'Scheme_9',
+    'Cyclic Anhydride Hydrolysis': 'Scheme_20',
+    'Amide Hydrolysis': 'Scheme_10',
+    'Lactam Hydrolysis': 'Scheme_11',
+    'Carbamate Hydrolysis': 'Scheme_12',
+    'Thiocarbamate Hydrolysis': 'Scheme_13',
+    'Urea Hydrolysis': 'Scheme_14',
+    'Cyclic Urea Hydrolysis': 'Scheme_22',
+    'Sulfonylurea Hydrolysis': 'Scheme_15',
+    'Imide Hydrolysis': 'Scheme_19',
+    'Nitrile Hydrolysis': 'Scheme_17',
+    'N-S Cleavage': 'Scheme_18',
+    'Cyclic Carbonate Hydrolysis': 'Scheme_21',
+    'Acid Halide Hydrolysis': 'Scheme_23',
+    'Dehydration of Geminal Diols': 'Scheme_24',
+};
 
 
 // ########## Globals!!! #########################
@@ -505,7 +533,6 @@ function init(json){
                             var next_node_id = buildGenKey(i + 1, node_gen_array);
                             var next_node = searchForNodeByGenKey(next_node_id, st_nodes);
 
-
                             var routes = next_node.data.routes;
                             var arrow_obj = $.parseHTML(arrow_html);  //<div><img></div>
                             if (routes) {
@@ -513,7 +540,11 @@ function init(json){
                                 var latest_node_route = parseRouteName(routes);
                                 // todo: break up route name by capital letters (e.g., HydroxyAlphaHydroxlation --> Hydroxy \n Alpha \n Hydrolation)
 
-                                $(arrow_obj).prepend('<br><p>' + latest_node_route + '</p>');  // add "routes"
+                                var linkSection = findReactionLinkSection(routes);
+                                alert("Link section: " + linkSection);
+                                var link = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#" + linkSection;
+
+                                $(arrow_obj).prepend('<br><p><a href="' + link + '" target="_blank">' + latest_node_route + '</a></p>');  // add "routes"
                             }
                             $('#reactionpathways').append(arrow_obj);
 
@@ -534,14 +565,8 @@ function init(json){
     st.loadJSON(json);
     //compute node positions and layout
     st.compute();
-    //optional: make a translation of the tree
-    // st.geom.translate(new $jit.Complex(-200, 0), "current");
     //emulate a click on the root node.
     st.onClick(st.root);
-    // resizeCanvas(nodeList.slice(0, st.config.levelsToShow + 1), nodeHeight);
-    //end
-
-
     // This is where st.graph.nodes would be accessible and a list of
     // nodes could easily be made to make one large chem info request to jchem!
     var st_nodes = st.graph.nodes;
@@ -552,26 +577,38 @@ function init(json){
     total_calls = calls_tracker;
     molecularInfoRequestStatus(true);  // indicate mol info request status
 
+}
 
+function findReactionLinkSection(routes) {
+    var route = routes.split(',').pop();
+    alert("route: " + route);
+    for (var reactionName in reactionMap) {
+        alert("reactionName: " + reactionName);
+        var sectionName = reactionMap[reactionName];
+        if(route.toLowerCase() == reactionName.toLowerCase()) {
+            alert("Returning: " + sectionName);
+            return sectionName;
+        }
+        // if (route.toLowerCase().includes(reactionName.toLowerCase())) {
+        //     alert("Returning :" + sectionName);
+        //     return sectionName;
+        // }
+    }
+    return false;
 }
 
 
 function parseRouteName(routes) {
     // break up word based on capital letters
     // e.g., EsterHydrolysis --> Ester \n Hydrolysis
-
     var route = routes.split(',').pop();
-
     // method accounting for single upper-case letter:
     var split_route_array = route.match(/([A-Z]?[^A-Z]*)/g).slice(0,-1);
-    
     var new_route_string = "";
     for (item in split_route_array) {
         new_route_string += split_route_array[item] + "\n";
     }
-
     return new_route_string;
-
 }
 
 
@@ -713,7 +750,6 @@ function getMolecularInfo(node) {
 function molecular_info_request_websocket(node) {
     // trying to use ws protocol instead of ajax,
     // perhaps this will prevent occasional timeouts.
-
     mol_info_request = JSON.stringify({
         'chemical': node.data.smiles,
         'is_node': true,
@@ -721,26 +757,17 @@ function molecular_info_request_websocket(node) {
         'genKey': node['data']['genKey'],
         'workflow': 'gentrans'
     });
-
     // Send data to cts_nodejs server:
     socket.emit('get_data', mol_info_request);
-
-    // Note: socket.on receive at cts_pchemprop_requests.html
-    // Need to refactor this and cts_pchemprop_requests.html
-
 }
 
 
 function molecular_info_request(node) {
     // nodes - could be one string or array of strings
-
-
     $.ajax({
         url: '/cts/rest/molecule',
         type: 'POST',
-
         data: {'chemical': node.data.smiles, 'is_node': true},
-
         dataType: 'json',
         success: function(data) {
             var data = jsonRepack(data);
@@ -748,56 +775,37 @@ function molecular_info_request(node) {
                 console.log(textStatus);
                 return;
             }
-
-
-
             calls_tracker--;
             console.log("mol info request tracker: " + calls_tracker);
-
-
             // could populate node with image and popup image here:
             // todo: cts_rest.py needs to know to get these for gentrans single mode
-            // data['node_image'] and data['popup_image']['html']
             node.name = data['data']['node_image'];
             node.data.html = data['data']['popup_image']['html'];
-
             for (var k in data['data']) {
                 if (k != 'node_image' && k != 'popup_image' && k != 'structureData') {
                     node.data[k] = data['data'][k]; 
                 }
             }
-
             molecularInfoRequestStatus(true);
-
             // Updates tree with product images after all chem info is returned:
             if (calls_tracker <= 0) {
                 redrawProductTree();  // redraws the tree
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
             }
-
-            // Update tree for each mol info response:
-            // redrawProductTree();
-
             var product_node = $('img#' + node.id + '.metabolite[height=114]');
             var molInfo = $('#mol-info-wrapper');
             var molInfoTable = $(molInfo).children('table.mol-info-table');
             buildMolInfoTable(molInfoTable, node, node.data);  // build mol info table
-
-            // $(product_node).addClass("selectedMetabolite");
-            // $("#" + node.id).children('img').addClass("selectedMetabolite");  // highlight node
-
             var molInfoHeader = $(molInfo).siblings('h3')[0];
             if ($(molInfoHeader).hasClass('collapse-close')) {
                 $(molInfoHeader).removeClass('collapse-close').addClass('collapse-open');
             }
-
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
         }
     });
 }
-
 
 function buildGenKey(depth_index, node_gen_array) {
     // Takes generation array of selected product 
@@ -812,25 +820,20 @@ function buildGenKey(depth_index, node_gen_array) {
     return gen_key;
 }
 
-
 function addImageToMolInfo(node) {
     var nodeHTML = $.parseHTML(node.data.html);
     var nodeImage = $(nodeHTML).children('div.metabolite_img');
     return nodeImage;
 }
 
-
 function buildMolInfoTable(molTable, node, data) {
     var acceptedKeys = ['generation', 'smiles', 'mass', 'name', 'formula', 'iupac', 'routes', 'exactMass'];
-
     // add genKey and routes from node to data:
     data['generation'] = node.data.genKey;
     data['routes'] = node.data.routes;
-
     //Clear existing table data..
     $(molTable).children().empty();
     $(molTable).html("");
-
      //Add molecular info to table..
     $(molTable).prepend('<tr class="header"><th colspan="2">Molecular Information</th></tr>');
     for (key in data) {
@@ -838,9 +841,7 @@ function buildMolInfoTable(molTable, node, data) {
             var newRow = '<tr><td>';
             newRow += key + '</td><td>';
             newRow += data[key] + '</td></tr>';
-            // $(molTable).find('tbody').append(newRow);
             $(molTable).append(newRow);
-            // $("#" + node.id).children().toggleClass("selectedMetabolite"); //highlight node
         }
     }
 }
@@ -850,10 +851,8 @@ function tabDisplayLogic(event) {
     //if menu bar is clicked, hide children!
     var target = $(event.target); //element that fired original click event
     if ($(target).hasClass('ui-tabs-nav')) {
-
         var divs = $('#tabs').children('.ui-tabs-panel'); //get div elements to hide/show
         var selectedDiv;
-
         //using li's, get aria-selected=true and get div with id from aria-controls 
         $('ul.ui-tabs-nav li').each(function() {
             var selected = $(this).attr('aria-selected');
@@ -862,16 +861,13 @@ function tabDisplayLogic(event) {
                 selectedDiv = $('div#' + divID);
             }
         });
-        
         var bothHid = 1; // 1 - both divs are hidden
         $(divs).each(function() {
             if ($(this).is(':visible')) { bothHid *= 0; }
             else { bothHid *= 1; }
         });
-
         if (bothHid) { $(selectedDiv).show(); }
         else { $(divs).hide(); }
-
     }
 }
 
@@ -881,14 +877,11 @@ function displayProductData() {
     // this function display mol info and p-chem results
     // of either the parent if no product is displayed, or
     // the right-clicked (displayed) product if there is one
-
     // check if selected product exist on the frontend:
     var product_mol_info = $('table.mol-info-table')[0];
-
     if ($('#mol-info-wrapper').is(':visible')) {
         // get node of selected product (2nd cell value of row containing "generation"):
         var selected_product = $('.mol-info-table tr:contains(generation)').children()[1].innerHTML;
-
         for (node in st.graph.nodes) {
             var node_gen = st.graph.nodes[node].data.genKey;
             if (node_gen == selected_product) {
@@ -897,7 +890,6 @@ function displayProductData() {
                 return;
             }
         }
-
     }
     else {
         // get node of parent molecular:
@@ -911,9 +903,7 @@ function displayProductData() {
         }
 
     }
-
 }
-
 
 function updateProgressBar(calls_tracker, total_calls) {
     var progress = 100 * (1 - (calls_tracker / total_calls));
@@ -921,7 +911,6 @@ function updateProgressBar(calls_tracker, total_calls) {
         value: progress
     });  
 }
-
 
 function blockInterface(block, custom_message) {
     var blockui_obj = {
@@ -942,7 +931,6 @@ function blockInterface(block, custom_message) {
         message: '<div id="pchem_wait"><h2 class="popup_header">Retrieving data...</h2><br><img src="/static_qed/cts/images/loader.gif" style="margin-top:-16px" id="load_wheel"><br><br><div id="progressbar"></div><br><input onclick="cancelRequest()" type="button" value="Cancel" id="btn-pchem-cancel"><br></div>',
         fadeIn: 500
     }
-
     var has_custom_message = custom_message != null && custom_message.length > 0;
     if (block && !(has_custom_message)) {
         $.blockUI(blockui_obj);
@@ -953,7 +941,6 @@ function blockInterface(block, custom_message) {
     }
     else { $.unblockUI(); }
 }
-
 
 function molecularInfoRequestStatus(in_progress) {
     // same of blockInterface, but doesn't block out
@@ -970,22 +957,16 @@ function molecularInfoRequestStatus(in_progress) {
 
 }
 
-
 function cancelRequest() {
-
     var blockui_message = '<div id="pchem_wait"><h3 class="popup_header">Physicochemical data successfully retrieved!<br><br>The data can be downloaded at the top-right of the page.</h3><br><br><input onclick="blockInterface(false)" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
-
     console.log("canceling request");
     socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps}));
     $.unblockUI();
 }
 
-
 function jsonRepack(jsonobj) {
   return JSON.parse(JSON.stringify(jsonobj));
 }
-
-
 
 function redrawProductTree() {
     /*
@@ -999,8 +980,6 @@ function redrawProductTree() {
     st.select(st.root);
 }
 
-
-
 function addLikelyBorderToProducts() {
     /*
     Adds a border around products in the tree that
@@ -1008,7 +987,6 @@ function addLikelyBorderToProducts() {
     */
     var treeNode;  // tree node object
     var treeNodeHtmlObject;  // tree node's displayed HTML on the tree
-
     for (var ind in st.graph.nodes) {
         treeNode = st.graph.nodes[ind];
         if (treeNode.data.globalAccumulation <= 0.1) {
@@ -1019,43 +997,11 @@ function addLikelyBorderToProducts() {
         $(treeNodeHtmlObject).addClass("likelyProduct");  // adds border
         treeNode.name = $(treeNodeHtmlObject).prop("outerHTML");  // adds new HTML to node
     }
-
-    // redrawProductTree();  // redraws the tree after above updates to nodes
-
 }
 
 </script>
 
-<!-- <div id="cont"> -->
-    <!-- <div id="center-cont"> -->
-        <!-- the canvas container -->
-        <!-- <div id="infovis"></div> -->
-    <!-- </div> -->
-    <!-- <div id="log"></div> -->
-<!-- </div> -->
-<!-- <div id="reactionpathways"> -->
-<!-- </div> -->
-
 <script type="text/javascript">
 $(document).ready(function () {
-
-    // var hidden_json = $('#hiddenJson').val();
-
-    // if (hidden_json != null) {
-    //     // expecting gentrans metabolites output to draw on jit canvas
-    //     var json = $.parseJSON($('#hiddenJson').val());
-    //     nodeHeight = 114
-    //     nodeWidth = 100
-    //     init(json);  // paint tree to canvas
-    // }
-
-
-    // $('#mol-info-header').removeClass('collapse-open').addClass('collapse-close');
-
-
-    // Could call cts_pchemprop_requests startPchemProp function here:
-
-
-
 });
 </script>
