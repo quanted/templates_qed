@@ -258,32 +258,16 @@ function addPchemDataToNode(node, pchem_data) {
             if (!('pchemprops' in matchedNode.data)) {
                 matchedNode.data.pchemprops = [];
             }
-
             for (pchemprop_obj in matchedNode.data.pchemprops) {
-                // if (Object.is(matchedNode.data.pchemprops[pchemprop_obj], pchem_data)) {
-                //     return;
-                // }
                 var productObj = matchedNode.data.pchemprops[pchemprop_obj];
                 if (productObj.prop == pchem_data['prop'] && productObj.method == pchem_data['method'] && productObj.data == pchem_data['data']) {
                     // Returns instead of adding data if prop already exist for product (i.e., node):
                     return;
                 }
-
             }
-
-            // if (Array.isArray(pchem_data['data'])) {
-            //     for (var dataInd in pchem_data['data']) {
-            //         var dataObj = pchem_data.data[dataInd];
-            //         matchedNode.data.pchemprops.push(dataObj);
-            //     }
-            //     return;
-            // }
-
             matchedNode.data.pchemprops.push(pchem_data);
-
             $("#" + matchedNode.id).children('img')
                 .addClass("hasPchemProps"); // highlight nodes
-
             return;
         }
     }
@@ -300,7 +284,6 @@ function addGenKey(jsonObj, json) {
     jsonObj.eachLevel(json, 0, genMax, function(node, depth) {
         depthList[depth] += 1;
         numNodesPerDepth[depth] += 1;  // tracking total nodes/depth
-        // var key = "";
         var key = "molecule ";
         if (depth == 0) { key += "1"; }
         else {
@@ -320,9 +303,6 @@ function addGenKey(jsonObj, json) {
 
 
 function init(json){
-
-    //init data
-    // json = $.parseJSON($('#hiddenJson').val());
 
     //attempt at fixing "child-parent" problem. maybe not the best..worked though
     var newChilds = [];
@@ -541,7 +521,6 @@ function init(json){
                                 // todo: break up route name by capital letters (e.g., HydroxyAlphaHydroxlation --> Hydroxy \n Alpha \n Hydrolation)
 
                                 var linkSection = findReactionLinkSection(routes);
-                                alert("Link section: " + linkSection);
                                 var link = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#" + linkSection;
 
                                 $(arrow_obj).prepend('<br><p><a href="' + link + '" target="_blank">' + latest_node_route + '</a></p>');  // add "routes"
@@ -581,18 +560,11 @@ function init(json){
 
 function findReactionLinkSection(routes) {
     var route = routes.split(',').pop();
-    alert("route: " + route);
     for (var reactionName in reactionMap) {
-        alert("reactionName: " + reactionName);
         var sectionName = reactionMap[reactionName];
         if(route.toLowerCase() == reactionName.toLowerCase()) {
-            alert("Returning: " + sectionName);
             return sectionName;
         }
-        // if (route.toLowerCase().includes(reactionName.toLowerCase())) {
-        //     alert("Returning :" + sectionName);
-        //     return sectionName;
-        // }
     }
     return false;
 }
@@ -627,10 +599,8 @@ function setLabelScaling(x, y) {
     Handles products zooming in/out with the mouse wheel, and
     now with some zoom in/out buttons on the tree canvas.
     */
-    
     x = st.canvas.scaleOffsetX;
     y = st.canvas.scaleOffsetY;
-
     // Note: .node class is apparently somewhere in drupal2017 template,
     // causing browser window and spacetree div to zoom.
     // having trouble add class to the <div> wrapper where .node is,
@@ -638,37 +608,28 @@ function setLabelScaling(x, y) {
     // the spacetree div, infovis
     var all_nodes = $(".node");
     var space_nodes = $('#infovis').find(all_nodes);  // only pick nodes inside spacetree
-
     $(space_nodes).css("-moz-transform", "scale(" + x +"," +  y + ")");
     $(space_nodes).css("-webkit-transform", "scale(" + x +"," + y + ")");
     $(space_nodes).css("-ms-transform", "scale(" + x +"," +  y + ")");
     $(space_nodes).css("-o-transform", "scale(" + x +"," +  y + ")");
-
 }
-
 
 function getSpaceTree() {
     if (st !== null) { return st; }
     else { return null; }
 }
 
-
 function resizeCanvas(nodes) {
-
     // TODO: Keep div same size, add scroll bars instead!
-
     var count = getDeepestNodeCount(nodes);
     var offset = 4 * nodeHeight;
     // need number of nodes at deepest level:
     var height = count * nodeHeight + offset;  // calculate new height
     st.canvas.resize(800, height);
     st.select(st.root);  // re-select the node to replot the tree
-
     // Increase size of containter divs as well:
     // $('#center-cont, #cont').height(height);
-
 }
-
 
 function getDeepestNodeCount(nodeList) {
     /* Loops through list of node count per depth,
@@ -682,35 +643,26 @@ function getDeepestNodeCount(nodeList) {
     return "error: could not find any nodes in list";
 }
 
-
 function getMolecularInfo(node) {
-
     //Get molecular info upon right-clicking a metabolite
     //on the gentrans tree structure output, and display
     //pchemprops if node has any
-
     var molInfo = $('#mol-info-wrapper');
     var _mol_info_keys = ['exactMass', 'formula', 'iupac', 'mass'];
-
     if ($(molInfo).has('p.intro-text').length > 0) {
         $(molInfo).children('p.intro-text').remove();
         $(molInfo).children('input#node-as-parent-button').show();
     }
-
     // Clear existing pchemprop table for new data:
     clearPchemData(); // from scripts_pchemprop..
-
     // only add node image if a different node has been clicked:
     if (!currentNode || node.id != currentNode.id) {
         molInfo.children('.nodeWrapDiv').empty();  // empty existing contents
         molInfo.children('.nodeWrapDiv').append(addImageToMolInfo(node));  // add image to mol info
     }
-
     var molInfoDiv = $(molInfo).children('div.nodeWrapDiv');
     var molInfoTable = $(molInfo).children('table.mol-info-table');
-
     var product_node = $('img#' + node.id + '.metabolite[height=114]');  // node height (todo: us variable, don't hard code )
-
     // Check node for molecular info, download if node
     // doesn't have any:
     if (node.hasOwnProperty('data') && node.data['iupac'] != null) {
@@ -721,18 +673,13 @@ function getMolecularInfo(node) {
         }
     }
     else {
-
-        // molecular_info_request(node.data.smiles);
-
         molecular_info_request(node);
     }
-
     // Scroll to mol info molecule image upon right-clicked metabolite event:
     $(molInfo).show(300, function () {
         var scrollPos = $(molInfoDiv).offset().top;
         $(window).scrollTop(scrollPos);
     });
-
     // Check node for pchem properties, display if node has any:
     if (node.data.hasOwnProperty("pchemprops")) {
         // loop pchemprops calling parseResponseToPchemTable() (cts_pchemprop_ajax_calls)
@@ -742,10 +689,7 @@ function getMolecularInfo(node) {
             parseResponseToPchemTable(response, node, true, true);
         }
     }
-
 }
-
-
 
 function molecular_info_request_websocket(node) {
     // trying to use ws protocol instead of ajax,
@@ -760,7 +704,6 @@ function molecular_info_request_websocket(node) {
     // Send data to cts_nodejs server:
     socket.emit('get_data', mol_info_request);
 }
-
 
 function molecular_info_request(node) {
     // nodes - could be one string or array of strings
