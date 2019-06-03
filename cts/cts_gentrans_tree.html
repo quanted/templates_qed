@@ -36,14 +36,14 @@ var hydrolysisReactionMap = {
 };
 var reductionReactionMap = {
     // Reduction Library Pathways:
-    'Hydrogenolysis': '1',
-    'Vicinal Dehalogenation': '2',
-    'Nitroaromatic Reduction': '3',
-    'Aromatic Azo Reduction': '4',
-    'Sulfoxide Reduction': '5',
-    'N-Nitrosamine Reduction': '6',
-    'Quinone Reduction': '7',
-    'Isoxazole Cleavage': '8'
+    'Hydrogenolysis': 'Scheme1',
+    'Vicinal Dehalogenation': 'Scheme2',
+    'Nitroaromatic Reduction': 'Scheme3',
+    'Aromatic Azo Reduction': 'Scheme4',
+    'Sulfoxide Reduction': 'Scheme5',
+    'N-Nitrosoamine Reduction': 'Scheme6',
+    'Quinone Reduction': 'Scheme7',
+    'Isoxazole Cleavage': 'Scheme8'
 };
 var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
 var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4.htm#";
@@ -579,7 +579,8 @@ function findReactionLinkSection(routes) {
             return reductionLink + sectionName;
         }
     }
-    return false;
+    // return false;
+    return '/cts/about/reactionlibs';  // returns main RL page there isn't a pathway match
 }
 
 
