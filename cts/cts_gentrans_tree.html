@@ -45,6 +45,8 @@ var reductionReactionMap = {
     'Quinone Reduction': '7',
     'Isoxazole Cleavage': '8'
 };
+var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
+var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4.htm#";
 
 
 // ########## Globals!!! #########################
@@ -565,8 +567,6 @@ function init(json){
 
 function findReactionLinkSection(routes) {
     var route = routes.split(',').pop();
-    var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
-    var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4-copy.htm#";
     for (var reactionName in hydrolysisReactionMap) {
         var sectionName = hydrolysisReactionMap[reactionName];
         if(route.toLowerCase() == reactionName.toLowerCase()) {
