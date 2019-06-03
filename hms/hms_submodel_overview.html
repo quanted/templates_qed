@@ -35,7 +35,7 @@
             <tbody>
             <tr><th>Parameter</th><th>DataType</th><th>Description</th></tr>
             {% for i in INPUTS %}
-                <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td></tr>
+                <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 |safe }}</td></tr>
             {% endfor %}
             </tbody>
         </table>
