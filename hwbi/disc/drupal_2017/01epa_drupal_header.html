@@ -42,13 +42,5 @@
   <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/html5.js"></script><![endif]-->
   {% endif %}
 </head>
-{% if electron %}
-<script>
-  window.nodeRequire = require;
-  delete window.require;
-  delete window.exports;
-  delete window.module;
-</script>
-{% endif %}
-<script src="/static_qed/hwbi/disc/js/jquery-3.3.1.min.js"></script>
+<script>window.$ = window.jQuery = require('jquery');</script>
 <!-- end 01epa_drupal_header.html -->
