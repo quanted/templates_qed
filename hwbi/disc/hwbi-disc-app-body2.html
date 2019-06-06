@@ -749,7 +749,7 @@
                     <div class="customize_description">
                         <button id="reset-hwbi-domains">Reset</button>
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
-                        <p>Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
+                        <p class="tab-desc">Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
                     </div>
                     <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
@@ -857,7 +857,7 @@
         <div class="customize_description">
             <button id="reset-service-btn">Reset</button>
             <h3>Services</h3>
-            <p>Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
+            <p class="tab-desc">Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
         </div>
         <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
@@ -907,8 +907,8 @@
 
         <div class="priority-rankings">
             <button id="riv-reset-btn">Reset</button>
-            <h3>Priority Rankings and Services</h3>
-            <p>Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
+            <h3>Priority Rankings</h3>
+            <p class="tab-desc">Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
             <div class="ranking-list-container">
                 <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
                 <ul class="rankinglist">
@@ -929,8 +929,12 @@
     </div>
 
     <div id="scenarios-tab" class="disc-body">
+        <div id="scenario-btns">
+            <button id="reset-scenario-builder-btn">Reset Scenario</button>
+            <button onclick="loadMetricValues('custom_val');">Load Custom Metrics</button>
+        </div>
         <h3>Scenario Builder</h3>
-        <p>The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures.</p>
+        <p class="tab-desc">The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures.</p>
         <div class="row cols-2 scenario-cols">
 
             <div class="col size-1of2">
@@ -980,11 +984,8 @@
                     </div>
                 </div>
 
-            <div class="col size-2of2" style="width: 45%;">
-                <div id="scenario-btns">
-                    <button id="reset-scenario-builder-btn">Reset Scenario</button>
-                    <button onclick="loadMetricValues('custom_val');">Load Custom Metrics</button>
-                </div>
+            <div class="col size-2of2 aster-area">
+                
                 <div id="aster">
                     <script src="/static_qed/hwbi/disc/js/draw.js" ></script>
                 </div>
@@ -994,7 +995,7 @@
 
     <div id="compare-tab" class="disc-body">
         <h3>Compare DISC Scores</h3>
-        <p>The DISC profile and related characteristic scores may be used to understand aspects that are potentially
+        <p class="tab-desc">The DISC profile and related characteristic scores may be used to understand aspects that are potentially
             influencing your community's DISC profile and to see how these characteristics may differ in other
             communities. These comparisons may help identify possible improvement opportunities to explore as well as
             provide context for interpreting DISC scores.</p>
