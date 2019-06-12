@@ -42,5 +42,16 @@
   <!--[if lt IE 9]><script src="https://www.epa.gov/sites/all/themes/epa/js/html5.js"></script><![endif]-->
   {% endif %}
 </head>
-<script>window.$ = window.jQuery = require('jquery');</script>
+<script>
+  try {
+    window.$ = window.jQuery = require('jquery');
+} catch (e) { 
+  console.log(e);
+  try {
+    window.$ = window.jQuery = require(require('path').join(process.resourcesPath, '/app.asar/node_modules/jquery'));
+  } catch (e) { 
+    console.log(e);
+  }
+}
+</script>
 <!-- end 01epa_drupal_header.html -->
