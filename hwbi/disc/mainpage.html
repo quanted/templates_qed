@@ -76,11 +76,16 @@
         <div id="mainpage" style="display: none;">
 
             <header class="main-header">
+                <div id="hamburger" onclick="hamburgerMenu();">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </div>
                 <a href="#" class="logo"><img src="/static_qed/hwbi/disc/img/epawhite.png" alt="EPA logo"></a>
                 <!-- <div id="connection-icons" onclick="toggleMainpageSearchType(event)">
                     <span><img src="/static_qed/hwbi/disc/img/no-internet.png" alt=""></span>
                     <span style="display: none;"><img src="/static_qed/hwbi/disc/img/connected.png" alt=""></span>
                 </div> -->
+                <img class="search-icon-toggle mobile" onclick="searchToggle();" src="/static_qed/hwbi/disc/img/searchwhite.png">
                 <div class="search">
                     <form action="#">
                         <input type="search" id="top-search-bar" placeholder="Enter your city or county"><img class="search-icon" src="/static_qed/hwbi/disc/img/searchwhite.png">
@@ -107,7 +112,7 @@
                     </div>
             </header>
 
-            <nav class="sidenav">
+            <nav class="sidenav no-mobile">
                 <ul>
                     <li class="home">
                         <a href="#" onclick="return show('homepage','mainpage');">Home</a>
