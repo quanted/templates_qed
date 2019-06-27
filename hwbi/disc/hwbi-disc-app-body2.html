@@ -289,9 +289,10 @@
                                 </div>
                             </div> <!--end domain-blocks -->
 
+                            <h3>Services Scores</h3>
                             <div class="service-blocks">
                                 <button type="button" id="servicedesc_btn" onclick="serviceText();">&bull; &bull; &bull;</button>
-                                <h3>Services</h3>
+                                <br><br>
                                 <div id="service-explanation" style="display: none;">There exists a myriad of currencies that frame the underpinnings of a thriving society-not all are dollars and cents. The wants and needs of people are met through the availability of items (i.e., goods) and delivery of assistance (i.e., services). The availability and flow of economic, social and ecosystem services serve many purposes within a community-everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources is the conduit for introducing change that influence quality of life outcomes.</div>
                                 <div class="chartcontainer">
                                     <div id="chart" class="radialbar"></div>
@@ -391,7 +392,7 @@
                                         },
                                     },
                                     series: [51],
-                                    labels: ['Ecosystem'],
+                                    labels: ['Environment'],
                                     colors: ['#20E647'],
                                     states: {
                                         normal: {
@@ -743,7 +744,7 @@
                     <div class="customize_description">
                         <button id="reset-hwbi-domains">Reset</button>
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
-                        <p class="tab-desc">Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value.</p>
+                        <p class="tab-desc">Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot.</p>
                     </div>
                     <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
@@ -851,7 +852,7 @@
         <div class="customize_description">
             <button id="reset-service-btn">Reset</button>
             <h3>Services</h3>
-            <p class="tab-desc">Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value.</p>
+            <p class="tab-desc">Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value. Changes are indicated with a blue dot.</p>
         </div>
         <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
@@ -902,7 +903,7 @@
         <div class="priority-rankings">
             <button id="riv-reset-btn">Reset</button>
             <h3>Priority Rankings</h3>
-            <p class="tab-desc">Use the arrows to rank the importance of domains based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
+            <p class="tab-desc">Use the arrows to rank the importance of community characteristics based on your preferences. A value of 8 has more importance and a value of 1 has less importance.</p>
             <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
             <div class="ranking-chart-list-container">
                 <div class="ranking-list-container">
@@ -940,7 +941,7 @@
                             <div class="services-nav">
                                 <ul class="services-tabs">
                                     <li id="1" onclick="tabsOnClick('1')" class="current-tab">Economic</li>
-                                    <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
+                                    <li id="2" onclick="tabsOnClick('2')">Environment</li>
                                     <li id="3" onclick="tabsOnClick('3')">Social</li>
                                 </ul>
                                 <hr class="s-tabs-below">
@@ -994,7 +995,7 @@
         <p class="tab-desc">The DISC profile and related characteristic scores may be used to understand aspects that are potentially
             influencing your community's DISC profile and to see how these characteristics may differ in other
             communities. These comparisons may help identify possible improvement opportunities to explore as well as
-            provide context for interpreting DISC scores.</p>
+            provide context for interpreting DISC scores. Hover over neighboring counties to compare scores for the current county.</p>
 		<div id="map-wrapper" class="map-wrapper">
 			<div id="compare-panel" class="compare-panel">
 				<div class="state"></div>
