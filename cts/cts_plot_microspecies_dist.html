@@ -1,4 +1,4 @@
-<div id="microspecies-distribution" class="plot"></div>
+<div id="microspecies-distribution" class="plot" tabindex="0" aria-label="microspecies distribution"></div>
 
 <script type="text/javascript">
 function plotMicroDist() {
@@ -86,6 +86,16 @@ function plotMicroDist() {
     $('#' + name).parent('div').css('border', '5px solid ' + color); // sets border color
     $('#' + name).css({'border': 'none', 'margin': '0px'}); // remove image border..
   }
+
+  // 508 compliance fixes:
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  var plotCanvas = $('canvas').each(function() {
+    let plotType = $(this).parent('div').attr('id');
+    if (plotType == 'microspecies-distribution') {
+      $(this).attr({'aria-label': "microspecies distribution vs pH plot"});
+    }
+  });
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 }
 </script>

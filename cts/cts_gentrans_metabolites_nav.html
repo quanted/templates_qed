@@ -4,6 +4,12 @@
 <script>
 $(document).ready(function() {
     $("#pchemprop_table").css('display', 'table');
+    // 508 compliance additions
+    // +++++++++++++++++++++++++++++++
+    $('canvas').each(function() {
+        console.log($(this));
+    });
+    // +++++++++++++++++++++++++++++++
 });
 </script>
 
@@ -20,7 +26,7 @@ $(document).ready(function() {
 
     <div id="spacetree-nav">
         <h3><span>Display up to:</span></h3>
-        <select id="gen-select">
+        <select id="gen-select" aria-label="select generation limit to display in tree">
             <option value="1" />1st gen </option>
             <option value="2" />2nd gen </option>
             <option value="3" />3rd gen </option>
