@@ -1,7 +1,8 @@
 <div id="overview_block">
     <h3 class="overview_subtab">Description</h3>
     <div class="overview_subblock overview_description">
-        <p>{{ DESCRIPTION }}</p>
+        <p>{{ DESCRIPTION | safe }}</p>
+        <div style="display: none;">
         <h4>Capabilities</h4>
         <p>Version - {{ VERSION }}</p>
         <ol>
@@ -9,16 +10,19 @@
                 <li>{{ cap }}</li>
             {% endfor %}
          </ol>
+        </div>
     </div>
-    <h3 class="overview_subtab">Usage Scenarios</h3>
+    <h3 class="overview_subtab">Code Samples</h3>
     <div class="overview_subblock overview_scenarios">
+        <div style="display:none;">
         {% for scen, v in SCENARIOS.items %}
             <h4>{{ scen }}</h4>
             <p>{{ v.0 }}</p>
             <p>{{ v.1 }}</p>
             <p>{{ v.2 }}</p>
         {% endfor %}
-        <h4>Code Samples</h4>
+            <h4>Code Samples</h4>
+        </div>
         <ul>
             {% for sample, url in SAMPLECODE.items %}
                 <li><a href="{{ url }}" target="_blank">HMS API Sample code - {{ sample }}</a></li>
