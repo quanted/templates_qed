@@ -89,10 +89,17 @@ function plotMicroDist() {
 
   // 508 compliance fixes:
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  let microspeciesCount = 0;
   var plotCanvas = $('canvas').each(function() {
     let plotType = $(this).parent('div').attr('id');
     if (plotType == 'microspecies-distribution') {
-      $(this).attr({'aria-label': "microspecies distribution vs pH plot"});
+      if ($(this).hasClass('jqplot-series-canvas')) {
+        microspeciesCount += 1;
+        $(this).attr({'aria-label': "microspecies" + microspeciesCount});  
+      }
+      else {
+        $(this).attr({'aria-label': "microspecies distribution vs pH plot"});
+      }
     }
   });
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -103,7 +110,12 @@ function plotMicroDist() {
 <script type="text/javascript">
 $(document).ready(function () {
   plotMicroDist();
+  $('jqplot-series-canvas').hover(function() {
+    // Loops each microspecies plot div (in order, hopefully).
+    // Creating interactivity with plot line and microspecies image.
+    var microspeciesNumber = $(this).attr('aria-label');
+    var matchingMicrospecis = $('div.cts-chem-wrap')
+  });
 });
 // plotMicroDist();
 </script>
-
