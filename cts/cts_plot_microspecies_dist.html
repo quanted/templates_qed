@@ -3,14 +3,84 @@
 <script type="text/javascript">
 function plotMicroDist() {
 
-  // var L = [{
-  //   label:'Drift',
-  //   color:'blue'
-  // }];
-
   var dataArr = JSON.parse($('#microDistData1').text());
 
-  var seriesInfo = [];
+  var colorSet1 = ['#1a1423', '#1e7272', '#b55f3a', '#454545', '#372549'];
+  var colorSet2 = ['#7bb399', '#1e7272', '#ba613b', '#454545', '#202020'];
+
+  // NOTE: Using color set 2
+  var seriesInfo = [
+    {
+      label: 'microspecies1',
+      color: '#7bb399'
+    },
+    {
+      label: 'microspecies2',
+      color: '#1e7272'
+    },
+    {
+      label: 'microspecies3',
+      color: '#515151'  // originally #454545
+    },
+    {
+      label: 'microspecies4',
+      color: '#ba613b',
+    },
+    {
+      label: 'microspecies5',
+      color: '#202020'
+    },
+    {
+      label: 'microspecies6',
+      color: '#7bb399',
+      linePattern: 'dotted'
+    },
+    {
+      label: 'microspecies7',
+      color: '#1e7272',
+      linePattern: 'dotted'
+    },
+    {
+      label: 'microspecies8',
+      color: '#ba613b',
+      linePattern: 'dotted'
+    },
+    {
+      label: 'microspecies9',
+      color: '#515151',
+      linePattern: 'dotted'
+    },
+    {
+      label: 'microspecies10',
+      color: '#202020',
+      linePattern: 'dotted'
+    },
+    {
+      label: 'microspecies11',
+      color: '#7bb399',
+      linePattern: 'dashed'
+    },
+    {
+      label: 'microspecies12',
+      color: '#1e7272',
+      linePattern: 'dashed'
+    },
+    {
+      label: 'microspecies13',
+      color: '#ba613b',
+      linePattern: 'dashed'
+    },
+    {
+      label: 'microspecies14',
+      color: '#515151',
+      linePattern: 'dashed'
+    },
+    {
+      label: 'microspecies15',
+      color: '#202020',
+      linePattern: 'dashed'
+    }
+  ];
   var plotData = [];
 
   //get keys for series labels, then convert back to list for plotting
@@ -63,6 +133,9 @@ function plotMicroDist() {
     highlighter: {
       show: true,
       sizeAdjust: 7.5
+    },
+    grid: {
+      background: '#ffffff'
     }
   });
 
@@ -82,8 +155,18 @@ function plotMicroDist() {
   for (var series in plot['series']) {
     var color = plot['series'][series]['color']; // series color..
     var name = plot['series'][series]['label']; // series name..
-    // $('#' + name).parent('div').css('border', '2px solid ' + color); // color parent div..
-    $('#' + name).parent('div').css('border', '5px solid ' + color); // sets border color
+    var linePattern = plot['series'][series]['linePattern'];
+    // $('#' + name).parent('div').css('border', '5px solid ' + color); // sets border color
+    // $('#' + name).css({'border': 'none', 'margin': '0px'}); // remove image border..
+    if (linePattern == 'dotted') {
+      $('#' + name).parent('div').css({'border': '5px solid ' + color, 'border-style': 'dotted'}); // sets border 
+    }
+    else if (linePattern == 'dashed') {
+      $('#' + name).parent('div').css({'border': '5px solid ' + color, 'border-style': 'dashed'}); // sets border
+    }
+    else {
+      $('#' + name).parent('div').css('border', '5px solid ' + color); // sets border 
+    }
     $('#' + name).css({'border': 'none', 'margin': '0px'}); // remove image border..
   }
 

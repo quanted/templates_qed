@@ -124,6 +124,8 @@ $(document).ready(function () {
 
         elements = collectDOM(workflow); // get relevant dom objects
 
+        $(elements).find('script').remove();  // removes script elements
+
    		if (workflow == "chemspec") {
             try {
                 imgData.push($('#microspecies-distribution').jqplotToImageStr(options));
