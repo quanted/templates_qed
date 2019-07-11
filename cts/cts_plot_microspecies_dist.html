@@ -128,16 +128,128 @@ function plotMicroDist() {
       }
     },
     seriesDefaults: {
-      showMarker: false
+      showMarker: false,
     },
-    highlighter: {
-      show: true,
-      sizeAdjust: 7.5
-    },
+    // highlighter: {
+    //   show: true,
+    //   sizeAdjust: 7.5
+    // },
     grid: {
       background: '#ffffff'
     }
   });
+
+  // Binds highlighting feature when user hovers over lines:
+  $('div#microspecies-distribution').bind('jqplotMouseMove', function(event, xy, axesData, neighbor, plot) {
+    var drawingCanvas = $(".jqplot-highlight-canvas")[0];
+    var context = drawingCanvas.getContext('2d');
+    var lineBounds = 6;  // linewidth + lineBounds for triggering highlight
+
+    context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    for (var i = 0; i < plot.series.length; i++) {
+      var value = hitTestSegments(plot.series[i].gridData, xy, plot.series[i].lineWidth + lineBounds);
+      if (value > -1) {
+        //draw the highlight
+        context.beginPath();
+        for (var j = 0; j < plot.series[i].gridData.length; j++) {
+          var p = plot.series[i].gridData[j];
+          if (j == 0)
+            context.moveTo(p[0], p[1]);
+          else context.lineTo(p[0], p[1]);
+        }
+
+        highlightLine(i + 1, context, plot);
+        highlightBorder(i + 1);
+
+        break;
+      }
+
+      highlightBorder();
+
+    }
+  });
+
+  function hitTestSegments(points, point, thickness) {
+    if (points.length < 2) return -1;
+    for (var i = 0; i < points.length - 1; i++) {
+      var p0 = points[i];
+      var p1 = points[i + 1];
+      var distance = dotLineLength(point.x, point.y, p0[0], p0[1], p1[0], p1[1], true);
+      if (distance < thickness) return i;
+    }
+    return -1;
+  }
+
+  //+ Jonas Raoni Soares Silva
+  //@ http://jsfromhell.com/math/dot-line-length [rev. #1]
+  dotLineLength = function(x, y, x0, y0, x1, y1, o) {
+    function lineLength(x, y, x0, y0) {
+      return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+    }
+    if (o && !(o = function(x, y, x0, y0, x1, y1) {
+        if (!(x1 - x0)) return {
+          x: x0,
+          y: y
+        };
+        else if (!(y1 - y0)) return {
+          x: x,
+          y: y0
+        };
+        var left, tg = -1 / ((y1 - y0) / (x1 - x0));
+        return {
+          x: left = (x1 * (x * tg - y + y0) + x0 * (x * -tg + y - y1)) / (tg * (x1 - x0) + y0 - y1),
+          y: tg * left - tg * x + y
+        };
+      }(x, y, x0, y0, x1, y1), o.x >= Math.min(x0, x1) && o.x <= Math.max(x0, x1) && o.y >= Math.min(y0, y1) && o.y <= Math.max(y0, y1))) {
+      var l1 = lineLength(x, y, x0, y0),
+        l2 = lineLength(x, y, x1, y1);
+      return l1 > l2 ? l2 : l1;
+    } else {
+      var a = y0 - y1,
+        b = x1 - x0,
+        c = x0 * y1 - y0 * x1;
+      return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
+    }
+  };
+
+  function highlightLine(msNum, context, plot) {
+    /*
+    Highlights microspecies line based on microspecies number/id.
+    */
+    //adding some sort of a glow effect
+    var msDiv = $('div#microspecies' + (msNum)).parent('div.chemspec_molecule');
+    var borderColor = $(msDiv).css('border-left-color');
+    context.lineWidth = plot.series[msNum  - 1].lineWidth + 9;
+    var outerBorderColor = borderColor.replace(')', ', 0.25)').replace('rgb', 'rgba');
+    context.strokeStyle = outerBorderColor;
+    context.stroke();
+    context.lineWidth = plot.series[msNum  - 1].lineWidth + 3;
+    var innerBorderColor = borderColor.replace(')', ', 0.75)').replace('rgb', 'rgba');
+    context.strokeStyle = innerBorderColor;
+    context.stroke();
+  }
+
+  function highlightBorder(msNum) {
+    /*
+    Highlights microspecies image border when user hovers
+    over its MS distribution plot line.
+    */
+    var msDiv = $('div#microspecies' + (msNum)).parent('div.chemspec_molecule');
+    $('div.cts-chem-wrap').each(function() {
+      var divId = $(this).attr('id');
+      if (divId.split("microspecies").length != 2) { return 'continue'; }
+      var thisMsNum = parseInt(divId.split("microspecies")[1]);
+      if (thisMsNum == msNum) {
+        // Highlights border:
+        $(msDiv).css('border-width', '10px');
+      }
+      else {
+        // Unhighlights border:
+        $('div#' + divId).parent('div.chemspec_molecule').css('border-width', '5px');
+      }
+    });
+  }
+
 
   // Get series colors to make microspecies image border
   // the same as its series color
@@ -193,12 +305,5 @@ function plotMicroDist() {
 <script type="text/javascript">
 $(document).ready(function () {
   plotMicroDist();
-  $('jqplot-series-canvas').hover(function() {
-    // Loops each microspecies plot div (in order, hopefully).
-    // Creating interactivity with plot line and microspecies image.
-    var microspeciesNumber = $(this).attr('aria-label');
-    var matchingMicrospecis = $('div.cts-chem-wrap')
-  });
 });
-// plotMicroDist();
 </script>
