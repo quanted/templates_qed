@@ -44,9 +44,10 @@
                     element: document.querySelector('#snapshot-btn'),
                     intro: "This is the snapshot button. This lets you create a static snapshot of this page, which opens in a new window."
                 }
-                ]
+                ],
+            doneLabel: 'Continue'
             });
-            intro.setOption('showStepNumbers', false).setOption('disableInteraction', true).start().oncomplete(function() {
+            intro.setOption('showStepNumbers', false).setOption('disableInteraction', true).setOption('scrollToElement', false).start().oncomplete(function() {
                 $('#compare-tab-link').trigger('click');
                 setTimeout(startCompareIntro, 500);
             });

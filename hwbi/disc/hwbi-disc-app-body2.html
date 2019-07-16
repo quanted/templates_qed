@@ -293,7 +293,7 @@
                             <div class="service-blocks">
                                 <button type="button" id="servicedesc_btn" onclick="serviceText();">&bull; &bull; &bull;</button>
                                 <br><br>
-                                <div id="service-explanation" style="display: none;">There exists a myriad of currencies that frame the underpinnings of a thriving society-not all are dollars and cents. The wants and needs of people are met through the availability of items (i.e., goods) and delivery of assistance (i.e., services). The availability and flow of economic, social and ecosystem services serve many purposes within a community-everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources is the conduit for introducing change that influence quality of life outcomes.</div>
+                                <div id="service-explanation" style="display: none;">The wants and needs of people are met through the availability of a variety of social, economic and environmental items (i.e., goods) and their delivery (i.e., services). The availability and flow of these services address many aspects of a community--everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources help to introduce changes that influence the quality of life for individuals and their communities.</div>
                                 <div class="chartcontainer">
                                     <div id="chart" class="radialbar"></div>
                                     <div id="chart2" class="radialbar"></div>
@@ -392,7 +392,7 @@
                                         },
                                     },
                                     series: [51],
-                                    labels: ['Environment'],
+                                    labels: ['Ecosystem'],
                                     colors: ['#20E647'],
                                     states: {
                                         normal: {
@@ -941,7 +941,7 @@
                             <div class="services-nav">
                                 <ul class="services-tabs">
                                     <li id="1" onclick="tabsOnClick('1')" class="current-tab">Economic</li>
-                                    <li id="2" onclick="tabsOnClick('2')">Environment</li>
+                                    <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
                                     <li id="3" onclick="tabsOnClick('3')">Social</li>
                                 </ul>
                                 <hr class="s-tabs-below">
@@ -1045,7 +1045,14 @@
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.mbda.gov/page/programs">Minority Business Development Agency Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/oie/ris/">US EDA Regional Innovation Strategies (RIS) Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/TAAF-Program-1-Pager.pdf">US EDA Trade Adjustment Assistance for Firms (TAAF) Program for cost-sharing technical assistance to eligible import-impacted U.S. firms</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/business-industry-loan-guarantees">USDA Business & Industry Loan Guarantees for rural businesses</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-development-grants">USDA link to rural business development grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/business-industry-loan-guarantees">USDA-RD Business & Industry Loan Guarantees</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-business-investment-program">USDA-RD Rural Business Investment Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-microentrepreneur-assistance-program">USDA-RD Rural Microentrepreneur Assistance Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ocs/programs/ced/about">US Department of Health and Human Services (DHHS) Office of Community Services Community Economic Development (CED) Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox"><a href="https://www.sba.gov/funding-programs">US Small Business Administration (SBA) funding programs</a></li>
 
@@ -1056,6 +1063,7 @@
 
                         <h4>Tribal Community Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.mbda.gov/page/grant-competition-american-indian-alaska-native-and-native-hawaiian-projects">Grant Competition for Native American, Alaska Native, and Native Hawaiian Projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/as-ia/ieed/division-economic-development/nabdi">Native American Business Development Institute (NABDI) Grant</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://business.defense.gov/Programs/Indian-Incentive-Program/How-to-Participate/">Tribal Communities: US Department of Defense Indian Incentive Program </a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/sites/default/files/ONAA_resource_guide.pdf">Tribal Communities: US SBA Resource Guide</a></li>
@@ -1079,6 +1087,10 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for job training, readiness, and employment activities</a></li>
 
+                        <h4>Tribal Community Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.statsamerica.org/distress/distress.aspx">Calculate whether a county, region, or neighborhood may meet grant thresholds for unemployment and income</a></li>
+
                         <h4>Local Data</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3002752813443&mapOSM[c2]=-95.97656249999999&mapOSM[s]=work3&mapOSM[fs]=false">Interactive Map of Unemployment Rates for Your Community</a></li>
@@ -1095,9 +1107,22 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Ag_Atlas_Maps/Economics">County-level Maps of the Economics of Agriculture</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/">USDA annual census providing data on farms and agriculture</a></li>
-                        
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/topics/farming/coexistence/coexistence-factsheets">USDA coexistence factsheets</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/topics/farming/coexistence/coexistence-resources-and-statistical-data">USDA coexistence resources and statistical data</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/Charts_and_Maps/Crops_County/">USDA county maps for crop yields, crop weather, micromaps, and crop acreage</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/aphis/ourfocus/planthealth/plant-pest-and-disease-programs/sa_crop_biosecurity">USDA crop biosecurity and emergency management</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/Statistics_by_Subject/">USDA crop production reports on prices, volume, quality, condition, and other market data</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/data-products/aquaculture-data/">USDA economic analysis of aquaculture data</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/topics/farming/coexistence/usda-efforts-coexistence">USDA efforts for coexistence</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/topics/crops.aspx">USDA main U.S. crop information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ams.usda.gov/rules-regulations/pesticide-records">USDA pesticide record keeping information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/publications/pub-details/?pubid=42548">USDA seafood safety and trade</a></li>
+
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/aphis/ourfocus/planthealth/plant-pest-and-disease-programs">Plant Pest and Disease Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/aquaculture?prnum=2068">USDA aquaculture research grants and extension programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nifa.usda.gov/funding-opportunity/beginning-farmer-and-rancher-development-program-bfrdp">USDA Beginning Farmer and Rancher Development Program (BFRDP) for education, mentoring, and techincal assistance initiatives</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/grants-and-loans-farmers">USDA grants and loans for farmers</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/energy-funding">USDA links to sources of funding for farm or home-based renewable energy projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/ric/small-farm-funding-resources">USDA resources for small farmers and those starting small farms</a></li>
@@ -1105,6 +1130,10 @@
                         <h4>Local Data</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.croplands.org/app/map?lat=40.81381&lng=-96.98730468750001&zoom=5">Zoom in This Map to See Local Croplands in Your Community</a></li>
+
+                        <h4>Tools</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://newfarmers.usda.gov/discovery">USDA Discovery Tool for personalized information on farming</a></li>
                         
                         <h4>Additional Resources</h4>
                         <hr>
@@ -1129,6 +1158,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/greening-americas-communities">Greening America's Communities Program to help develop green infrastructure and other sustainable design strategies</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/telecommunications-infrastructure-loans-loan-guarantees">USDA-RD Telecommunications Infrastructure Loans & Loan Guarantees</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community facilities direct loan program to help rural communities to make infrastructure improvements</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Public-Works-Program-1-Pager.pdf">US EDA Public Works Program for revitalizing, expanding, and upgrading physical infrastructure</a></li>
 
                         <h4>Tribal Community Resources</h4>
                         <hr>
@@ -1151,13 +1181,21 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ntia.doc.gov/category/grants ">NTIA Grants for broadband deployment in America</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-broadband-access-loan-and-loan-guarantee">USDA-RD Rural Broadband Access Loan and Loan Guarantee</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community Facilities Direct Loan & Grant Program for rural community public computer access</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-connect-grants">USDA Grants for broadband deployment into rural communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/reconnect/program-overview">USDA ReConnect Program to expand broadband service to rural areas</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/telecommunications-infrastructure-loans-loan-guarantees">USDA Telecommunications Infrastructure Loans & Loan Guarantees</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.commerce.wa.gov/building-infrastructure/community-economic-revitalization-board/rural-broadband/">Washington State Dept. of Commerce Rural Broadband Program resource for local governments, federally recognized Indian tribes, and rural communities</a></li>
 
                         <h4>Local Data</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://geoisp.com/us/">Detailed Internet Service Provider Information for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://broadbandmap.fcc.gov/#/">FCC Broadband Access Map for Your Community</a></li>
+
+                        <h4>Tribal Community Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/iduesannh/index.html">Department of Education - Alaska Native and Native Hawaiian-Serving Institutions Broadband Funding</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/iduesaitcc/index.html">Department of Education - American Indian Tribally Controlled Colleges and Universities Broadband Funding</a></li>
                         
 
                         <h4>Additional Resources</h4>
@@ -1179,10 +1217,17 @@
                         <h4>General Information</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/attracting-infill-development-distressed-communities">Attracting Infill Development in Distressed Communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.statsamerica.org/innovation/index_map/">Innovation Index Map to compare innovation capacity in different counties and regions</a></li>
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdfifund.gov/programs-training/Programs/new-markets-tax-credit/Pages/default.aspx">CDFI New Markets Tax Credit Program for community development and economic growth in distressed communities</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/cool-connected">Cool and Connected Program to help revitablize small-town main streets and promote economic development</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/edi/assistance/">Federal assistance for economic development</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Economic-Adjustment-Assistance-Program-1-Pager.pdf">US EDA Economic Adjustment Assistance Program to promote economic development</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Local-TA-and-UC-Program-1-Pager.pdf">US EDA Local Technical Assistance and University Center Programs to support regional economic development strategies in distressed communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Planning-Program-1-Pager.pdf">US EDA Planning Program to facilitate regional economic development efforts</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-economic-development-loan-grant-program">USDA-RD Rural Economic Development Loan & Grant Program</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
@@ -1225,7 +1270,7 @@
             </div>
 
             <div class="environment-resources-section">
-                <h3 class="no-print">Environment</h3>
+                <h3 class="no-print">Ecosystem</h3>
                 
                 <button class="accordion-metrics">Air Quality</button> 
                 <div class="metric-accordion-panel">
@@ -1237,6 +1282,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/criteria-air-pollutants">Criteria Air Pollutants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/csapr">Cross-State Air Pollution Rule</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/aboutepa/about-office-air-and-radiation-oar#oaqps">EPA Office of Air and Radiation Information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/indoor-air-quality-iaq/popular-indoor-air-quality-topics">EPA popular indoor air quality topics resources</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ert/environmental-response-team-trace-atmosphere-gas-analyzer-taga">Environmental Response Team Trace Atmosphere Gas Analyzer (TAGA)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/haps">Hazardous Air Pollutants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/mats">Mercury and Air Toxics Standards</a></li>
@@ -1251,6 +1297,8 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/nsr/improving-air-quality-economic-incentive-programs">Air Quality Economic Incentives Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/research-grants/air-research-grants ">Air Research Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cleandiesel/clean-diesel-rebates">Clean Diesel Rebates</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cleandiesel/clean-diesel-tribal-grants">Clean Diesel Tribal Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/grants/air-grants-and-funding">Current and Past EPA Air Grants and Funding</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cleandiesel/clean-diesel-national-grants">Diesel Emissions Reductions Act (DERA) Clean Diesel National Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://cleancities.energy.gov/funding-opportunities/">US Dept. of Energy Funding Opportunities</a></li>
@@ -1261,6 +1309,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.airnow.gov/">Air Quality Index Information for your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www3.epa.gov/myem/envmap/find.html">Current Air Quality, AIr Polluting Facilities, and UV Light Index for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3002752813443&mapOSM[c2]=-95.97656249999999&mapOSM[s]=sql38&mapOSM[fs]=false">Interactive Map of Air Quality Index (AQI) for Your Community</a></li>
+
+                        <h4>Tools</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://cfpub.epa.gov/quantifier/index.cfm?action=main.home">Diesel Emissions Quantifier to evaluate clean diesel projects and upgrade options</a></li>
                         
                         <h4>Tribal Community Resources</h4>
                         <hr>
@@ -1276,6 +1328,7 @@
                     <ul>
                         <h4>General Information</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.atsdr.cdc.gov/sites/brownfields/partnerships_project.html">Agency for Toxic Substances and Disease Registry (ATSDR) community partnership projects and Brownfields reuse</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/land-revitalization/aquaponics-business-plan-user-guide">Aquaponics Business Plan User Guide for agricultural reuses of brownfields</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdfa.net/cdfa/cdfaweb.nsf/pages/brownfields-home.html">Council of Development Finance Agencies (CDFA) Brownfields technical assistance program toolkit</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/land-revitalization/revitalization-tools-communities">Guide to assist communities in planning effective brownfields stakeholder forums</a></li>
@@ -1312,66 +1365,6 @@
                     </ul>
                 </div>
 
-                <button class="accordion-metrics">Emergency Preparedness</button> 
-                <div class="metric-accordion-panel">
-                    <div>Emergency prepardness is important in the community in the event that a disaster may happen. The community will need to be prepared ahead of time in order to mitigate any harm to human health.
-                    </div>
-                    <ul>
-                        <h4>General Information</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/got-problem#">Answers to questions or issues about flood related problems</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/wildfires">DHS Fire Emergency Preparedness Information & Resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/2004_04_27_watersecurity_pubs_small_medium_erp_guidance040704.pdf">Emergency Response Plan Guidance for Small and Medium Community Water Systems</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fireadaptednetwork.org/resources/fac-assessment-tool/">Fire Adapted Communities Self-Assessment Tool for fire preparedness</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-08/documents/flood_resilience_guide.pdf">Flood Resilience: A Basic Guide for Water and Wastewater Utilities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/flood-resilience-checklist">Flood Resilience Checklist for Your Community</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/12423">How to Lower Flood Insurance Costs</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/learn-state-water-emergency-response-exercises">Learn from State Water Emergency Response Exercises</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Emergency-Preparedness">NFPA Fire Emergency Preparedness Resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Wildfire/Wildfire-safety-tips">NFPA Wildfire Preparedness Tips</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/prevention/technology/">USFA Fire protection technology information</a></li>
-                        
-                        <h4>Grants and Programs</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/emergency-response/environmental-response-laboratory-network">Environmental Response Laboratory Network (ERLN) Program to support chemical, biological, and radiological response and recovery efforts</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/fedfunds">Federal Funding for Water and Wastewater Utilities in National Disasters (Fed FUNDS)</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.floodsmart.gov/">FEMA's National Flood Insurance Program</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/nfip-reinsurance-program">FEMA's National Flood Re-Insurance Program</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/flood-mitigation-assistance-grant-program">FEMA NFIP Grants</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fs20.formsite.com/fmglobal/form14/index.html">FM Global Fire Prevention Grant Program</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/national-fire-plan--rural-fire-assistance.html#.XMHjq-hKjct">National Fire Plan - Rural Fire Assistance Program</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/grants/">USFA Fire service grants and funding</a></li>
-
-                        <h4>Local Data</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://airnow.gov/index.cfm?action=topics.smoke_wildfires">AirNow Current Fire Conditions for Your Community</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.floodsmart.gov/why/all-about-flood-maps">FEMA Flood Maps to Know Your Flood Risk</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://firms.modaps.eosdis.nasa.gov/map/#z:3;c:-60.8,7.4;d:2019-05-16..2019-05-17">Fire Information for Resource Management System (FIRMS) for Your Community</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://gis.ncdc.noaa.gov/maps/ncei/drought/us">U.S. Drought Monitor Map for Your Community</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?useExisting=1&layers=fc0ccb504be142b59eb16a7ef44669a3">Wildlife Hazard Potential Map for Your Community</a></li>
-
-                        <h4>Tools</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cameo">CAMEO (Computer-Aided Management of Emergency Operations) to plan for and respond to chemical emergencies</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/crwu/creat-risk-assessment-application-water-utilities">Climate Resilience Evaluation and Awareness Tool (CREAT) to help utilities to adapt to extreme weather events</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/develop-and-conduct-water-resilience-tabletop-exercise-water-utilities">Tabletop Exercise Tool for Drinking Water and Wastewater Utilities</a></li>
-
-                        <h4>Tribal Community Resources</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribal Communities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribal Communities: Emergency preparedness training provided by FEMA</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribal Community preparedness resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/tribal-homeland-security-grant-program">Tribal Homeland Security Grant Program provided by FEMA</a></li>
-
-                        <h4>Additional Resources</h4>
-                        <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
-                        <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
-                        
-                    </ul>
-                </div>
-
                 <button class="accordion-metrics">Environmentally Sound Waste Reduction</button> 
                 <div class="metric-accordion-panel">
                     <div>Disposal of solid waste is a major service communities provide for their citizens.   Disposal must be follow environmentally sound practices to protect human heath and ecosystem services  in an economicaly sound manner.  These practices range from individual actions, to local activities such as waste reduction in school lunch programs, to large-scale changes in community waste practices.</div>
@@ -1383,8 +1376,13 @@
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-predevelopment-planning-grants">Initial planning and development of applications grant  for USDA Rural Development Water and Waste Disposal direct loan/grant and loan guarantee programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.recyclebank.com/about-us/">RecycleBank online rewards program for recycling</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/search-special-evaluation-assistance-rural-communities-and-households">USDA-RD SEARCH program for very small, financially distressed rural communities to support water and waste disposal projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/solid-waste-management-grants">USDA-RD Solid Waste Management Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-grants-alleviate-health-risks-tribal-lands-and-colonias">USDA-RD Water & Waste Disposal Grants for access to waste disposal facilities and services in low-income communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-loan-grant-program">USDA-RD Water & Waste Disposal Loan & Grant Program for sanitary solid waste and sewage disposal in rural areas</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-revolving-loan-funds">USDA-RD Water & Waste Disposal Revolving Loan Funds to improve waste disposal systems in rural areas</a></li>
 
                         <h4>Local Data</h4>
                         <hr>
@@ -1396,6 +1394,7 @@
 
                         <h4>Tools</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www2.ergweb.com/bdrtool/login.asp">Incident Waste Decision Support Tool (I-WASTE) for waste generated by disasters</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/transforming-waste-tool">Managing and Transforming Waste Streams: A Tool for Communities</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://mswdst.rti.org/">Municipal Solid Waste Decision Support Tool (MSW-DST)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/warm">Waste Reduction Model (WARM) to calculate and total greenhouse gas emissions of waste management practices</a></li>
@@ -1405,6 +1404,25 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal-lands/tribal-waste-management-program">Tribal Waste Management Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal-lands/tribal-waste-management-program-sustainability-evaluation-tool">Tribal Waste Management Program Sustainability Evaluation Tool</a></li>
 
+                    </ul>
+                </div>
+
+                <button class="accordion-metrics">Fisheries and Wildlife</button>
+                <div class="metric-accordion-panel">
+                    <div>It is important to conserve, protect, and enhance fish, wildlife, and natural habitats for use and enjoyment by present and future generations.</div>
+                    <ul>
+                        <h4>Grants and Programs</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://coast.noaa.gov/czm/landconservation/">NOAA Coastal and Estuarine Land Conservation Program to help local governments preserve coastal and estuarine lands</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fisheries.noaa.gov/grant/coastal-and-marine-habitat-restoration-grants">NOAA Coastal and Marine Habitat Restoration Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://coast.noaa.gov/czm/about/">NOAA Coastal Zone Management Program for coastal resource management</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://coralreef.noaa.gov/conservation/funding_welcome.html">NOAA Coral Reef Conservation Program financial assistance</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://seagrant.noaa.gov/Funding">NOAA Sea Grant Funding Opportunities for healthy coastal ecosystems and sustainable fisheries and aquaculture</a></li>
+                        
+                        <h4>Tribal Community Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.westcoast.fisheries.noaa.gov/protected_species/salmon_steelhead/recovery_planning_and_implementation/pacific_coastal_salmon_recovery_fund.html">NOAA Pacific Coast Salmon Recovery Fund</a></li>
+    
                     </ul>
                 </div>
 
@@ -1489,17 +1507,30 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy">EPA list of energy resources for state, local, and tribal governments</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/re-powering/learn-more-about-re-powering#what">Information on EPA's RE-Powering America's Land Initiative for renewable energy potential of current and formerly contaminated sites</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://smartcitiescouncil.com/article/how-can-i-reduce-energy-use-my-city">Information on how different cities cut their energy use</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrel.gov/workingwithus/partnership-opportunities.html">NREL partnership opportunities for renewable energy and energy efficiency</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/oce/climate_change/estimation.htm">USDA greenhouse gas estimation methods</a></li>
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.energy.gov/eere/buildings/buildings-funding-opportunities">DOE Building Technologies funding opportunities for energy Efficiency</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.energy.gov/eere/geothermal/geothermal-technologies-office-open-funding-opportunities">DOE Geothermal Technologies Office funding opportunities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.energy.gov/eere/solar/funding-opportunities">DOE Solar Energy Techonologies Office funding opportunities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.energy.gov/eere/wind/wind-energy-funding-opportunities">DOE Wind Energy Technologies Office funding opportunities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.energystar.gov/about/federal_tax_credits">ENERGY STAR Federal Income Tax Credits and other incentives for energy efficiency</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=38.75408327579141&mapOSM[c2]=-102.48046875&mapOSM[s]=housing228&mapOSM[fs]=false">Interactive Map of Different Fuel Usage for House Heating in Your Community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/energy/matrix/findPrograms">USDA Energy Matrix to Find Energy Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-energy-america-program-energy-audit-renewable-energy-development-assistance">USDA Rural Energy for America Program Energy Audit & Renewable Energy Development Assistance Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/repowering-assistance-program">USDA-RD Repowering Assistance Program for renewable biomass sytems for heating and power</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-energy-america-program-renewable-energy-systems-energy-efficiency">USDA-RD Rural Energy for America Program Renewable Energy Systems & Energy Efficiency Improvement Guaranteed Loans & Grants</a></li>
 
                         <h4>Local Data</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/re-powering/re-powering-mapper">Renewable energy potential on contaminated lands, landfills and mine sites map for your community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/energy/maps/maps/Investment.htm">USDA Energy Investment Map</a></li>
 
                         <h4>Tools</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/avoided-emissions-and-generation-tool-avert">AVoided Emissions and geneRation Tool (AVERT) for estimating the emissions benefits of energy efficiency and renewable energy policies and programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/clean-energy-finance-tool">Clean Energy Finance Tool for energy efficiency and clean energy improvements</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/co-benefits-risk-assessment-cobra-health-impacts-screening-and-mapping-tool">CO-Benefits Risk Assessment (COBRA) Health Impacts Screening and Mapping Tool</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/local-greenhouse-gas-inventory-tool">Local Greenhouse Gas Inventory Tool</a></li>
@@ -1573,6 +1604,7 @@
 
                         <h4>Tools</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/exams-version-index">Exposure Analysis Modeling System (EXAMS) to measure and track the release of chemical contaminants in an aquatic ecosystem</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/mmsoils">Multimedia Contaminant Fate, Transport, and Exposure Model (MMSOILS) tool that estimates human exposure and health risk from hazardous waste sites</a></li>
 
                         <h4>Tribal Community Resources</h4>
@@ -1606,6 +1638,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://forestry.alaska.gov/insects/index">Alaska State Forest Health Protection Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://forestry.alaska.gov/grants">Alaska State Forestry Grants and Program Assistance</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.idl.idaho.gov/grants/index.html">Idaho State Forestry & Fire Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fs.fed.us/spf/coop/programs/loa/aboutflp.shtml">USFS Forest Legacy Program for forest land conservation</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.dnr.wa.gov/ForestHealth">Washington State Forest Health Program Resources</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.dnr.wa.gov/urban-and-community-forestry-grants">Washington State Urban and Community Forestry Grants</a></li>
 
@@ -1627,6 +1660,8 @@
                     <ul>
                         <h4>General Information</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eurekalert.org/pub_releases/2019-07/psu-pss070819.php">Case Study: Cooling Portland, OR through planting vegetation, using reflective material, and installing green roofs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/heat-islands/climate-change-and-heat-islands">EPA information on climate change and heat islands</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/heat-islands/excessive-heat-events-guidebook">US EPA Excessive Heat Events guidebook for community official, emergency managers, and others to plan for and respond to excessive heat events</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/heat-islands/heat-island-outreach-materials">US EPA heat island outreach resources on urban heat island formation, planning for excessive heat events, smart growth, and more.</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/heat-islands/heat-island-compendium">US EPA mitigation measures to reduce negative impacts of urban heat islands</a></li>
@@ -1674,10 +1709,17 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cwsrf">Clean Water State Revolving Fund</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/drinkingwatersrf">Drinking Water State Revolving Fund</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/urbanwaterspartners/five-star-and-urban-waters-restoration-grant-program-2018">Five Star and Urban Waters Restoration Grant Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-predevelopment-planning-grants">Initial planning and development of applications grant  for USDA Rural Development Water and Waste Disposal direct loan/grant and loan guarantee programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/npdes">National Polutant Discharge Elimination System (NPDES) permit program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/npdes/national-pretreatment-program">National Pretreatment Program to protect water quality</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://marinedebris.noaa.gov/funding/funding-opportunities">NOAA Marine Debris Program for identifying, reducing, and preventing debris in the marine environment</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ofmpub.epa.gov/apex/wfc/f?p=165:3:27230371908611::NO:3::">Search for other water grants at the Water Finance Clearinghouse for your community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/household-water-well-system-grants">USDA-RD Household Water Well System Grants for clean, reliable water</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/search-special-evaluation-assistance-rural-communities-and-households">USDA-RD SEARCH program for very small, financially distressed rural communities to support water and waste disposal projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-grants-alleviate-health-risks-tribal-lands-and-colonias">USDA-RD Water & Waste Disposal Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-grants-alleviate-health-risks-tribal-lands-and-colonias">USDA-RD Water & Waste Disposal Grants for access to safe, reliable drinking water in low-income communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-loan-grant-program">USDA-RD Water & Waste Disposal Loan & Grant Program for clean and reliable drinking water systems and storm water drainage in rural areas</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/water-waste-disposal-revolving-loan-funds">USDA-RD Water & Waste Disposal Revolving Loan Funds to improve water systems in rural areas</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/fedfunds">US EPA program offering federal funding for water and wastewater systems after national disasters and other incidents that disrupt services.</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/wetlands/wetland-program-development-grants-and-epa-wetlands-grant-coordinators">Wetland Program Development Grants</a></li>
 
@@ -1691,6 +1733,7 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/better-assessment-science-integrating-point-and-non-point-sources-basins">Better Assessment Science Integrating Point and Nonpoint Sources (BASIN) for watershed- and water quality-based studies</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/communitywaterresilience/community-based-water-resiliency-tool">Community-Based Water Resiliency Tool</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://wateranalytics.org/epanet-rtx/">EPANET-RTX for water utilities to design and evaluate response plans and actions relative to contamination events</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cwsrf/user-guide-financing-alternatives-comparison-tool">Financing Alternatives Comparison Tool (FACT) to identify the most cost-effective method for wastewater or drinking water management projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/water-research/national-stormwater-calculator">National Stormwater Calculator to estimate annual amount of rainwater and frequency of runoff from a specific site</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/water-research/sanitary-sewer-overflow-analysis-and-planning-ssoap-toolbox">Sanitary Sewer Overflow Analysis and Planning (SSOAP) Toolbox</a></li>
@@ -1702,8 +1745,11 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-106-tribal-program-funding">Region 10 Clean Water Act Section 106 Tribal Program Funding for water pollution control</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-319-tribal-program-funding">Region 10 Clean Water Act Section 319 Tribal Program Funding for nonpoint source pollution problems and threats</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/nps/tribal-319-grant-program">Tribal 319 Grant Program for Nonpoint Source (NPS) Pollution</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/water-pollution-control-section-106-grants/tribal-grants-under-section-106-clean-water-act">Tribal Grants under Section 106 of the Clean Water Act</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribaldrinkingwater/tribal-public-water-system-supervision-program">Tribal Public Water System Supervision Program (PWSS)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/wqs-tech/tribes-and-water-quality-standards">Tribes and Water Quality Standards</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/grants-rural-and-native-alaskan-villages">USDA-RD Grants for Rural and Native Alaska Villages to provide safe drinking water and waste disposal systems</a></li>
                     
                     </ul>
                 </div>
@@ -1736,6 +1782,7 @@
                         
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/asthma/national-environmental-leadership-award-asthma-management">EPA National Environmental Leadership Award in Asthma Management</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
 
                         <h4>Local Data</h4>
@@ -1791,7 +1838,13 @@
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://innovation.ed.gov/what-we-do/parental-options/promise-neighborhoods-pn/">Department of Education Promise Neighborhoods program for distressed communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/reapsrsa/index.html">Department of Education Small, Rural School Achievement Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/ssae/index.html">Department of Education Student Support and Academic Enrichment Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/reaprlisp/index.html">Department of Educaton Rural and Low-Income School Program for improving student achievement</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/funding/">Institute of Education Sciences Funding</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.noaa.gov/office-education/bwet">NOAA Bay Watershed Education and Training (B-WET) for watersheds and related ocean, coastal, riverine, estuarine, and Great Lakes ecosystems</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community Facilities Direct Loan & Grant Program for rural community educational services</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/find/elig/index.html">US Dept. of Education Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.williampennfoundation.org/what-we-fund/high-school-completion">William Penn Foundation High School Completion Grants</a></li>
 
@@ -1831,6 +1884,7 @@
                         <h4>Grants and Programs</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.wkkf.org/grantseekers">Information, contacts, and funding opportunities for community revitalization and engagement projects</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://beta.sam.gov/fal/d29a8a49b657437981880a82e009803d/view?keywords=Surveys,%20Studies,%20Investigations%20and%20Special%20Purpose%20Activities%20Relating%20to%20Environmental%20Justice&sort=-relevance&index=&is_active=true&page=1">Surveys, Studies, Investigations, Training and Special Purpose Activities Relating to Environmental Justice</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmentaljustice/environmental-justice-small-grants-program">US EPA Environmental Justice program grants for community-based organizations, and local and tribal organizations concerning environmental justice issues</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/environmental-justice/environmental-justice-collaborative-problem-solving-cooperative-agreement-0">US EPA Environmental Justice program providing assistance to organizations concerning local environmental and/or public health issues.</a></li>        
 
@@ -1856,6 +1910,7 @@
                         <h4>Grants and Programs</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/funding/topics/food-security-and-nutrition">Rural Food Security Funding</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community Facilities Direct Loan & Grant Program for rural community local food systems</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nifa.usda.gov/program/hunger-food-security-programs">USDA Food Security Funding</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdfifund.gov/programs-training/Programs/new-markets-tax-credit/Pages/default.aspx?utm_source=HUD+Exchange+Mailing+List&utm_campaign=b64b94e191-Promise_Zones_Update_10_27_2015&utm_medium=email&utm_term=0_f32b935a5f-b64b94e191-19340809">US Department of the Treasury new markets tax credits program which enhances community development and economic growth through tax credits to attract private investment to distressed communities.</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">US federal government nationwide food assistance programs</a></li>
@@ -1899,6 +1954,8 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fcc.gov/general/rural-health-care-program">FCC Rural Health Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/topics/healthcare-access/funding">Rural Healthcare Funding</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/project-examples/770">The Remote Area Medical Clinic program to provide free, mobile medical clinics to underserved areas.</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community Facilities Direct Loan & Grant Program for rural community health care facilities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/distance-learning-telemedicine-grants">USDA Distance Learning & Telemedicine Grants</a></li>
 
                         <h4>Local Data</h4>
                         <hr>
@@ -1972,6 +2029,7 @@
                     <ul>
                         <h4>General Information</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://eurekalert.org/pub_releases/2019-07/uop-sgl071019.php">Case Study: Passive exposure to nearby greenspace linked to less intense and frequent cravings</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
                         
                         <h4>Local Data</h4>
@@ -2005,6 +2063,7 @@
                     <ul>
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transportation.gov/BUILDgrants">Department of Transportation BUILD  Grants for transporation infrastructure</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.transit.dot.gov/funding/grants/rural-transportation-assistance-program-5311b3">Federal Transit Administration program for rural transportation assistance</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nationalrtap.org/">US DOT National Rural Assistance Transit Assistance Program offering national rural transit resources </a></li>
 
@@ -2048,6 +2107,91 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3&mapOSM[c2]=-96&mapOSM[s]=work111&mapOSM[fs]=false">Interactive Map of Bicycle Usage to Work for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3&mapOSM[c2]=-96&mapOSM[s]=work113&mapOSM[fs]=false">Interactive Map of Walking as a Means of Transportation for Work for Your Community</a></li>
 
+                    </ul>
+                </div>
+
+                <button class="accordion-metrics">Emergency Preparedness</button> 
+                <div class="metric-accordion-panel">
+                    <div>Emergency prepardness is important in the community in the event that a disaster may happen. The community will need to be prepared ahead of time in order to mitigate any harm to human health.
+                    </div>
+                    <ul>
+                        <h4>General Information</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/animal_health/nahms/feedlot/downloads/feedlot2011/Feed11_is_EmergMgmt.pdf">APHIS Emergency Preparedness and Management on U.S. Feedlots</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/got-problem#">Answers to questions or issues about flood related problems</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cre/being-prepared-climate-change-checklists-potential-climate-change-risks-step-3">Being Prepared for Climate Change: A workbook for developing risk-based adaptation plans</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-flood-recovery-and-long-term-resilience-vermont">Case Study: Smart Growth Approaches for Disaster-Resilient Communites - Vermont</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/nceh/radiation/emergencies/index.htm?CDC_AA_refVal=https%3A%2F%2Femergency.cdc.gov%2Fradiation%2Findex.asp">CDC radiation emergencies information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/case-studies">Climate Resilience case studies</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/community-based-adaptation-changing-climate">Community-based adaptation to a changing climate guide</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/wildfires">DHS Fire Emergency Preparedness Information & Resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtreporter.unl.edu/submitreport/">Drought Impact Reporter</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/2004_04_27_watersecurity_pubs_small_medium_erp_guidance040704.pdf">Emergency Response Plan Guidance for Small and Medium Community Water Systems</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/planning-climate-change-adaptation">EPA Climate change adaptation general information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1494007144395-b0e215ae1ba6ac1b556f084e190e5862/FEMA_2017_Hurricane_HTP_FINAL.pdf">FEMA guide on how to prepare for a hurricane</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fireadaptednetwork.org/resources/fac-assessment-tool/">Fire Adapted Communities Self-Assessment Tool for fire preparedness</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-08/documents/flood_resilience_guide.pdf">Flood Resilience: A Basic Guide for Water and Wastewater Utilities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/flood-resilience-checklist">Flood Resilience Checklist for Your Community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/12423">How to Lower Flood Insurance Costs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1527015736946-1f1f8b5f3989072327dd54d5007c06cf/HurricaneV2.pdf">Hurricane information sheet</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/hurricane-toolkit">Hurricane Seasonal Preparedness Digital Toolkit</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/33036">Improvised Nuclear Device Response and Recovery: Communicating in the Immediate Aftermath</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/learn-state-water-emergency-response-exercises">Learn from State Water Emergency Response Exercises</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Emergency-Preparedness">NFPA Fire Emergency Preparedness Resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Wildfire/Wildfire-safety-tips">NFPA Wildfire Preparedness Tips</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nws.noaa.gov/nwr/">NOAA Weather Radio All Hazards (NWR) for continuous weather information</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.weather.gov/safety/hurricane">NWS hurricane safety tips and resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-framework-climate-resilient-economy">Planning Framework for a Climate-Resilient Economy</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/">U.S. Climate Resilience Toolkit</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtmonitor.unl.edu/">United States Drought Monitor</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/food-safety-education/get-answers/food-safety-fact-sheets/emergency-preparedness/a-consumers-guide-to-food-safety-severe-storms-and-hurricanes/ct_index/!ut/p/a1/jVDRTsMwDPwWPsBKSsfEHqdKaC1bq2kCQl- mKHHTSGtSxelgfD1BvABiMPvJvjufdaxlgrVOHq2R0XonDx9zO9_zLZ9ni4JXzSK742X9uG3ui4Lf7m4S4fkPQp1fqD9TS_6fvrrA4Dpsio1h7ShjD9Z1ngmDEaSjFwzEROe9BpIdxhN0UkWgHjEmAAcMBp06wRhwlAG1Q0p7Cco7mhJKYCarEaKHr1cIjxgQKPowUDLS0E8hWCWTngkV99ZpfGVPrP3-Ps9Sl3W-m62qOufN7Cfhl3w_CecDHIcH8bZerrgtr94BSWXnKg!!/">USDA Consumer's guide to food safety for severe storms and hurricanes</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/Assets/USDA-FSA-Public/usdafiles/FactSheets/2017/fsa_disaster_assistance_programs_at_a_glance_oct2017.pdf">USDA Disaster Assistance Fact Sheet</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/sites/default/files/documents/usda-livestock-preparedness-fact-sheet.pdf">USDA Preparedness Fact Sheet for Livestock</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/prevention/technology/">USFA Fire protection technology information</a></li>
+                        
+                        <h4>Grants and Programs</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/emergency-community-water-assistance-grants">Emergency Community Water Assistance Grants to prepare or recover from threates to safe, reliable drinking water</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/emergency-response/environmental-response-laboratory-network">Environmental Response Laboratory Network (ERLN) Program to support chemical, biological, and radiological response and recovery efforts</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/fedfunds">Federal Funding for Water and Wastewater Utilities in National Disasters (Fed FUNDS)</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.floodsmart.gov/">FEMA's National Flood Insurance Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/nfip-reinsurance-program">FEMA's National Flood Re-Insurance Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/flood-mitigation-assistance-grant-program">FEMA NFIP Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fs20.formsite.com/fmglobal/form14/index.html">FM Global Fire Prevention Grant Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/national-fire-plan--rural-fire-assistance.html#.XMHjq-hKjct">National Fire Plan - Rural Fire Assistance Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/disaster-assistance-program/index">USDA Disaster Assistance Programs for communities, farmers, ranchers, and businesses affected by natural disasters</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/grants/">USFA Fire service grants and funding</a></li>
+
+                        <h4>Local Data</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://airnow.gov/index.cfm?action=topics.smoke_wildfires">AirNow Current Fire Conditions for Your Community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.floodsmart.gov/why/all-about-flood-maps">FEMA Flood Maps to Know Your Flood Risk</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://firms.modaps.eosdis.nasa.gov/map/#z:3;c:-60.8,7.4;d:2019-05-16..2019-05-17">Fire Information for Resource Management System (FIRMS) for Your Community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://gis.ncdc.noaa.gov/maps/ncei/drought/us">U.S. Drought Monitor Map for Your Community</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?useExisting=1&layers=fc0ccb504be142b59eb16a7ef44669a3">Wildlife Hazard Potential Map for Your Community</a></li>
+
+                        <h4>Tools</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cameo">CAMEO (Computer-Aided Management of Emergency Operations) to plan for and respond to chemical emergencies</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/crwu/creat-risk-assessment-application-water-utilities">Climate Resilience Evaluation and Awareness Tool (CREAT) to help utilities to adapt to extreme weather events</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/crwu/creat-risk-assessment-application-water-utilities">Creating Resilient Water Utilities (CRWU) Risk assessment application to help adapt to extreme weather events</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/mobile-app">FEMA Mobile App for shelter information, disaster resources, weather alerts, and safety tips</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/develop-and-conduct-water-resilience-tabletop-exercise-water-utilities">Tabletop Exercise Tool for Drinking Water and Wastewater Utilities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/visual-plumes">Visual Plumes model system for simulating surface water jets and plumes</a></li>
+
+                        <h4>Tribal Community Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribal Communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribal Communities: Emergency preparedness training provided by FEMA</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribal Community preparedness resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/tribal-homeland-security-grant-program">Tribal Homeland Security Grant Program provided by FEMA</a></li>
+
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
+                        
                     </ul>
                 </div>
 
