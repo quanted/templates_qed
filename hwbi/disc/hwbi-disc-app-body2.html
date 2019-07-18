@@ -27,7 +27,7 @@
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
                     
-                    <button type="button" id="rank_btn" onclick="priorityText()">&bull; &bull; &bull;</button>
+                    <button type="button" id="rank_btn" title="More info" onclick="priorityText()">&bull; &bull; &bull;</button>
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">Well-being and resilience measures are often used to characterize the drivers that influence human behavior and affect the human condition. These quality of life attributes are multi-dimensional that are best described using a host of metrics that respond to the changing environment in which people live. A synthesis of this knowledge helps shape our understanding about people and their needs, both actual and perceived.</div>
                     <div id="domain-scores">
@@ -291,7 +291,7 @@
 
                             <h3>Services Scores</h3>
                             <div class="service-blocks">
-                                <button type="button" id="servicedesc_btn" onclick="serviceText();">&bull; &bull; &bull;</button>
+                                <button type="button" id="servicedesc_btn" title="More info" onclick="serviceText();">&bull; &bull; &bull;</button>
                                 <br><br>
                                 <div id="service-explanation" style="display: none;">The wants and needs of people are met through the availability of a variety of social, economic and environmental items (i.e., goods) and their delivery (i.e., services). The availability and flow of these services address many aspects of a community--everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources help to introduce changes that influence the quality of life for individuals and their communities.</div>
                                 <div class="chartcontainer">
@@ -2117,38 +2117,66 @@
                     <ul>
                         <h4>General Information</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/animal_health/nahms/feedlot/downloads/feedlot2011/Feed11_is_EmergMgmt.pdf">APHIS Emergency Preparedness and Management on U.S. Feedlots</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/got-problem#">Answers to questions or issues about flood related problems</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cre/being-prepared-climate-change-checklists-potential-climate-change-risks-step-3">Being Prepared for Climate Change: A workbook for developing risk-based adaptation plans</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-flood-recovery-and-long-term-resilience-vermont">Case Study: Smart Growth Approaches for Disaster-Resilient Communites - Vermont</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/nceh/radiation/emergencies/index.htm?CDC_AA_refVal=https%3A%2F%2Femergency.cdc.gov%2Fradiation%2Findex.asp">CDC radiation emergencies information</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/case-studies">Climate Resilience case studies</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/community-based-adaptation-changing-climate">Community-based adaptation to a changing climate guide</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/wildfires">DHS Fire Emergency Preparedness Information & Resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtreporter.unl.edu/submitreport/">Drought Impact Reporter</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/2004_04_27_watersecurity_pubs_small_medium_erp_guidance040704.pdf">Emergency Response Plan Guidance for Small and Medium Community Water Systems</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/planning-climate-change-adaptation">EPA Climate change adaptation general information</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1494007144395-b0e215ae1ba6ac1b556f084e190e5862/FEMA_2017_Hurricane_HTP_FINAL.pdf">FEMA guide on how to prepare for a hurricane</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fireadaptednetwork.org/resources/fac-assessment-tool/">Fire Adapted Communities Self-Assessment Tool for fire preparedness</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-08/documents/flood_resilience_guide.pdf">Flood Resilience: A Basic Guide for Water and Wastewater Utilities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/flood-resilience-checklist">Flood Resilience Checklist for Your Community</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/12423">How to Lower Flood Insurance Costs</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1527015736946-1f1f8b5f3989072327dd54d5007c06cf/HurricaneV2.pdf">Hurricane information sheet</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/hurricane-toolkit">Hurricane Seasonal Preparedness Digital Toolkit</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/33036">Improvised Nuclear Device Response and Recovery: Communicating in the Immediate Aftermath</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/learn-state-water-emergency-response-exercises">Learn from State Water Emergency Response Exercises</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Emergency-Preparedness">NFPA Fire Emergency Preparedness Resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Wildfire/Wildfire-safety-tips">NFPA Wildfire Preparedness Tips</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nws.noaa.gov/nwr/">NOAA Weather Radio All Hazards (NWR) for continuous weather information</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.weather.gov/safety/hurricane">NWS hurricane safety tips and resources</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-framework-climate-resilient-economy">Planning Framework for a Climate-Resilient Economy</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/">U.S. Climate Resilience Toolkit</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtmonitor.unl.edu/">United States Drought Monitor</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/food-safety-education/get-answers/food-safety-fact-sheets/emergency-preparedness/a-consumers-guide-to-food-safety-severe-storms-and-hurricanes/ct_index/!ut/p/a1/jVDRTsMwDPwWPsBKSsfEHqdKaC1bq2kCQl- mKHHTSGtSxelgfD1BvABiMPvJvjufdaxlgrVOHq2R0XonDx9zO9_zLZ9ni4JXzSK742X9uG3ui4Lf7m4S4fkPQp1fqD9TS_6fvrrA4Dpsio1h7ShjD9Z1ngmDEaSjFwzEROe9BpIdxhN0UkWgHjEmAAcMBp06wRhwlAG1Q0p7Cco7mhJKYCarEaKHr1cIjxgQKPowUDLS0E8hWCWTngkV99ZpfGVPrP3-Ps9Sl3W-m62qOufN7Cfhl3w_CecDHIcH8bZerrgtr94BSWXnKg!!/">USDA Consumer's guide to food safety for severe storms and hurricanes</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/Assets/USDA-FSA-Public/usdafiles/FactSheets/2017/fsa_disaster_assistance_programs_at_a_glance_oct2017.pdf">USDA Disaster Assistance Fact Sheet</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/sites/default/files/documents/usda-livestock-preparedness-fact-sheet.pdf">USDA Preparedness Fact Sheet for Livestock</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/prevention/technology/">USFA Fire protection technology information</a></li>
+                        <div class="metric-accordion-panel-h5">
+                            <h5>Agriculture</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/animal_health/nahms/feedlot/downloads/feedlot2011/Feed11_is_EmergMgmt.pdf">APHIS Emergency Preparedness and Management on U.S. Feedlots</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/Assets/USDA-FSA-Public/usdafiles/FactSheets/2017/fsa_disaster_assistance_programs_at_a_glance_oct2017.pdf">USDA Disaster Assistance Fact Sheet</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/sites/default/files/documents/usda-livestock-preparedness-fact-sheet.pdf">USDA Preparedness Fact Sheet for Livestock</a></li>
+
+                            <h5>Climate Resilience</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cre/being-prepared-climate-change-checklists-potential-climate-change-risks-step-3">Being Prepared for Climate Change: A workbook for developing risk-based adaptation plans</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/case-studies">Climate Resilience case studies</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/community-based-adaptation-changing-climate">Community-based adaptation to a changing climate guide</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x/planning-climate-change-adaptation">EPA Climate change adaptation general information</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-framework-climate-resilient-economy">Planning Framework for a Climate-Resilient Economy</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/">U.S. Climate Resilience Toolkit</a></li>
+
+                            <h5>Drought</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtreporter.unl.edu/submitreport/">Drought Impact Reporter</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtmonitor.unl.edu/">United States Drought Monitor</a></li>
+
+                            <h5>Fire</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/wildfires">DHS Fire Emergency Preparedness Information & Resources</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fireadaptednetwork.org/resources/fac-assessment-tool/">Fire Adapted Communities Self-Assessment Tool for fire preparedness</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Emergency-Preparedness">NFPA Fire Emergency Preparedness Resources</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/By-topic/Wildfire/Wildfire-safety-tips">NFPA Wildfire Preparedness Tips</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/prevention/technology/">USFA Fire protection technology information</a></li>
+
+                            <h5>Flooding</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/got-problem#">Answers to questions or issues about flood related problems</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-08/documents/flood_resilience_guide.pdf">Flood Resilience: A Basic Guide for Water and Wastewater Utilities</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/flood-resilience-checklist">Flood Resilience Checklist for Your Community</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/12423">How to Lower Flood Insurance Costs</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/national-flood-insurance-program">The National Flood Insurance Program Help Center, with information to reduce the impacs of floods</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-flood-recovery-and-long-term-resilience-vermont">Case Study: Smart Growth Approaches for Disaster-Resilient Communites - Vermont</a></li>
+
+                            <h5>Hurricane</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1494007144395-b0e215ae1ba6ac1b556f084e190e5862/FEMA_2017_Hurricane_HTP_FINAL.pdf">FEMA guide on how to prepare for a hurricane</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library-data/1527015736946-1f1f8b5f3989072327dd54d5007c06cf/HurricaneV2.pdf">Hurricane information sheet</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/hurricane-toolkit">Hurricane Seasonal Preparedness Digital Toolkit</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.weather.gov/safety/hurricane">NWS hurricane safety tips and resources</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/food-safety-education/get-answers/food-safety-fact-sheets/emergency-preparedness/a-consumers-guide-to-food-safety-severe-storms-and-hurricanes/ct_index/!ut/p/a1/jVDRTsMwDPwWPsBKSsfEHqdKaC1bq2kCQl- mKHHTSGtSxelgfD1BvABiMPvJvjufdaxlgrVOHq2R0XonDx9zO9_zLZ9ni4JXzSK742X9uG3ui4Lf7m4S4fkPQp1fqD9TS_6fvrrA4Dpsio1h7ShjD9Z1ngmDEaSjFwzEROe9BpIdxhN0UkWgHjEmAAcMBp06wRhwlAG1Q0p7Cco7mhJKYCarEaKHr1cIjxgQKPowUDLS0E8hWCWTngkV99ZpfGVPrP3-Ps9Sl3W-m62qOufN7Cfhl3w_CecDHIcH8bZerrgtr94BSWXnKg!!/">USDA Consumer's guide to food safety for severe storms and hurricanes</a></li>
+
+                            <h5>Radiation</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cdc.gov/nceh/radiation/emergencies/index.htm?CDC_AA_refVal=https%3A%2F%2Femergency.cdc.gov%2Fradiation%2Findex.asp">CDC radiation emergencies information</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/media-library/assets/documents/33036">Improvised Nuclear Device Response and Recovery: Communicating in the Immediate Aftermath</a></li>
+                            
+                            <h5>Water Supplies</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/sites/production/files/2015-04/documents/2004_04_27_watersecurity_pubs_small_medium_erp_guidance040704.pdf">Emergency Response Plan Guidance for Small and Medium Community Water Systems</a></li>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/learn-state-water-emergency-response-exercises">Learn from State Water Emergency Response Exercises</a></li>
+
+                            <h5>All Emergencies</h5>
+                            <hr>
+                            <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nws.noaa.gov/nwr/">NOAA Weather Radio All Hazards (NWR) for continuous weather information</a></li>
+                        </div>
                         
                         <h4>Grants and Programs</h4>
                         <hr>
