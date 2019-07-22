@@ -94,13 +94,11 @@ $(document).ready(function() {
 
     // TODO: Cancel button, which removes pending tasks from celery queues:
     $('#btn-pchem-cancel').on('click', function () {
-        console.log("pchem cancel button selected");
         socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps, 'service': service}));
         if (typeof(blockInterface) == "function") {
             // Check if progress bar JS module is being used (e.g., batch mode progress bar)
             blockInterface(false);
         }
-        console.log("Clearing p-chem table..");  // todo: only clear loading wheels, keep data..
         $('#btn-pchem-cleardata').trigger('click');
     });
 
@@ -537,7 +535,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
                 _node_data[n] = node['data'][n];
             }
         }
-        pchem_data['node'] = _node_data;
+        // pchem_data['node'] = _node_data;
+        pchem_data['nodes'] = [_node_data];
     }
 
 

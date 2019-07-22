@@ -563,6 +563,9 @@ function init(json){
     total_calls = calls_tracker;
     molecularInfoRequestStatus(true);  // indicate mol info request status
 
+    // 508 compliance fix - adds label to canvas:
+    var treeCanvas = $('canvas#infovis-canvas').attr({'aria-label': 'reaction pathway tree', 'tabindex': '0'});
+
 }
 
 function findReactionLinkSection(routes) {
@@ -956,9 +959,4 @@ function addLikelyBorderToProducts() {
     }
 }
 
-</script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-});
 </script>
