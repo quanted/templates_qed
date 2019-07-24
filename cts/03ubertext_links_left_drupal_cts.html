@@ -4,7 +4,8 @@
     <h2 class="element-invisible">CTS Workflows</h2>
     <ul class="menu">
       {% for key, value in LINK_DICT.items %}
-        <h3 class="headerbar">{{ key|safe }}</h3>
+        <!-- <h3 class="headerbar">{{ key|safe }}</h3> -->
+        <h3 style="padding-top:10px;">{{ key|safe }}</h3>
         {% for valueKey, valueValue in value.items %}
           <li class="menu-item{% if forloop.last %} menu-item-last{% endif %}">
             <a href="/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
