@@ -222,7 +222,7 @@
             border-radius: 4px;
             padding: 2px 4px 4px 4px;
             background-color: transparent;
-            width: 9%;
+            width: 12%;
             margin: 1px 1px;
             display: inline-block;
         }
@@ -1052,13 +1052,13 @@
             filters.map(function (index) {
                 // In the html input tag for each filter the name includes two numbers, or one for rarity, which indicate the index of the column in fishTable.
                 var filterName = filters[index].firstElementChild.name.split('_');
+                {##}
+                {#if (filterName[0] === "rarity") {#}
+                {#    notInTable = notInTable.concat(filterRarity(Number(filterName[1])));#}
+                {#else {#}
+                {#    notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));#}
+                notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
 
-                if (filterName[0] === "rarity") {
-                    notInTable = notInTable.concat(filterRarity(Number(filterName[1])));
-                }
-                else {
-                    notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
-                }
             });
             // Merges array of indexes from fish removed from assemblage by the filter and manual removal. Sorts numerically ascending.
             notInTable = notInTable.concat(removedFishList).sort(function (a, b) {
@@ -1270,10 +1270,12 @@
                 url: "/pisces/rest/api/v1/stream/properties?comid=" + comid + "&latitude=" + lat + "&longitude=" + lng,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
-                    $(".width_value").val(Number(data["attributes"]["width"]).toFixed(3));
+                    {#$(".width_value").val(Number(data["attributes"]["width"]).toFixed(3));#}
                     $(".area_value").val(Number(data["attributes"]["area"]).toFixed(3));
                     $(".slope_value").val(Number(data["attributes"]["slope"]).toFixed(3));
-                    setTimeout(applyWidthFilter, 300);
+                    $(".elevation_value").val(Number(data["attributes"]["elevation"]).toFixed(3));
+                    $(".iwi_value").val(Number(data["attributes"]["iwi"]).toFixed(3));
+                    setTimeout(activateFilters, 300);
                 },
                 error: function (jqXHR, status, errorThrown) {
                     console.log(errorThrown);
@@ -1281,8 +1283,11 @@
             });
         }
 
-        function applyWidthFilter(){
-            $('#width_filter').trigger("click");
+        function activateFilters(){
+            $('#slope_filter').trigger("click");
+            $('#area_filter').trigger("click");
+            $('#elevation_filter').trigger("click");
+            $('#iwi_filter').trigger("click");
         }
 
         function getFishData() {
@@ -1953,18 +1958,18 @@
                 <div class="filterTitle">Fish Assemblage Filters</div>
                 <div style="text-align:center;">
                     <div class="panel" id="assemblage_filters">
-                        <div class="fish_filter">
-                            <input id="width_filter" type="button" name="width_10_11" value="Width" class="filterButton"
-                                   align="center" title="Filter fish by stream width."><br>
-                            <input type="text" id="filter_field" class="width_value" placeholder="(m)"
-                                   title="Enter a value in meters.">
-                        </div>
-                        <div class="fish_filter">
-                            <input id="depth_filter" type="button" name="depth_8_9" value="Depth" class="filterButton"
-                                   align="center" title="Filter fish by stream depth."><br>
-                            <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"
-                                   title="Enter a value in centimeters.">
-                        </div>
+{#                        <div class="fish_filter">#}
+{#                            <input id="width_filter" type="button" name="width_10_11" value="Width" class="filterButton"#}
+{#                                   align="center" title="Filter fish by stream width."><br>#}
+{#                            <input type="text" id="filter_field" class="width_value" placeholder="(m)"#}
+{#                                   title="Enter a value in meters.">#}
+{#                        </div>#}
+{#                        <div class="fish_filter">#}
+{#                            <input id="depth_filter" type="button" name="depth_8_9" value="Depth" class="filterButton"#}
+{#                                   align="center" title="Filter fish by stream depth."><br>#}
+{#                            <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"#}
+{#                                   title="Enter a value in centimeters.">#}
+{#                        </div>#}
                         <div class="fish_filter">
                             <input id="area_filter" type="button" name="area_12_13" value="Area" class="filterButton"
                                    align="center" title="Filter fish by stream drainage area."><br>
@@ -1977,38 +1982,50 @@
                             <input type="text" id="filter_field" class="slope_value" placeholder="(%)"
                                    title="Enter a value as a percent grade.">
                         </div>
-                        <div class="fish_filter" style="margin-left:40px;">
-                            <input id="cond_filter" type="button" name="cond_20_21" value="Conductivity"
-                                   class="filterButton streamChem" align="center" title="Filter fish by stream conductivity."><br>
-                            <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)"
-                                   title="Enter a value in micro-Siemens per square centimeter.">
+                         <div class="fish_filter">
+                            <input id="elevation_filter" type="button" name="elevation_22_23" value="Mean Elevation" class="filterButton"
+                                   align="center" title="Filter fish by mean elevation."><br>
+                            <input type="text" id="filter_field" class="elevation_value" placeholder="(m)"
+                                   title="Enter a value in meters.">
                         </div>
                         <div class="fish_filter">
-                            <input id="do_filter" type="button" name="do_22_23" value="Dissolved Oxygen"
-                                   class="filterButton streamChem" align="center"
-                                   title="Filter fish by stream dissolved oxygen."><br>
-                            <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"
-                                   title="Enter a value as percentage.">
+                            <input id="iwi_filter" type="button" name="iwi_22_23" value="Index of Watershed Integrity" class="filterButton"
+                                   align="center" title="Filter fish by index of watershed integrity."><br>
+                            <input type="text" id="filter_field" class="iwi_value" placeholder=""
+                                   title="Enter a value as index of watershed integrity.">
                         </div>
-                        <div class="fish_filter">
-                            <input id="ph_filter" type="button" name="ph_18_19" value="pH" class="filterButton streamChem"
-                                   align="center" title="Filter fish by stream pH."><br>
-                            <input type="text" id="filter_field" class="ph_value" placeholder="(SU)"
-                                   title="Enter a value in standard units.">
-                        </div>
-                        <div class="fish_filter">
-                            <input id="tss_filter" type="button" name="tss_14_15" value="Suspended Solids"
-                                   class="filterButton streamChem"
-                                   align="center" title="Filter fish by stream suspended solids."><br>
-                            <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"
-                                   title="Enter a value in milligrams per liter.">
-                        </div>
-                        <div class="fish_filter" style="margin-left: 40px;">
-                            <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton fishRarity"
-                                   align="center" title="Filter fish by rarity.">
-                            <input title="Rarity Range" type="text" id="rarity_value" readonly>
-                            <div id="rarity_range"></div>
-                        </div>
+{#                        <div class="fish_filter" style="margin-left:40px;">#}
+{#                            <input id="cond_filter" type="button" name="cond_20_21" value="Conductivity"#}
+{#                                   class="filterButton streamChem" align="center" title="Filter fish by stream conductivity."><br>#}
+{#                            <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)"#}
+{#                                   title="Enter a value in micro-Siemens per square centimeter.">#}
+{#                        </div>#}
+{#                        <div class="fish_filter">#}
+{#                            <input id="do_filter" type="button" name="do_22_23" value="Dissolved Oxygen"#}
+{#                                   class="filterButton streamChem" align="center"#}
+{#                                   title="Filter fish by stream dissolved oxygen."><br>#}
+{#                            <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"#}
+{#                                   title="Enter a value as percentage.">#}
+{#                        </div>#}
+{#                        <div class="fish_filter">#}
+{#                            <input id="ph_filter" type="button" name="ph_18_19" value="pH" class="filterButton streamChem"#}
+{#                                   align="center" title="Filter fish by stream pH."><br>#}
+{#                            <input type="text" id="filter_field" class="ph_value" placeholder="(SU)"#}
+{#                                   title="Enter a value in standard units.">#}
+{#                        </div>#}
+{#                        <div class="fish_filter">#}
+{#                            <input id="tss_filter" type="button" name="tss_14_15" value="Suspended Solids"#}
+{#                                   class="filterButton streamChem"#}
+{#                                   align="center" title="Filter fish by stream suspended solids."><br>#}
+{#                            <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"#}
+{#                                   title="Enter a value in milligrams per liter.">#}
+{#                        </div>#}
+{#                        <div class="fish_filter" style="margin-left: 40px;">#}
+{#                            <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton fishRarity"#}
+{#                                   align="center" title="Filter fish by rarity.">#}
+{#                            <input title="Rarity Range" type="text" id="rarity_value" readonly>#}
+{#                            <div id="rarity_range"></div>#}
+{#                        </div>#}
                     </div>
                 </div>
             </div>
