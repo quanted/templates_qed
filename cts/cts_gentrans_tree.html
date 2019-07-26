@@ -435,7 +435,9 @@ function init(json){
                 tip.innerHTML += '<div align="left"><b>accumulation: </b>' + (100.0 * node.data.accumulation).toFixed(2) + '%<br></div>';
                 tip.innerHTML += '<div align="left"><b>global accumulation: </b>' + (100.0 * node.data.globalAccumulation).toFixed(2) + '%<br></div>';
                 tip.innerHTML += '<div align="left"><b>likelihood: </b>' + node.data.likelihood + '<br></div>';
-                tip.innerHTML += $(node_enlarged_image)[0].innerHTML;
+                if ($(node_enlarged_image).length) {
+                    tip.innerHTML += $(node_enlarged_image)[0].innerHTML;
+                }
 
             }
         },
