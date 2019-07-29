@@ -4,7 +4,7 @@
             <div id="results_body">
                 <div id="snapshot_results">
                     <div id="hwbi-score">
-                        <p id="location">Snapshot results for:<br>[location]</p>
+                        <p id="location">Snapshot results for<br>[location]</p>
                         <div id="score_graph_div">
                             <span class="score_indicator" id="score_indicator_span"></span>
                             <p id="wellbeing-score">0</p>
@@ -16,11 +16,11 @@
                             <p>The Decision Integration for Strong Communities (DISC) index is a summary measure that
                                 provides a profile about select community characteristics. The index is based on
                                 indicators and metrics derived from existing cultural, economic, health, and other
-                                related data. The DISC profile index provides a snapshot about quality of life
+                                related data from years 2015-2019. The DISC profile index provides a snapshot about quality of life
                                 characteristics common across all communities and is sensitive to changes in the
                                 economic, social and ecological environments.</p>
                         </div>
-                        <button id="snapshot-btn" onclick="generateSnapshot();">Create Snapshot</button>
+                        <button id="snapshot-btn" onclick="generateSnapshot(this);">Create Snapshot</button>
                     </div>
                     
                 </div>
@@ -260,22 +260,22 @@
                                 </div>
                             </div>
                             {#            Resilience Block           #}
-                            <div id="basic-resilience-block" class="domain-score-block">
+                            <div id="resilience-block" class="domain-score-block">
                                     <button class="accordion domain-expand"></button>
-                                    <div id="basic-resilience_data-title" class="domain-data-title">Basic Resilience:</div>
-                                    <div id="basic-resilience_score" class="domain-score">0.0</div>
-                                    <div id="basic-resilience_location" class="domain-location">Nation: <span id="basic-resilience_national_score"></span>, State: <span id="basic-resilience_state_score"></span></div>
-                                    <div id="basic-resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                        <div class="score-bar resilience-bar" id="basic-resilience_score-bar"></div>
+                                    <div id="resilience_data-title" class="domain-data-title">Resilience:</div>
+                                    <div id="resilience_score" class="domain-score">0.0</div>
+                                    <div id="resilience_location" class="domain-location">Nation: <span id="resilience_national_score"></span>, State: <span id="resilience_state_score"></span></div>
+                                    <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                        <div class="score-bar resilience-bar" id="resilience_score-bar"></div>
                                     </div>
                                     <div class="slider-block">
                                         <span class="left-slider-legend">Less</span>
                                         <div class="slider-container">
-                                            <div id="basic-resilience-slider-bar" class="rank-slider resilience-slider"></div>
+                                            <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
                                         </div>
                                         <span class="right-slider-legend">More</span>
                                     </div>
-                                    <div id="basic-resilience_details" class="domain-description">
+                                    <div id="resilience_details" class="domain-description">
                                         <p>
                                             The Resilience domain describes a community's core ability to withstand and recover from an adverse natural hazard event in the context of potential natural hazard exposures and local resilience governance.
                                         </p>
@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                             </div> <!--end domain-blocks -->
-
+                            <hr />
                             <h3>Services Scores</h3>
                             <div class="service-blocks">
                                 <button type="button" id="servicedesc_btn" title="More info" onclick="serviceText();">&bull; &bull; &bull;</button>
@@ -744,9 +744,9 @@
                     <div class="customize_description">
                         <button id="reset-hwbi-domains">Reset</button>
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
-                        <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page.</p>
+                        <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data.</p>
                     </div>
-                    <div class="card-list">{% regroup hwbi_metrics by 6 as hwbi_domains %}{% regroup hwbi_metrics by 7 as hwbi_indicators %}{% for domain in hwbi_domains %}
+                    <div class="card-list">{% regroup hwbi_metrics by 2 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
                             <div class="card card{{ forloop.counter }}">
                                 <a href="#{{ domain.grouper|slugify }}-modal">
@@ -756,7 +756,8 @@
                                 <div id="{{ domain.grouper|slugify }}-modal" class="modal-overlay">
                                     <div class="modal">
                                         <h2 class="modal-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
-                                        <button class="reset-hwbi-custom-btn" data-id="{{ domain.list.0.17 }}">Reset</button>
+                                        <p>{{ domain.list.0.11 }}</p>
+                                        <button class="reset-hwbi-custom-btn" data-id="{{ domain.grouper }}">Reset</button>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
                                         <a href="#" class="close">&times;</a>
                                         <div class="modalcontent">
@@ -767,13 +768,13 @@
                                                         <h4 id="{{ domain.grouper|slugify }}_indicators_title"></h4>
                                                         <div id="{{ domain.grouper|slugify }}_indicators_description"></div>
                                                     </div>
-                                                    <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.6 == domain.grouper %}
-                                                        <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.14}}">
+                                                    <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.2 == domain.grouper %}
+                                                        <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.10}}">
                                                             <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}: <span id="{{ domain.grouper|slugify }}_{{indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
-                                                            <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
-                                                                <span class="" title="{{ metric.1 }}">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span>
+                                                            <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.2 == indicator.list.0.2 and metric.3 == indicator.list.0.3 %}
+                                                                <label for="customize-hwbi-metrics-{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}
                                                                 <span class=""></span>
-                                                                <input id="" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.16 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}">
+                                                                <input id="customize-hwbi-metrics-{{ metric.0|slugify }}" type="range" class="thumb customize-hwbi-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.5 }}" data-max="{{ metric.6 }}" data-var="{{ metric.0 }}" data-sign="{{ metric.7 }}" data-units="{{ metric.9 }}" value=""></label>
                                                             {% endif %}{% endfor %}</div>
                                                         </div>{% endif %}{% endfor %}
                                                     </div>
@@ -784,41 +785,6 @@
                                 </div>
                             </div>
                         </div>{% endfor %}
-                        <div class="card-wrap">
-                            <div class="card card9">
-                                <a href="#basic-resilience-modal">
-                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/basic-resilience.jpg" />
-                                    <div class="card-text-overlay">Basic Resilience</div>
-                                </a>
-                                <div id="basic-resilience-modal" class="modal-overlay">
-                                    <div class="modal">
-                                        <h2 class="modal-title">Basic Resilience <span id="basic-resilience_modal_score" class="domain-modal-score"></span></h2>
-                                        <!-- <button class="reset-hwbi-custom-btn" data-id="34">Reset</button> -->
-                                        <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
-                                        <a href="#" class="close">&times;</a>
-                                        <div class="modalcontent">
-                                            <div id="customize_domain_details"></div>
-                                            <div id="customize_domain_indicators">
-                                                <div id="basic-resilience_indicators" class="row cols-2 domain_indicator">
-                                                    <div class="col size-1of2 description-column">
-                                                        <h4 id="basic-resilience_indicators_title"></h4>
-                                                        <div id="basic-resilience_indicators_description"></div>
-                                                    </div>
-                                                    <div class="col size-1of2 indicator-column">
-                                                        <div class="row cols-1 indicator_block" data-title="Governance">
-                                                            <button class="accordion-metrics indicator_data-title">Governance: <span id="basic-resilience_governance_value" class="indicator_value"></span></button>
-                                                        </div>
-                                                        <div class="row cols-1 indicator_block" data-title="RISK">
-                                                            <button class="accordion-metrics indicator_data-title">RISK: <span id="basic-resilience_risk_value" class="indicator_value"></span></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 
                     </div>
@@ -852,9 +818,9 @@
         <div class="customize_description">
             <button id="reset-service-btn">Reset</button>
             <h3>Services</h3>
-            <p class="tab-desc">Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value. Changes are indicated with a blue dot. Changing the sliders will also change the Services Scores on the Community Snapshot page.</p>
+            <p class="tab-desc">Click on a card labeled with the service that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall service value. Changes are indicated with a blue dot. Changing the sliders will also change the Services Scores on the Community Snapshot page to no longer reflect EPA data.</p>
         </div>
-        <div class="services-card-list">{% regroup service_metrics by 6 as service_domains %}{% regroup service_metrics by 7 as service_indicators %} {% regroup service_metrics by 8 as service_metric_groups %}
+        <div class="services-card-list">{% regroup service_metrics by 2 as service_domains %}{% regroup service_metrics by 3 as service_indicators %} {% regroup service_metrics by 4 as service_metric_groups %}
             <div class="services-card-wrap">{% for metric_group in service_metric_groups %}
                 <div class="service-card s-card{{ forloop.counter }}">
                     <a href="#{{ metric_group.grouper|slugify }}-service-modal">
@@ -863,7 +829,7 @@
                     </a>
                     <div id="{{ metric_group.grouper|slugify }}-service-modal" class="modal-overlay">
                         <div class="modal">
-                            <h2 class="modal-title">{{ metric_group.grouper }}</h2>
+                            <h2 class="modal-title">{{ metric_group.grouper }} <span id="{{ metric_group.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
                             <a href="#" class="close">&times;</a>
                             <button class="reset-service-custom-btn" data-type="{{ metric_group.grouper }}">Reset</button>
                             <div class="modalcontent">
@@ -873,16 +839,16 @@
                                             <h4 id="{{ metric_group.grouper|slugify }}-service-indicators_title"></h4>
                                             <div id="{{ metric_group.grouper|slugify }}-service-indicators_description"></div>
                                         </div>
-                                        <div class="col size-1of2 indicator-column">{% for domain in service_domains %}{% if domain.list.0.8 == metric_group.grouper %}
-                                            <div class="row cols-1 indicator_block" data-title="{{domain.list.0.15}}">
-                                                <button class="accordion-metrics indicator_data-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_{{ indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
-                                                <div class="metric-accordion-panel">{% for indicator in service_indicators %}{% if indicator.list.0.6 == domain.grouper %}
-                                                    <span data-title="{{indicator.list.0.14}}">
-                                                        <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}</button>
-                                                        <div class="metric-accordion-panel">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
-                                                            <span class="" title="">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}</span>
+                                        <div class="col size-1of2 indicator-column">{% for domain in service_domains %}{% if domain.list.0.4 == metric_group.grouper %}
+                                            <div class="row cols-1 indicator_block" data-title="{{domain.list.0.11}}">
+                                                <button class="accordion-metrics indicator_data-title">{{ domain.grouper }}: <span id="{{ metric_group.grouper|slugify }}_{{domain.grouper|slugify }}_value" class="indicator_value"></span></button>
+                                                <div class="metric-accordion-panel">{% for indicator in service_indicators %}{% if indicator.list.0.2 == domain.grouper %}
+                                                    <span data-title="{{indicator.list.0.10}}">
+                                                        <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}: <span id="{{ domain.grouper|slugify }}_{{indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
+                                                        <div class="metric-accordion-panel">{% for metric in service_metrics %}{% if metric.3 == indicator.list.0.3 and metric.2 == indicator.list.0.2 %}
+                                                            <label for="customize-service-metrics-{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }} {% elif metric.1 != "" %}{{ metric.1 }} {% else %}{{ metric.0 }}: {% endif %}
                                                             <span class=""></span>
-                                                            <input id="" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-var="{{ metric.16 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" value="">
+                                                            <input id="customize-service-metrics-{{ metric.0|slugify }}" type="range" class="thumb customize-service-metrics {{ metric.0|slugify }}" min="0.0" max="1.0" step="0.01" data-min="{{ metric.5 }}" data-max="{{ metric.6 }}" data-var="{{ metric.0 }}" data-sign="{{ metric.7 }}" data-units="{{ metric.9 }}" value=""></label>
                                                         {% endif %}{% endfor %}</div>
                                                     </span>{% endif %}{% endfor %}
                                                 </div>
@@ -913,7 +879,7 @@
                         {% for domain in hwbi_domains %}
                         <li class="{{domain.grouper|slugify}}-rank">
                             <form action="">
-                                <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="8" value="1" data-did="{{ domain.list.0.17 }}"></label>
+                                <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="8" value="1" data-did="{{ domain.grouper }}"></label>
                             </form>
                         </li>
                         {% endfor %}
@@ -946,15 +912,16 @@
                                 </ul>
                                 <hr class="s-tabs-below">
                             </div>
-                        </nav><a href="#" class="back container-back" onclick="serviceTabContainerReturn();"></a><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 6 as domains %}{% regroup service_metrics by 7 as indicators %}{% regroup service_metrics by 8 as metricGroups %}{% for metricGroup in metricGroups %}
+                        </nav>
+                        <a href="#" class="back container-back" onclick="serviceTabContainerReturn();"></a><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 2 as domains %}{% regroup service_metrics by 3 as indicators %}{% regroup service_metrics by 4 as metricGroups %}{% for metricGroup in metricGroups %}
                         
                         <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="slinky-menu" style="display: none;">
-                            <ul>{% for domain in domains %}{% if domain.list.0.8 == metricGroup.grouper %}
+                            <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
                                 <li>
                                     <a href="#">{{ domain.grouper }}</a>
-                                    <ul>{% for indicator in indicators %}{% if indicator.list.0.6 == domain.grouper %}
+                                    <ul>{% for indicator in indicators %}{% if indicator.list.0.2 == domain.grouper %}
                                         <li>
-                                            <a href="#" onclick="filterSelection('{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
+                                            <a href="#" onclick="filterSelection('{{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
                                         </li>{% endif %}{% endfor %}
                                     </ul>
                                 </li>{% endif %}{% endfor %}
@@ -967,12 +934,15 @@
                                 
                                 <div class>
                                     
-                                    <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.8 == metricGroup.grouper %}
-                                        <label id="{{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.6|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.6 == indicator.list.0.6 and metric.7 == indicator.list.0.7 %}
-                                                <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}"><span class="">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}</span><span class=""></span>
+                                    <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.4 == metricGroup.grouper %}
+                                        <label id="{{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.2 == indicator.list.0.2 and metric.3 == indicator.list.0.3 %}
+                                            <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
+                                                    
+                                                <label for="{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}
+                                                <span class=""></span>
             
                                             
-                                            <input id="{{ metric.0|slugify }}" class="thumb scenario-builder-metric {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.9 }}" data-max="{{ metric.10 }}" data-sign="{{ metric.11 }}" data-units="{{ metric.13 }}" data-var="{{ metric.16 }}"></div>{% endif %}{% endfor %}
+                                                <input id="{{ metric.0|slugify }}" class="thumb scenario-builder-metric {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.5 }}" data-max="{{ metric.6 }}" data-sign="{{ metric.7 }}" data-units="{{ metric.9 }}" data-var="{{ metric.0 }}"></label></div>{% endif %}{% endfor %}
                                         </label>{% endif %}{% endfor %}
                                     </div>
                                 </div>
@@ -1011,7 +981,8 @@
 				<div class="lt"><span class="lt_moe"></span></div>
 				<div class="ls"><span class="ls_moe"></span></div>
 				<div class="ss"><span class="ss_moe"></span></div>
-				<div class="sc"><span class="sc_moe"></span></div>
+                <div class="sc"><span class="sc_moe"></span></div>
+                <div class="re"><span class="re_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 				
@@ -1027,7 +998,8 @@
 				<div class="lt"><span class="lt_moe"></span></div>
 				<div class="ls"><span class="ls_moe"></span></div>
 				<div class="ss"><span class="ss_moe"></span></div>
-				<div class="sc"><span class="sc_moe"></span></div>
+                <div class="sc"><span class="sc_moe"></span></div>
+                <div class="re"><span class="re_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 		</div>
@@ -1063,12 +1035,12 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?layers=0626249738dd45b5832b465acddd5e0a">Change in Business Vacancy Rate Map</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://eig.org/dci">Distressed Communities Index by Zip Code</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.mbda.gov/page/grant-competition-american-indian-alaska-native-and-native-hawaiian-projects">Grant Competition for Native American, Alaska Native, and Native Hawaiian Projects</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/as-ia/ieed/division-economic-development/nabdi">Native American Business Development Institute (NABDI) Grant</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://business.defense.gov/Programs/Indian-Incentive-Program/How-to-Participate/">Tribal Communities: US Department of Defense Indian Incentive Program </a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/sites/default/files/ONAA_resource_guide.pdf">Tribal Communities: US SBA Resource Guide</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://business.defense.gov/Programs/Indian-Incentive-Program/How-to-Participate/">Tribes: US Department of Defense Indian Incentive Program </a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/sites/default/files/ONAA_resource_guide.pdf">Tribes: US SBA Resource Guide</a></li>
 
                     </ul>
                 </div>
@@ -1085,11 +1057,11 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for job training, readiness, and employment activities</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.statsamerica.org/distress/distress.aspx">Calculate whether a county, region, or neighborhood may meet grant thresholds for unemployment and income</a></li>
 
@@ -1140,7 +1112,7 @@
                         <h4>Additional Resources</h4>
                         <hr>
                         <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
-                        <li><input class="resources-checkbox" type="checkbox"><label>Tribal Communities: Keepseagle Fast-Track Grant Program for native farm development provided by First Nations Development Institute </label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Tribes: Keepseagle Fast-Track Grant Program for native farm development provided by First Nations Development Institute </label></li>
 
                         
                         
@@ -1162,7 +1134,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community facilities direct loan program to help rural communities to make infrastructure improvements</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Public-Works-Program-1-Pager.pdf">US EDA Public Works Program for revitalizing, expanding, and upgrading physical infrastructure</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribaldrinkingwater/drinking-water-infrastructure-grants-tribal-set-aside-program">Drinking Water Infrastructure Grants - Tribal Set-Aside Program</a></li>
                         
@@ -1194,7 +1166,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://geoisp.com/us/">Detailed Internet Service Provider Information for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://broadbandmap.fcc.gov/#/">FCC Broadband Access Map for Your Community</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/iduesannh/index.html">Department of Education - Alaska Native and Native Hawaiian-Serving Institutions Broadband Funding</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/iduesaitcc/index.html">Department of Education - American Indian Tribally Controlled Colleges and Universities Broadband Funding</a></li>
@@ -1316,10 +1288,10 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://cfpub.epa.gov/quantifier/index.cfm?action=main.home">Diesel Emissions Quantifier to evaluate clean diesel projects and upgrade options</a></li>
                         
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-tribal-programs">Other Tribal Community Programs and Resources for EPA Region 10</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-air-act-tribal-program-funding">Tribal Communities: Region 10 Clean Air Act Tribal Program Funding for air quality management</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-tribal-programs">Other Tribe Programs and Resources for EPA Region 10</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-air-act-tribal-program-funding">Tribes: Region 10 Clean Air Act Tribal Program Funding for air quality management</a></li>
                         
                     </ul>
                 </div>
@@ -1359,10 +1331,10 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/land-revitalization/community-reuse-property-prioritization-tool">Community Reuse Property Prioritization Tool</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/equitable-redevelopment-petroleum-brownfields-zuni-pueblo-and-other-tribal-communities">Equitable Redevelopment of Petroleum Brownfields for Tribal Communities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/state-and-tribal-response-program-grant-funding-guidance-resources">Tribal Communities: US EPA Brownfields grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/equitable-redevelopment-petroleum-brownfields-zuni-pueblo-and-other-tribal-communities">Equitable Redevelopment of Petroleum Brownfields for Tribes</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/state-and-tribal-response-program-grant-funding-guidance-resources">Tribes: US EPA Brownfields grants</a></li>
                         
                     </ul>
                 </div>
@@ -1401,7 +1373,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://mswdst.rti.org/">Municipal Solid Waste Decision Support Tool (MSW-DST)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/warm">Waste Reduction Model (WARM) to calculate and total greenhouse gas emissions of waste management practices</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal-lands/tribal-waste-management-program">Tribal Waste Management Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal-lands/tribal-waste-management-program-sustainability-evaluation-tool">Tribal Waste Management Program Sustainability Evaluation Tool</a></li>
@@ -1421,7 +1393,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://coralreef.noaa.gov/conservation/funding_welcome.html">NOAA Coral Reef Conservation Program financial assistance</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://seagrant.noaa.gov/Funding">NOAA Sea Grant Funding Opportunities for healthy coastal ecosystems and sustainable fisheries and aquaculture</a></li>
                         
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.westcoast.fisheries.noaa.gov/protected_species/salmon_steelhead/recovery_planning_and_implementation/pacific_coastal_salmon_recovery_fund.html">NOAA Pacific Coast Salmon Recovery Fund</a></li>
     
@@ -1443,7 +1415,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/pacific/ecoservices/habcon/partners/HowitWorks.html">Partners for Fish and Wildlife Program for habitat improvement</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/endangered/grants/grant-programs.html">US Fish and Wildlife Service (FWS) Endangered Species Grant Programs</a></li>
                         
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/grants/tribal.html">Tribal Wildlife Grants program for wildlife restoration</a></li>
 
@@ -1539,7 +1511,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/re-powering/re-powerings-electronic-decision-tree">RE-Powering's Electronic Decision Tree to screen sites for suitability for solar photovoltaics or wind installations</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/tool-finder-local-government-clean-energy-initiatives">Tool Finder for Local Government Clean Energy Initiatives</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/tribal-greenhouse-gas-inventory-tool">Tribal Greenhouse Gas Inventory Tool</a></li>
 
@@ -1609,10 +1581,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/exams-version-index">Exposure Analysis Modeling System (EXAMS) to measure and track the release of chemical contaminants in an aquatic ecosystem</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/mmsoils">Multimedia Contaminant Fate, Transport, and Exposure Model (MMSOILS) tool that estimates human exposure and health risk from hazardous waste sites</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/superfund/remedial-program-indian-country">Remedial Program in Indian Country</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/toxics-release-inventory-tri-program/tri-tribal-communities">Tribal Communities: US EPA Toxic Release Inventory (TRI) Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/toxics-release-inventory-tri-program/tri-tribal-communities">Tribes: US EPA Toxic Release Inventory (TRI) Program</a></li>
                         
                         
 
@@ -1651,7 +1623,7 @@
                         <h4>Additional Resources</h4>
                         <hr>
                         <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
-                        <li><input class="resources-checkbox" type="checkbox"><label>Tribal Communities: The National Forest Foundation has a Matching Awards Program (MAP) for Forest Health</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Tribes: The National Forest Foundation has a Matching Awards Program (MAP) for Forest Health</label></li>
 
                     </ul>
                 </div>
@@ -1743,7 +1715,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/water-research/system-urban-stormwater-treatment-and-analysis-integration-sustain">System for Urban Stormwater Treatment and Analysis Integration (SUSTAIN)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterqualitysurveillance/resources-design-and-implement-customer-complaint-surveillance-surveillance">Tools to establish alerting thresholds for customer water quality complaints</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-106-tribal-program-funding">Region 10 Clean Water Act Section 106 Tribal Program Funding for water pollution control</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribal/region-10-clean-water-act-section-319-tribal-program-funding">Region 10 Clean Water Act Section 319 Tribal Program Funding for nonpoint source pollution problems and threats</a></li>
@@ -1791,9 +1763,9 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.asthmaforecast.com/">National Asthma Map and Forecast for Your Community</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/indoor-air-quality-iaq/indoor-air-quality-tools-tribal-communities">Tribal Communities: US EPA indoor air quality tools</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/indoor-air-quality-iaq/indoor-air-quality-tools-tribal-communities">Tribes: US EPA indoor air quality tools</a></li>
 
                     </ul>
                 </div>
@@ -1816,10 +1788,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://opioidepidemic.maps.arcgis.com/apps/webappviewer/index.html?id=f28417533819453eb65e40550c244937">National Drug Drop-off Locator for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://opioidepidemic.maps.arcgis.com/apps/webappviewer/index.html?id=153b0c32fefc432eae6a0e8439b9f56b">National Naloxone Map for Reversing Opioid Overdose for Your Community</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/tribal-training-technical-assistance">Tribal Communities: SAMHSA training and technical assistance</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/resources/substance-use-disorders">Tribal Communities: Substance Abuse and Mental Health Services Administration (SAMHSA) substance use disorders resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/tribal-training-technical-assistance">Tribes: SAMHSA training and technical assistance</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.samhsa.gov/tribal-ttac/resources/substance-use-disorders">Tribes: Substance Abuse and Mental Health Services Administration (SAMHSA) substance use disorders resources</a></li>
                         
                     </ul>
                 </div>
@@ -1855,10 +1827,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=38.75408327579141&mapOSM[c2]=-102.48046875&mapOSM[s]=city10&mapOSM[fs]=false">Interactive Map of High School Educational Attainment Rate for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nces.ed.gov/globallocator/">Search for All Schools Within and Near Your Community</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indiandemo/index.html">Tribal Communities: US Department of Education discretionary/competitive grants for students</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indianformula/index.html">Tribal Communities: US Department of Education formula grants for students</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indiandemo/index.html">Tribes: US Department of Education discretionary/competitive grants for students</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indianformula/index.html">Tribes: US Department of Education formula grants for students</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for educational activities</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/tribal-college-initiative-grants">Tribal College Initiative Grants for education infrastructure improvements</a></li>
 
@@ -1918,9 +1890,9 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nutrition.gov/subject/food-assistance-programs">US federal government nationwide food assistance programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ruralhealthinfo.org/project-examples/897">The Wholesome Rx program to provide affordable, healthy food for healthcare recipients.</a></li>
                         
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fns.usda.gov/fdpir/food-distribution-program-indian-reservations-fdpir">Tribal Communities: USDA Food distribution program for low-income households</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fns.usda.gov/fdpir/food-distribution-program-indian-reservations-fdpir">Tribes: USDA Food distribution program for low-income households</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
@@ -1929,7 +1901,7 @@
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security in rural communities, contact the Rural Health Information Hub</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more resources on how to eat more sustainably, visit FoodPrint's website</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Hunger+Health Feeding America has more information on food insecurity</label></li>
-                        <li><input class="resources-checkbox" type="checkbox"><label>Tribal Community resources for food security can be found at Partnership with Native Americans website</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Tribe resources for food security can be found at Partnership with Native Americans website</label></li>
                         
                     </ul>
                 </div>
@@ -1963,9 +1935,9 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://healthsites.io/map">Interactive Map of Healthsites for Your Community</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cms.gov/Outreach-and-Education/American-Indian-Alaska-Native/AIAN/CMS-Tribal-Products.html">Tribal Communities: US CMS healthcare resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.cms.gov/Outreach-and-Education/American-Indian-Alaska-Native/AIAN/CMS-Tribal-Products.html">Tribes: US CMS healthcare resources</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
@@ -2003,10 +1975,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=4ed20164f914429b951486adcbc2b8e8">Housing Affordability Index for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://htaindex.cnt.org/map/">Housing and Transportation Affordability Index for Your Community</a></li>
                         
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.gov/benefit/798">Tribal Communities: Housing Improvement Program for home repair, renovation, replacement, and new housing grants</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/green-building-tools-tribes/funding-opportunities-tribal-green-building#epa">Tribal Communities: US EPA funding opportunities for green building</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.gov/benefit/798">Tribes: Housing Improvement Program for home repair, renovation, replacement, and new housing grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/green-building-tools-tribes/funding-opportunities-tribal-green-building#epa">Tribes: US EPA funding opportunities for green building</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.va.gov/homeloans/nadl.asp">US HUD Direct home loan program for Native Americans</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/grants/ihbg">US HUD Indian Housing Block Grant Program</a></li>
                         
@@ -2210,11 +2182,11 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/develop-and-conduct-water-resilience-tabletop-exercise-water-utilities">Tabletop Exercise Tool for Drinking Water and Wastewater Utilities</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/visual-plumes">Visual Plumes model system for simulating surface water jets and plumes</a></li>
 
-                        <h4>Tribal Community Resources</h4>
+                        <h4>Tribe Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribal Communities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribal Communities: Emergency preparedness training provided by FEMA</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribal Community preparedness resources</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribes</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribes: Emergency preparedness training provided by FEMA</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribe preparedness resources</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/tribal-homeland-security-grant-program">Tribal Homeland Security Grant Program provided by FEMA</a></li>
 
                         <h4>Additional Resources</h4>
