@@ -142,32 +142,40 @@ function plotMicroDist() {
 
   // Binds highlighting feature when user hovers over lines:
   $('div#microspecies-distribution').bind('jqplotMouseMove', function(event, xy, axesData, neighbor, plot) {
-    var drawingCanvas = $(".jqplot-highlight-canvas")[0];
-    var context = drawingCanvas.getContext('2d');
+    // var drawingCanvas = $(".jqplot-highlight-canvas")[0];
+    // var context = drawingCanvas.getContext('2d');
     var lineBounds = 6;  // linewidth + lineBounds for triggering highlight
-
-    context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    // context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
     for (var i = 0; i < plot.series.length; i++) {
       var value = hitTestSegments(plot.series[i].gridData, xy, plot.series[i].lineWidth + lineBounds);
       if (value > -1) {
-        //draw the highlight
-        context.beginPath();
-        for (var j = 0; j < plot.series[i].gridData.length; j++) {
-          var p = plot.series[i].gridData[j];
-          if (j == 0)
-            context.moveTo(p[0], p[1]);
-          else context.lineTo(p[0], p[1]);
-        }
-
-        highlightLine(i + 1, context, plot);
+        // highlightLine(i + 1, context, plot);
+        highlightLine(i + 1);
         highlightBorder(i + 1);
-
         break;
       }
-
       highlightBorder();
-
+      highlightLine();
     }
+  });
+
+  // Hoverover event for microspecies images: highlights plot line:
+  $('td#ms-cell').children('div.chemspec_molecule').hover(function() {
+    // Highlight associated microspecies line on plot on hover-in event:
+    // let drawingCanvas = $(".jqplot-highlight-canvas")[0];
+    // let context = drawingCanvas.getContext('2d');
+    // context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    var msNum = $(this).children('div.cts-chem-wrap').attr('id').split('microspecies')[1];
+    // highlightLine(msNum, context, plot);
+    highlightLine(msNum);
+    highlightBorder(msNum);
+  }, function() {
+    // Hover-out event: removes border and plot highlights:
+    highlightBorder();
+    highlightLine();
+    // let drawingCanvas = $(".jqplot-highlight-canvas")[0];
+    // let context = drawingCanvas.getContext('2d');
+    // context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
   });
 
   function hitTestSegments(points, point, thickness) {
@@ -213,11 +221,24 @@ function plotMicroDist() {
     }
   };
 
-  function highlightLine(msNum, context, plot) {
+  // function highlightLine(msNum, context, plot) {
+    function highlightLine(msNum) {
     /*
     Highlights microspecies line based on microspecies number/id.
     */
-    //adding some sort of a glow effect
+    let drawingCanvas = $(".jqplot-highlight-canvas")[0];
+    let context = drawingCanvas.getContext('2d');
+    context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+
+    if (!msNum) { return; }
+
+    context.beginPath();
+    for (var j = 0; j < plot.series[msNum - 1].gridData.length; j++) {
+      var p = plot.series[msNum - 1].gridData[j];
+      if (j == 0)
+        context.moveTo(p[0], p[1]);
+      else context.lineTo(p[0], p[1]);
+    }
     var msDiv = $('div#microspecies' + (msNum)).parent('div.chemspec_molecule');
     var borderColor = $(msDiv).css('border-left-color');
     context.lineWidth = plot.series[msNum  - 1].lineWidth + 9;

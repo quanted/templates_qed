@@ -42,7 +42,8 @@ $(document).ready(function() {
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
 
-    metabolizer_post = '{{metabolizer_post}}';
+    // metabolizer_post = '{{metabolizer_post}}';
+    metabolizer_post = Object({{metabolizer_post}});
 
 
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
@@ -577,7 +578,7 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         pchem_data['workflow'] = 'gentrans';
         pchem_data['gen_limit'] = genMax;
 
-        pchem_data['metabolizer_post'] = JSON.parse(metabolizer_post);
+        pchem_data['metabolizer_post'] = JSON.parse(JSON.stringify(metabolizer_post));
 
     }
 
