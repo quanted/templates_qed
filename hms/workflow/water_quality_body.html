@@ -45,13 +45,23 @@
         </ul>
         <div id="input_tab">
             <form id="submit_form" action="#">
-                <fieldset>
+                <fieldset style="display:inline-flex;">
                     <label for="source_select">Select dataset source: </label>
                     <select name="source" id="source_select">
                         <option selected="selected">nldas</option>
                         <option>ncei</option>
                         <option>nwm</option>
                     </select>
+                    <br><br>
+                    <label for="minAmmonia">Minimum Ammonia (mg): </label>
+                    <input type="number" value="100000" id="minAmmonia"><br>
+                    <label for="maxAmmonia">Maximum Ammonia (mg): </label>
+                    <input type="number" value="750000" id="maxAmmonia"><br><br>
+
+                    <label for="minNitrate">Minimum Nitrate (mg): </label>
+                    <input type="number" value="1000" id="minNitrate"><br>
+                    <label for="maxNitrate">Maximum Nitrate (mg): </label>
+                    <input type="number" value="10000" id="maxNitrate"><br>
                 </fieldset>
             </form>
             <div id="input_submit"><button id="input_submit_button">Submit</button></div>
