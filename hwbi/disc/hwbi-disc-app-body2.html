@@ -27,7 +27,7 @@
                 <div id="wellbeing-scores">
                     <h3 id="domain-scores_data-title">Community Characteristic Scores</h3>
                     
-                    <button type="button" id="rank_btn" title="More info" onclick="priorityText()">&bull; &bull; &bull;</button>
+                    <button type="button" id="rank_btn" title="More info" onclick="moreInfoPriority()">&bull; &bull; &bull;</button>
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">Well-being and resilience measures are often used to characterize the drivers that influence human behavior and affect the human condition. These quality of life attributes are multi-dimensional that are best described using a host of metrics that respond to the changing environment in which people live. A synthesis of this knowledge helps shape our understanding about people and their needs, both actual and perceived.</div>
                     <div id="domain-scores">
@@ -291,7 +291,7 @@
                             <hr />
                             <h3>Services Scores</h3>
                             <div class="service-blocks">
-                                <button type="button" id="servicedesc_btn" title="More info" onclick="serviceText();">&bull; &bull; &bull;</button>
+                                <button type="button" id="servicedesc_btn" title="More info" onclick="moreInfoServices();">&bull; &bull; &bull;</button>
                                 <br><br>
                                 <div id="service-explanation" style="display: none;">The wants and needs of people are met through the availability of a variety of social, economic and environmental items (i.e., goods) and their delivery (i.e., services). The availability and flow of these services address many aspects of a community--everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources help to introduce changes that influence the quality of life for individuals and their communities.</div>
                                 <div class="chartcontainer">
@@ -744,6 +744,9 @@
                     <div class="customize_description">
                         <button id="reset-hwbi-domains">Reset</button>
                         <h3>Customizing the DISC profile score for <span id="customize_location">[location]</span></h3>
+                        <!-- <button type="button" id="qol_btn" title="More info" onclick="moreInfoQOL()">&bull; &bull; &bull;</button>
+                        <br><br>
+                        <div id="qolexplanation" style="display: none;">The entirety of DISC is based on the US EPA Human Well-Being Index (HWBI) and Climate Resilience Screening Index (CRSI). The HWBI indicators represent a suite of community quality of life characteristics, socio-ecological service measures and models that relate the two sets of values. The CRSI indicators offer measures of potential natural hazard exposures and basic governance measures that indicate potential recovery preparedness. All indicators are calculated based on the best publicly available data. Data selection is science-based and reviewed for national comparability. It is recognized that the best available data may not always be most relevant. To account for this, the DISC indicators may be customized using local data and knowledge so the base-line measures can more closely reflect local conditions.</div> -->
                         <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data.</p>
                     </div>
                     <div class="card-list">{% regroup hwbi_metrics by 2 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
@@ -869,7 +872,7 @@
         <div class="priority-rankings">
             <button id="riv-reset-btn">Reset</button>
             <h3>Priority Rankings</h3>
-            <p class="tab-desc">Use the arrows to rank the importance of community characteristics based on your preferences. A value of 8 has more importance and a value of 1 has less importance. Changes made below will also change your DISC score on the Community Snapshot and the Scenario Builder pages.</p>
+            <p class="tab-desc">Use the arrows to rank the importance of community characteristics based on your preferences. A value of 9 has more importance and a value of 1 has less importance. Changes made below will also change your DISC score on the Community Snapshot and the Scenario Builder pages.</p>
             <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
             <div class="ranking-chart-list-container">
                 <div class="ranking-list-container">
@@ -1007,6 +1010,9 @@
     <div id="resources-tab" class="disc-body">
         <div class="resources-body">
             <button id="report_pdf" class="report_pdf_button" type="button" onclick="newDISC(); domainChange(); indicatorChange(); copyDivs(); resourceLabelCheck();">PDF Report</button>
+            <h3 class="no-print">Resources</h3>
+            <p class="tab-desc no-print">Resource information has been pulled together to offer extended information about topics introduced in the DISC application. This list of resources is intended to help you find more information about ways to help improve the local environmental conditions of interest that may ultimately lead to a more sustainable and vibrant community.</p>
+            
             <div class="economic-resources-section">
                 <h3 class="no-print">Economic</h3>
                 <button class="accordion-metrics">Business Development</button>
