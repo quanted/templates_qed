@@ -882,7 +882,7 @@
                         {% for domain in hwbi_domains %}
                         <li class="{{domain.grouper|slugify}}-rank">
                             <form action="">
-                                <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="8" value="1" data-did="{{ domain.grouper }}"></label>
+                                <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="9" value="1" data-did="{{ domain.grouper }}"></label>
                             </form>
                         </li>
                         {% endfor %}
