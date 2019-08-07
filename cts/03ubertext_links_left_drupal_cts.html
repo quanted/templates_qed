@@ -8,13 +8,19 @@
         <h3 style="padding-top:10px;">{{ key|safe }}</h3>
         {% for valueKey, valueValue in value.items %}
           <li class="menu-item{% if forloop.last %} menu-item-last{% endif %}">
+
+          {% if 'http' in valueValue %}
+            <a href="{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
+          {% else %}          
             <a href="/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
-            {% if MODEL == valueValue %}
-              <ul class="menu">
-                <li class="menu-item"><a href="/{{ MODEL }}/input" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "input" or PAGE == "output" %} active-trail active{% endif %}">Run single chemical</a></li>
-                <li class="menu-item"><a href="/{{ MODEL }}/batch" title="Run {{ valueKey|safe }} Batch" class="menu-link{% if PAGE == "batch" or PAGE == "batchoutput" %} active-trail active{% endif %}">Run batch file</a></li>
-              </ul>
-            {% endif %}
+          {% endif %}
+
+          {% if MODEL == valueValue %}
+            <ul class="menu">
+              <li class="menu-item"><a href="/{{ MODEL }}/input" title="Run {{ valueKey|safe }}" class="menu-link{% if PAGE == "input" or PAGE == "output" %} active-trail active{% endif %}">Run single chemical</a></li>
+              <li class="menu-item"><a href="/{{ MODEL }}/batch" title="Run {{ valueKey|safe }} Batch" class="menu-link{% if PAGE == "batch" or PAGE == "batchoutput" %} active-trail active{% endif %}">Run batch file</a></li>
+            </ul>
+          {% endif %}
           </li>
         {% endfor %}
       {% endfor %}</ul>
