@@ -1175,16 +1175,27 @@
         }
 
         function formatDetails(details) {
+            if (details['slope_l'] === null){
+                return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +
+                    'Rarity: ' + details["rarity"] + '<br>' + 'No envelope data available.</p>'
+            }
             return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +
                 'Rarity: ' + details["rarity"] + '<br>' +
-                'Stream Depth Range (cm): (' + details["depth_l"] + ' - ' + details["depth_u"] + ')<br>' +
-                'Stream Width Range (m): (' + details["width_l"] + ' - ' + details["width_u"] + ')<br>' +
                 'Stream Area Range (ha): (' + details["area_l"] + ' - ' + details["area_u"] + ')<br>' +
                 'Stream Slope Range (%): (' + details["slope_l"] + ' - ' + details["slope_u"] + ')<br>' +
-                'Stream TSS Range (mg/l): (' + details["tss_l"] + ' - ' + details["tss_u"] + ')<br>' +
-                'Stream pH Range: (' + details["ph_l"] + ' - ' + details["ph_u"] + ')<br>' +
-                'Stream Conductivity Range (uS/cm2): (' + details["cond_l"] + ' - ' + details["cond_u"] + ')<br>' +
-                'Stream Dissolved Oxygen Range (% sat): (' + details["do_l"] + ' - ' + details["do_u"] + ')<br></p>';
+                'Elevation Range (m): (' + details["elev_l"] + ' - ' + details["elev_u"] + ')<br>' +
+                'Index of Watershed Integrity Range: (' + details["iwi_l"] + ' - ' + details["iwi_u"] + ')<br>' +
+                'Benthic Invertebrate Index Range: (' + details["bmmi_l"] + ' - ' + details["bmmi_u"] + ')<br></p>';
+            {#return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +#}
+            {#    'Rarity: ' + details["rarity"] + '<br>' +#}
+            {#    'Stream Depth Range (cm): (' + details["depth_l"] + ' - ' + details["depth_u"] + ')<br>' +#}
+            {#    'Stream Width Range (m): (' + details["width_l"] + ' - ' + details["width_u"] + ')<br>' +#}
+            {#    'Stream Area Range (ha): (' + details["area_l"] + ' - ' + details["area_u"] + ')<br>' +#}
+            {#    'Stream Slope Range (%): (' + details["slope_l"] + ' - ' + details["slope_u"] + ')<br>' +#}
+            {#    'Stream TSS Range (mg/l): (' + details["tss_l"] + ' - ' + details["tss_u"] + ')<br>' +#}
+            {#    'Stream pH Range: (' + details["ph_l"] + ' - ' + details["ph_u"] + ')<br>' +#}
+            {#    'Stream Conductivity Range (uS/cm2): (' + details["cond_l"] + ' - ' + details["cond_u"] + ')<br>' +#}
+            {#    'Stream Dissolved Oxygen Range (% sat): (' + details["do_l"] + ' - ' + details["do_u"] + ')<br></p>';#}
         }
 
         function selectStreamFromCoord(lat, lon) {
@@ -1197,14 +1208,11 @@
 
         function onStreamMapClick(e) {
             startLoad();
-            $(".depth_value").val('');
-            $(".width_value").val('');
-            $(".area_value").val('');
-            $(".slope_value").val('');
-            $(".tss_value").val('');
-            $(".pH_value").val('');
-            $(".cond_value").val('');
-            $(".do_value").val('');
+            $(".area_value").val("");
+            $(".slope_value").val("");
+            $(".elevation_value").val("");
+            $(".iwi_value").val("");
+            $(".bmmi_value").val("");
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
@@ -1270,11 +1278,11 @@
                 url: "/pisces/rest/api/v1/stream/properties?comid=" + comid + "&latitude=" + lat + "&longitude=" + lng,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
-                    {#$(".width_value").val(Number(data["attributes"]["width"]).toFixed(3));#}
                     $(".area_value").val(Number(data["attributes"]["area"]).toFixed(3));
                     $(".slope_value").val(Number(data["attributes"]["slope"]).toFixed(3));
                     $(".elevation_value").val(Number(data["attributes"]["elevation"]).toFixed(3));
                     $(".iwi_value").val(Number(data["attributes"]["iwi"]).toFixed(3));
+                    $(".bmmi_value").val(Number(data["attributes"]["bmmi"]).toFixed(3));
                     setTimeout(activateFilters, 300);
                 },
                 error: function (jqXHR, status, errorThrown) {
@@ -1288,13 +1296,14 @@
             $('#area_filter').trigger("click");
             $('#elevation_filter').trigger("click");
             $('#iwi_filter').trigger("click");
+            $('#bmmi_filter').trigger("click");
         }
 
         function getFishData() {
             var huc8 = selectedHuc;
             $.ajax({
                 type: "GET",
-                url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
+                url: "/pisces/rest/api/v2/fish/genera/hucs/" + huc8,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
                     removedFishList = [];
@@ -1302,9 +1311,9 @@
                     $('#fish_filters').closest('div').show();
                     $('#envelope_toggle').closest('div').show();
                     $('#huc_calc_toggle').closest('div').show();
-                    populateFishTable(data["species"]);
+                    populateFishTableV2(data["species"]);
                     var fishTableData = $('#fishTable').DataTable().rows().data();
-                    populateFilteredFishTable(fishTableData);
+                    populateFilteredFishTableV2(fishTableData);
                     populateCalcTable(fishTableData);
                 },
                 error: function (jqXHR, status, errorThrown) {
@@ -1313,8 +1322,8 @@
                     return null;
                 }
             });
-            {#getTESTFishData();#}
         }
+
         function populateFishTable(data) {
             $('#fishTable').DataTable().destroy();
             $('#fishTable').empty();
@@ -1341,7 +1350,6 @@
                         data: "species",
                         title: "Scientific Name",
                         name: "scientific_name"
-
                     },
                     {
                         data: "genus",
@@ -1458,11 +1466,166 @@
                         data: "thin_adj",
                         title: "&Delta;",
                         name: "delta"
+                    },
+                    {
+
                     }
                 ],
                 "columnDefs": [
                     {
                         "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                        "visible": false
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return row["genus"] + " " + data;
+                        },
+                        "targets": 3
+                    },
+                    {
+                        width: 50, targets: [0, 1]
+                    },
+                    {
+                        "targets": 1,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'select-checkbox',
+                        'render': function (data, type, full, meta) {
+                            return '<input type="checkbox" checked>';
+                        }
+                    }
+                ],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                searching: false,
+                paging: false,
+                bInfo: false,
+                "order": [[2, 'asc']]
+
+            };
+            $('#fishTable').closest('div').show();
+            $('#fishTable').DataTable(config);
+        }
+
+        function populateFishTableV2(data) {
+            $('#fishTable').DataTable().destroy();
+            $('#fishTable').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        "class": "details-control",
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": "",
+                        title: "Info"
+                    },
+                    {
+                        title: "Add/Remove",
+                        name: "add_remove"
+                    },
+                    {
+                        data: "common_name",
+                        title: "Common Name",
+                        name: "common_name"
+                    },
+                    {
+                        data: "species",
+                        title: "Scientific Name",
+                        name: "scientific_name"
+                    },
+                    {
+                        data: "genus",
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: "genusID",
+                        title: "Genus Id",
+                        name: "genus_id"
+                    },
+                    {
+                        data: "species_id",
+                        title: "Species Id",
+                        name: "species_id"
+
+                    },
+                    {
+                        data: "mean_weight",
+                        title: "Mean Weight",
+                        name: "mean_weight"
+                    },
+                    {
+                        data: "rarity",
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: "thinning",
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: "thin_adj",
+                        title: "&Delta;",
+                        name: "delta"
+                    },
+                    {
+                        data: "slope_l",
+                        title: "Slope Lower",
+                        name: "slope_l"
+                    },
+                    {
+                        data: "slope_u",
+                        title: "Slope Upper",
+                        name: "slope_u"
+                    },
+                    {
+                        data: "area_l",
+                        title: "Area Lower",
+                        name: "area_l"
+                    },
+                    {
+                        data: "area_u",
+                        title: "Area Upper",
+                        name: "area_u"
+                    },
+                    {
+                        data: "elev_l",
+                        title: "Elevation Lower",
+                        name: "elev_l"
+                    },
+                    {
+                        data: "elev_u",
+                        title: "Elevation Upper",
+                        name: "elev_u"
+                    },
+                    {
+                        data: "iwi_l",
+                        title: "IWI Lower",
+                        name: "iwi_l"
+                    },
+                    {
+                        data: "iwi_u",
+                        title: "IWI Upper",
+                        name: "iwi_u"
+                    },
+                    {
+                        data: "bmmi_l",
+                        title: "BMMI Lower",
+                        name: "bmmi_l"
+                    },
+                    {
+                        data: "bmmi_u",
+                        title: "BMMI Upper",
+                        name: "bmmi_u"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
                         "visible": false
                     },
                     {
@@ -1657,6 +1820,134 @@
             $('#filteredFishTable').DataTable(config);
         }
 
+        function populateFilteredFishTableV2(data) {
+            $('#filteredFishTable').DataTable().destroy();
+            $('#filteredFishTable').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        data: "common_name",
+                        title: "Common Name",
+                        name: "common_name"
+                    },
+                    {
+                        data: "species",
+                        title: "Scientific Name",
+                        name: "scientific_name"
+                    },
+                    {
+                        data: "genus",
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: "genusID",
+                        title: "Genus Id",
+                        name: "genus_id"
+                    },
+                    {
+                        data: "species_id",
+                        title: "Species Id",
+                        name: "species_id"
+
+                    },
+                    {
+                        data: "mean_weight",
+                        title: "Mean Weight",
+                        name: "mean_weight"
+                    },
+                    {
+                        data: "rarity",
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: "thinning",
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: "thin_adj",
+                        title: "&Delta;",
+                        name: "delta"
+                    },
+                    {
+                        data: "slope_l",
+                        title: "Slope Lower",
+                        name: "slope_l"
+                    },
+                    {
+                        data: "slope_u",
+                        title: "Slope Upper",
+                        name: "slope_u"
+                    },
+                    {
+                        data: "area_l",
+                        title: "Area Lower",
+                        name: "area_l"
+                    },
+                    {
+                        data: "area_u",
+                        title: "Area Upper",
+                        name: "area_u"
+                    },
+                    {
+                        data: "elev_l",
+                        title: "Elevation Lower",
+                        name: "elev_l"
+                    },
+                    {
+                        data: "elev_u",
+                        title: "Elevation Upper",
+                        name: "elev_u"
+                    },
+                    {
+                        data: "iwi_l",
+                        title: "IWI Lower",
+                        name: "iwi_l"
+                    },
+                    {
+                        data: "iwi_u",
+                        title: "IWI Upper",
+                        name: "iwi_u"
+                    },
+                    {
+                        data: "bmmi_l",
+                        title: "BMMI Lower",
+                        name: "bmmi_l"
+                    },
+                    {
+                        data: "bmmi_u",
+                        title: "BMMI Upper",
+                        name: "bmmi_u"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                        "visible": false
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return row["genus"] + " " + data;
+                        },
+                        "targets": 1
+                    },
+                    {
+                        "bSortable": false,
+                        "aTargets": [0, 1]
+                    }
+                ],
+                sorting: false,
+                searching: false,
+                paging: false,
+                bInfo: false
+            };
+            $('#filteredFishTable').closest('div').show();
+            $('#filteredFishTable').DataTable(config);
+        }
+
         function populateCalcTable(data) {
             var d2 = JSON.parse(JSON.stringify(data));
             $('#calc_table').DataTable().destroy();
@@ -1754,21 +2045,6 @@
             selectedHuc = hucID.substring(0, 8);
             return huc8;
         }
-
-        $(function () {
-            $("#rarity_range").slider({
-                range: true,
-                min: 1,
-                max: 10,
-                values: [1, 10],
-                slide: function (event, ui) {
-                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);
-                }
-            });
-            $("#rarity_value").val($("#rarity_range").slider("values", 0) +
-                " - " + $("#rarity_range").slider("values", 1));
-
-        });
 
         {# Accordion JS #}
 
@@ -1954,78 +2230,39 @@
             </div>
             <br class="row" id="streamData">
             <div id="fish_filters" style="display:none;">
-                {#                <button class="accordion">Fish Assemblage Filters</button>#}
                 <div class="filterTitle">Fish Assemblage Filters</div>
                 <div style="text-align:center;">
                     <div class="panel" id="assemblage_filters">
-{#                        <div class="fish_filter">#}
-{#                            <input id="width_filter" type="button" name="width_10_11" value="Width" class="filterButton"#}
-{#                                   align="center" title="Filter fish by stream width."><br>#}
-{#                            <input type="text" id="filter_field" class="width_value" placeholder="(m)"#}
-{#                                   title="Enter a value in meters.">#}
-{#                        </div>#}
-{#                        <div class="fish_filter">#}
-{#                            <input id="depth_filter" type="button" name="depth_8_9" value="Depth" class="filterButton"#}
-{#                                   align="center" title="Filter fish by stream depth."><br>#}
-{#                            <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"#}
-{#                                   title="Enter a value in centimeters.">#}
-{#                        </div>#}
                         <div class="fish_filter">
-                            <input id="area_filter" type="button" name="area_12_13" value="Area" class="filterButton"
+                            <input id="area_filter" type="button" name="area_13_14" value="Area" class="filterButton"
                                    align="center" title="Filter fish by stream drainage area."><br>
                             <input type="text" id="filter_field" class="area_value" placeholder="(ha)"
                                    title="Enter a value in hectares.">
                         </div>
                         <div class="fish_filter">
-                            <input id="slope_filter" type="button" name="slope_16_17" value="Slope" class="filterButton"
+                            <input id="slope_filter" type="button" name="slope_11_12" value="Slope" class="filterButton"
                                    align="center" title="Filter fish by stream slope."><br>
                             <input type="text" id="filter_field" class="slope_value" placeholder="(%)"
                                    title="Enter a value as a percent grade.">
                         </div>
                          <div class="fish_filter">
-                            <input id="elevation_filter" type="button" name="elevation_22_23" value="Mean Elevation" class="filterButton"
+                            <input id="elevation_filter" type="button" name="elevation_15_16" value="Mean Elevation" class="filterButton"
                                    align="center" title="Filter fish by mean elevation."><br>
                             <input type="text" id="filter_field" class="elevation_value" placeholder="(m)"
                                    title="Enter a value in meters.">
                         </div>
                         <div class="fish_filter">
-                            <input id="iwi_filter" type="button" name="iwi_22_23" value="Index of Watershed Integrity" class="filterButton"
+                            <input id="iwi_filter" type="button" name="iwi_17_18" value="Index of Watershed Integrity" class="filterButton"
                                    align="center" title="Filter fish by index of watershed integrity."><br>
                             <input type="text" id="filter_field" class="iwi_value" placeholder=""
-                                   title="Enter a value as index of watershed integrity.">
+                                   title="Enter a value as an index of watershed integrity.">
                         </div>
-{#                        <div class="fish_filter" style="margin-left:40px;">#}
-{#                            <input id="cond_filter" type="button" name="cond_20_21" value="Conductivity"#}
-{#                                   class="filterButton streamChem" align="center" title="Filter fish by stream conductivity."><br>#}
-{#                            <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)"#}
-{#                                   title="Enter a value in micro-Siemens per square centimeter.">#}
-{#                        </div>#}
-{#                        <div class="fish_filter">#}
-{#                            <input id="do_filter" type="button" name="do_22_23" value="Dissolved Oxygen"#}
-{#                                   class="filterButton streamChem" align="center"#}
-{#                                   title="Filter fish by stream dissolved oxygen."><br>#}
-{#                            <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"#}
-{#                                   title="Enter a value as percentage.">#}
-{#                        </div>#}
-{#                        <div class="fish_filter">#}
-{#                            <input id="ph_filter" type="button" name="ph_18_19" value="pH" class="filterButton streamChem"#}
-{#                                   align="center" title="Filter fish by stream pH."><br>#}
-{#                            <input type="text" id="filter_field" class="ph_value" placeholder="(SU)"#}
-{#                                   title="Enter a value in standard units.">#}
-{#                        </div>#}
-{#                        <div class="fish_filter">#}
-{#                            <input id="tss_filter" type="button" name="tss_14_15" value="Suspended Solids"#}
-{#                                   class="filterButton streamChem"#}
-{#                                   align="center" title="Filter fish by stream suspended solids."><br>#}
-{#                            <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"#}
-{#                                   title="Enter a value in milligrams per liter.">#}
-{#                        </div>#}
-{#                        <div class="fish_filter" style="margin-left: 40px;">#}
-{#                            <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton fishRarity"#}
-{#                                   align="center" title="Filter fish by rarity.">#}
-{#                            <input title="Rarity Range" type="text" id="rarity_value" readonly>#}
-{#                            <div id="rarity_range"></div>#}
-{#                        </div>#}
+                        <div class="fish_filter">
+                            <input id="bmmi_filter" type="button" name="bmmi_19_20" value="Benthic Invertebrate Index" class="filterButton"
+                                   align="center" title="Filter fish by benthic invertebrate index."><br>
+                            <input type="text" id="filter_field" class="bmmi_value" placeholder=""
+                                   title="Enter a value as a value of benthic invertebrate index">
+                        </div>
                     </div>
                 </div>
             </div>
