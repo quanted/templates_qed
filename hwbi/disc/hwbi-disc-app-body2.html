@@ -912,53 +912,55 @@
             <div class="col size-1of2">
 
                 <div class="services">
-                        <nav>
-                            <div class="services-nav">
-                                <ul class="services-tabs">
-                                    <li id="1" onclick="tabsOnClick('1')" class="current-tab">Economic</li>
-                                    <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
-                                    <li id="3" onclick="tabsOnClick('3')">Social</li>
-                                </ul>
-                                <hr class="s-tabs-below">
-                            </div>
-                        </nav>
-                        <a href="#" class="back container-back" onclick="serviceTabContainerReturn();"></a><h4 id="service_indicator_title"></h4>{% regroup service_metrics by 2 as domains %}{% regroup service_metrics by 3 as indicators %}{% regroup service_metrics by 4 as metricGroups %}{% for metricGroup in metricGroups %}
-                        
-                        <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="slinky-menu" style="display: none;">
-                            <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
-                                <li>
-                                    <a href="#">{{ domain.grouper }}</a>
-                                    <ul>{% for indicator in indicators %}{% if indicator.list.0.2 == domain.grouper %}
-                                        <li>
-                                            <a href="#" onclick="filterSelection('{{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}'); $('#s-menu-{{ metricGroup.grouper|slugify }}').removeClass('show'); createMetricTitles();">{{ indicator.grouper }}</a>
-                                        </li>{% endif %}{% endfor %}
-                                    </ul>
-                                </li>{% endif %}{% endfor %}
+                    <nav>
+                        <div class="services-nav">
+                            <ul class="services-tabs">
+                                <li id="1" onclick="tabsOnClick('1')" class="current-tab">Economic</li>
+                                <li id="2" onclick="tabsOnClick('2')">Ecosystem</li>
+                                <li id="3" onclick="tabsOnClick('3')">Social</li>
                             </ul>
-                        </div>{% endfor %}
+                            <hr class="s-tabs-below">
+                        </div>
+                    </nav>
+                    <a href="#" class="back container-back" onclick="serviceTabContainerReturn();"></a><h4 id="service_indicator_title"></h4>
+                    {% regroup service_metrics by 2 as domains %}
+                    {% regroup service_metrics by 3 as indicators %}
+                    {% regroup service_metrics by 4 as metricGroups %}
                     
-                        <section class="services-tabs-container">{% for metricGroup in metricGroups %}
-                            
-                            <div id="tab{{ forloop.counter }}">
+                    
+                    {% for metricGroup in metricGroups %}
+                    <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="row cols-2 slinky-menu" style="display: none;">
+                        <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
+                            <li class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
+                                <label title="{{ domain.list.0.11 }}">{{ domain.grouper }}: <span class=""></span>
+                                    <input id="{{ domain.0|slugify }}" type="range" min="0" max="100" step="1">
+                                </label>
                                 
-                                <div class>
-                                    
-                                    <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.4 == metricGroup.grouper %}
-                                        <label id="{{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.2 == indicator.list.0.2 and metric.3 == indicator.list.0.3 %}
-                                            <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
-                                                    
-                                                <label for="{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}
-                                                <span class=""></span>
-            
-                                            
-                                                <input id="{{ metric.0|slugify }}" class="thumb scenario-builder-metric {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.5 }}" data-max="{{ metric.6 }}" data-sign="{{ metric.7 }}" data-units="{{ metric.9 }}" data-var="{{ metric.0 }}"></label></div>{% endif %}{% endfor %}
-                                        </label>{% endif %}{% endfor %}
-                                    </div>
-                                </div>
-                            </div>{% endfor %}
-                        </section>
+                            </li>{% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
+                    {% endfor %}
+                    
+                    <section class="services-tabs-container">{% for metricGroup in metricGroups %}
+                        <div id="tab{{ forloop.counter }}">
+                            <div class>
+                                <div class="row cols-2"><!-- <div class="{% if forloop.counter|divisibleby:2 %}col size-2of2{% else %}col size-1of2{% endif %}"> -->{% for indicator in indicators %}{% if indicator.list.0.4 == metricGroup.grouper %}
+                                    <label id="{{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}" class="filterDiv {{ indicator.list.0.2|slugify }}-{{indicator.grouper|slugify }}">{% for metric in service_metrics %}{% if metric.2 == indicator.list.0.2 and metric.3 == indicator.list.0.3 %}
+                                        <div class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
+                                                
+                                            <label for="{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}
+                                            <span class=""></span>
+        
+                                        
+                                            <input id="{{ metric.0|slugify }}" class="thumb scenario-builder-metric {{ metric.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" value="" data-min="{{ metric.5 }}" data-max="{{ metric.6 }}" data-sign="{{ metric.7 }}" data-units="{{ metric.9 }}" data-var="{{ metric.0 }}"></label></div>{% endif %}{% endfor %}
+                                    </label>{% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>{% endfor %}
+                    </section>
                 </div>
+            </div>
 
             <div class="col size-2of2 aster-area">
                 
