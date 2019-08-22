@@ -905,7 +905,7 @@
             <button onclick="loadMetricValues('custom_val');">Load Custom Service Metrics</button>
         </div>
         <h3>Scenario Builder</h3>
-        <p class="tab-desc">The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations.</p>
+        <p class="tab-desc">The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score.</p>
         <span class="scenario-builder-score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</span>
         <div class="scenario-cols">
 
@@ -930,10 +930,16 @@
                     <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="row cols-2 slinky-menu" style="display: none;">
                         <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
                             <li class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
-                                <label title="{{ domain.list.0.11 }}">{{ domain.grouper }}: <span class=""></span>
-                                    <input id="{{ domain.0|slugify }}" type="range" min="0" max="100" step="1">
+                                <label title="{{ domain.list.0.11 }}"><span class="help scenario-builder-domain-label" onclick="toggleDomainConstituentMetricList('{{ domain.0|slugify }}')">{{ domain.grouper }}: </span><span class=""></span>
+                                    <input id="{{ domain.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" data-domain="{{ domain.0 }}" class="scenario-builder-domain">
                                 </label>
-                                
+                                <div id="{{ domain.0|slugify }}-metrics" class="constituent-metrics" style="display: none;">
+                                    <h5>Constituent Metrics</h5>
+                                    <hr>
+                                    {% for metric in service_metrics %}{% if metric.2 == domain.list.0.2 %}
+                                    <div title="{{ metric.1 }}">{{ metric.12 }}</div>
+                                    {% endif %}{% endfor %}
+                                </div>
                             </li>{% endif %}
                             {% endfor %}
                         </ul>
