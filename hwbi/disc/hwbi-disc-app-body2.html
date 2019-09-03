@@ -22,7 +22,7 @@
                                 economic, social and ecological environments.</p>
                         </div>
                         <button id="snapshot-btn" onclick="generateSnapshot(this);">Create Snapshot</button>
-                        <p class="score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</p>
+                        <p class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</p>
                     </div>
                     
                 </div>
@@ -761,7 +761,7 @@
                                 <div id="{{ domain.grouper|slugify }}-modal" class="modal-overlay">
                                     <div class="modal">
                                         <h2 class="modal-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
-                                        <span class="score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</span>
+                                        <span class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
                                         <p>{{ domain.list.0.11 }}</p>
                                         <button class="reset-hwbi-custom-btn" data-id="{{ domain.grouper }}">Reset</button>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
@@ -838,7 +838,7 @@
                             <h2 class="modal-title">{{ metric_group.grouper }} <span id="{{ metric_group.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
                             <a href="#" class="close">&times;</a>
                             <button class="reset-service-custom-btn" data-type="{{ metric_group.grouper }}">Reset</button>
-                            <span class="score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</span>
+                            <span class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
                             <div class="modalcontent">
                                 <div id="customize_service_indicators">
                                     <div id="{{ metric_group.grouper|slugify }}-service-indicators" class="row cols-2 domain_indicator">
@@ -878,7 +878,7 @@
             <h3>Priority Rankings</h3>
             <p class="tab-desc">Use the arrows to rank the importance of community characteristics based on your preferences. A value of 9 has more importance and a value of 1 has less importance. Changes made below will also change your DISC score on the Community Snapshot and the Scenario Builder pages.</p>
             <h3 class="modal-disc-score" id="testscore">DISC: <span>0.0</span></h3>
-            <span class="score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</span>
+            <span class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
             <div class="ranking-chart-list-container">
                 <div class="ranking-list-container">
                     
@@ -905,8 +905,8 @@
             <button onclick="loadMetricValues('custom_val');">Load Custom Service Metrics</button>
         </div>
         <h3>Scenario Builder</h3>
-        <p class="tab-desc">The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score.</p>
-        <span class="scenario-builder-score-change-warning">The outputs on this page include data inputs customized by the user and not provided by EPA.</span>
+        <p class="tab-desc">People perceive quality of life differently. The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence the perception of quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score.</p>
+        <span class="scenario-builder-score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
         <div class="scenario-cols">
 
             <div class="col size-1of2">
