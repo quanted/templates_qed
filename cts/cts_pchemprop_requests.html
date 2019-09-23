@@ -414,6 +414,21 @@ function connectToSocket() {
                     }
                 }
                 molecularInfoRequestStatus(true);
+
+                var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
+                if (is_gentrans_single && data['prop'] == 'products') {
+                    // initiate space tree with incoming socket data:
+                    // nodeHeight = 114
+                    // nodeWidth = 100
+                    init(data['data']);  // paint tree to canvas
+                }
+                var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
+                if (is_cheminfo) {
+                    // molecularInfoRequestStatus(false);  // all data retrieved, removed load status
+                    addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
+                    redrawProductTree();  // redraws the tree (cts_gentrans_tree.html)
+                }
+
             }
         }
 

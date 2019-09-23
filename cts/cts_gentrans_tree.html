@@ -638,29 +638,29 @@ function getSpaceTree() {
     else { return null; }
 }
 
-function resizeCanvas(nodes) {
-    // TODO: Keep div same size, add scroll bars instead!
-    var count = getDeepestNodeCount(nodes);
-    var offset = 4 * nodeHeight;
-    // need number of nodes at deepest level:
-    var height = count * nodeHeight + offset;  // calculate new height
-    st.canvas.resize(800, height);
-    st.select(st.root);  // re-select the node to replot the tree
-    // Increase size of containter divs as well:
-    // $('#center-cont, #cont').height(height);
-}
+// function resizeCanvas(nodes) {
+//     // TODO: Keep div same size, add scroll bars instead!
+//     var count = getDeepestNodeCount(nodes);
+//     var offset = 4 * nodeHeight;
+//     // need number of nodes at deepest level:
+//     var height = count * nodeHeight + offset;  // calculate new height
+//     st.canvas.resize(800, height);
+//     st.select(st.root);  // re-select the node to replot the tree
+//     // Increase size of containter divs as well:
+//     // $('#center-cont, #cont').height(height);
+// }
 
-function getDeepestNodeCount(nodeList) {
-    /* Loops through list of node count per depth,
-     * returning the num of nodes at the deepest depth */
-    for (var i = nodeList.length - 1; i >= 0; i--) {
-        var numNodesAtDepth = nodeList[i];
-        if (numNodesAtDepth > 0) {
-            return numNodesAtDepth;
-        }
-    }
-    return "error: could not find any nodes in list";
-}
+// function getDeepestNodeCount(nodeList) {
+//     /* Loops through list of node count per depth,
+//      * returning the num of nodes at the deepest depth */
+//     for (var i = nodeList.length - 1; i >= 0; i--) {
+//         var numNodesAtDepth = nodeList[i];
+//         if (numNodesAtDepth > 0) {
+//             return numNodesAtDepth;
+//         }
+//     }
+//     return "error: could not find any nodes in list";
+// }
 
 function getMolecularInfo(node) {
     //Get molecular info upon right-clicking a metabolite
