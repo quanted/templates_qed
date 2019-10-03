@@ -930,7 +930,7 @@
                     <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="row cols-2 slinky-menu" style="display: none;">
                         <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
                             <li class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
-                                <label><span title="{{ domain.list.0.11 }}" class="pointer scenario-builder-domain-label" onclick="toggleDomainConstituentMetricList('{{ domain.0|slugify }}')">{{ domain.grouper }}: </span><span class=""></span>
+                                <label><span title="{{ domain.list.0.11 }}" class="pointer scenario-builder-domain-label" onclick="toggleDomainConstituentMetricList('{{ domain.0|slugify }}'); toggleArrow(this);"><i class="arrow-down"></i>{{ domain.grouper }}: </span><span class=""></span>
                                     <input id="{{ domain.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" data-domain="{{ domain.0 }}" class="scenario-builder-domain">
                                 </label>
                                 <div id="{{ domain.0|slugify }}-metrics" class="constituent-metrics" style="display: none;">
