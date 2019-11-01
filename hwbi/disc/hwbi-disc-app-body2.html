@@ -2811,7 +2811,145 @@
 
     <div id="references-tab" class="disc-body">
         <h3>References</h3>
-        <p class="tab-desc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt exercitationem fugiat dolore, odio quae consequuntur distinctio sapiente! A, fugiat, aperiam sed quasi error eveniet omnis ex atque quo minus nobis repudiandae vel soluta earum est beatae ratione ipsa maiores aut? Mollitia dicta ullam repudiandae ratione facilis placeat animi totam, similique, quis consequatur repellendus. Id ab beatae error placeat distinctio, deleniti, nostrum voluptatum velit vero consequuntur reprehenderit modi! Amet similique, maiores doloremque, deserunt fugit perferendis suscipit cupiditate asperiores, pariatur iure vero
+        <p class="tab-desc">Here you will find technical information about the data, calculation methods, visualizations and modeled results generated in the DISC application. Links to published research are also offered so you can learn more about the science behind the indicators used to produce DISC.
+        <br><br>
+        <span style="font-weight: bold; font-style: italic;">Disclaimer: Information and results presented in the DISC application are not intended for regulatory purposes nor should any decisions be based on these resultsd alone.</span>
         </p>
+
+        <h4 style="font-weight: bold; font-style: italic;">Limitations: Data, Scenario Models and Visualizations</h4>
+        <p>Statistical error is inherent. Data management strategies; data processing activities; standardization and imputation methods; and model testing were some of the approaches used to minimize data error and validate the appropriateness of the data used in the DISC application. Model equations do not account for additional error introduced by user supplied data.
+        <br><br>
+        The relationship-function equations used in the <span style="font-weight: bold;">Scenario Builder</span> feature were derived from regression models. These results are meant to help visualize results generated from user inputs. Data simulations and graphics produced are intended to help stimulate conversations related to community sustainability to help inform decision planning.
+        <br><br>
+        Application graphics and interactive features are intended to enhance the user experience. Every effort has been taken to maximize precision in the graphical presentation of measures to support meaningful interpretation of data patterns.</p>
+
+        <h4 style="font-style: italic;">Under the Hood: A Brief Technical Overview</h4>
+        <p>The DISC application uses existing and introduced data to calculate a suite of customized community characteristics indicators and a summary index. The DISC features and utilities have been developed as a series of web-pages housed in a single website-like downloadable file. Each page was developed using HTML and JavaScript. Features were created using the Data Driven Documents JavaScript library <a href="https://d3js.org">(https://d3js.org)</a>. The DISC application was designed to be standalone HTML-driven package to be run on local Windows or Mac platforms. The compiled HTML product was generated using the Electron JavaScript library <a href="https://electronjs.org">(https://electronjs.org)</a>.</p>
+
+        <h4>About the Data</h4>
+        <p>Baseline data used to provide default information for calculations are drawn from results published in “A U.S. Human Well-being Index (HWBI) for multiple scales: linking service provisioning to human well-being endpoints (2000-2010)” (Smith et al. 2014) and “Development of a Climate Resilience Screening Index (CRSI): An Assessment of Resilience to Acute Meteorological Events and Selected Natural Hazards” <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">(Summers, et al. 2017)</a>. Indicator research was conducted under the <a href="https://www.epa.gov/aboutepa/about-office-research-and-development-ord">U.S. Environmental Protection Agency’s</a> (EPA) indicator development research associated with EPA’s <a href="https://www.epa.gov/aboutepa/about-office-research-and-development-ord">Office of Research and Development Sustainable and Healthy Communities Research Program</a>.
+        <br><br>
+        Application users can introduce their own data. to populate all or part of the baseline information used for building visualizations. If only a subset of the parameters is supplied, the missing local metric data are back-filled with baseline county values. The complete set of metrics, both default and introduced, formed the basis for calculating the suite of indicators and final summary index using methods adapted from US EPA 2012 and <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">(Summers, et al. 2017)</a>.</p>
+
+        <h4>Calculating Indicators and the DISC Score</h4>
+        <p>It is assumed that introduced data meet the data owner’s quality expectations and are relevant for calculating baseline indicators for the models. Because baseline data represent calculated county-level unitless “scores”, supplied metric values will be standardized to 0-1 unitless scale as part of the application functionality. Metrics reported in units other than percentages or proportions, such as dollars, counts, normalized counts, and time, will be converted to the appropriate unit basis using the minimum-maximum standardization. The equation is: value = (𝑥 – 𝑥𝑚𝑖𝑛/𝑥𝑚𝑎𝑥−𝑥𝑚𝑖𝑛).</p>
+
+        There are four steps for calculating the DISC score:
+        <ol>
+            <li>Indicator scores will be calculated as a population weighted average of related standardized metric values;</li>
+            <li>Community Characteristic or <span style="font-style: italic;">domain</span> scores are obtained by averaging indicator scores;</li>
+            <li>When used, priority weighting are used to create relationship adjustment factors; and</li>
+            <li>The DISC score is calculated as the sum of weighted sub-indices or domain scores.</li>
+        </ol>
+        <p>The same metric standardization method is used for creating base-line service indicators, however, the standardized service indicators or categories are derived from population-weighted average metrics associated with each service. For more details on data selection methods and indicator development procedures, please refer to <a href="#ref-links">US EPA 2012</a> and <a href="#ref-links">US EPA 2014</a>.</p>
         
+
+        <h4>Scenario Builder</h4>
+        <p>A recent publication, “A model for change: An approach for forecasting well-being from service-based decision” (Summers, et al. 2016), describes an approach to examine the influences of relationships between introduced direct and indirect changes in selected economic, environmental and social services and eight domains of human well-being with an additional indicator called resilience. As combined, the indicators represent quality of life. The DISC application adapted this approach using models developed from the outcome of a step-wise process and 15 years of data (2000–2015). Multivariate relationship functions are used to demonstrate likely impacts of decisions on community quality of life, as well as the possible intended and unintended secondary and tertiary effects relative to a decision scenario. The DISC application translates this approach for use in communities by allowing application users to introduce data and knowledge that more closely reflect local conditions and local decision contexts.
+        <br><br>
+        These services-to-HWBI relationship function equations serve as the engine for building scenarios. The functional relationship equations for each of the community character domains (i.e., DISCd = ƒ(Se, Ss, Sec)) were determined based on results from the step-wise regression process to identify main effects and primary pair-wise interactions among select economic, environmental and social service indicators quantified as scores on a 0-100 scale. Some key points on this stepwise method:
+        <ul>
+            <li>The method used regression models to identify predictive variables based on adjusted R2 and sequenced F-tests. The initial model begins with no variables selected and candidate model variables are evaluated on a pairwise basis including those parameters already selected.</li>
+            <li>The f-statistic significance level was the primary determinate for inclusion or exclusion in the model. After each pass in the stepwise process, the model was refitted with the held variables.</li>
+            <li>Entry and exit criteria used for keeping or eliminating effects were based on f-value significance levels of 0.15 and 0.10, respectively.</li>
+            <li>Main effect and two-way interaction terms selected during the step-wise process that exhibited partial R2 ≥ 0.02 were reviewed for inclusion in the final model.</li>
+            <li>Using results from the review of the stepwise selections, a final, multivariate model was created for each domain by incorporating a constructed (fixed) main effect plus interaction terms identified as significantly improving the explanatory capability of the model.</li>
+        </ul></p>
+        <p>For more information regarding the equation development methods, please see <a href="#ref-links">Summers et al. 2016</a>.</p>
+
+        <h4>Definitions</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">General description of terms that are unique or uniquely defined in the context of this research</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Community Characteristics - also called <span style="font-style: italic;">Domains</span></td>
+                    <td>Distinct aggregations of characteristics commonly used to describe the state of quality of life conditions. Example domains are living standards, health, and connection to nature.</td>
+                </tr>
+                <tr>
+                    <td>Downloadable</td>
+                    <td>Available for transfer from the Internet or a network typically associated with files, applications and/or tools that can be run or opened from a local computer.</td>
+                </tr>
+                <tr>
+                    <td>Economic Services</td>
+                    <td>The services influencing performance, structural, and behavioral aspects of the economy that affect quality of life.</td>
+                </tr>
+                <tr>
+                    <td>Ecosystem Services</td>
+                    <td>The goods and services provided by ecosystem functions and processes that benefit humans or have the potential to do so in the future.</td>
+                </tr>
+                <tr>
+                    <td>DISC</td>
+                    <td>A multidimensional description of the state of people's lives, which encompasses personal relationships, strong and inclusive communities, meeting basic human needs, good health, financial and personal security, access to education, adequate free time, connectedness to the natural environment, rewarding employment, and the ability to achieve personal goals. Collectively, these domains represent the state of the human condition are generally good indicators for monitoring the impacts of local planning decisions.</td>
+                </tr>
+                <tr>
+                    <td>Index (Indices)</td>
+                    <td>An aggregate of indicator values. For this project, an index, also known as a composite index, represents a multidimensional value that expresses a singular condition or status point.</td>
+                </tr>
+                <tr>
+                    <td>Indicator</td>
+                    <td>An interpretable summary value that reflects the state of, or change in, a system or point of interest that is being evaluated. In the context of this project, indicators are derived from measures or metrics that correspond to components of elements of quality of life. Example indicators are perceived safety, lifestyle and behavior, wealth.</td>
+                </tr>
+                <tr>
+                    <td>Metric</td>
+                    <td>A [singular] measurable, observable, or interpretable value. Example metrics are mortality rate, median income, and national park visits.</td>
+                </tr>
+                <tr>
+                    <td>Priority Weighting</td>
+                    <td>A feature of the user to introduce.</td>
+                </tr>
+                <tr>
+                    <td>Secondary Data</td>
+                    <td>Data that will be used in a research project that are not newly generated through project activities. Rather, data are “found” from other sources. This type data may also be called existing data, found data, or non-direct measurements. For HWBI research, secondary data refers to metric values and indicator values not derived from metrics.</td>
+                </tr>
+                <tr>
+                    <td>Services</td>
+                    <td>A wide range of final goods and services that influence quality of life. There are three broad categories of services referred to in the research. These are:<br>
+                    <ul>
+                        <li>Economic - the services influencing the performance, structural, behavioral aspects of the economy</li>
+                        <li>Environmental - the goods and services provided by ecosystem functions and processes that benefit people or have the potential to do so in the future</li>
+                        <li>Social - the wide range of services that are provided by people for the benefit of people</li>
+                    </ul></td>
+                </tr>
+                <tr>
+                    <td>Social Services</td>
+                    <td>The wide range of services that are provided by people for the benefit of people.</td>
+                </tr>
+                <tr>
+                    <td>Sustainability</td>
+                    <td>In the context of the DISC application, sustainability is defined as the ability “to create and maintain conditions under which humans and nature can exist in productive harmony, [and] that permit fulfilling the social, economic, and other requirements of present and future generations.” (National Environmental Protection Act 1969).</td>
+                </tr>
+                <tr>
+                    <td>Tool</td>
+                    <td>A tangible aid used as a means of performing an operation or achieving an end (e.g. computer software application).</td>
+                </tr>
+                <tr>
+                    <td>Visualization</td>
+                    <td>The process of representing abstract data as images to assist with explaining the meaning of the data.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+
+        <div id="ref-links">
+            <h4>References</h4>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=242106">Smith, L. M., H. M. Smith, J. L. Case, and L. Harwell. 2012. Indicators and Methods for Constructing a U.S. Human Well-being Index (HWBI) for Ecosystem Services Research. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-12/023.</a>
+            </p>
+            <p>
+                <a href="https://nepis.epa.gov/Exe/ZyNET.exe/P100KFTA.txt?ZyActionD=ZyDocument&Client=EPA&Index=1995%20Thru%201999%7C1976%20Thru%201980%7C2006%20Thru%202010%7C1991%20Thru%201994%7CHardcopy%20Publications%7C2000%20Thru%202005%7C1986%20Thru%201990%7C2011%20Thru%202015%7C1981%20Thru%201985%7CPrior%20to%201976&Docs=&Query=600R14223%20&Time=&EndTime=&SearchMethod=2&TocRestrict=n&Toc=&TocEntry=&QField=&QFieldYear=&QFieldMonth=&QFieldDay=&UseQField=&IntQFieldOp=0&ExtQFieldOp=0&XmlQuery=&File=D%3A%5CZYFILES%5CINDEX%20DATA%5C11THRU15%5CTXT%5C00000011%5CP100KFTA.txt&User=ANONYMOUS&Password=anonymous&SortMethod=-%7Ch&MaximumDocuments=15&FuzzyDegree=0&ImageQuality=r85g16/r85g16/x150y150g16/i500&Display=hpfr&DefSeekPage=x&SearchBack=ZyActionL&Back=ZyActionS&BackDesc=Results%20page&MaximumPages=1&ZyEntry=1&SeekPage=x">Smith, L. M., Harwell, L. C., Summers, J. K., Smith, H. M., Wade, C. M., Straub, K. R. and J.L. Case. 2014. A U.S. Human Well-being Index (HWBI) for multiple scales: linking service provisioning to human well-being endpoints (2000-2010). EPA/600/R-14/223. pp. 200.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=281738">Smith, L., C. Wade, K. Straub, L. Harwell, J. Case, M. Harwell, and Kevin Summers. 2014. Indicators and Methods for Evaluating Economic, Ecosystem and Social Services Provisioning: A Human Well-being Index (HWBI) Research Product. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-14/184.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=318653">Summers, Kevin, L. Harwell, and L. Smith. 2016. A Model For Change: An Approach for Forecasting Well-Being From Service-Based Decisions. ECOLOGICAL INDICATORS. Elsevier Science Ltd, New York, NY, 69:295-309.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">Summers, Kevin, L. Harwell, K. Buck, L. Smith, D. Vivian, J. Bousquin, J. Harvey, S. Hafner, and M. McLaughlin. 2017. Development of a Climate Resilience Screening Index (CRSI): An Assessment of Resilience to Acute Meteorological Events and Selected Natural Hazards. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-17/238.</a>
+            </p>
+        </div>
     </div>
