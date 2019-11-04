@@ -757,7 +757,7 @@
                         <!-- <button type="button" id="qol_btn" title="More info" onclick="moreInfoQOL()">&bull; &bull; &bull;</button>
                         <br><br>
                         <div id="qolexplanation" style="display: none;">The entirety of DISC is based on the US EPA Human Well-Being Index (HWBI) and Climate Resilience Screening Index (CRSI). The HWBI indicators represent a suite of community quality of life characteristics, socio-ecological service measures and models that relate the two sets of values. The CRSI indicators offer measures of potential natural hazard exposures and basic governance measures that indicate potential recovery preparedness. All indicators are calculated based on the best publicly available data. Data selection is science-based and reviewed for national comparability. It is recognized that the best available data may not always be most relevant. To account for this, the DISC indicators may be customized using local data and knowledge so the base-line measures can more closely reflect local conditions.</div> -->
-                        <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations.</p>
+                        <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations. <span class="complete-text" style="display: none;">It is recognized that county-level data does not always reflect conditions in a community. The Customize feature allows you to change metric-level information by entering your own data values, one metric at a time, to adjust indicators displayed in the Community Snapshot dashboard so indicators. Under “File” at the top left of this page, you have an option to do a mass upload of all new data values. Additionally, other interactive features in DISC will use updated metrics automatically in most cases. Use of custom metrics is an option for the Scenario Builder requiring a separate step to load the values. </span><a class="more-toggle" href="#" onclick="customizeMoreText(this);">More...</a></p>
                     </div>
                     <div class="card-list">{% regroup hwbi_metrics by 2 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
@@ -913,7 +913,7 @@
             <button onclick="loadMetricValues('custom_val');">Load Custom Service Metrics</button>
         </div>
         <h3>Scenario Builder</h3>
-        <p class="tab-desc">People perceive quality of life differently. The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence the perception of quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score.</p>
+        <p class="tab-desc">Changes in the economic, social and natural environments (Services) have varying degrees of influence on the quality of people’s lives. The Scenario Builder allows you make modest positive adjustments to the indicators related to these environments to see how much potential influence those changes may have on Community Characteristic indicators. The intended use of the Scenario Builder is to stimulate planning conversations by seeing if community improvement choices may have the intended effect on quality of life. <span class="complete-text" style="display: none;">Additionally, scenario results can be observed in the context of relative or perceived importance (Priority Ranking) of these community outcome measures. To load any changes you may have made to services data under Customize Data, simply click the “Load Custom Services Metrics” button. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score. Changes made here will not change your score on the Community Snapshot page. </span><a class="more-toggle" href="#" onclick="customizeMoreText(this);">More...</a></p>
         <span class="scenario-builder-score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
         <div class="scenario-cols">
 
@@ -1114,7 +1114,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Kessler Foundation Signature Employment Grants</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>National Congress of American Indians (NCAI) has tribe resources for employment</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Search for Workforce Development Grants at GrantWatch</label></li>
@@ -1173,7 +1173,7 @@
                         
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Tribes: Keepseagle Fast-Track Grant Program for native farm development provided by First Nations Development Institute </label></li>
 
                         
@@ -1202,7 +1202,7 @@
                         
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>*Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Case Study: Tribal Infrastructure Fund Board awards more than $14 Million to critical projects in New Mexico tribal communities</label></li>
                     </ul>
                 </div>
@@ -1239,7 +1239,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>*Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Community Networks provides Internet infrastructure information</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Education Superhighway has information about upgrading internet access to public schools  in America and on districts in need of bandwidth and fiber.</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label  >For more information about rural broadband in Washington, contact the WA State Department of Commerce CERB Rural Broadband Program Director & Tribal Liaison</label></li>
@@ -1275,7 +1275,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
@@ -1305,7 +1305,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
                         
                     </ul>
@@ -1510,7 +1510,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Alaska Conservation Foundation focuses on long-term, enduring solutions for conservation protection at http://alaskaconservation.org/grant-opportunities/</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Columbia River Inter-Tribal Fish Commission has resources for fish and habitat restoration</label></li>
                     </ul>
@@ -1537,7 +1537,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>National Invasive Species Awareness Week has tools to evalatuate local invasive species control</label></li>
     
                     </ul>
@@ -1561,7 +1561,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>www.lightpollutionmap.info provides an interactive map to visualize light pollution levels in your community</label></li>
                         
                     </ul>
@@ -1751,7 +1751,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>The National Forest Foundation offers a Matching Awards Program for forest health at https://www.nationalforests.org/grant-programs/map</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Tribes: The National Forest Foundation has a Matching Awards Program (MAP) for Forest Health</label></li>
 
@@ -1907,7 +1907,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox" name="" value="">National Asthma Map and Forecast for Your Community at asthmaforecast.com</li>
 
                     </ul>
@@ -1998,7 +1998,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Best Buy provides Grants for Organizations Focused on Youth in Educational, Technologically Driven Community Projects</label></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value="">Clearing Magazine has environmental education success stories from around the PNW</li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For state contacts, visit the U.S. Department of Education website.</label></li>
@@ -2141,7 +2141,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
                         
                     </ul>
@@ -2222,7 +2222,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security, contact the USDA National Institute of Food and Agriculture</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security in rural communities, contact the Rural Health Information Hub</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more resources on how to eat more sustainably, visit FoodPrint's website</label></li>
@@ -2274,7 +2274,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Alaska, contact the Alaska Office of Rural Health</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in America, contact the National Rural Health Association</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Idaho, contact the Idaho Office of Rural Health</label></li>
@@ -2364,7 +2364,7 @@
                         
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox" name="" value="">ParkServe has park accessibility information for your community</li>
 
                     </ul>
@@ -2393,7 +2393,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>The Community Tool Box by the University of Kansas provides a toolkit to increase community participation and action.</label></li>
                         
                     </ul>
@@ -2425,7 +2425,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>    
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>    
                         <li><input class="resources-checkbox" type="checkbox" name="" value="">Walk Score has your transit score for your community</li>
 
                     </ul>
@@ -2464,7 +2464,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox" name="" value="">Get your Walk and Bike Score for your community at Walk Score’s website</li>
                     </ul>
                 </div>
