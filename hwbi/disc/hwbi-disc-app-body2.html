@@ -2,6 +2,9 @@
 <div id="community-snapshot-tab" class="disc-body">
         <div id="community-snapshot-content">
             <div id="results_body">
+
+                
+
                 <div id="snapshot_results">
                     <div id="hwbi-score">
                         <p id="location">Snapshot results for<br>[location]</p>
@@ -33,44 +36,45 @@
                     <br><br>
                     <div id="priorityexplanation" style="display: none;">Well-being and resilience measures are often used to characterize the drivers that influence human behavior and affect the human condition. These quality of life attributes are multi-dimensional that are best described using a host of metrics that respond to the changing environment in which people live. A synthesis of this knowledge helps shape our understanding about people and their needs, both actual and perceived.</div>
                     <div id="domain-scores">
-                        <div class="domain-blocks">
-                        {#            Nature Block        #}
-                        <div id="nature-block" class="domain-score-block">
+                            <div class="domain-blocks">
+                            {#            Education Block           #}
+                            <div id="education-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
-                                <div id="connection-to-nature_score" class="domain-score">0.0</div>
-                                <div id="connection-to-nature_location" class="domain-location">Nation: <span id="connection-to-nature_national_score"></span>, State: <span id="connection-to-nature_state_score"></span></div>
-                                <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar nature-bar" id="nature-score-bar"></div>
+                                <div id="education_data-title" class="domain-data-title">Education:</div>
+                                <div id="education_score" class="domain-score">0.0</div>
+                                <div id="education_location" class="domain-location">Nation: <span id="education_national_score"></span>, State: <span id="education_state_score"></span></div>
+                                
+                                <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar education-bar" id="education-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
                                     <div class="slider-container">
-                                        <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                        <div id="education-slider-bar" class="rank-slider education-slider"></div>
                                     </div>
                                     <span class="right-slider-legend">More</span>
                                 </div>
-                                <div id="nature_details" class="domain-description">
+                                <div id="education_details" class="domain-description">
                                     <p>
-                                        The Connection to Nature domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
-
+                                        The Education domain covers basic skills in reading, math and science. Measures of student safety and health are also included.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Education');">More...</a>
                                     </p>
-                                    <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/connection-to-nature.jpg"
-                                             alt="Connection to Nature">
-                                        <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
+                                    <!-- <figure class="domain_image_right">
+                                        <img src="/static_qed/hwbi/disc/img/education.jpg"
+                                                alt="Education">
+                                        <figcaption>Courtesy of U.S. FWS</figcaption>
                                     </figure> -->
                                     
                                 </div>
                             </div>
-                        {#            Cultural Block         #}
-                        <div id="cultural-block" class="domain-score-block">
+                            {#            Cultural Block         #}
+                            <div id="cultural-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
-                                <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
-                                <div id="cultural-fulfillment_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
-                                <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
+                                <div id="cultural_data-title" class="domain-data-title">Fulfillment through Culture:</div>
+                                <div id="fulfillment-through-culture_score" class="domain-score">0.0</div>
+                                <div id="fulfillment-through-culture_location" class="domain-location">Nation: <span id="fulfillment-through-culture_national_score"></span>, State: <span id="fulfillment-through-culture_state_score"></span></div>
+                                <div id="fulfillment-through-culture_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cultural-bar" id="fulfillment-through-culture-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -81,76 +85,49 @@
                                 </div>
                                 <div id="cultural_details" class="domain-description">
                                     <p>
-                                        The Cultural Fulfillment domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities. 
+                                        The Fulfillment through Culture domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Culture');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/cultural-fulfillment.jpg"
-                                             alt="Cultural Fulfillment">
+                                        <img src="/static_qed/hwbi/disc/img/fulfillment-through-culture.jpg"
+                                                alt="Fulfillment through Culture">
                                         <figcaption>Courtesy of iStockphoto</figcaption>
                                     </figure> -->
                                     
                                 </div>
                             </div>
-                        {#            Education Block           #}
-                        <div id="education-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="education_data-title" class="domain-data-title">Education:</div>
-                            <div id="education_score" class="domain-score">0.0</div>
-                            <div id="education_location" class="domain-location">Nation: <span id="education_national_score"></span>, State: <span id="education_state_score"></span></div>
-                            
-                            <div id="education_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar education-bar" id="education-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="education-slider-bar" class="rank-slider education-slider"></div>
+                            {#            Health Block           #}
+                            <div id="health-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="health_data-title" class="domain-data-title">Health:</div>
+                                <div id="health_score" class="domain-score">0.0</div>
+                                <div id="health_location" class="domain-location">Nation: <span id="health_national_score"></span>, State: <span id="health_state_score"></span></div>
+                                <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar health-bar" id="health-score-bar"></div>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="education_details" class="domain-description">
-                                <p>
-                                    The Education domain covers basic skills in reading, math and science. Measures of student safety and health are also included. 
-                                </p>
-                                <!-- <figure class="domain_image_right">
-                                    <img src="/static_qed/hwbi/disc/img/education.jpg"
-                                         alt="Education">
-                                    <figcaption>Courtesy of U.S. FWS</figcaption>
-                                </figure> -->
-                                
-                            </div>
-                        </div>
-                        {#            Health Block           #}
-                        <div id="health-block" class="domain-score-block">
-                            <button class="accordion domain-expand"></button>
-                            <div id="health_data-title" class="domain-data-title">Health:</div>
-                            <div id="health_score" class="domain-score">0.0</div>
-                            <div id="health_location" class="domain-location">Nation: <span id="health_national_score"></span>, State: <span id="health_state_score"></span></div>
-                            <div id="health_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                <div class="score-bar health-bar" id="health-score-bar"></div>
-                            </div>
-                            <div class="slider-block">
-                                <span class="left-slider-legend">Less</span>
-                                <div class="slider-container">
-                                    <div id="health-slider-bar" class="rank-slider health-slider"></div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Less</span>
+                                    <div class="slider-container">
+                                        <div id="health-slider-bar" class="rank-slider health-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">More</span>
                                 </div>
-                                <span class="right-slider-legend">More</span>
-                            </div>
-                            <div id="health_details" class="domain-description">
-                                <p>
-                                    The Health domain describes people's involvement in healthy behaviors, prevalence of illness, access to healthcare, mortality and life expectancy. 
+                                <div id="health_details" class="domain-description">
+                                    <p>
+                                        The Health domain describes people's involvement in healthy behaviors, prevalence of illness, access to healthcare, mortality and life expectancy.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Health');">More...</a>
 
-                                </p>
-                                <!-- <figure class="domain_image_left">
-                                    <img src="/static_qed/hwbi/disc/img/health.jpg"
-                                         alt="Health">
-                                    <figcaption>Courtesy of iStockphoto</figcaption>
-                                </figure> -->
-                                
+                                    </p>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/health.jpg"
+                                                alt="Health">
+                                        <figcaption>Courtesy of iStockphoto</figcaption>
+                                    </figure> -->
+                                    
+                                </div>
                             </div>
-                        </div>
-                        {#            Leisure Block           #}
-                        <div id="leisure-block" class="domain-score-block">
+                            {#            Leisure Block           #}
+                            <div id="leisure-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
                                 <div id="leisure-time_score" class="domain-score">0.0</div>
@@ -168,17 +145,18 @@
                                 <div id="leisure_details" class="domain-description">
                                     <p>
                                         The Leisure Time domain describes how our time is spent including: employment, care for seniors and activities that people partake in for personal enjoyment. A higher score may represent a positive or a negative characteristic in context of other domain indicators.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Leisure');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/leisure-time.jpg"
-                                             alt="Leisure Time">
+                                                alt="Leisure Time">
                                         <figcaption>Courtesy of U.S. EPA</figcaption>
                                     </figure> -->
                                     
                                 </div>
                             </div>
-                        {#            Living Standards Block           #}
-                        <div id="living-block" class="domain-score-block">
+                            {#            Living Standards Block           #}
+                            <div id="living-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="living_data-title" class="domain-data-title">Living Standards:</div>
                                 <div id="living-standards_score" class="domain-score">0.0</div>
@@ -195,18 +173,77 @@
                                 </div>
                                 <div id="living_details" class="domain-description">
                                     <p>
-                                        The Living Standards domain contains information about lifestyles. It includes measures of basic necessities, wealth and income. 
+                                        The Living Standards domain contains information about lifestyles. It includes measures of basic necessities, wealth and income.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Living');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/living-standards.jpg"
-                                             alt="Living Standards">
+                                                alt="Living Standards">
                                         <figcaption>Courtesy of Microsoft.com</figcaption>
                                     </figure> -->
                                     
                                 </div>
                             </div>
-                        {#            Safety Block           #}
-                        <div id="safety-block" class="domain-score-block">
+                            {#            Nature Block        #}
+                            <div id="nature-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="nature_data-title" class="domain-data-title">Nature Connection:</div>
+                                <div id="nature-connection_score" class="domain-score">0.0</div>
+                                <div id="nature-connection_location" class="domain-location">Nation: <span id="nature-connection_national_score"></span>, State: <span id="nature-connection_state_score"></span></div>
+                                <div id="nature-connection_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar nature-bar" id="nature-score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Less</span>
+                                    <div class="slider-container">
+                                        <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">More</span>
+                                </div>
+                                <div id="nature_details" class="domain-description">
+                                    <p>
+                                        The Nature Connection domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Connection');">More...</a>
+                                    </p>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/nature-connection.jpg"
+                                                alt="Nature Connection">
+                                        <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
+                                    </figure> -->
+                                    
+                                </div>
+                            </div>
+                            {#            Resilience Block           #}
+                            <div id="resilience-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="resilience_data-title" class="domain-data-title">Resilience:</div>
+                                <div id="resilience_score" class="domain-score">0.0</div>
+                                <div id="resilience_location" class="domain-location">Nation: <span id="resilience_national_score"></span>, State: <span id="resilience_state_score"></span></div>
+                                <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar resilience-bar" id="resilience_score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Less</span>
+                                    <div class="slider-container">
+                                        <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">More</span>
+                                </div>
+                                <div id="resilience_details" class="domain-description">
+                                    <p>
+                                        The Resilience domain describes a community's core ability to withstand and recover from an adverse natural hazard event in the context of potential natural hazard exposures and local resilience governance.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Resilience');">More...</a>
+                                    </p>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/social-cohesion.jpg"
+                                                alt="Social Cohesion">
+                                        <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                    </figure> -->
+                                    
+                                </div>
+                            </div>
+                            {#            Safety Block           #}
+                            <div id="safety-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
                                 <div id="safety-and-security_score" class="domain-score">0.0</div>
@@ -223,18 +260,19 @@
                                 </div>
                                 <div id="safety_details" class="domain-description">
                                     <p>
-                                        The Safety and Security domain includes information about perceived safety, actual safety and potential for danger. 
+                                        The Safety and Security domain includes information about perceived safety, actual safety and potential for danger.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Safety');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_right">
                                         <img src="/static_qed/hwbi/disc/img/safety-and-security.jpg"
-                                             alt="Safety">
+                                                alt="Safety">
                                         <figcaption>Courtesy of iStockphoto.com</figcaption>
                                     </figure> -->
                                     
                                 </div>
                             </div>
-                        {#            Social Cohesion Block           #}
-                        <div id="cohesion-block" class="domain-score-block">
+                            {#            Social Cohesion Block           #}
+                            <div id="cohesion-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
                                 <div id="cohesion_data-title" class="domain-data-title">Social Cohesion:</div>
                                 <div id="social-cohesion_score" class="domain-score">0.0</div>
@@ -251,7 +289,8 @@
                                 </div>
                                 <div id="cohesion_details" class="domain-description">
                                     <p>
-                                        The Social Cohesion domain describes people's connection to each other and their community by measuring involvement in family, democracy, and the community as a whole. 
+                                        The Social Cohesion domain describes people's connection to each other and their community by measuring involvement in family, democracy, and the community as a whole.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Social');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
                                         <img src="/static_qed/hwbi/disc/img/social-cohesion.jpg"
@@ -261,41 +300,13 @@
                                     
                                 </div>
                             </div>
-                            {#            Resilience Block           #}
-                            <div id="resilience-block" class="domain-score-block">
-                                    <button class="accordion domain-expand"></button>
-                                    <div id="resilience_data-title" class="domain-data-title">Resilience:</div>
-                                    <div id="resilience_score" class="domain-score">0.0</div>
-                                    <div id="resilience_location" class="domain-location">Nation: <span id="resilience_national_score"></span>, State: <span id="resilience_state_score"></span></div>
-                                    <div id="resilience_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                        <div class="score-bar resilience-bar" id="resilience_score-bar"></div>
-                                    </div>
-                                    <div class="slider-block">
-                                        <span class="left-slider-legend">Less</span>
-                                        <div class="slider-container">
-                                            <div id="resilience-slider-bar" class="rank-slider resilience-slider"></div>
-                                        </div>
-                                        <span class="right-slider-legend">More</span>
-                                    </div>
-                                    <div id="resilience_details" class="domain-description">
-                                        <p>
-                                            The Resilience domain describes a community's core ability to withstand and recover from an adverse natural hazard event in the context of potential natural hazard exposures and local resilience governance.
-                                        </p>
-                                        <!-- <figure class="domain_image_left">
-                                            <img src="/static_qed/hwbi/disc/img/social-cohesion.jpg"
-                                                 alt="Social Cohesion">
-                                            <figcaption>Courtesy of iStockphoto.com</figcaption>
-                                        </figure> -->
-                                        
-                                    </div>
-                                </div>
                             </div> <!--end domain-blocks -->
                             <hr />
                             <h3>Services Scores</h3>
                             <div class="service-blocks">
                                 <button type="button" id="servicedesc_btn" title="More info" onclick="moreInfoServices();">&bull; &bull; &bull;</button>
                                 <br><br>
-                                <div id="service-explanation" style="display: none;">The wants and needs of people are met through the availability of a variety of social, economic and environmental items (i.e., goods) and their delivery (i.e., services). The availability and flow of these services address many aspects of a community--everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources help to introduce changes that influence the quality of life for individuals and their communities.</div>
+                                <div id="service-explanation" style="display: none;">The wants and needs of people are met through the availability of a variety of social, economic and environmental items (i.e., goods) and their delivery (i.e., services). The availability and flow of these services address many aspects of a community--everything from health to employment to clean water. New investment in or redistribution of economic, social and natural resources help to introduce changes that influence the quality of life for individuals and their communities. <a href="#" onclick="ipcRenderer.send('open-pdf', 'Services');">More...</a></div>
                                 <div class="chartcontainer">
                                     <div id="chart" class="radialbar"></div>
                                     <div id="chart2" class="radialbar"></div>
@@ -699,6 +710,8 @@
                     </div> <!-- end domain scores -->
 
                 </div>
+                
+                <div id="scrollIndicator"><span></span>Scroll</div>
             </div>
         </div>
     </div>
@@ -749,7 +762,7 @@
                         <!-- <button type="button" id="qol_btn" title="More info" onclick="moreInfoQOL()">&bull; &bull; &bull;</button>
                         <br><br>
                         <div id="qolexplanation" style="display: none;">The entirety of DISC is based on the US EPA Human Well-Being Index (HWBI) and Climate Resilience Screening Index (CRSI). The HWBI indicators represent a suite of community quality of life characteristics, socio-ecological service measures and models that relate the two sets of values. The CRSI indicators offer measures of potential natural hazard exposures and basic governance measures that indicate potential recovery preparedness. All indicators are calculated based on the best publicly available data. Data selection is science-based and reviewed for national comparability. It is recognized that the best available data may not always be most relevant. To account for this, the DISC indicators may be customized using local data and knowledge so the base-line measures can more closely reflect local conditions.</div> -->
-                        <p class="tab-desc">The entirety of DISC is based on the HWBI (Quality of Life/community characteristics, services, scenarios) and CRSI (Resilience as a subset of indicators). Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations.</p>
+                        <p class="tab-desc">Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations.
                     </div>
                     <div class="card-list">{% regroup hwbi_metrics by 2 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
@@ -765,7 +778,7 @@
                                         <p>{{ domain.list.0.11 }}</p>
                                         <button class="reset-hwbi-custom-btn" data-id="{{ domain.grouper }}">Reset</button>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
-                                        <a href="#" class="close">&times;</a>
+                                        <a href="#" class="customize-close">&#129120;</a>
                                         <div class="modalcontent">
                                             <div id="customize_domain_details"></div>
                                             <div id="customize_domain_indicators">
@@ -836,7 +849,7 @@
                     <div id="{{ metric_group.grouper|slugify }}-service-modal" class="modal-overlay">
                         <div class="modal">
                             <h2 class="modal-title">{{ metric_group.grouper }} <span id="{{ metric_group.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
-                            <a href="#" class="close">&times;</a>
+                            <a href="#" class="customize-close">&#129120;</a>
                             <button class="reset-service-custom-btn" data-type="{{ metric_group.grouper }}">Reset</button>
                             <span class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
                             <div class="modalcontent">
@@ -905,7 +918,7 @@
             <button onclick="loadMetricValues('custom_val');">Load Custom Service Metrics</button>
         </div>
         <h3>Scenario Builder</h3>
-        <p class="tab-desc">People perceive quality of life differently. The Scenario Builder gives you an opportunity to see how changes in the economic, social and natural environments may influence the perception of quality of life characteristics valued in your community. This feature is intended to highlight changes in the DISC quality of life measures in relation to adjustments made to the inventory or quality of local assets and services. Additionally, shifts in well-being, resilience, cultural, social cohesion and other values can be observed in the context of relative or perceived importance of these community outcome measures. Changes made here will not change your score on the Community Snapshot page. Load the data from the changes you made in the Customize Data page by clicking Load Custom Metrics. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score.</p>
+        <p class="tab-desc">Changes in the economic, social and natural environments (Services) have varying degrees of influence on the quality of people’s lives. The Scenario Builder allows you make modest positive adjustments to the indicators related to these environments to see how much potential influence those changes may have on Community Characteristic indicators. The intended use of the Scenario Builder is to stimulate planning conversations by seeing if community improvement choices may have the intended effect on quality of life. <span class="complete-text" style="display: none;">Additionally, scenario results can be observed in the context of relative or perceived importance (Priority Ranking) of these community outcome measures. To load any changes you may have made to services data under Customize Data, simply click the “Load Custom Services Metrics” button. Clicking on the service domain name will display a list of constituent metrics which contribute to the domain score. Changes made here will not change your score on the Community Snapshot page. </span><a class="more-toggle" href="#" onclick="customizeMoreText(this);">More...</a></p>
         <span class="scenario-builder-score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
         <div class="scenario-cols">
 
@@ -930,7 +943,7 @@
                     <div id="s-menu-{{ metricGroup.grouper|slugify }}" class="row cols-2 slinky-menu" style="display: none;">
                         <ul>{% for domain in domains %}{% if domain.list.0.4 == metricGroup.grouper %}
                             <li class="colcontainer {% cycle 'col size-1of2' 'col size-2of2' as switch %}">
-                                <label><span title="{{ domain.list.0.11 }}" class="pointer scenario-builder-domain-label" onclick="toggleDomainConstituentMetricList('{{ domain.0|slugify }}')">{{ domain.grouper }}: </span><span class=""></span>
+                                <label><span title="{{ domain.list.0.11 }}" class="pointer scenario-builder-domain-label" onclick="toggleDomainConstituentMetricList('{{ domain.0|slugify }}'); toggleArrow(this);"><i class="arrow-down"></i>{{ domain.grouper }}: </span><span class=""></span>
                                     <input id="{{ domain.0|slugify }}" type="range" min="0.0" max="1.0" step="0.01" data-domain="{{ domain.0 }}" class="scenario-builder-domain">
                                 </label>
                                 <div id="{{ domain.0|slugify }}-metrics" class="constituent-metrics" style="display: none;">
@@ -968,9 +981,11 @@
 
             <div class="col size-2of2 aster-area">
                 
-                <div id="aster">
+                <div id="heat-chart"></div>
+                <div id="legend1"></div>
+                <!-- <div id="aster">
                     <script src="/static_qed/hwbi/disc/js/draw.js" ></script>
-                </div>
+                </div> -->
             </div>
             </div>
     </div>
@@ -989,15 +1004,15 @@
 				<h3 class="name"></h3>
 				<div class="hwbi"><span class="moe"></span></div>
 				<div class="domhead exspace"></div>
-				<div class="cn"><span class="cn_moe"></span></div>
-				<div class="cf"><span class="cf_moe"></span></div>
-				<div class="ed"><span class="ed_moe"></span></div>
+                <div class="ed"><span class="ed_moe"></span></div>
+                <div class="cf"><span class="cf_moe"></span></div>
 				<div class="he"><span class="he_moe"></span></div>
 				<div class="lt"><span class="lt_moe"></span></div>
-				<div class="ls"><span class="ls_moe"></span></div>
+                <div class="ls"><span class="ls_moe"></span></div>
+                <div class="cn"><span class="cn_moe"></span></div>
+                <div class="re"><span class="re_moe"></span></div>
 				<div class="ss"><span class="ss_moe"></span></div>
                 <div class="sc"><span class="sc_moe"></span></div>
-                <div class="re"><span class="re_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 				
@@ -1006,15 +1021,15 @@
 				<h3 class="name"></h3>
 				<div class="hwbi"><span class="moe"></span></div>
 				<div class="domhead exspace"></div>
-				<div class="cn"><span class="cn_moe"></span></div>
-				<div class="cf"><span class="cf_moe"></span></div>
-				<div class="ed"><span class="ed_moe"></span></div>
+                <div class="ed"><span class="ed_moe"></span></div>
+                <div class="cf"><span class="cf_moe"></span></div>
 				<div class="he"><span class="he_moe"></span></div>
 				<div class="lt"><span class="lt_moe"></span></div>
-				<div class="ls"><span class="ls_moe"></span></div>
+                <div class="ls"><span class="ls_moe"></span></div>
+                <div class="cn"><span class="cn_moe"></span></div>
+                <div class="re"><span class="re_moe"></span></div>
 				<div class="ss"><span class="ss_moe"></span></div>
                 <div class="sc"><span class="sc_moe"></span></div>
-                <div class="re"><span class="re_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 		</div>
@@ -1039,6 +1054,10 @@
                         <h4>Grants and Programs</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.mbda.gov/page/programs">Minority Business Development Agency Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://seedfund.nsf.gov/about/">National Science Foundation (NSF) America's Seed Fund</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sbir.gov/about/about-sbir">SBA Small Business Innovation Research (SBIR) Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sbir.gov/about/about-sttr">SBA Small Business Technology Transfer (STTR) Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://selectusa.stateincentives.org/?referrer=selectusa">Search and compare state incentive programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/oie/ris/">US EDA Regional Innovation Strategies (RIS) Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/TAAF-Program-1-Pager.pdf">US EDA Trade Adjustment Assistance for Firms (TAAF) Program for cost-sharing technical assistance to eligible import-impacted U.S. firms</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/business-industry-loan-guarantees">USDA Business & Industry Loan Guarantees for rural businesses</a></li>
@@ -1052,7 +1071,14 @@
                         <h4>Local Data</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?layers=0626249738dd45b5832b465acddd5e0a">Change in Business Vacancy Rate Map</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.clustermapping.us/">Cluster Mapping Tool for assessing regional cluster strengths, business environment characteristics, and innovation assets</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://eig.org/dci">Distressed Communities Index by Zip Code</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sba.gov/local-assistance/find/">SBA Find Local Assistance</a></li>
+
+                        <h4>Tools</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://acetool.commerce.gov/">Assess Costs Every (ACE) Tool to assess total cossts and enable informed decision-making</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ipassessment.uspto.gov/start.html">IP Awareness Assessment</a></li>
 
                         <h4>Tribe Resources</h4>
                         <hr>
@@ -1071,10 +1097,13 @@
                         <h4>General Information</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bls.gov/lau/">U.S. Department of Labor (USDL), Bureau of Labor Statistics Employment Data for cities of 25,000 or more and selected other communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://disability.workforcegps.org/resources#nav-programs">Workforce GPS Disability and Employment Resources</a></li>
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/economic-impact-initiative-grants">Economic Impact Initiative Grants for rural communities with extreme unemployment and severe economic depression</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.doleta.gov/programs/">US Department of Labor (USDL) Employment and Training Division, Adult Services</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.grants.gov/learn-grants/grant-making-agencies/department-of-labor.html">US Department of Labor (USDL) Grant Programs</a></li>
 
                         <h4>Local Data</h4>
                         <hr>
@@ -1087,6 +1116,13 @@
                         <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for job training, readiness, and employment activities</a></li>
+
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Kessler Foundation Signature Employment Grants</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>National Congress of American Indians (NCAI) has tribe resources for employment</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Search for Workforce Development Grants at GrantWatch</label></li>
                     </ul>
                 </div>
 
@@ -1097,6 +1133,7 @@
                         <h4>General Information</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Ag_Atlas_Maps/Economics">County-level Maps of the Economics of Agriculture</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://legacy.rma.usda.gov/livestock/">Livestock Insurance Information</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.sare.org/Learning-Center/Bulletins/Clean-Energy-Farming/Text-Version">Sustainable Agriculture Research & Education information clean energy farming</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/">USDA annual census providing data on farms and agriculture</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/topics/farming/coexistence/coexistence-factsheets">USDA coexistence factsheets</a></li>
@@ -1109,10 +1146,14 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/topics/crops.aspx">USDA main U.S. crop information</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ams.usda.gov/rules-regulations/pesticide-records">USDA pesticide record keeping information</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ers.usda.gov/publications/pub-details/?pubid=42548">USDA seafood safety and trade</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nass.usda.gov/Publications/AgCensus/2012/Online_Resources/Ag_Census_Web_Maps/index.php">USD Ag Census Web Maps for crops and plants, economics, farms, livestock and animals, and operators</a></li>
 
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/farm-loan-programs/index">FSA Farm Loan Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/index">FSA Programs and Services</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/aphis/ourfocus/planthealth/plant-pest-and-disease-programs">Plant Pest and Disease Programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ams.usda.gov/services/grants/scbgp">Specialty Crop Block Grant Program (SCBGP)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/aquaculture?prnum=2068">USDA aquaculture research grants and extension programs</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://nifa.usda.gov/funding-opportunity/beginning-farmer-and-rancher-development-program-bfrdp">USDA Beginning Farmer and Rancher Development Program (BFRDP) for education, mentoring, and techincal assistance initiatives</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nal.usda.gov/afsic/grants-and-loans-farmers">USDA grants and loans for farmers</a></li>
@@ -1121,15 +1162,23 @@
 
                         <h4>Local Data</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://hub.arcgis.com/app/amerigeoss::imagery-landsat-8-agriculture-analysis">Type in Your Location to Look at the Health of Your Farms</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.croplands.org/app/map?lat=40.81381&lng=-96.98730468750001&zoom=5">Zoom in This Map to See Local Croplands in Your Community</a></li>
 
                         <h4>Tools</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://newfarmers.usda.gov/discovery">USDA Discovery Tool for personalized information on farming</a></li>
+
+                        <h4>Tribe Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.aphis.usda.gov/aphis/ourfocus/tribalrelations/SA_Program_and_Activities">APHIS Programs and Activities on Tribal Lands</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/farm-loan-programs/native-american-loans/index">FSA Native American Tribal Loans</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/bia/ots/division-natural-resources/branch-agriculture-and-rangeland-development">BIA Agriculture & Range Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/agriculture-on-indian-lands.html">BIA Agriculture on Indian Lands</a></li>
                         
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Tribes: Keepseagle Fast-Track Grant Program for native farm development provided by First Nations Development Institute </label></li>
 
                         
@@ -1156,6 +1205,10 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/tribaldrinkingwater/drinking-water-infrastructure-grants-tribal-set-aside-program">Drinking Water Infrastructure Grants - Tribal Set-Aside Program</a></li>
                         
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Case Study: Tribal Infrastructure Fund Board awards more than $14 Million to critical projects in New Mexico tribal communities</label></li>
                     </ul>
                 </div>
 
@@ -1165,9 +1218,9 @@
                     <ul>
                         <h4>General Information</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/files/508_RDeConnectivityToolkit121918.pdf"> USDA toolkit of resources for broadband development in rural areas.</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/files/508_RDeConnectivityToolkit121918.pdf">USDA toolkit of resources for broadband development in rural areas.</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.oregon.gov/Broadband/pages/index.aspx">Oregon State resource for information on availability of broadband Internet services, planning activities, and maps </a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://content.govdelivery.com/accounts/USDAOC/bulletins/2332477 ">USDA investments to improve rural electric infrastructure and finance smart grid technologies</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usda.gov/media/press-releases/2019/02/28/usda-announces-investments-improve-rural-electric-infrastructure">USDA investments to improve rural electric infrastructure and finance smart grid technologies</a></li>
 
                         <h4>Grants and Programs</h4>
                         <hr>
@@ -1181,7 +1234,6 @@
 
                         <h4>Local Data</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://geoisp.com/us/">Detailed Internet Service Provider Information for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://broadbandmap.fcc.gov/#/">FCC Broadband Access Map for Your Community</a></li>
 
                         <h4>Tribe Resources</h4>
@@ -1192,13 +1244,14 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>*Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Community Networks provides Internet infrastructure information</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Education Superhighway has information about upgrading internet access to public schools  in America and on districts in need of bandwidth and fiber.</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label  >For more information about rural broadband in Washington, contact the WA State Department of Commerce CERB Rural Broadband Program Director & Tribal Liaison</label></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">geoISP offers a coverage map of Broadband Internet for your community</li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Rural Fiber Works provides service to increase broadband in small and rural communities</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>The National Rural Telecommunications Council provides rural utility service to rural communities</label></li>
-                        
+                        <li><input class="resources-checkbox" type="checkbox"><label>USAC Additional Discount to Match State/Tribal Funding for Special Construction</label></li>
                     </ul>
                 </div>
 
@@ -1221,9 +1274,13 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.eda.gov/pdf/about/Planning-Program-1-Pager.pdf">US EDA Planning Program to facilitate regional economic development efforts</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/rural-economic-development-loan-grant-program">USDA-RD Rural Economic Development Loan & Grant Program</a></li>
 
+                        <h4>Tribe Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/grants/icdbg">HUD Indian Community Development Block Grant Program (ICDBG)</a></li>
+
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
@@ -1253,7 +1310,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
                         
                     </ul>
@@ -1362,6 +1419,7 @@
 
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www7.nau.edu/itep/main/HazSubMap/twrap_HzSubMap_Bnfields.asp">ITEP Brownfields Resources for Tribes</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/equitable-redevelopment-petroleum-brownfields-zuni-pueblo-and-other-tribal-communities">Equitable Redevelopment of Petroleum Brownfields for Tribes</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/brownfields/state-and-tribal-response-program-grant-funding-guidance-resources">Tribes: US EPA Brownfields grants</a></li>
                         
@@ -1418,8 +1476,16 @@
                 <div class="metric-accordion-panel">
                     <div>It is important to conserve, protect, and enhance fish, wildlife, and natural habitats for use and enjoyment by present and future generations.</div>
                     <ul>
+                        <h4>General Information</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://alaskaseagrant.org/our-work/">Alaska Sea Grant offers information and education that supports healthy coastal resources, strong economies, and vibrant communities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://app.nwcouncil.org/ext/hli/">High Level Indicators to track the progress of regional fish and wildlife efforst in the Columbia Basin</a></li>
+
+
                         <h4>Grants and Programs</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://alaskaseagrant.org/research/funding/">Alaska Sea Grant Program funding</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/coastal/CoastalGrants/index.html">FWS National Coastal Wetlands Conservation Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.noaa.gov/office-education/bwet">NOAA Bay Watershed Education and Training (B-WET) for watersheds and related ocean, coastal, riverine, estuarine, and Great Lakes ecosystems</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://coast.noaa.gov/czm/landconservation/">NOAA Coastal and Estuarine Land Conservation Program to help local governments preserve coastal and estuarine lands</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fisheries.noaa.gov/grant/coastal-and-marine-habitat-restoration-grants">NOAA Coastal and Marine Habitat Restoration Grants</a></li>
@@ -1428,21 +1494,30 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://seagrant.noaa.gov/Funding">NOAA Sea Grant Funding Opportunities for healthy coastal ecosystems and sustainable fisheries and aquaculture</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nps.gov/orgs/rtca/index.htm">NPS Rivers, Trails, and Conservation Assistance Program (RTCA)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/wetlands/wetland-program-development-grants-and-epa-wetlands-grant-coordinators">Wetland Program Development Grants</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/conservation-programs/index">USDA Conservation Programs</a></li>
+
 
                         <h4>Local Data</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/southeast/conservation-tools/geospatial-fisheries-information-network/">FWS Geospatial Fisheries Information Network (GeoFIN) to view barries to fish passage across the U.S.</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/southeast/conservation-tools/information-for-planning-and-consultation/">FWS Information for Planning and Consultation (IPAC)</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/southeast/conservation-tools/tracking-and-reporting-on-actions-for-conservation-of-species/">FWS Tracking and Reporting on Actions for Conservation of Species (TRACS)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.pugetsoundinfo.wa.gov/">Puget Sound Info for restoration, protection, and recovery information for the Puget Sound region</a></li>
                         
                         <h4>Tribe Resources</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://tools.niehs.nih.gov//srp/researchbriefs/view.cfm?Brief_ID=295">Article on how model predicts PAH levels in important tribal food source</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/bia/ots/division-natural-resources/branch-fish-wildlife-recreation">BIA Branch of Fish, Wildlife, and Recreation</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://wsfrprograms.fws.gov/Subpages/GrantPrograms/TLIP/TLIP.htm">FWS Tribal Landowner Incentive Grant Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fws.gov/nativeamerican/grants.html">FWS Tribal Wildlife Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.westcoast.fisheries.noaa.gov/protected_species/salmon_steelhead/recovery_planning_and_implementation/pacific_coastal_salmon_recovery_fund.html">NOAA Pacific Coast Salmon Recovery Fund</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrcs.usda.gov/wps/portal/nrcs/main/national/people/outreach/tribal/">The Natural Resources Conservation Service (NRCS) Tribal Assistance</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfwf.org/whatwedo/programs/Pages/home.aspx">National Fish and Wildlife Foundation (NFWF) Conservation Programs</a></li>
-    
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Alaska Conservation Foundation focuses on long-term, enduring solutions for conservation protection at http://alaskaconservation.org/grant-opportunities/</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Columbia River Inter-Tribal Fish Commission has resources for fish and habitat restoration</label></li>
                     </ul>
                 </div>
 
@@ -1467,7 +1542,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>National Invasive Species Awareness Week has tools to evalatuate local invasive species control</label></li>
     
                     </ul>
@@ -1491,7 +1566,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>www.lightpollutionmap.info provides an interactive map to visualize light pollution levels in your community</label></li>
                         
                     </ul>
@@ -1560,11 +1635,13 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/co-benefits-risk-assessment-cobra-health-impacts-screening-and-mapping-tool">CO-Benefits Risk Assessment (COBRA) Health Impacts Screening and Mapping Tool</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www3.epa.gov/ttn/catc/dir1/landgem-v302.xls">EPA LandGEM-Landfill Gas Emissions Model</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/local-greenhouse-gas-inventory-tool">Local Greenhouse Gas Inventory Tool</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/re-powering/re-powerings-electronic-decision-tree">RE-Powering's Electronic Decision Tree to screen sites for suitability for solar photovoltaics or wind installations</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/re-powering/re-powering-mapping-and-screening-tools">RE-Powering Mapping and Screening Tools</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/tool-finder-local-government-clean-energy-initiatives">Tool Finder for Local Government Clean Energy Initiatives</a></li>
 
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bpa.gov/news/Tribal/Pages/Low-Income-Weatherization.aspx">BPA Tribal Set-Aside for Low-Income Weatherization</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/tribal-energy-development-capacity-grants.html">Tribal Energy Development Capacity Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/statelocalenergy/tribal-greenhouse-gas-inventory-tool">Tribal Greenhouse Gas Inventory Tool</a></li>
 
                     </ul>
@@ -1646,7 +1723,7 @@
 
                 <button class="accordion-metrics">Tree Cover</button>
                 <div class="metric-accordion-panel">
-                    <div>While not all forests have the same density dependent upon geographical location, tree cover is important to the health of the environment and communities. Tree cover can be affected by deforestation, disease, infestation, and/or natural disasters. Conservation of trees helps to maintain wildlife habitats and increases the community's connection to nature.</div>
+                    <div>While not all forests have the same density dependent upon geographical location, tree cover is important to the health of the environment and communities. Tree cover can be affected by deforestation, disease, infestation, and/or natural disasters. Conservation of trees helps to maintain wildlife habitats and increases the community's nature connection.</div>
                     <ul>
                         <h4>General Information</h4>
                         <hr>
@@ -1673,9 +1750,14 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://canopy.itreetools.org/">i-Tree Canopy Tool to Estimate Tree Cover in Your Community</a></li>
 
+                        <h4>Tribe Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/bia/ots/dfwfm/bofrp">BIA Branch of Forest Resources Planning (BOFRP)</a></li>
+
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox"><label>The National Forest Foundation offers a Matching Awards Program for forest health at https://www.nationalforests.org/grant-programs/map</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>Tribes: The National Forest Foundation has a Matching Awards Program (MAP) for Forest Health</label></li>
 
                     </ul>
@@ -1787,7 +1869,6 @@
                 <div class="metric-accordion-panel">
                     <div>These EPA links have various environmental data that you can explore for your community. Data that you can explore include air quality, water quality, greenhouse gas emissions, public health, and more.</div>
                     <ul>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/healthresearch/introduction-community-focused-exposure-and-risk-screening-tool-c-ferst">Community-Focused Exposure and Risk Screening Tool (C-FERST)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www3.epa.gov/enviro/">Database information toxic air releases, water discharge, hazardous waste, and other environmental activities affecting air, water, and land for your community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www3.epa.gov/myem/envmap/find.html">Local Environmental Data for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://enviroatlas.epa.gov/enviroatlas/interactivemap/">U.S. EPA EnviroAtlas interactive map for your community</a></li>
@@ -1818,10 +1899,6 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/asthma/national-environmental-leadership-award-asthma-management">EPA National Environmental Leadership Award in Asthma Management</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/healthy_homes/hhi">US Department of Housing and Urban Development Healthy Homes inititative to help chidren and families</a></li>
 
-                        <h4>Local Data</h4>
-                        <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.asthmaforecast.com/">National Asthma Map and Forecast for Your Community</a></li>
-
                         <h4>Tools</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.asthmacommunitynetwork.org/carat">Childhood Asthma Risk Assessment Tool (CARAT)</a></li>
@@ -1831,6 +1908,12 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www7.nau.edu/itep/main/iaq/iaq_asthma">IAQTC Asthma Education for Tribes</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://thhnw.org/resources/asthma-allergies/">THHN Asthma resources and information</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/indoor-air-quality-iaq/indoor-air-quality-tools-tribal-communities">Tribes: US EPA indoor air quality tools</a></li>
+
+
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">National Asthma Map and Forecast for Your Community at asthmaforecast.com</li>
 
                     </ul>
                 </div>
@@ -1869,7 +1952,6 @@
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://k12education.gatesfoundation.org/about/">Bill and Melinda Gates Foundation Grants and Resources</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gatesfoundation.org/Media-Center/Press-Releases/2003/02/Grant-to-Support-Nationwide-High-School-Network">Education case study: Bill and Melinda Gates Foundation grant to Portland Community College.</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://clearingmagazine.org/ee-success-stories-from-around-the-pnw">Environmental Education Success Stories from around the PNW</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/education/national-environmental-education-act-0">National Environmental Education Act</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4681508">Programs to Increase High School Completion</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://marionpubliclibrary.org/events/book-trip-across-america/book-trip-teen-edition">Suggestions to improve reading skills and interest </a></li>
@@ -1886,8 +1968,10 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/education/environmental-education-ee-grants">Environmental Education Local Grants Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/education/presidential-innovation-award-environmental-educators">EPA Presidential Innovation Award for Environmental Educators</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/education/presidents-environmental-youth-award">EPA President's Environmental Youth Award</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://grantsalert.com/grants/">GrantsAlert available grants for K-12 teachers and schools</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://grayff.org/grants/">Gray Family Foundation grants for environmental education</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://ies.ed.gov/funding/">Institute of Education Sciences Funding</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.noaa.gov/office-education/elp">NOAA Environmental Literacy Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/community-facilities-direct-loan-grant-program">USDA Community Facilities Direct Loan & Grant Program for rural community educational services</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/find/elig/index.html">US Dept. of Education Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.williampennfoundation.org/what-we-fund/high-school-completion">William Penn Foundation High School Completion Grants</a></li>
@@ -1903,16 +1987,28 @@
 
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/administrative-cost-grants-for-indian-schools.html">Administrative Cost Grants for Indian Schools</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bpa.gov/news/Tribal/Pages/default.aspx">BPA request for proposals that support tribal youth education programs</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/federally-recognized-tribes-extension-grant-program">Federally-Recognized Tribes Extension Program (FRTEP)</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for educational activities</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bie.edu/Programs/Sovereignty/index.htm">Sovereignty in Indian Education Enhancement Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/tribally-controlled-community-college-endowments.html">Tribally Controlled Community College Endowments</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/tribal-college-initiative-grants">Tribal College Initiative Grants for education infrastructure improvements</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/tribal-college-research-grant-program">Tribal College Research Grant Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bie.edu/Programs/TribalEduDeptGrantProgram/index.htm">Tribal Education Department Grant Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/tribal-equity-grants-program">Tribal Equity Grants Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nifa.usda.gov/program/tribal-extension-grant-program">Tribal Extension Grant Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indiandemo/index.html">Tribes: US Department of Education discretionary/competitive grants for students</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www2.ed.gov/programs/indianformula/index.html">Tribes: US Department of Education formula grants for students</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.acf.hhs.gov/ofa/resource/new-plan-guidance-non-477-2016">Native Employment Works (NEW) Program funding for educational activities</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.rd.usda.gov/programs-services/tribal-college-initiative-grants">Tribal College Initiative Grants for education infrastructure improvements</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>Best Buy provides Grants for Organizations Focused on Youth in Educational, Technologically Driven Community Projects</label></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">Clearing Magazine has environmental education success stories from around the PNW</li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For state contacts, visit the U.S. Department of Education website.</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>Target offers field trip grants to fund learning opportunities outside the classroom.</label></li>
+                        <li><input class="resources-checkbox" type="checkbox"><label>The Melinda Gray Ardia Environmental foundation offers Environmental Curricula Grants.</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
 
                     </ul>
@@ -1941,7 +2037,7 @@
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/smartgrowth/planning-framework-climate-resilient-economy">Planning Framework for a Climate-Resilient Economy</a></li>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://toolkit.climate.gov/">U.S. Climate Resilience Toolkit</a></li>
 
-                            <h5>Drought</h5>
+                            <h5>Earthquakes</h5>
                             <hr>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://crew.org/products-and-programs/earthquake-scenarios/">Cascadia Region Earthquake Workgroup earthquake scenarios</a></li>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://cusec.org/our-earthquake-risk/">CUSEC central U.S. earthquake risk information</a></li>
@@ -1951,7 +2047,7 @@
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/Staying-safe/Preparedness/Emergency-Preparedness/Earthquakes">NFPA earthquake safety basics</a></li>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.wsspc.org/resources-reports/earthquake-center/">WSSPC earthquake center resources for Western U.S.</a></li>
 
-                            <h5>Earthquakes</h5>
+                            <h5>Drought</h5>
                             <hr>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtreporter.unl.edu/submitreport/">Drought Impact Reporter</a></li>
                             <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://droughtmonitor.unl.edu/">United States Drought Monitor</a></li>
@@ -2018,6 +2114,7 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/flood-mitigation-assistance-grant-program">FEMA NFIP Grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://fs20.formsite.com/fmglobal/form14/index.html">FM Global Fire Prevention Grant Program</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/national-fire-plan--rural-fire-assistance.html#.XMHjq-hKjct">National Fire Plan - Rural Fire Assistance Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nfpa.org/Public-Education/Fire-causes-and-risks/Wildfire/Firewise-USA">NFPA Firewise USA Program to teach how to adapt to living with wildfire</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fsa.usda.gov/programs-and-services/disaster-assistance-program/index">USDA Disaster Assistance Programs for communities, farmers, ranchers, and businesses affected by natural disasters</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.usfa.fema.gov/grants/">USFA Fire service grants and funding</a></li>
 
@@ -2035,13 +2132,13 @@
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/cameo">CAMEO (Computer-Aided Management of Emergency Operations) to plan for and respond to chemical emergencies</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/arc-x">Climate Change Adaptation Resource Center (ARC-X)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/crwu/creat-risk-assessment-application-water-utilities">Climate Resilience Evaluation and Awareness Tool (CREAT) to help utilities to adapt to extreme weather events</a></li>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/crwu/creat-risk-assessment-application-water-utilities">Creating Resilient Water Utilities (CRWU) Risk assessment application to help adapt to extreme weather events</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fema.gov/mobile-app">FEMA Mobile App for shelter information, disaster resources, weather alerts, and safety tips</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/waterresiliencetraining/develop-and-conduct-water-resilience-tabletop-exercise-water-utilities">Tabletop Exercise Tool for Drinking Water and Wastewater Utilities</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/ceam/visual-plumes">Visual Plumes model system for simulating surface water jets and plumes</a></li>
 
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.federalgrantswire.com/cooperative-landscape-conservation-indian-affairs.html">Cooperative Landscape Conservation (CLC) Program for climate resilience</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.gao.gov/assets/660/651160.pdf">FEMA Flooding Resources/Mitigation and Flood Insurance Information for Tribes</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://training.fema.gov/tribal/">Tribes: Emergency preparedness training provided by FEMA</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.ready.gov/make-a-plan/indian-country">Tribe preparedness resources</a></li>
@@ -2049,7 +2146,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
                         
                     </ul>
@@ -2124,11 +2221,13 @@
                         
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.nativefoodsystems.org/about">Native Food Systems Resource Center</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fns.usda.gov/fdpir/food-distribution-program-indian-reservations-fdpir">Tribes: USDA Food distribution program for low-income households</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.fns.usda.gov/fdpir/indian-tribal-organization">USDA Indian Tribal Organization list of resources for FDPIR Food Package, USDA DoD Fresh Fruit and Vegetable Program, and Nutrition Education</a></li>
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security, contact the USDA National Institute of Food and Agriculture</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security in rural communities, contact the Rural Health Information Hub</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more resources on how to eat more sustainably, visit FoodPrint's website</label></li>
@@ -2180,7 +2279,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Alaska, contact the Alaska Office of Rural Health</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in America, contact the National Rural Health Association</label></li>
                         <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Idaho, contact the Idaho Office of Rural Health</label></li>
@@ -2224,7 +2323,11 @@
                         
                         <h4>Tribe Resources</h4>
                         <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.bia.gov/bia/ois/dhs/housing-improvement-program">DHS Housing Improvement Program</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/grants/icdbg">HUD Indian Community Development Block Grant Program (ICDBG)</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/homeownership/184/tribes">Section 184 Loan Guarantee Program  to bring more housing to tribal communities </a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/green-building-tools-tribes/tribal-green-building-toolkit">Tribal Green Building Toolkit</a></li>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.hud.gov/program_offices/public_indian_housing/ih/homeownership/titlevi">Tribal Housing Activities Loan Guarantee Program (Title VI)</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.gov/benefit/798">Tribes: Housing Improvement Program for home repair, renovation, replacement, and new housing grants</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.epa.gov/green-building-tools-tribes/funding-opportunities-tribal-green-building#epa">Tribes: US EPA funding opportunities for green building</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.benefits.va.gov/homeloans/nadl.asp">US HUD Direct home loan program for Native Americans</a></li>
@@ -2257,16 +2360,17 @@
 
                 <button class="accordion-metrics">Parks</button> 
                 <div class="metric-accordion-panel">
-                    <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and connection to nature.</div>
+                    <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and nature connection.</div>
                     <ul>
                         <h4>General Information</h4>
                         <hr>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://eurekalert.org/pub_releases/2019-07/uop-sgl071019.php">Case Study: Passive exposure to nearby greenspace linked to less intense and frequent cravings</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.nrpa.org/contentassets/f768428a39aa4035ae55b2aaff372617/pocket-parks.pdf">Suggestions from the National Park and Recreation Association to create miniparks</a></li>
                         
-                        <h4>Local Data</h4>
+                        <h4>Additional Resources</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://parkserve.tpl.org/">Look up Park Accessibility for Your Community</a></li>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">ParkServe has park accessibility information for your community</li>
 
                     </ul>
                 </div>
@@ -2294,7 +2398,7 @@
 
                         <h4>Additional Resources</h4>
                         <hr>
-                        <p><i>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</i></p>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
                         <li><input class="resources-checkbox" type="checkbox"><label>The Community Tool Box by the University of Kansas provides a toolkit to increase community participation and action.</label></li>
                         
                     </ul>
@@ -2316,10 +2420,18 @@
 
                         <h4>Local Data</h4>
                         <hr>
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.walkscore.com/">Get Your Transit Score for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3&mapOSM[c2]=-96&mapOSM[s]=work95&mapOSM[fs]=false">Interactive Map of Public Transportation Usage to Work for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=d3ad365274a941caa095d6b077b59f94">Predominant Means of Transportation to Work Map for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.slc.gsa.gov/slc/">Smart location calculator for exploring how workplace location affects worker commute travel</a></li>
+
+                        <h4>Tribe Resources</h4>
+                        <hr>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://flh.fhwa.dot.gov/programs/ttp/">Tribal Transportation Program</a></li>
+
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>    
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">Walk Score has your transit score for your community</li>
 
                     </ul>
                 </div>
@@ -2352,10 +2464,13 @@
 
                         <h4>Local Data</h4>
                         <hr> 
-                        <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="https://www.walkscore.com/score/">Get Your Walk Score and Bike Score for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3&mapOSM[c2]=-96&mapOSM[s]=work111&mapOSM[fs]=false">Interactive Map of Bicycle Usage to Work for Your Community</a></li>
                         <li><input class="resources-checkbox" type="checkbox" name="" value=""><a href="http://www.city-data.com/#mapOSM?mapOSM[zl]=4&mapOSM[c1]=37.3&mapOSM[c2]=-96&mapOSM[s]=work113&mapOSM[fs]=false">Interactive Map of Walking as a Means of Transportation for Work for Your Community</a></li>
 
+                        <h4>Additional Resources</h4>
+                        <hr>
+                        <p><span>Resources without links are provided as such because EPA is unable to link to sites with donation requests. The EPA does not endorse these websites and organizations.</span></p>
+                        <li><input class="resources-checkbox" type="checkbox" name="" value="">Get your Walk and Bike Score for your community at Walk Score’s website</li>
                     </ul>
                 </div>
 
@@ -2392,581 +2507,460 @@
             </div>
 
 
+            <a href="#" class="returntop">back to top &uarr;</a>
 
-            <!-- <h3>Additional Resources</h3>
-
-            <hr style="margin: .5em 0 1em; background: #aaa;">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus provident quis voluptatum sapiente dolores similique maiores culpa libero explicabo repellendus!</p>
-
-            <h4 class="resources-subhead">Economic</h4>
-
-            <button class="accordion-metrics">Internet Access</button>
-            <div class="metric-accordion-panel">
-                <div>Internet access is the ability to connect to the Internet. Underserved communities have little to no access to the Internet, which may confound social disadvantages.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Education Superhighway has information about upgrading internet access to public schools  in America and on districts in need of bandwidth and fiber.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Rural Fiber Works provides service to increase broadband in small and rural communities</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>The National Rural Telecommunications Council provides rural utility service to rural communities</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Community Networks provides Internet infrastructure information</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label  >For more information about rural broadband in Washington, contact the WA State Department of Commerce CERB Rural Broadband Program Director & Tribal Liaison</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Poverty Rate</button>
-            <div class="metric-accordion-panel">
-                <div>Lack of financial resources can affect all aspects of an individual's and family's economic and social well being. Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society. Links are provided to information on poverty and services to provide needed resources.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Education</button>
-            <div class="metric-accordion-panel">
-                <div>Education is an important service that provides knowledge and skill for citizens in a community. Education can have a great impact on a community's growth and development.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Social Engagement</button>
-            <div class="metric-accordion-panel">
-                <div>Accessible, accurate and secure elections are necessary for American citizens to have a voice in governmental laws and policies that affect all aspects of their economic, social and ecosystem well-being.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Local Economy</button>
-            <div class="metric-accordion-panel">
-                <div>Local economy is the economic system and range of economic activity in a local area that serves a local population.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon Institute for Policy Research and Engagement Resources provides "planning and technical assistance to help solve local issues and improve the quality of life" in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            
-
-
-            <h4 class="resources-subhead">Environment</h4>
-
-            <button class="accordion-metrics">Invasive Species</button>
-            <div class="metric-accordion-panel">
-                <div>An invasive species is defined as an organism that is non-native to the ecosystem in which it is found that is likely to cause harm to the environment, economy, or human health. Invasive species pose a threat due to their ability to spread rapidly and cause widespread damage. </div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>National Invasive Species Awareness Week has tools to evalatuate local invasive species control</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Emergency Preparedness</button>
-            <div class="metric-accordion-panel">
-                <div>Emergency prepardness is important in the community in the event that a disaster may happen. The community will need to be prepared ahead of time in order to mitigate any harm to human health.
-                </div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>The Federation of American Scientists provides information on the National Flood Insurance Program</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Light Pollution</button>
-            <div class="metric-accordion-panel">
-                <div>Light pollution is the introduction of artificial light into the natural environment. Light pollution greatly diminishes human quality of life and is a symptom of increased energy usage. It is the brightening of the night sky from non-natural sources of light scattering into the atmosphere. Light pollution has pronounced ecological effects and has the potential to influence human circadian rhythms.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>JPL NASA Resource on How to Reduce Light Pollution</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Lightpollutionmap.info provides an interactive map to visualize light pollution levels in your community</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                    
-                </ul>
-
-            </div>
-
-
-            
-
-            <h4 class="resources-subhead">Social</h4>
-
-            <button class="accordion-metrics">Education</button>
-            <div class="metric-accordion-panel">
-                <div>Education is an important service that provides knowledge and skill for citizens in a community. Education can have a great impact on a community's growth and development.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>For state contacts, visit the U.S. Department of Education website.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Best Buy provides Grants for Organizations Focused on Youth in Educational, Technologically Driven Community Projects</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Social Engagement</button>
-            <div class="metric-accordion-panel">
-                <div>Social engagement is the degree that an individual participates in a community.  High social engagement has been correlated with increase in happiness, health, and well-being.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>The Community Tool Box by the University of Kansas provides a toolkit to increase community participation and action.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Healthcare</button>
-            <div class="metric-accordion-panel">
-                <div>Healthcare access is important to the overall well-being of a community. Underserved communities that do not have access to healthcare are at risk for reduced quality of life. </div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in America, contact the National Rural Health Association</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Washington, contact the Washington Office of Rural Health</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Oregon, contact the Oregon Office of Rural Health</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Idaho, contact the Idaho Office of Rural Health</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information about rural healthcare in Alaska, contact the Alaska Office of Rural Health</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The National Rural Health Association provides more information about rural healthcare.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Modern Healthcare provides more information about rural healthcare.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more toolkits and resources for rural healthcare, visit Washington State Hospital Association website</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The Universal Service Administrative Co. has information about the FCC Healthcare Connect Fund</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Food Security</button>
-            <div class="metric-accordion-panel">
-                <div>Food security means access by all people at all times to enough food for an active, healthy life, affecting all aspects of their economic and social well being.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security, contact the USDA National Institute of Food and Agriculture</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more information on food security in rural communities, contact the Rural Health Information Hub</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Hunger+Health Feeding America has more information on food insecurity</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>For more resources on how to eat more sustainably, visit FoodPrint's website</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div>
-
-            <button class="accordion-metrics">Poverty Rate</button>
-            <div class="metric-accordion-panel">
-                <div>Lack of financial resources can affect all aspects of an individual's and family's economic and social well being. Poverty can affect a person's ability to provide food, housing, education, health care, transportation as well as full participation in society. Links are provided to information on poverty and services to provide needed resources.</div>
-                <ul>
-                    <li><input class="resources-checkbox" type="checkbox"><label>USBank provides grants for community organizations that promote economic development tied to work, home, and play.</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The American Planning Association provides Metrics for Planning Healthy Communities</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>The University of Oregon provides resources for students  to increase a communities capacity for economic, social and environmental planning in Oregon</label></li>
-
-                    <li><input class="resources-checkbox" type="checkbox"><label>Walmart provides the Walmart Community Grant Program for local organizations to support the needs of their communities.</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Center for Nonprofit Excellence sources grant opportunities for non-profit organizations on their website</label></li>
-                    <li><input class="resources-checkbox" type="checkbox"><label>Puget Consumers Co-op has community grants for organizations that focus on environmental and social action within communities in the Puget Sound region</label></li>
-                </ul>
-
-            </div> -->
-
-                <a href="#" class="returntop">back to top &uarr;</a>
-
-            </div>
-
-
-            <div id="printable">
-                <!-- <table class="summary" id="table">
-                    <thead>
-                        <tr>
-                            <th colspan="8" id="reportlocation"></th>
-                        </tr>
-                        <tr>
-                            <th colspan="5">Indicator Scores</th>
-                            <th colspan="3">Domain Scores</th>
-                        </tr>
-                        <tr>
-                            <th>Domains</th>
-                            <th>Indicators</th>
-                            <th>Original Baseline</th>
-                            <th>Updated</th>
-                            <th class="separator">Change</th>
-                            <th>Original Baseline</th>
-                            <th>With Indicator Updates</th>
-                            <th>Change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="report-domains"> 
-                            <th rowspan="5">Built Environment</th>
-                            <td>Communication Infrastructure</td>
-                            <td id="communication_infrastructure" class="baselineindicator"></td>
-                            <td id="communication_infrastructure_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="5" class="baselinedomain" id="environment_score_summary"></td>
-                            <td rowspan="5" class="updateddomain" id="environment_adj">-</td>
-                            <td rowspan="5" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Housing Characteristics</td>
-                            <td id="housing_characteristics" class="baselineindicator"></td>
-                            <td id="housing_characteristics_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Transportation Infrastructure</td>
-                            <td id="transportation_infrastructure" class="baselineindicator"></td>
-                            <td id="transportation_infrastructure_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Utility Infrastucture</td>
-                            <td id="utility_infrastructure" class="baselineindicator"></td>
-                            <td id="utility_infrastructure_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Vacant Structures</td>
-                            <td id="vacant_structures" class="baselineindicator"></td>
-                            <td id="vacant_structures_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="5">Community Involvement</th>
-                            <td>Attitudes Towards Others and the Community</td>
-                            <td id="attitudes" class="baselineindicator"></td>
-                            <td id="attitude_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="5" class="baselinedomain" id="community_score_summary"></td>
-                            <td rowspan="5" class="updateddomain" id="community_adj">-</td>
-                            <td rowspan="5" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Democratic Engagement</td>
-                            <td id="democratic_engagement" class="baselineindicator"></td>
-                            <td id="democratic_engagement_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Family Bonding</td>
-                            <td id="family_bonding" class="baselineindicator"></td>
-                            <td id="family_bonding_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Social Engagement</td>
-                            <td id="social_engagement" class="baselineindicator"></td>
-                            <td id="social_engagement_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Social Support</td>
-                            <td id="social_support" class="baselineindicator"></td>
-                            <td id="social_support_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains">
-                            <th rowspan="3">Education</th>
-                            <td>Basic Educational Knowledge and Skills of Youth</td>
-                            <td id="educational_knowledge" class="baselineindicator"></td>
-                            <td id="educational_knowledge_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="3" class="baselinedomain" id="education_score_summary"></td>
-                            <td rowspan="3" class="updateddomain" id="education_adj">-</td>
-                            <td rowspan="3" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Participation and Attainment</td>
-                            <td id="participation_attainment" class="baselineindicator"></td>
-                            <td id="participation_attainment_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Social, Emotional and Developmental Aspects</td>
-                            <td id="social_emotional_developmental" class="baselineindicator"></td>
-                            <td id="social_emotional_developmental_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="6">Health</th>
-                            <td>Healthcare</td>
-                            <td id="healthcare" class="baselineindicator"></td>
-                            <td id="healthcare_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="6" class="baselinedomain" id="health_score_summary"></td>
-                            <td rowspan="6" class="updateddomain" id="health_adj">-</td>
-                            <td rowspan="6" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Lifestyle and Behavior</td>
-                            <td id="lifestyle_behavior" class="baselineindicator"></td>
-                            <td id="lifestyle_behavior_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>health Characteristics</td>
-                            <td id="health_characteristics" class="baselineindicator"></td>
-                            <td id="health_characteristics_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Life Expectancy and Mortality</td>
-                            <td id="life_exp" class="baselineindicator"></td>
-                            <td id="life_exp_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Personal Well-Being</td>
-                            <td id="personal_wellbeing" class="baselineindicator"></td>
-                            <td id="personal_wellbeing_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Social Services</td>
-                            <td id="social_services" class="baselineindicator"></td>
-                            <td id="social_services_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains">
-                            <th rowspan="2">Environmental Resource Management</th>
-                            <td>Condition</td>
-                            <td id="condition" class="baselineindicator"></td>
-                            <td id="condition_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="2" class="baselinedomain" id="resource-mgmt_score_summary"></td>
-                            <td rowspan="2" class="updateddomain" id="resource-mgmt_adj">-</td>
-                            <td rowspan="2" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Extent of Ecosystem Types</td>
-                            <td id="ecosystem_types" class="baselineindicator"></td>
-                            <td id="ecosystem_types_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="2">Hazard Vulnerability</th>
-                            <td>Exposure</td>
-                            <td id="exposure" class="baselineindicator"></td>
-                            <td id="exposure_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="2" class="baselinedomain" id="hazard_score_summary"></td>
-                            <td rowspan="2" class="updateddomain" id="hazard_adj">-</td>
-                            <td rowspan="2" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Loss</td>
-                            <td id="loss" class="baselineindicator"></td>
-                            <td id="loss_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="5">Local Economy</th>
-                            <td>Basic Necessities</td>
-                            <td id="basic_necessities" class="baselineindicator"></td>
-                            <td id="basic_necessities_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="5" class="baselinedomain" id="economy_score_summary"></td>
-                            <td rowspan="5" class="updateddomain" id="economy_adj">-</td>
-                            <td rowspan="5" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Economic Diversity</td>
-                            <td id="economic_diversity" class="baselineindicator"></td>
-                            <td id="economic_diversity_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Socio-Economics</td>
-                            <td id="socio_economics" class="baselineindicator"></td>
-                            <td id="socio_economics_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Wealth</td>
-                            <td id="wealth" class="baselineindicator"></td>
-                            <td id="wealth_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Work</td>
-                            <td id="work" class="baselineindicator"></td>
-                            <td id="work_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="3">Resilience Planning</th>
-                            <td>Community Preparedness</td>
-                            <td id="community_preparedness" class="baselineindicator"></td>
-                            <td id="community_preparedness_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="3" class="baselinedomain" id="resilience_score_summary"></td>
-                            <td rowspan="3" class="updateddomain" id="resilience_adj">-</td>
-                            <td rowspan="3" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Natural Resource Conservation</td>
-                            <td id="resource_conservation" class="baselineindicator"></td>
-                            <td id="resource_conservation_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Personal Preparedness</td>
-                            <td id="personal_preparedness" class="baselineindicator"></td>
-                            <td id="personal_preparedness_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="4">Local Culture</th>
-                            <td>Activity Participation</td>
-                            <td id="activity_participation" class="baselineindicator"></td>
-                            <td id="activity_participation_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="4" class="baselinedomain" id="culture_score_summary"></td>
-                            <td rowspan="4" class="updateddomain" id="culture_adj">-</td>
-                            <td rowspan="4" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Biophilia</td>
-                            <td id="biophilia" class="baselineindicator"></td>
-                            <td id="biophilia_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Time Spent</td>
-                            <td id="time_spent" class="baselineindicator"></td>
-                            <td id="time_spent_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Working Age Adults</td>
-                            <td id="working_adults" class="baselineindicator"></td>
-                            <td id="working_adults_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-            
-                        </tr>
-                        <tr class="report-domains"> 
-                            <th rowspan="3">Safety and Security</th>
-                            <td>Actual Safety</td>
-                            <td id="actual_safety" class="baselineindicator"></td>
-                            <td id="actual_safety_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                            <td rowspan="3" class="baselinedomain" id="safety_score_summary"></td>
-                            <td rowspan="3" class="updateddomain" id="safety_adj">-</td>
-                            <td rowspan="3" class="changed">-</td>
-                        </tr>
-                        <tr>
-                            <td>Perceived Safety</td>
-                            <td id="perceived_safety" class="baselineindicator"></td>
-                            <td id="perceived_safety_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td>Risk</td>
-                            <td id="risk" class="baselineindicator"></td>
-                            <td id="risk_adj" class="updatedindicator">-</td>
-                            <td class="separator">-</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="originaldiscscore">Original DISC Score: <span id="report-wellbeing-score"></span></td>
-                            <td colspan="3" class="newdiscscore">New DISC Score: <span id="report-wellbeing-score-new"></span> </td>
-                        </tr>
-                    </tbody>
-                </table> -->
-            </div>
         </div>
+
+            
+
+
+        <div id="printable">
+            <!-- <table class="summary" id="table">
+                <thead>
+                    <tr>
+                        <th colspan="8" id="reportlocation"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">Indicator Scores</th>
+                        <th colspan="3">Domain Scores</th>
+                    </tr>
+                    <tr>
+                        <th>Domains</th>
+                        <th>Indicators</th>
+                        <th>Original Baseline</th>
+                        <th>Updated</th>
+                        <th class="separator">Change</th>
+                        <th>Original Baseline</th>
+                        <th>With Indicator Updates</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="report-domains"> 
+                        <th rowspan="5">Built Environment</th>
+                        <td>Communication Infrastructure</td>
+                        <td id="communication_infrastructure" class="baselineindicator"></td>
+                        <td id="communication_infrastructure_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="5" class="baselinedomain" id="environment_score_summary"></td>
+                        <td rowspan="5" class="updateddomain" id="environment_adj">-</td>
+                        <td rowspan="5" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Housing Characteristics</td>
+                        <td id="housing_characteristics" class="baselineindicator"></td>
+                        <td id="housing_characteristics_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation Infrastructure</td>
+                        <td id="transportation_infrastructure" class="baselineindicator"></td>
+                        <td id="transportation_infrastructure_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Utility Infrastucture</td>
+                        <td id="utility_infrastructure" class="baselineindicator"></td>
+                        <td id="utility_infrastructure_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Vacant Structures</td>
+                        <td id="vacant_structures" class="baselineindicator"></td>
+                        <td id="vacant_structures_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="5">Community Involvement</th>
+                        <td>Attitudes Towards Others and the Community</td>
+                        <td id="attitudes" class="baselineindicator"></td>
+                        <td id="attitude_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="5" class="baselinedomain" id="community_score_summary"></td>
+                        <td rowspan="5" class="updateddomain" id="community_adj">-</td>
+                        <td rowspan="5" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Democratic Engagement</td>
+                        <td id="democratic_engagement" class="baselineindicator"></td>
+                        <td id="democratic_engagement_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Family Bonding</td>
+                        <td id="family_bonding" class="baselineindicator"></td>
+                        <td id="family_bonding_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Social Engagement</td>
+                        <td id="social_engagement" class="baselineindicator"></td>
+                        <td id="social_engagement_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Social Support</td>
+                        <td id="social_support" class="baselineindicator"></td>
+                        <td id="social_support_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains">
+                        <th rowspan="3">Education</th>
+                        <td>Basic Educational Knowledge and Skills of Youth</td>
+                        <td id="educational_knowledge" class="baselineindicator"></td>
+                        <td id="educational_knowledge_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="3" class="baselinedomain" id="education_score_summary"></td>
+                        <td rowspan="3" class="updateddomain" id="education_adj">-</td>
+                        <td rowspan="3" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Participation and Attainment</td>
+                        <td id="participation_attainment" class="baselineindicator"></td>
+                        <td id="participation_attainment_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Social, Emotional and Developmental Aspects</td>
+                        <td id="social_emotional_developmental" class="baselineindicator"></td>
+                        <td id="social_emotional_developmental_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="6">Health</th>
+                        <td>Healthcare</td>
+                        <td id="healthcare" class="baselineindicator"></td>
+                        <td id="healthcare_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="6" class="baselinedomain" id="health_score_summary"></td>
+                        <td rowspan="6" class="updateddomain" id="health_adj">-</td>
+                        <td rowspan="6" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Lifestyle and Behavior</td>
+                        <td id="lifestyle_behavior" class="baselineindicator"></td>
+                        <td id="lifestyle_behavior_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>health Characteristics</td>
+                        <td id="health_characteristics" class="baselineindicator"></td>
+                        <td id="health_characteristics_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Life Expectancy and Mortality</td>
+                        <td id="life_exp" class="baselineindicator"></td>
+                        <td id="life_exp_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Personal Well-Being</td>
+                        <td id="personal_wellbeing" class="baselineindicator"></td>
+                        <td id="personal_wellbeing_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Social Services</td>
+                        <td id="social_services" class="baselineindicator"></td>
+                        <td id="social_services_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains">
+                        <th rowspan="2">Environmental Resource Management</th>
+                        <td>Condition</td>
+                        <td id="condition" class="baselineindicator"></td>
+                        <td id="condition_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="2" class="baselinedomain" id="resource-mgmt_score_summary"></td>
+                        <td rowspan="2" class="updateddomain" id="resource-mgmt_adj">-</td>
+                        <td rowspan="2" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Extent of Ecosystem Types</td>
+                        <td id="ecosystem_types" class="baselineindicator"></td>
+                        <td id="ecosystem_types_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="2">Hazard Vulnerability</th>
+                        <td>Exposure</td>
+                        <td id="exposure" class="baselineindicator"></td>
+                        <td id="exposure_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="2" class="baselinedomain" id="hazard_score_summary"></td>
+                        <td rowspan="2" class="updateddomain" id="hazard_adj">-</td>
+                        <td rowspan="2" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Loss</td>
+                        <td id="loss" class="baselineindicator"></td>
+                        <td id="loss_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="5">Local Economy</th>
+                        <td>Basic Necessities</td>
+                        <td id="basic_necessities" class="baselineindicator"></td>
+                        <td id="basic_necessities_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="5" class="baselinedomain" id="economy_score_summary"></td>
+                        <td rowspan="5" class="updateddomain" id="economy_adj">-</td>
+                        <td rowspan="5" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Economic Diversity</td>
+                        <td id="economic_diversity" class="baselineindicator"></td>
+                        <td id="economic_diversity_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Socio-Economics</td>
+                        <td id="socio_economics" class="baselineindicator"></td>
+                        <td id="socio_economics_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Wealth</td>
+                        <td id="wealth" class="baselineindicator"></td>
+                        <td id="wealth_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Work</td>
+                        <td id="work" class="baselineindicator"></td>
+                        <td id="work_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="3">Resilience Planning</th>
+                        <td>Community Preparedness</td>
+                        <td id="community_preparedness" class="baselineindicator"></td>
+                        <td id="community_preparedness_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="3" class="baselinedomain" id="resilience_score_summary"></td>
+                        <td rowspan="3" class="updateddomain" id="resilience_adj">-</td>
+                        <td rowspan="3" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Natural Resource Conservation</td>
+                        <td id="resource_conservation" class="baselineindicator"></td>
+                        <td id="resource_conservation_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Personal Preparedness</td>
+                        <td id="personal_preparedness" class="baselineindicator"></td>
+                        <td id="personal_preparedness_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="4">Local Culture</th>
+                        <td>Activity Participation</td>
+                        <td id="activity_participation" class="baselineindicator"></td>
+                        <td id="activity_participation_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="4" class="baselinedomain" id="culture_score_summary"></td>
+                        <td rowspan="4" class="updateddomain" id="culture_adj">-</td>
+                        <td rowspan="4" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Biophilia</td>
+                        <td id="biophilia" class="baselineindicator"></td>
+                        <td id="biophilia_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Time Spent</td>
+                        <td id="time_spent" class="baselineindicator"></td>
+                        <td id="time_spent_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Working Age Adults</td>
+                        <td id="working_adults" class="baselineindicator"></td>
+                        <td id="working_adults_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+        
+                    </tr>
+                    <tr class="report-domains"> 
+                        <th rowspan="3">Safety and Security</th>
+                        <td>Actual Safety</td>
+                        <td id="actual_safety" class="baselineindicator"></td>
+                        <td id="actual_safety_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                        <td rowspan="3" class="baselinedomain" id="safety_score_summary"></td>
+                        <td rowspan="3" class="updateddomain" id="safety_adj">-</td>
+                        <td rowspan="3" class="changed">-</td>
+                    </tr>
+                    <tr>
+                        <td>Perceived Safety</td>
+                        <td id="perceived_safety" class="baselineindicator"></td>
+                        <td id="perceived_safety_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td>Risk</td>
+                        <td id="risk" class="baselineindicator"></td>
+                        <td id="risk_adj" class="updatedindicator">-</td>
+                        <td class="separator">-</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="originaldiscscore">Original DISC Score: <span id="report-wellbeing-score"></span></td>
+                        <td colspan="3" class="newdiscscore">New DISC Score: <span id="report-wellbeing-score-new"></span> </td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+    </div>
+
+    <div id="references-tab" class="disc-body">
+        <h3>References</h3>
+        <p class="tab-desc">Here you will find technical information about the data, calculation methods, visualizations and modeled results generated in the DISC application. Links to published research are also offered so you can learn more about the science behind the indicators used to produce DISC.
+        <br><br>
+        <span style="font-weight: bold; font-style: italic; font-size: 14px;">Disclaimer: Information and results presented in the DISC application are not intended for regulatory purposes nor should any decisions be based on these results alone.</span>
+        </p>
+
+        <h4 style="font-weight: bold; font-style: italic;">Limitations: Data, Scenario Models and Visualizations</h4>
+        <p>Statistical error is inherent. Data management strategies; data processing activities; standardization and imputation methods; and model testing were some of the approaches used to minimize data error and validate the appropriateness of the data used in the DISC application. Model equations do not account for additional error introduced by user supplied data.
+        <br><br>
+        The relationship-function equations used in the <span style="font-weight: bold;">Scenario Builder</span> feature were derived from regression models. These results are meant to help visualize results generated from user inputs. Data simulations and graphics produced are intended to help stimulate conversations related to community sustainability to help inform decision planning.
+        <br><br>
+        Application graphics and interactive features are intended to enhance the user experience. Every effort has been taken to maximize precision in the graphical presentation of measures to support meaningful interpretation of data patterns.</p>
+
+        <h4 style="font-style: italic;">Under the Hood: A Brief Technical Overview</h4>
+        <p>The DISC application uses existing and introduced data to calculate a suite of customized community characteristics indicators and a summary index. The DISC features and utilities have been developed as a series of web-pages housed in a single website-like downloadable file. Each page was developed using HTML and JavaScript. Features were created using the Data Driven Documents JavaScript library <a href="https://d3js.org">(https://d3js.org)</a>. The DISC application was designed to be standalone HTML-driven package to be run on local Windows or Mac platforms. The compiled HTML product was generated using the Electron JavaScript library <a href="https://electronjs.org">(https://electronjs.org)</a>.</p>
+
+        <h4>About the Data</h4>
+        <p>Baseline data used to provide default information for calculations are drawn from results published in “A U.S. Human Well-being Index (HWBI) for multiple scales: linking service provisioning to human well-being endpoints (2000-2010)” (Smith et al. 2014) and “Development of a Climate Resilience Screening Index (CRSI): An Assessment of Resilience to Acute Meteorological Events and Selected Natural Hazards” <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">(Summers, et al. 2017)</a>. Indicator research was conducted under the <a href="https://www.epa.gov/aboutepa/about-office-research-and-development-ord">U.S. Environmental Protection Agency’s</a> (EPA) indicator development research associated with EPA’s <a href="https://www.epa.gov/aboutepa/about-office-research-and-development-ord">Office of Research and Development Sustainable and Healthy Communities Research Program</a>.
+        <br><br>
+        Application users can introduce their own data. to populate all or part of the baseline information used for building visualizations. If only a subset of the parameters is supplied, the missing local metric data are back-filled with baseline county values. The complete set of metrics, both default and introduced, formed the basis for calculating the suite of indicators and final summary index using methods adapted from US EPA 2012 and <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">(Summers, et al. 2017)</a>.</p>
+
+        <h4>Calculating Indicators and the DISC Score</h4>
+        <p>It is assumed that introduced data meet the data owner’s quality expectations and are relevant for calculating baseline indicators for the models. Because baseline data represent calculated county-level unitless “scores”, supplied metric values will be standardized to 0-1 unitless scale as part of the application functionality. Metrics reported in units other than percentages or proportions, such as dollars, counts, normalized counts, and time, will be converted to the appropriate unit basis using the minimum-maximum standardization. The equation is: value = (𝑥 – 𝑥𝑚𝑖𝑛/𝑥𝑚𝑎𝑥−𝑥𝑚𝑖𝑛).</p>
+
+        There are four steps for calculating the DISC score:
+        <ol>
+            <li>Indicator scores will be calculated as a population weighted average of related standardized metric values;</li>
+            <li>Community Characteristic or <span style="font-style: italic;">domain</span> scores are obtained by averaging indicator scores;</li>
+            <li>When used, priority weighting are used to create relationship adjustment factors; and</li>
+            <li>The DISC score is calculated as the sum of weighted sub-indices or domain scores.</li>
+        </ol>
+        <p>The same metric standardization method is used for creating base-line service indicators, however, the standardized service indicators or categories are derived from population-weighted average metrics associated with each service. For more details on data selection methods and indicator development procedures, please refer to <a href="#ref-links">US EPA 2012</a> and <a href="#ref-links">US EPA 2014</a>.</p>
+        
+
+        <h4>Scenario Builder</h4>
+        <p>A recent publication, “A model for change: An approach for forecasting well-being from service-based decision” (Summers, et al. 2016), describes an approach to examine the influences of relationships between introduced direct and indirect changes in selected economic, environmental and social services and eight domains of human well-being with an additional indicator called resilience. As combined, the indicators represent quality of life. The DISC application adapted this approach using models developed from the outcome of a step-wise process and 15 years of data (2000–2015). Multivariate relationship functions are used to demonstrate likely impacts of decisions on community quality of life, as well as the possible intended and unintended secondary and tertiary effects relative to a decision scenario. The DISC application translates this approach for use in communities by allowing application users to introduce data and knowledge that more closely reflect local conditions and local decision contexts.
+        <br><br>
+        These services-to-HWBI relationship function equations serve as the engine for building scenarios. The functional relationship equations for each of the community character domains (i.e., DISCd = ƒ(Se, Ss, Sec)) were determined based on results from the step-wise regression process to identify main effects and primary pair-wise interactions among select economic, environmental and social service indicators quantified as scores on a 0-100 scale. Some key points on this stepwise method:
+        <ul>
+            <li>The method used regression models to identify predictive variables based on adjusted R2 and sequenced F-tests. The initial model begins with no variables selected and candidate model variables are evaluated on a pairwise basis including those parameters already selected.</li>
+            <li>The f-statistic significance level was the primary determinate for inclusion or exclusion in the model. After each pass in the stepwise process, the model was refitted with the held variables.</li>
+            <li>Entry and exit criteria used for keeping or eliminating effects were based on f-value significance levels of 0.15 and 0.10, respectively.</li>
+            <li>Main effect and two-way interaction terms selected during the step-wise process that exhibited partial R2 ≥ 0.02 were reviewed for inclusion in the final model.</li>
+            <li>Using results from the review of the stepwise selections, a final, multivariate model was created for each domain by incorporating a constructed (fixed) main effect plus interaction terms identified as significantly improving the explanatory capability of the model.</li>
+        </ul></p>
+        <p>For more information regarding the equation development methods, please see <a href="#ref-links">Summers et al. 2016</a>.</p>
+
+        <h4>Definitions</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">General description of terms that are unique or uniquely defined in the context of this research</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Community Characteristics - also called <span style="font-style: italic;">Domains</span></td>
+                    <td>Distinct aggregations of characteristics commonly used to describe the state of quality of life conditions. Example domains are living standards, health, and nature connection.</td>
+                </tr>
+                <tr>
+                    <td>Downloadable</td>
+                    <td>Available for transfer from the Internet or a network typically associated with files, applications and/or tools that can be run or opened from a local computer.</td>
+                </tr>
+                <tr>
+                    <td>Economic Services</td>
+                    <td>The services influencing performance, structural, and behavioral aspects of the economy that affect quality of life.</td>
+                </tr>
+                <tr>
+                    <td>Ecosystem Services</td>
+                    <td>The goods and services provided by ecosystem functions and processes that benefit humans or have the potential to do so in the future.</td>
+                </tr>
+                <tr>
+                    <td>DISC</td>
+                    <td>A multidimensional description of the state of people's lives, which encompasses personal relationships, strong and inclusive communities, meeting basic human needs, good health, financial and personal security, access to education, adequate free time, connectedness to the natural environment, rewarding employment, and the ability to achieve personal goals. Collectively, these domains represent the state of the human condition are generally good indicators for monitoring the impacts of local planning decisions.</td>
+                </tr>
+                <tr>
+                    <td>Index (Indices)</td>
+                    <td>An aggregate of indicator values. For this project, an index, also known as a composite index, represents a multidimensional value that expresses a singular condition or status point.</td>
+                </tr>
+                <tr>
+                    <td>Indicator</td>
+                    <td>An interpretable summary value that reflects the state of, or change in, a system or point of interest that is being evaluated. In the context of this project, indicators are derived from measures or metrics that correspond to components of elements of quality of life. Example indicators are perceived safety, lifestyle and behavior, wealth.</td>
+                </tr>
+                <tr>
+                    <td>Metric</td>
+                    <td>A [singular] measurable, observable, or interpretable value. Example metrics are mortality rate, median income, and national park visits.</td>
+                </tr>
+                <tr>
+                    <td>Priority Weighting</td>
+                    <td>A feature of the user to introduce.</td>
+                </tr>
+                <tr>
+                    <td>Secondary Data</td>
+                    <td>Data that will be used in a research project that are not newly generated through project activities. Rather, data are “found” from other sources. This type data may also be called existing data, found data, or non-direct measurements. For HWBI research, secondary data refers to metric values and indicator values not derived from metrics.</td>
+                </tr>
+                <tr>
+                    <td>Services</td>
+                    <td>A wide range of final goods and services that influence quality of life. There are three broad categories of services referred to in the research. These are:<br>
+                    <ul>
+                        <li>Economic - the services influencing the performance, structural, behavioral aspects of the economy</li>
+                        <li>Environmental - the goods and services provided by ecosystem functions and processes that benefit people or have the potential to do so in the future</li>
+                        <li>Social - the wide range of services that are provided by people for the benefit of people</li>
+                    </ul></td>
+                </tr>
+                <tr>
+                    <td>Social Services</td>
+                    <td>The wide range of services that are provided by people for the benefit of people.</td>
+                </tr>
+                <tr>
+                    <td>Sustainability</td>
+                    <td>In the context of the DISC application, sustainability is defined as the ability “to create and maintain conditions under which humans and nature can exist in productive harmony, [and] that permit fulfilling the social, economic, and other requirements of present and future generations.” (National Environmental Protection Act 1969).</td>
+                </tr>
+                <tr>
+                    <td>Tool</td>
+                    <td>A tangible aid used as a means of performing an operation or achieving an end (e.g. computer software application).</td>
+                </tr>
+                <tr>
+                    <td>Visualization</td>
+                    <td>The process of representing abstract data as images to assist with explaining the meaning of the data.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+
+        <div id="ref-links">
+            <h4>References</h4>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=242106">Smith, L. M., H. M. Smith, J. L. Case, and L. Harwell. 2012. Indicators and Methods for Constructing a U.S. Human Well-being Index (HWBI) for Ecosystem Services Research. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-12/023.</a>
+            </p>
+            <p>
+                <a href="https://nepis.epa.gov/Exe/ZyNET.exe/P100KFTA.txt?ZyActionD=ZyDocument&Client=EPA&Index=1995%20Thru%201999%7C1976%20Thru%201980%7C2006%20Thru%202010%7C1991%20Thru%201994%7CHardcopy%20Publications%7C2000%20Thru%202005%7C1986%20Thru%201990%7C2011%20Thru%202015%7C1981%20Thru%201985%7CPrior%20to%201976&Docs=&Query=600R14223%20&Time=&EndTime=&SearchMethod=2&TocRestrict=n&Toc=&TocEntry=&QField=&QFieldYear=&QFieldMonth=&QFieldDay=&UseQField=&IntQFieldOp=0&ExtQFieldOp=0&XmlQuery=&File=D%3A%5CZYFILES%5CINDEX%20DATA%5C11THRU15%5CTXT%5C00000011%5CP100KFTA.txt&User=ANONYMOUS&Password=anonymous&SortMethod=-%7Ch&MaximumDocuments=15&FuzzyDegree=0&ImageQuality=r85g16/r85g16/x150y150g16/i500&Display=hpfr&DefSeekPage=x&SearchBack=ZyActionL&Back=ZyActionS&BackDesc=Results%20page&MaximumPages=1&ZyEntry=1&SeekPage=x">Smith, L. M., Harwell, L. C., Summers, J. K., Smith, H. M., Wade, C. M., Straub, K. R. and J.L. Case. 2014. A U.S. Human Well-being Index (HWBI) for multiple scales: linking service provisioning to human well-being endpoints (2000-2010). EPA/600/R-14/223. pp. 200.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=281738">Smith, L., C. Wade, K. Straub, L. Harwell, J. Case, M. Harwell, and Kevin Summers. 2014. Indicators and Methods for Evaluating Economic, Ecosystem and Social Services Provisioning: A Human Well-being Index (HWBI) Research Product. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-14/184.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=318653">Summers, Kevin, L. Harwell, and L. Smith. 2016. A Model For Change: An Approach for Forecasting Well-Being From Service-Based Decisions. ECOLOGICAL INDICATORS. Elsevier Science Ltd, New York, NY, 69:295-309.</a>
+            </p>
+            <p>
+                <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NHEERL&dirEntryId=337914">Summers, Kevin, L. Harwell, K. Buck, L. Smith, D. Vivian, J. Bousquin, J. Harvey, S. Hafner, and M. McLaughlin. 2017. Development of a Climate Resilience Screening Index (CRSI): An Assessment of Resilience to Acute Meteorological Events and Selected Natural Hazards. U.S. Environmental Protection Agency, Washington, DC, EPA/600/R-17/238.</a>
+            </p>
+            <p>
+                <a href="https://www.flickr.com/photos/pb/10529132416">gray skies over corvallis</a> by <a href="https://www.flickr.com/photos/pb/">Paul Bausch</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA</a>.
+            </p>
+            <p>
+                List of cities and their county/county-equivalent is licensed from <a href="https://simplemaps.com/data/us-cities">https://simplemaps.com/data/us-cities</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+            </p>
+        </div>
+    </div>

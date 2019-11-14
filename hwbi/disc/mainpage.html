@@ -4,7 +4,7 @@
         <div id="toast"></div>
         <!-- HOMEPAGE -->
         <div id="homepage">
-            <div class="split left-side">
+            <div class="split left-side" role="img" aria-label="gray skies over corvallis by Paul Bausch">
         
                 <img class="epalogo-home" src="/static_qed/hwbi/disc/img/epa2.gif" alt="">
                 <h1 class=""></h1>
@@ -49,19 +49,23 @@
                         </form>
                     </div>
 
-                    <a class="info-popup-button" href="#popup1">What is DISC?</a>
+                    <a class="info-popup-button" href="#popup1" style="display: none;">What is DISC?</a>
+                    <a class="tutButton" href="#" onclick="introJs().setOption('showBullets', false).setOption('showStepNumbers', false).setOption('doneLabel', 'Okay').setOption('disableInteraction', false).setOption('tooltipPosition', 'left').start();">View the walkthrough</a>
 
                     <div id="popup1" class="overlay">
                         <div class="popup">
                             <h2 class="popup-title">Decision Integration for Strong Communities (DISC)</h2>
-                            <a href="#" class="close">&times;</a>
+                            <!-- <a href="#" class="close">&times;</a> -->
                             <div class="popupcontent">
-                                The intersection where the natural, built and social environments meet is where a "place" becomes a "home." As a community changes, challenges arise that may threaten the quality of life characteristics you value most. From creating jobs to building greener infrastructure, many considerations are needed to identify local investment options that may prove most beneficial to your community over time. Assessing the status of those characteristics and the local amenities that can influence them is often the first step toward finding solutions to resolve community issues. Indicators and indices can be used to assess various community attributes to help inform the local decision-making process. Indicators 
+                                The intersection where the natural, built and social environments meet is where a "place" becomes a "home." As a community changes, challenges arise that may threaten the quality of life characteristics you value most. From creating jobs to building greener infrastructure, many considerations are needed to identify local investment options that may prove most beneficial to your community over time. Assessing the status of those characteristics and the local amenities that can influence them is often the first step toward finding solutions to resolve community issues. Indicators and indices can be used to assess various community attributes to help inform the local decision-making process.
                                 <br>
                                 <br>
                                 The Decision Integration for Strong Communities (DISC) application integrates raw measures (e.g., median income, disease prevalence) to help you interpret patterns observed in the data. Resulting indicators are presented to characterize qualities that represent or support vitality, health, resilience, and well-being in your community. DISC features allow you to incorporate local knowledge or data to reflect local conditions better. You have an option to build decision-case scenarios to help inform decision making discussions. Finally, DISC offers resource information that may help you on your journey toward creating a sustainable and robust community.
                                 <br><br>
-                                <a class="tutButton" href="#" onclick="introJs().setOption('showBullets', false).setOption('showStepNumbers', false).setOption('doneLabel', 'Okay').setOption('disableInteraction', false).setOption('tooltipPosition', 'left').start();">View the walkthrough</a>
+                                
+                                <a href="#" class="startButton" onClick="saveOption();">Get Started</a><br>
+                                <input type="checkbox" id="checkbox-modal-hide">
+                                <label for="checkbox">Don't show this message again</label>
                                 
                             </div>
                         </div>
@@ -136,6 +140,9 @@
                     </li>
                     <li class="resources">
                         <a href="#resources-tab" id="resources-tab-link">Resources</a>
+                    </li>
+                    <li class="references">
+                        <a href="#references-tab" id="references-tab-link">References</a>
                     </li>
                     <hr class="sidenav-hr">
                     <button id="reset-all" onclick="resetAll();">Reset All</button>
