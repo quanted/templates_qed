@@ -70,11 +70,11 @@
                             {#            Cultural Block         #}
                             <div id="cultural-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="cultural_data-title" class="domain-data-title">Fulfillment through Culture:</div>
-                                <div id="fulfillment-through-culture_score" class="domain-score">0.0</div>
-                                <div id="fulfillment-through-culture_location" class="domain-location">Nation: <span id="fulfillment-through-culture_national_score"></span>, State: <span id="fulfillment-through-culture_state_score"></span></div>
-                                <div id="fulfillment-through-culture_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar cultural-bar" id="fulfillment-through-culture-score-bar"></div>
+                                <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
+                                <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
+                                <div id="cultural-fulfillment_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
+                                <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
@@ -85,12 +85,12 @@
                                 </div>
                                 <div id="cultural_details" class="domain-description">
                                     <p>
-                                        The Fulfillment through Culture domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities.
+                                        The Cultural Fulfillment domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities.
                                         <a href="#" onclick="ipcRenderer.send('open-pdf', 'Culture');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/fulfillment-through-culture.jpg"
-                                                alt="Fulfillment through Culture">
+                                        <img src="/static_qed/hwbi/disc/img/cultural-fulfillment.jpg"
+                                                alt="Cultural Fulfillment">
                                         <figcaption>Courtesy of iStockphoto</figcaption>
                                     </figure> -->
                                     
@@ -187,10 +187,10 @@
                             {#            Nature Block        #}
                             <div id="nature-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="nature_data-title" class="domain-data-title">Nature Connection:</div>
-                                <div id="nature-connection_score" class="domain-score">0.0</div>
-                                <div id="nature-connection_location" class="domain-location">Nation: <span id="nature-connection_national_score"></span>, State: <span id="nature-connection_state_score"></span></div>
-                                <div id="nature-connection_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
+                                <div id="connection-to-nature_score" class="domain-score">0.0</div>
+                                <div id="connection-to-nature_location" class="domain-location">Nation: <span id="connection-to-nature_national_score"></span>, State: <span id="connection-to-nature_state_score"></span></div>
+                                <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
                                     <div class="score-bar nature-bar" id="nature-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
@@ -202,12 +202,12 @@
                                 </div>
                                 <div id="nature_details" class="domain-description">
                                     <p>
-                                        The Nature Connection domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
+                                        The Connection to Nature domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
                                         <a href="#" onclick="ipcRenderer.send('open-pdf', 'Connection');">More...</a>
                                     </p>
                                     <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/nature-connection.jpg"
-                                                alt="Nature Connection">
+                                        <img src="/static_qed/hwbi/disc/img/connection-to-nature.jpg"
+                                                alt="Connection to Nature">
                                         <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
                                     </figure> -->
                                     
@@ -1723,7 +1723,7 @@
 
                 <button class="accordion-metrics">Tree Cover</button>
                 <div class="metric-accordion-panel">
-                    <div>While not all forests have the same density dependent upon geographical location, tree cover is important to the health of the environment and communities. Tree cover can be affected by deforestation, disease, infestation, and/or natural disasters. Conservation of trees helps to maintain wildlife habitats and increases the community's nature connection.</div>
+                    <div>While not all forests have the same density dependent upon geographical location, tree cover is important to the health of the environment and communities. Tree cover can be affected by deforestation, disease, infestation, and/or natural disasters. Conservation of trees helps to maintain wildlife habitats and increases the community's connection to nature.</div>
                     <ul>
                         <h4>General Information</h4>
                         <hr>
@@ -2360,7 +2360,7 @@
 
                 <button class="accordion-metrics">Parks</button> 
                 <div class="metric-accordion-panel">
-                    <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and nature connection.</div>
+                    <div>Parks of all shapes and sizes can provide outdoor recreation for a community's citizens, improving their health and connection to nature.</div>
                     <ul>
                         <h4>General Information</h4>
                         <hr>
@@ -2872,7 +2872,7 @@
             <tbody>
                 <tr>
                     <td>Community Characteristics - also called <span style="font-style: italic;">Domains</span></td>
-                    <td>Distinct aggregations of characteristics commonly used to describe the state of quality of life conditions. Example domains are living standards, health, and nature connection.</td>
+                    <td>Distinct aggregations of characteristics commonly used to describe the state of quality of life conditions. Example domains are living standards, health, and connection to nature.</td>
                 </tr>
                 <tr>
                     <td>Downloadable</td>
