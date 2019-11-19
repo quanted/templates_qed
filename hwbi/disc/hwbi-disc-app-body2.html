@@ -67,35 +67,6 @@
                                     
                                 </div>
                             </div>
-                            {#            Cultural Block         #}
-                            <div id="cultural-block" class="domain-score-block">
-                                <button class="accordion domain-expand"></button>
-                                <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
-                                <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
-                                <div id="cultural-fulfillment_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
-                                <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
-                                </div>
-                                <div class="slider-block">
-                                    <span class="left-slider-legend">Less</span>
-                                    <div class="slider-container">
-                                        <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
-                                    </div>
-                                    <span class="right-slider-legend">More</span>
-                                </div>
-                                <div id="cultural_details" class="domain-description">
-                                    <p>
-                                        The Cultural Fulfillment domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities.
-                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Culture');">More...</a>
-                                    </p>
-                                    <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/cultural-fulfillment.jpg"
-                                                alt="Cultural Fulfillment">
-                                        <figcaption>Courtesy of iStockphoto</figcaption>
-                                    </figure> -->
-                                    
-                                </div>
-                            </div>
                             {#            Health Block           #}
                             <div id="health-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
@@ -122,35 +93,6 @@
                                         <img src="/static_qed/hwbi/disc/img/health.jpg"
                                                 alt="Health">
                                         <figcaption>Courtesy of iStockphoto</figcaption>
-                                    </figure> -->
-                                    
-                                </div>
-                            </div>
-                            {#            Leisure Block           #}
-                            <div id="leisure-block" class="domain-score-block">
-                                <button class="accordion domain-expand"></button>
-                                <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
-                                <div id="leisure-time_score" class="domain-score">0.0</div>
-                                <div id="leisure-time_location" class="domain-location">Nation: <span id="leisure-time_national_score"></span>, State: <span id="leisure-time_state_score"></span></div>
-                                <div id="leisure-time_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar leisure-bar" id="leisure-time-score-bar"></div>
-                                </div>
-                                <div class="slider-block">
-                                    <span class="left-slider-legend">Less</span>
-                                    <div class="slider-container">
-                                        <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
-                                    </div>
-                                    <span class="right-slider-legend">More</span>
-                                </div>
-                                <div id="leisure_details" class="domain-description">
-                                    <p>
-                                        The Leisure Time domain describes how our time is spent including: employment, care for seniors and activities that people partake in for personal enjoyment. A higher score may represent a positive or a negative characteristic in context of other domain indicators.
-                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Leisure');">More...</a>
-                                    </p>
-                                    <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/leisure-time.jpg"
-                                                alt="Leisure Time">
-                                        <figcaption>Courtesy of U.S. EPA</figcaption>
                                     </figure> -->
                                     
                                 </div>
@@ -184,31 +126,31 @@
                                     
                                 </div>
                             </div>
-                            {#            Nature Block        #}
-                            <div id="nature-block" class="domain-score-block">
+                            {#            Safety Block           #}
+                            <div id="safety-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
-                                <div id="connection-to-nature_score" class="domain-score">0.0</div>
-                                <div id="connection-to-nature_location" class="domain-location">Nation: <span id="connection-to-nature_national_score"></span>, State: <span id="connection-to-nature_state_score"></span></div>
-                                <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar nature-bar" id="nature-score-bar"></div>
+                                <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
+                                <div id="safety-and-security_score" class="domain-score">0.0</div>
+                                <div id="safety-and-security_location" class="domain-location">Nation: <span id="safety-and-security_national_score"></span>, State: <span id="safety-and-security_state_score"></span></div>
+                                <div id="safety-and-security_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar safety-bar" id="safety-and-security_score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
                                     <div class="slider-container">
-                                        <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                        <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
                                     </div>
                                     <span class="right-slider-legend">More</span>
                                 </div>
-                                <div id="nature_details" class="domain-description">
+                                <div id="safety_details" class="domain-description">
                                     <p>
-                                        The Connection to Nature domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
-                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Connection');">More...</a>
+                                        The Safety and Security domain includes information about perceived safety, actual safety and potential for danger.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Safety');">More...</a>
                                     </p>
-                                    <!-- <figure class="domain_image_left">
-                                        <img src="/static_qed/hwbi/disc/img/connection-to-nature.jpg"
-                                                alt="Connection to Nature">
-                                        <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
+                                    <!-- <figure class="domain_image_right">
+                                        <img src="/static_qed/hwbi/disc/img/safety-and-security.jpg"
+                                                alt="Safety">
+                                        <figcaption>Courtesy of iStockphoto.com</figcaption>
                                     </figure> -->
                                     
                                 </div>
@@ -242,31 +184,31 @@
                                     
                                 </div>
                             </div>
-                            {#            Safety Block           #}
-                            <div id="safety-block" class="domain-score-block">
+                            {#            Cultural Block         #}
+                            <div id="cultural-block" class="domain-score-block">
                                 <button class="accordion domain-expand"></button>
-                                <div id="safety_data-title" class="domain-data-title">Safety & Security:</div>
-                                <div id="safety-and-security_score" class="domain-score">0.0</div>
-                                <div id="safety-and-security_location" class="domain-location">Nation: <span id="safety-and-security_national_score"></span>, State: <span id="safety-and-security_state_score"></span></div>
-                                <div id="safety-and-security_score_bar" class="domain-score-bar clearfix" data-percent="0%">
-                                    <div class="score-bar safety-bar" id="safety-and-security_score-bar"></div>
+                                <div id="cultural_data-title" class="domain-data-title">Cultural Fulfillment:</div>
+                                <div id="cultural-fulfillment_score" class="domain-score">0.0</div>
+                                <div id="cultural-fulfillment_location" class="domain-location">Nation: <span id="cultural-fulfillment_national_score"></span>, State: <span id="cultural-fulfillment_state_score"></span></div>
+                                <div id="cultural-fulfillment_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar cultural-bar" id="cultural-fulfillment-score-bar"></div>
                                 </div>
                                 <div class="slider-block">
                                     <span class="left-slider-legend">Less</span>
                                     <div class="slider-container">
-                                        <div id="safety-slider-bar" class="rank-slider safety-slider"></div>
+                                        <div id="cultural-slider-bar" class="rank-slider cultural-slider"></div>
                                     </div>
                                     <span class="right-slider-legend">More</span>
                                 </div>
-                                <div id="safety_details" class="domain-description">
+                                <div id="cultural_details" class="domain-description">
                                     <p>
-                                        The Safety and Security domain includes information about perceived safety, actual safety and potential for danger.
-                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Safety');">More...</a>
+                                        The Cultural Fulfillment domain describes people's cultural involvement. Measures include how often people participate in the arts and spiritual activities.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Culture');">More...</a>
                                     </p>
-                                    <!-- <figure class="domain_image_right">
-                                        <img src="/static_qed/hwbi/disc/img/safety-and-security.jpg"
-                                                alt="Safety">
-                                        <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/cultural-fulfillment.jpg"
+                                                alt="Cultural Fulfillment">
+                                        <figcaption>Courtesy of iStockphoto</figcaption>
                                     </figure> -->
                                     
                                 </div>
@@ -296,6 +238,65 @@
                                         <img src="/static_qed/hwbi/disc/img/social-cohesion.jpg"
                                              alt="Social Cohesion">
                                         <figcaption>Courtesy of iStockphoto.com</figcaption>
+                                    </figure> -->
+                                    
+                                </div>
+                            </div>
+                            {#            Leisure Block           #}
+                            <div id="leisure-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="leisure_data-title" class="domain-data-title">Leisure Time:</div>
+                                <div id="leisure-time_score" class="domain-score">0.0</div>
+                                <div id="leisure-time_location" class="domain-location">Nation: <span id="leisure-time_national_score"></span>, State: <span id="leisure-time_state_score"></span></div>
+                                <div id="leisure-time_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar leisure-bar" id="leisure-time-score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Less</span>
+                                    <div class="slider-container">
+                                        <div id="leisure-slider-bar" class="rank-slider leisure-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">More</span>
+                                </div>
+                                <div id="leisure_details" class="domain-description">
+                                    <p>
+                                        The Leisure Time domain describes how our time is spent including: employment, care for seniors and activities that people partake in for personal enjoyment. A higher score may represent a positive or a negative characteristic in context of other domain indicators.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Leisure');">More...</a>
+                                    </p>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/leisure-time.jpg"
+                                                alt="Leisure Time">
+                                        <figcaption>Courtesy of U.S. EPA</figcaption>
+                                    </figure> -->
+                                    
+                                </div>
+                            </div>
+                            
+                            {#            Nature Block        #}
+                            <div id="nature-block" class="domain-score-block">
+                                <button class="accordion domain-expand"></button>
+                                <div id="nature_data-title" class="domain-data-title">Connection to Nature:</div>
+                                <div id="connection-to-nature_score" class="domain-score">0.0</div>
+                                <div id="connection-to-nature_location" class="domain-location">Nation: <span id="connection-to-nature_national_score"></span>, State: <span id="connection-to-nature_state_score"></span></div>
+                                <div id="connection-to-nature_score_bar" class="domain-score-bar clearfix" data-percent="0%">
+                                    <div class="score-bar nature-bar" id="nature-score-bar"></div>
+                                </div>
+                                <div class="slider-block">
+                                    <span class="left-slider-legend">Less</span>
+                                    <div class="slider-container">
+                                        <div id="nature-slider-bar" class="rank-slider nature-slider"></div>
+                                    </div>
+                                    <span class="right-slider-legend">More</span>
+                                </div>
+                                <div id="nature_details" class="domain-description">
+                                    <p>
+                                        The Connection to Nature domain describes how people feel about nature. It is measured by people's perception of nature and how it affects them.
+                                        <a href="#" onclick="ipcRenderer.send('open-pdf', 'Connection');">More...</a>
+                                    </p>
+                                    <!-- <figure class="domain_image_left">
+                                        <img src="/static_qed/hwbi/disc/img/connection-to-nature.jpg"
+                                                alt="Connection to Nature">
+                                        <figcaption>Courtesy of Evgeni Dinev; freedigitalphotos.net</figcaption>
                                     </figure> -->
                                     
                                 </div>
@@ -764,32 +765,32 @@
                         <div id="qolexplanation" style="display: none;">The entirety of DISC is based on the US EPA Human Well-Being Index (HWBI) and Climate Resilience Screening Index (CRSI). The HWBI indicators represent a suite of community quality of life characteristics, socio-ecological service measures and models that relate the two sets of values. The CRSI indicators offer measures of potential natural hazard exposures and basic governance measures that indicate potential recovery preparedness. All indicators are calculated based on the best publicly available data. Data selection is science-based and reviewed for national comparability. It is recognized that the best available data may not always be most relevant. To account for this, the DISC indicators may be customized using local data and knowledge so the base-line measures can more closely reflect local conditions.</div> -->
                         <p class="tab-desc">Click on a card labeled with the characteristic that you are interested in changing to display the related indicators and metrics. Use the sliders associated with each indicator to increase or decrease its score to adjust the overall community characteristic value. Changes are indicated with a blue dot. Changing the sliders will change your DISC Score on the Community Snapshot page to no longer reflect EPA data. In cases where metric data are not available for calculations, "N/A" is displayed in place of a baseline measurement. "N/A" values will not be used in calculations.
                     </div>
-                    <div class="card-list">{% regroup hwbi_metrics by 2 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
+                    <div class="card-list">{% regroup hwbi_metrics by 14 as hwbi_domains %}{% regroup hwbi_metrics by 3 as hwbi_indicators %}{% for domain in hwbi_domains %}
                         <div class="card-wrap">
                             <div class="card card{{ forloop.counter }}">
-                                <a href="#{{ domain.grouper|slugify }}-modal">
-                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/{{ domain.grouper|slugify }}.jpg" />
-                                    <div class="card-text-overlay">{{ domain.grouper }}</div>
+                                <a href="#{{ domain.list.0.2|slugify }}-modal">
+                                    <img class="cardimgcover" src="../../../static_qed/hwbi/disc/img/{{ domain.list.0.2|slugify }}.jpg" />
+                                    <div class="card-text-overlay">{{ domain.list.0.2 }}</div>
                                 </a>
-                                <div id="{{ domain.grouper|slugify }}-modal" class="modal-overlay">
+                                <div id="{{ domain.list.0.2|slugify }}-modal" class="modal-overlay">
                                     <div class="modal">
-                                        <h2 class="modal-title">{{ domain.grouper }} <span id="{{ domain.grouper|slugify }}_modal_score" class="domain-modal-score"></span></h2>
+                                        <h2 class="modal-title">{{ domain.list.0.2 }} <span id="{{ domain.list.0.2|slugify }}_modal_score" class="domain-modal-score"></span></h2>
                                         <span class="score-change-warning">The outputs on this page include modeled data and data inputs customized by the user and not provided by EPA.</span>
                                         <p>{{ domain.list.0.11 }}</p>
-                                        <button class="reset-hwbi-custom-btn" data-id="{{ domain.grouper }}">Reset</button>
+                                        <button class="reset-hwbi-custom-btn" data-id="{{ domain.list.0.2 }}">Reset</button>
                                         <h3 class="modal-disc-score" id="testscore">DISC: <span></span></h3>
                                         <a href="#" class="customize-close">&#129120;</a>
                                         <div class="modalcontent">
                                             <div id="customize_domain_details"></div>
                                             <div id="customize_domain_indicators">
-                                                <div id="{{ domain.grouper|slugify }}_indicators" class="row cols-2 domain_indicator">
+                                                <div id="{{ domain.list.0.2|slugify }}_indicators" class="row cols-2 domain_indicator">
                                                     <div class="col size-1of2 description-column">
-                                                        <h4 id="{{ domain.grouper|slugify }}_indicators_title"></h4>
-                                                        <div id="{{ domain.grouper|slugify }}_indicators_description"></div>
+                                                        <h4 id="{{ domain.list.0.2|slugify }}_indicators_title"></h4>
+                                                        <div id="{{ domain.list.0.2|slugify }}_indicators_description"></div>
                                                     </div>
-                                                    <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.2 == domain.grouper %}
+                                                    <div class="col size-1of2 indicator-column">{% for indicator in hwbi_indicators %}{% if indicator.list.0.2 == domain.list.0.2 %}
                                                         <div class="row cols-1 indicator_block" data-title="{{indicator.list.0.10}}">
-                                                            <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}: <span id="{{ domain.grouper|slugify }}_{{indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
+                                                            <button class="accordion-metrics indicator_data-title">{{indicator.grouper}}: <span id="{{ domain.list.0.2|slugify }}_{{indicator.grouper|slugify }}_value" class="indicator_value"></span></button>
                                                             <div class="metric-accordion-panel">{% for metric in hwbi_metrics %}{% if metric.2 == indicator.list.0.2 and metric.3 == indicator.list.0.3 %}
                                                                 <label for="customize-hwbi-metrics-{{ metric.0|slugify }}" class="" title="" data-title="{{ metric.1 }} ({{ metric.13 }}, ">{% if metric.12 != "" %}{{ metric.12 }}: {% elif metric.1 != "" %}{{ metric.1 }}: {% else %}{{ metric.0 }}: {% endif %}
                                                                 <span class=""></span>
@@ -898,9 +899,9 @@
                     <ul class="rankinglist">
 
                         {% for domain in hwbi_domains %}
-                        <li class="{{domain.grouper|slugify}}-rank">
+                        <li class="{{domain.list.0.2|slugify}}-rank">
                             <form action="">
-                                <label>{{domain.grouper}}<input type="number" name="{{ domain.grouper|slugify }}-rank-number" min="1" max="9" value="1" data-did="{{ domain.grouper }}"></label>
+                                <label>{{domain.list.0.2}}<input type="number" name="{{ domain.list.0.2|slugify }}-rank-number" min="1" max="9" value="1" data-did="{{ domain.list.0.2 }}"></label>
                             </form>
                         </li>
                         {% endfor %}
@@ -1005,14 +1006,14 @@
 				<div class="hwbi"><span class="moe"></span></div>
 				<div class="domhead exspace"></div>
                 <div class="ed"><span class="ed_moe"></span></div>
-                <div class="cf"><span class="cf_moe"></span></div>
-				<div class="he"><span class="he_moe"></span></div>
-				<div class="lt"><span class="lt_moe"></span></div>
+                <div class="he"><span class="he_moe"></span></div>
                 <div class="ls"><span class="ls_moe"></span></div>
-                <div class="cn"><span class="cn_moe"></span></div>
+                <div class="ss"><span class="ss_moe"></span></div>
                 <div class="re"><span class="re_moe"></span></div>
-				<div class="ss"><span class="ss_moe"></span></div>
-                <div class="sc"><span class="sc_moe"></span></div>
+                <div class="cf"><span class="cf_moe"></span></div>
+				<div class="sc"><span class="sc_moe"></span></div>
+				<div class="lt"><span class="lt_moe"></span></div>
+                <div class="cn"><span class="cn_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 				
@@ -1022,14 +1023,14 @@
 				<div class="hwbi"><span class="moe"></span></div>
 				<div class="domhead exspace"></div>
                 <div class="ed"><span class="ed_moe"></span></div>
-                <div class="cf"><span class="cf_moe"></span></div>
-				<div class="he"><span class="he_moe"></span></div>
-				<div class="lt"><span class="lt_moe"></span></div>
+                <div class="he"><span class="he_moe"></span></div>
                 <div class="ls"><span class="ls_moe"></span></div>
-                <div class="cn"><span class="cn_moe"></span></div>
+                <div class="ss"><span class="ss_moe"></span></div>
                 <div class="re"><span class="re_moe"></span></div>
-				<div class="ss"><span class="ss_moe"></span></div>
-                <div class="sc"><span class="sc_moe"></span></div>
+                <div class="cf"><span class="cf_moe"></span></div>
+				<div class="sc"><span class="sc_moe"></span></div>
+				<div class="lt"><span class="lt_moe"></span></div>
+                <div class="cn"><span class="cn_moe"></span></div>
 				<div class="_label exspace">(0 to 100 scale)</div>
 			</div>
 		</div>
