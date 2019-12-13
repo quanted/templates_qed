@@ -423,7 +423,8 @@
                 }
                 else {
                     {#var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];#}
-                    var link = "https://waterdata.usgs.gov/nwis/inventory/?site_no=" + hucs[0];
+                    {#var link = "https://waterdata.usgs.gov/nwis/inventory/?site_no=" + hucs[0];#}
+                    var link = "https://water.usgs.gov/lookup/getwatershed?" + hucs[0]
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" + "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
                 var layerGroup = [];
