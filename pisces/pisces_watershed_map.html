@@ -702,17 +702,23 @@
                 if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
 
                 // tolerance
-                var tolerance = [];
-                if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
-                if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
-                if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
-                if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");
+                {#var tolerance = [];#}
+                {#if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");#}
+                {#if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");#}
+                {#if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");#}
+                {#if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");#}
 
                 // use
                 var use = [];
                 if (details["sportfishing"] === "1") use.push(" Sportfishing");
                 if (details["nongame"] === "1") use.push(" Nongame");
                 if (details["subsis_fish"] === "1") use.push(" Subsistence");
+
+                var ubiquity = (details["ubiquity"] == null) ? "NA" : details["ubiquity"].toFixed(3);
+                var extent = (details["extent"] == null) ? "NA" : details["extent"].toFixed(3);
+                var tolerance = (details["tolerance"] == null) ? "NA" : details["tolerance"].toFixed(3);
+                var robustness = (details["robustness"] == null) ? "NA" : details["robustness"].toFixed(3);
+
 
                 // links
                 var google_link = "https://www.google.com/search?tbm=isch&q=" + sName.replace(" ", "+");
@@ -728,10 +734,10 @@
                     '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Column</td><td>' + column.toString() + +'</td></tr>' +
                     '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
                     '<tr><td>PFG Rarity</td><td>' + details["rarity"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                    '<tr><td>Ubiquity</td><td>' + details["ubiquity"].toFixed(3) + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
-                    '<tr><td>Extent</td><td>' + details["extent"].toFixed(3) + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
-                    '<tr><td>Tolerance</td><td>' + details["tolerance"].toFixed(3) + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr>' +
-                    '<tr><td>Robustness</td><td>' + details["robustness"].toFixed(3) + '</td><td></td><td></td></tr></table>' +
+                    '<tr><td>Ubiquity</td><td>' + ubiquity + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>Extent</td><td>' + extent + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                    '<tr><td>Tolerance</td><td>' + tolerance + '</td><td></td><td></td></tr>' +
+                    '<tr><td>Robustness</td><td>' + robustness + '</td><td></td><td></td></tr></table>' +
                     '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
