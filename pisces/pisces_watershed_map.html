@@ -94,6 +94,17 @@
         border-radius: 0 3px 3px 0 !important;
     }
 
+    .fishTable {
+        height: 100%;
+    }
+
+    #fishTable_wrapper {
+        height: 82%;
+    }
+    .dataTables_scroll {
+        display: contents;
+    }
+
     #fishTable thead * {
         font-size: 10px;
     }
@@ -215,7 +226,8 @@
     }
 
     div.dataTables_scrollBody {
-        max-height: 360px !important;
+        display: inline-block;
+        height: 100%;
     }
 
     {#    Loader    #}
@@ -719,10 +731,10 @@
                 if (details["nongame"] === "1") use.push(" Nongame");
                 if (details["subsis_fish"] === "1") use.push(" Subsistence");
 
-                var ubiquity = (details["ubiquity"] == null) ? "NA" : details["ubiquity"].toFixed(3);
-                var extent = (details["extent"] == null) ? "NA" : details["extent"].toFixed(3);
-                var tolerance = (details["tolerance"] == null) ? "NA" : details["tolerance"].toFixed(3);
-                var robustness = (details["robustness"] == null) ? "NA" : details["robustness"].toFixed(3);
+                var ubiquity = (details["ubiquity"] == null) ? "NA" : details["ubiquity"].toFixed(1);
+                var extent = (details["extent"] == null) ? "NA" : details["extent"].toFixed(1);
+                var tolerance = (details["tolerance"] == null) ? "NA" : details["tolerance"].toFixed(1);
+                var robustness = (details["robustness"] == null) ? "NA" : details["robustness"].toFixed(1);
 
 
                 // links
