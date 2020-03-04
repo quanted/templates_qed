@@ -68,10 +68,10 @@
 
     #queryParameters {
         display: none;
-        box-shadow: 0px 1px 3px 0px black;
-        border-radius: 10px;
+        {#box-shadow: 0px 1px 3px 0px black;#}
+        {#border-radius: 10px;#}
         padding: 10px;
-        margin: 10px -100px;
+        {#margin: 10px -100px;#}
     }
 
     #queryResults {
@@ -259,6 +259,42 @@
         font-size: 10px !important;
     }
 
+    #queryParameterTable {
+        border: none;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .queryTable {
+        width: 100%;
+        border-spacing: 0;
+    }
+
+    table.queryDetails {
+        line-height: 8px;
+        width: 99%;
+        border: none;
+        margin: 0 10px;
+        box-shadow: none;
+        font-size: 8px;
+    }
+    .tableHeader td {
+        font-weight: bold;
+        background: lightgray;
+        border-radius: 0;
+    }
+    table.queryTable * {
+        font-size: 11px;
+        border: none;
+        box-shadow: none;
+        line-height: 1.0;
+    }
+    table.queryTable col:nth-child(even) {
+        width: 15%;
+        min-width: 25px;
+    }
+
+
 </style>
 
 
@@ -325,8 +361,9 @@
                 document.getElementById('fishDetailsTable').innerHTML = "";
                 document.getElementById('queryResults').style.display = "none";
                 setTimeout(generateQuery, 200);
-                var parameters = collectParameters();
-                populateParameterTable(parameters);
+                generateParameterTable();
+                {#var parameters = collectParameters();#}
+                {#populateParameterTable(parameters);#}
                 $('#queryParameters').show();
 {#                document.getElementById('queryResults').style.display = "flow-root";#}
                 return false;
@@ -412,10 +449,13 @@
             var maxage = $('#maxAgeValue').val().split(' - ');
             maxage = "max_age=" + maxage[0] + "_" + maxage[1] + "&";
             var meanw = $('#meanWeightValue').val().split(' - ');
+            meanw[1] = (meanw[1] === "500") ? "7150" : meanw[1];
             meanw = "mean_weight=" + meanw[0] + "_" + meanw[1] + "&";
             var meanl = $('#meanLengthValue').val().split(' - ');
+            meanl[1] = (meanl[1] === "40") ? "78" : meanl[1];
             meanl = "mean_length=" + meanl[0] + "_" + meanl[1] + "&";
             var maxl = $('#maxLengthValue').val().split(' - ');
+            maxl[1] = (maxl[1] === "200") ? "610" : maxl[1];
             maxl = "max_length=" + maxl[0] + "_" + maxl[1] + "&";
 
             var ubiquity = $('#ubiquityValue').val().split(' - ');
@@ -510,6 +550,76 @@
                     document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>Query submission unsuccessful.</p>";
                 }
             });
+        }
+
+        function generateParameterTable(){
+
+            var sciName = $('#sciName').val().trim();
+            var comName = $('#comName').val().trim();
+            var group= $('#fishGroup').val().toString().split(",").join(", ");
+            var native = "";
+            $('#native').val().map(function (i) {
+                if (i === "native_y") {
+                    native = "Native";
+                }
+                else if (i === "native_n") {
+                   native = "Introduced";
+                }
+            });
+
+            var fishUse = jQuery.makeArray($($('#fishuse')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+
+            var rarity = $('#rarityValue').val();
+            var maxAge = $('#maxAgeValue').val();
+            var meanWei = $('#meanWeightValue').val();
+            var meanLen = $('#meanLengthValue').val();
+            var maxLen = $('#maxLengthValue').val();
+
+            var tolerance = $('#toleranceValue').val();
+            var ubiquity = $('#ubiquityValue').val();
+            var extent = $('#extentValue').val();
+            var robustness = $('#robustnessValue').val();
+
+
+            var system = jQuery.makeArray($($('#preferedSystem')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var wPosition = jQuery.makeArray($($('#waterPosition')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var substrate = jQuery.makeArray($($('#substrate')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var habitat = jQuery.makeArray($($('#habitatType')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var clarity = jQuery.makeArray($($('#waterType')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var thermal = jQuery.makeArray($($('#thermal')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var topography = jQuery.makeArray($($('#topography')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+
+            $("#queryParameterTable").html(
+                '<table class="queryTable"><col><col><col><col>' +
+                '<tr class="tableHeader"><td>Parameter</td><td>Value(s)</td><td>Parameter</td><td>Value(s)</td></tr>' +
+                '<tr class="tableValue"><td>Common Name</td><td>' + comName + '</td><td>Ubiquity</td><td>' + ubiquity.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Scientific Name</td><td> ' + sciName + ' </td><td>Extent</td><td>' + extent.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Tribe</td><td>' + group + '</td><td>Tolerance</td><td>' + tolerance.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Biogeography</td><td>' + native + '</td><td>Robustness</td><td>' + robustness.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Beneficial Use</td><td>' + fishUse + '</td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>PFG Rarity</td><td>' + rarity + '</td><td>Water Position</td><td>' + wPosition.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Max Age (yr)</td><td>' + maxAge + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Mean Weight (g)</td><td>' + meanWei + '</td><td>Habitat</td><td>' + habitat.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Mean Length (cm)</td><td>' + meanLen + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Max Length (cm)</td><td>' + maxLen + '</td><td>Thermal Regime</td><td>' + thermal.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td></td><td></td><td>Topography</td><td>' + topography.toString() + '</td></tr>' +
+                '</table>');
         }
 
         function collectParameters() {
@@ -982,8 +1092,8 @@
                                                     $("#meanWeightSlider").slider({
                                                         range: true,
                                                         min: 0,
-                                                        max: 7125,
-                                                        values: [0, 7125],
+                                                        max: 500,
+                                                        values: [0, 500],
                                                         slide: function (event, ui) {
                                                             $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1003,8 +1113,8 @@
                                                     $("#meanLengthSlider").slider({
                                                         range: true,
                                                         min: 1,
-                                                        max: 78,
-                                                        values: [1, 78],
+                                                        max: 40,
+                                                        values: [1, 40],
                                                         slide: function (event, ui) {
                                                             $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1023,8 +1133,8 @@
                                                     $("#maxLengthSlider").slider({
                                                         range: true,
                                                         min: 1,
-                                                        max: 610,
-                                                        values: [1, 610],
+                                                        max: 200,
+                                                        values: [1, 200],
                                                         slide: function (event, ui) {
                                                             $("#maxLengthValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1218,7 +1328,7 @@
                                     <input id="resetQuery" name="resetQuery" type="reset" value="Reset Query"
                                            title="Reset all query parameter fields"/>
                                 </div>
-                                <p style="font-size:12px;">*Note: Use cntr + click to make multiple
+                                <p style="font-size:14px;">*Note: Use cntr + click to make multiple
                                     selections/deselections.</p>
                             </div>
                         </li>
@@ -1234,30 +1344,31 @@
                 </tr>
                 <div id="queryParameters">
                     <h4 style="text-align:center;">Submitted Query Parameters</h4>
-                    <table id="parameterTable" class="display" width="100%" title="Parameters used to generate query">
-                        <thead>
-                        <tr>
-                            <th>Common Name</th>
-                            <th>Scientific Name</th>
-                            <th>Tribe</th>
-                            <th>Biogeography</th>
-                            <th>Beneficial Use</th>
-                            <th>Tolerance</th>
-                            <th>Rarity</th>
-                            <th>Max Age (yr)</th>
-                            <th>Mean Weight (g)</th>
-                            <th>Mean Length (cm)</th>
-                            <th>Max Length (cm)</th>
-                            <th>System</th>
-                            <th>Water Position</th>
-                            <th>Substrate</th>
-                            <th>Habitat</th>
-                            <th>Water Clarity</th>
-                            <th>Thermal Regime</th>
-                            <th>Topography</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div id="queryParameterTable"></div>
+{#                    <table id="parameterTable" class="display" width="100%" title="Parameters used to generate query">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th>Common Name</th>#}
+{#                            <th>Scientific Name</th>#}
+{#                            <th>Tribe</th>#}
+{#                            <th>Biogeography</th>#}
+{#                            <th>Beneficial Use</th>#}
+{#                            <th>Tolerance</th>#}
+{#                            <th>Rarity</th>#}
+{#                            <th>Max Age (yr)</th>#}
+{#                            <th>Mean Weight (g)</th>#}
+{#                            <th>Mean Length (cm)</th>#}
+{#                            <th>Max Length (cm)</th>#}
+{#                            <th>System</th>#}
+{#                            <th>Water Position</th>#}
+{#                            <th>Substrate</th>#}
+{#                            <th>Habitat</th>#}
+{#                            <th>Water Clarity</th>#}
+{#                            <th>Thermal Regime</th>#}
+{#                            <th>Topography</th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                    </table>#}
                 </div>
                 <div id="queryResults">
                     <h4 style="text-align:center;">Database Query Results</h4>
