@@ -17,9 +17,19 @@
         Attributes of the HMS {{ SUBMODEL }} input object
         <table>
             <tbody>
-            <tr><th>Parameter</th><th>DataType</th><th>Description</th></tr>
+            <tr><th>Parameter</th><th>DataType</th><th>Description</th><th>Comments</th></tr>
             {% for i in INPUTS %}
-                <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 |safe }}</td></tr>
+                <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 |safe }}</td><td {{ i.4|safe }}>{{ i.3 |safe }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        Output Data Format Options
+        <table>
+            <tbody>
+            <tr><th>Format Specifier</th><th>Name</th><th>Example</th></tr>
+            {% for f in FORMATS %}
+                <tr><td>{{ f.0 }}</td><td>{{ f.1|safe }}</td><td>{{ f.2 |safe }}</td></tr>
             {% endfor %}
             </tbody>
         </table>
