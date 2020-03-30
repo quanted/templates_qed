@@ -18,13 +18,13 @@
     <div class="input_table_row table_header">
         <div class="input_table_key">Input</div>
         <div class="input_table_value">Value</div>
-        <div class="input_table_comment"></div>
+{#        <div class="input_table_comment"></div>#}
     </div>
     {% for field in FORM %}
         <div class="input_table_row">
             <div class="input_table_key">{{ field.label_tag }}</div>
             <div class="input_table_value">{{ field }}</div>
-            <div class="input_table_comment">{{ field.help_text }}</div>
+{#            <div class="input_table_comment">{{ field.help_text }}</div>#}
         </div>
     {% endfor %}
 </div>
