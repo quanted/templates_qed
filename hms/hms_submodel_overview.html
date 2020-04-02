@@ -24,15 +24,17 @@
             </tbody>
         </table>
         <br>
-        Output Data Format Options
-        <table>
-            <tbody>
-            <tr><th>Format Specifier</th><th>Name</th><th>Example</th></tr>
-            {% for f in FORMATS %}
-                <tr><td>{{ f.0 }}</td><td>{{ f.1|safe }}</td><td>{{ f.2 |safe }}</td></tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% if FORMATS %}
+            Output Data Format Options
+            <table>
+                <tbody>
+                <tr><th>Format Specifier</th><th>Name</th><th>Example</th></tr>
+                {% for f in FORMATS %}
+                    <tr><td>{{ f.0 }}</td><td>{{ f.1|safe }}</td><td>{{ f.2 |safe }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
     <h3 class="overview_subtab">Output Parameters</h3>
     <div class="overview_subblock overview_output">
