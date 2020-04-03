@@ -42,7 +42,8 @@ $(document).ready(function() {
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
 
-    metabolizer_post = '{{metabolizer_post}}';
+    // metabolizer_post = '{{metabolizer_post}}';
+    metabolizer_post = Object({{metabolizer_post}});
 
 
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
@@ -76,8 +77,6 @@ $(document).ready(function() {
     else {
         calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
         total_calls = calls_tracker;
-        // sessionStorage.setItem('calls_tracker', calls_tracker);
-        // sessionStorage.setItem('total_calls', total_calls);
         startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
@@ -96,13 +95,11 @@ $(document).ready(function() {
 
     // TODO: Cancel button, which removes pending tasks from celery queues:
     $('#btn-pchem-cancel').on('click', function () {
-        console.log("pchem cancel button selected");
         socket.emit('get_data', JSON.stringify({'cancel': true, 'pchem_request': checkedCalcsAndProps, 'service': service}));
         if (typeof(blockInterface) == "function") {
             // Check if progress bar JS module is being used (e.g., batch mode progress bar)
             blockInterface(false);
         }
-        console.log("Clearing p-chem table..");  // todo: only clear loading wheels, keep data..
         $('#btn-pchem-cleardata').trigger('click');
     });
 
@@ -227,6 +224,14 @@ function connectToSocket() {
         
         data = JSON.parse(data);
 
+
+        if ('error' in data) {
+            blockui_message = '<div id="pchem_wait"><h3 class="popup_header">' + data['error'] + '. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
+            blockInterface(true, blockui_message);
+            return;
+        }
+
+
         if (workflow == 'pchemprop' && run_type == 'single') {
             calls_tracker--;
             batch_data.push(data);
@@ -249,7 +254,6 @@ function connectToSocket() {
             calls_tracker = parseInt(sessionStorage.getItem('calls_tracker'));
             total_calls = parseInt(sessionStorage.getItem('total_calls'));
 
-            // if (workflow == 'gentrans') {
             if (data['workflow'] == 'gentrans' || data['request_post']['workflow'] == 'gentrans') {
                 // workflow global var was getting set to false during
                 // gentrans batch, oddly enough...
@@ -284,7 +288,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -302,12 +305,12 @@ function connectToSocket() {
                         var pchem_data = {
                             'chemical': data.data['chemical'],
                             'ph': kowPH,
-                            // 'nodes': product_data,
                             'pchem_request': checkedCalcsAndProps,
                             'run_type': run_type,
                             'workflow': 'gentrans',
                             'genKey': data.request_post['genKey'],
-                            'mass': data.data['mass']
+                            'mass': data.data['mass'],
+                            'request_post': {'service': null}
                         };
 
                         var cache = [];
@@ -347,7 +350,9 @@ function connectToSocket() {
 
                                 var prod_obj = batch_chem[prod_index];
 
-                                if (prod_obj['genKey'] == data_obj_genkey && prod_obj['smiles'] == data_obj_smiles) {
+                                var chemMatch = prod_obj['smiles'] == data_obj_smiles || prod_obj['chemical'] == data_obj_smiles;
+
+                                if (prod_obj['genKey'] == data_obj_genkey && chemMatch) {
 
                                     var data_obj = {
                                         'data': data['data'],
@@ -386,7 +391,6 @@ function connectToSocket() {
                             var product_data_object = parents_data_array[product_index];
                             if (data.request_post.chemical == product_data_object.smiles) {
                                 // add chem info to this product object:
-                                // batch_data[parent_index][product_index]
                                 $.extend(batch_data[parent_index][product_index], data.data);
                             }
                         }
@@ -402,7 +406,9 @@ function connectToSocket() {
         else {
             batch_data.push(data);
 
-            if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo') {
+            // if ('service' in data && data['service'] == 'getChemInfo') {
+            if (data.request_post && data.request_post.service == 'getChemInfo') {
                 // add data to node object of products tree:
                 for (var index in st.graph.nodes) {
                     if (data['request_post']['genKey'] == st.graph.nodes[index]['data']['genKey']) {
@@ -416,6 +422,21 @@ function connectToSocket() {
                     }
                 }
                 molecularInfoRequestStatus(true);
+
+                var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
+                if (is_gentrans_single && data['prop'] == 'products') {
+                    // initiate space tree with incoming socket data:
+                    // nodeHeight = 114
+                    // nodeWidth = 100
+                    init(data['data']);  // paint tree to canvas
+                }
+                var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
+                if (is_cheminfo) {
+                    // molecularInfoRequestStatus(false);  // all data retrieved, removed load status
+                    addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
+                    redrawProductTree();  // redraws the tree (cts_gentrans_tree.html)
+                }
+
             }
         }
 
@@ -426,13 +447,7 @@ function connectToSocket() {
             var pchemprop_option = $('#gen-select-pchem').val();
             var is_gentrans_single = workflow == 'gentrans' && run_type == 'single';
 
-            // if (workflow == 'gentrans' && pchemprop_option != "0" && pchemprop_option != undefined) {
-            //     // handleGeomean(workflow, run_type);
-            //     displayProductData();  // cts_gentrans_tree function
-            // }
-
             // For molecular info data for metabolites:
-            // if (workflow == 'gentrans' && run_type == 'single' && data['prop'] == 'products') {
             if (is_gentrans_single && data['prop'] == 'products') {
                 // initiate space tree with incoming socket data:
                 nodeHeight = 114
@@ -444,7 +459,7 @@ function connectToSocket() {
                 $('#total-products').html(total_products_html);
 
             }
-            var is_cheminfo = 'service' in data['request_post'] && data['request_post']['service'] == 'getChemInfo';
+            var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
             if (is_cheminfo) {
                 molecularInfoRequestStatus(false);  // all data retrieved, removed load status
                 addLikelyBorderToProducts();  // adds border to products with accumlation > 10% (cts_gentrans_tree.html)
@@ -477,7 +492,6 @@ function connectToSocket() {
             // TODO: CSV download using current csv code in CTS
             if(window.location.href.indexOf('testws') > -1) {
                 // all calls complete, display batch_data as formatted json:
-                // var output_data = JSON.stringify()
                 $('#testws-response').val(JSON.stringify(batch_data, undefined, 4));
             }
 
@@ -535,7 +549,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         'ph': kowPH,
         // 'node': node,
         'pchem_request': checkedCalcsAndProps,
-        'service': null
+        'service': null,
+        'workflow': workflow
     };
     if (node != null) {
         var _node_data = {};
@@ -544,7 +559,8 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
                 _node_data[n] = node['data'][n];
             }
         }
-        pchem_data['node'] = _node_data;
+        // pchem_data['node'] = _node_data;
+        pchem_data['nodes'] = [_node_data];
     }
 
 
@@ -585,7 +601,11 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         pchem_data['workflow'] = 'gentrans';
         pchem_data['gen_limit'] = genMax;
 
-        pchem_data['metabolizer_post'] = JSON.parse(metabolizer_post);
+        pchem_data['metabolizer_post'] = JSON.parse(JSON.stringify(metabolizer_post));
+
+        if (window.location.pathname.includes("biotrans")) {
+            pchem_data['calc'] = 'biotrans'
+        }
 
     }
 

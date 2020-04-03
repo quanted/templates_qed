@@ -1,4 +1,4 @@
-<div id="isoelectric-point" class="plot"></div>
+<div id="isoelectric-point" class="plot" tabindex="0" aria-label="isoelectric point plot"></div>
 
 <script type="text/javascript">
 function plotIsoPt() {
@@ -37,17 +37,32 @@ function plotIsoPt() {
     seriesDefaults: {
       showMarker: false
     },
-    // series:[
-    //   {
-    //     lineWidth: 2
-    //   },
-    //   {
-    //     lineWidth: 1,
-    //     color: "#000000"
-    //   }
-    // ]
+    grid: {
+      background: '#ffffff'
+    },
+    series:[
+      {
+        lineWidth: 2
+      },
+      {
+        lineWidth: 1,
+        color: "#000000"
+      }
+    ]
   });
+
+  // 508 compliance fixes:
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  var plotCanvas = $('canvas').each(function() {
+    let plotType = $(this).parent('div').attr('id');
+    if (plotType == 'isoelectric-point') {
+      $(this).attr({'aria-label': "plot of isoelectric point vs pH"});
+    }
+  });
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
 }
+
 </script>
 
 <script type="text/javascript">

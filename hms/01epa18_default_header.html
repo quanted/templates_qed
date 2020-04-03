@@ -677,10 +677,13 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="skip-links"><a href="#main-content" class="skip-link element-invisible element-focusable">Jump to main
     content</a></div>
+{% if NOTPUBLIC %}
+<div id="application-wide-alert" class="disclaimer-banner">
+    <div class="disclaimer-block">{{ DISCLAIMER }}</div>
+</div>
+{% endif %}
 <div id="block-pane-official-website-header"
      class="block block-pane  block-pane-official-website-header sitewide-alert sitewide-alert--official">
-
-
     <div class="sitewide-alert__content"><p>An official website of the United States government.</p>
     </div>
 </div>
@@ -705,7 +708,7 @@
 
             <form class="epa-search" method="get" action="https://search.epa.gov/epasearch/epasearch">
                 <label class="element-hidden" for="search-box">Search</label>
-                <input class="form-text" placeholder="Search EPA.gov" name="querytext" id="search-box" value=""/>
+                <input class="form-text" placeholder="Search EPA.gov" name="querytext" id="search-box" title="Search Box" value=""/>
                 <button class="epa-search-button" id="search-button" type="submit" title="Search">Search</button>
                 <input type="hidden" name="areaname" value=""/>
                 <input type="hidden" name="areacontacts" value=""/>
@@ -717,7 +720,7 @@
     </div>
 </header>
 {{ IMPORTS }}
-<section id="main-content" class="main-content clearfix" role="main" lang="en">
+<section id="main-content" class="main-content clearfix" role="main" lang="en" tabindex="0">
     <h2 class="microsite-name">{{ TITLE }}</h2>
 
     <div class="region-preface clearfix">

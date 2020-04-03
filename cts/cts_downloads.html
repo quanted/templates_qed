@@ -5,7 +5,7 @@ $(document).ready(function () {
 	var run_data = {{run_data}};
 	var json_data = {};
 
-	function parseOutputForCSV() {
+	function parseOutputForCSV(csvType=null) {
 		var workflow = getWorkflow(); // get current workflow name
 
 		json_data['workflow'] = workflow;
@@ -63,20 +63,38 @@ $(document).ready(function () {
     	}
     	else if (workflow == "gentrans") {
     		if (run_type == 'batch') {
-    			json_data['batch_data'] = batch_data;
+    			if (csvType == 'likely') {
+    				// Makes array of products that are likely:
+    				var newBatchData = [];
+    				for (var chemInd in batch_data) {
+    					var likelyProducts = buildMetabolitesArray("likely", "batch", batch_data[chemInd]);
+    					newBatchData.push(likelyProducts);
+    				}
+    				json_data['batch_data'] = newBatchData;
+    			}
+    			else {
+    				json_data['batch_data'] = batch_data;
+    			}
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['batch_chems'] = batch_chems;
     			json_data['geomeanDict'] = geomeanDict;
     		}
     		else {
-    			// buildMetabolitesArray() is for spacetree (i.e., not batch mode)
-    			json_data['data'] = buildMetabolitesArray();
+    			json_data['data'] = buildMetabolitesArray(csvType);
     			json_data['checkedCalcsAndProps'] = checkedCalcsAndProps;
     			json_data['geomeanDict'] = geomeanDict;  // gets global geomean for p-chem properties
     		}
+
+    		// Sends key to backend to make likely CSV:
+    		if (csvType == 'likely') {
+    			json_data['csv_type'] = csvType;
+    		}
+
     	}
 
     	json_data['run_data'] = run_data;
+
+    	removeImageData();  // removes 'node_image' and 'popup_image' from batch_chems and batch_data global objects
 
 		var cache = [];
 		var json_data_string = JSON.stringify(json_data, function(key, value) {
@@ -89,6 +107,8 @@ $(document).ready(function () {
 		    return value;
 		});
 		cache = null;  // Enable garbage collection
+
+		json_data = {};  // clears object after it's used
 
     	return json_data_string;
 	}
@@ -103,6 +123,8 @@ $(document).ready(function () {
         var jsonData = ""; // json data string (originally intended for metabolites)
 
         elements = collectDOM(workflow); // get relevant dom objects
+
+        $(elements).find('script').remove();  // removes script elements
 
    		if (workflow == "chemspec") {
             try {
@@ -134,8 +156,6 @@ $(document).ready(function () {
         }
 
 		jq_html = $('<div />').append($(elements).clone()).html();
-		// var n_plot_1 = $('#microspecies-distribution').size();
-		// var n_plot_2 = $('#isoelectric-point').size();
 		var n_plot_1 = $('#microspecies-distribution').length;
 		var n_plot_2 = $('#isoelectric-point').length;
 		n_plot = n_plot_1 + n_plot_2;
@@ -157,9 +177,18 @@ $(document).ready(function () {
 		$('form.post_form').attr({'action': 'html', 'method': 'POST'}).submit();
 	});
 
-	$('#csvExport').click(function () {
+	$('#csvExport').click(function (evt) {
 
-        var jsonData = parseOutputForCSV();
+		var csvType = evt.target.id;
+		var jsonData;
+
+		if (csvType == "gentrans-likely-csv") {
+			// Returns global accumulation CSV instead of default tree CSV.
+			jsonData = parseOutputForCSV("likely");
+		}
+		else {
+			jsonData = parseOutputForCSV();
+		}
 
 		$('table.getpdf').html("");
 		$('<tr style="display:none"><td><input type="hidden" name="run_data"></td></tr>')
@@ -172,11 +201,9 @@ $(document).ready(function () {
 
 	});
 
-
 	$('#csv_batch').click(function () {
 		$('#csvExport').trigger('click');
 	});
-
 
 	$('#fadeExport_pdf').append('<span class="hover"></span>').each(function () {
 		var $span = $('> span.hover', this).css('opacity', 0);
@@ -208,15 +235,39 @@ $(document).ready(function () {
 });
 
 
-function buildMetabolitesArray() {
+function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=null) {
 	// calls cts_gentrans_tree function getSpaceTree()
-	var canvasNodes = getSpaceTree().graph.nodes;
-    var nodeArray = [];
-    for (var node in canvasNodes) {
-        if (canvasNodes.hasOwnProperty(node)) {
-            var nodeItem = canvasNodes[node]['data'];
-            nodeArray.push(nodeItem);
-        }
+	var nodeArray = [];
+	// Gets products from tree if in single mode:
+	if (run_type == 'single') {
+		productNodes = getSpaceTree().graph.nodes;
+	}
+    for (var node in productNodes) {
+    	if (!productNodes.hasOwnProperty(node)) { continue; }
+    	var nodeItem;
+    	if (run_type == 'single') {
+			nodeItem = productNodes[node]['data'];    		
+    	}
+    	else if (run_type == 'batch') {
+    		nodeItem = productNodes[node];
+    	}
+
+    	if (csvType == "likely") {
+    		// Builds "likely" csv with nodes with globalAccumulation > 10%
+    		var genNum = nodeItem.genKey
+    		// Assumes genKeys with integer values are parents (e.g., 1, 2, etc.)
+    		if (nodeItem.genKey == "molecule 1") {
+    			nodeArray.push(nodeItem);
+    		}
+    		// Adds products with GA > 0.1%:
+    		if (nodeItem.globalAccumulation > 0.001) {
+    			nodeArray.push(nodeItem);
+    		}
+    	}
+    	else {
+    		// Builds full node tree for all other CSV types:
+    		nodeArray.push(nodeItem);
+    	}
     }
     return nodeArray;
 }
@@ -255,42 +306,30 @@ function collectDOM(workflow) {
 			elements = $("div.articles_output").children('h2[class="model_header"], div#timestamp, h3#userInputs');
 	        elements = elements.add('table#inputsTable'); // user inputs
 	        elements = elements.add('h4#pka, dl#pkaValues'); // pKa values
-
 	        var parentTitle = $('table#msMain td:first h4');
-	        var parentImage = $('#parent_div img'); // parent species
-	        // var parentTable = $('#parent_div table');
-	        // elements = elements.add(parentTitle).add(parentImage).add(parentTable);
-	        elements = elements.add(parentTitle).add(parentImage);
-	        
-	        var test = $('table#msMain td#ms-cell').children();
-
-	        var ms = $('table#msMain td#ms-cell').children().not($('div.chemspec_molecule'));
-
-	        // removes SVG (keeps hidden img version) for PDF
-	        $(ms).each(function () {
-	        	$(this).find('div.metabolite_img svg').remove();
+	        var parentDiv = $('div.tooltiptext > #parent_div')[0]; 
+	        var parentImage = $(parentDiv).children('.metabolite_img').children('img.hidden-chem')[0];
+	        var parentInfo = $(parentDiv).children('table')[0]; 
+	        elements = elements.add(parentTitle).add(parentImage).add(parentInfo);
+	        var ms = $('table#msMain td#ms-cell').children('.tooltiptext').children();
+	        elements = elements.add($('table#msMain td#ms-cell').children('h4')[0]);
+	        $(ms).each(function() {
+	        	var msImg = $(this).children('.metabolite_img').children('img.hidden-chem');
+	        	var msInfo = $(this).children('table');
+	        	elements = elements.add(msImg).add(msInfo);
 	        });
-
-	        elements = elements.add(ms);
-	        var majorMS = $('h4#majorMS, #majorMS_div img, #majorMS_div table');
-	        // var majorMS = $('h4#majorMS, #majorMS_div svg, #majorMS_div table');
+	        var majorMS = $('h4#majorMS, #majorMS_div img.hidden-chem, #majorMS_div table');
 	        elements = elements.add(majorMS);
-	        var taut = $('h4#taut, p.taut-percent, #taut_div img, #taut_div table');
+	        var taut = $('h4#taut, p.taut-percent, #taut_div img.hidden-chem, #taut_div table');
 	        elements = elements.add(taut);
-	        var stereo = $('h4#stereo, #stereo_div img, #stereo_div table');
+	        var stereo = $('h4#stereo, #stereo_div img.hidden-chem, #stereo_div table');
 	        elements = elements.add(stereo);
 	        return elements;
 	    case "pchemprop":
-
 	    	var pchem_elements = $('div.articles_output').children().not(':hidden, div#export_menu').clone();
-	    	// elements = $('div.articles_output').children().not(':hidden, div#export_menu');
 	    	var ph = $(pchem_elements).find('#id_kow_ph').val();
 	    	$(pchem_elements).find('#id_kow_ph').parent('h3').append(ph);
-	    	// $(pchem_elements).find('p, td.colorKey, input').remove();
 	    	$(pchem_elements).find('td.colorKey, input, p.gentransError, p.selectNodeForData').remove();
-
-	    	// elements.add(pchem_elements);
-
 	    	return pchem_elements;
 	   	case "gentrans":
 	   		elements = $("div.articles_output").children('h2[class="model_header"], div#timestamp, h3#userInputs');
@@ -328,6 +367,55 @@ function pickOutPka(html_string) {
 		pka_obj[key_val_array[0]] = key_val_array[1];
 	});
 	return pka_obj;
+}
+
+
+function removeImageData() {
+	/*
+	Removes image data (node_image, popup_image) from
+	batch_data and batch_chems objects.
+	*/
+	try {
+		if (!batch_data) { return; }
+	}
+	catch(error) { return; }
+	for (var chemInd in batch_data) {
+		var chemObj = batch_data[chemInd];
+		var nodeData = batch_data[chemInd]['node'];
+		if (!nodeData) { continue; }
+		if ('node_image' in chemObj) {
+			// remove key:
+			delete chemObj['node_image'];
+		}
+		if ('popup_image' in chemObj) {
+			// remove key:
+			delete chemObj['popup_image'];
+		}
+		if ('node_image' in nodeData) {
+			// remove key:
+			delete nodeData['node_image'];
+		}
+		if ('popup_image' in nodeData) {
+			// remove key:
+			delete nodeData['popup_image'];
+		}
+		if ('structureData' in nodeData) {
+			// delete nodeData['structureData'];
+			nodeData['structureData'] = {};  // clears structureData object
+			chemObj['structureData'] = {};
+		}
+	}
+	for (var chemInd in batch_chems) {
+		var chemObj = batch_chems[chemInd];
+		if ('node_image' in chemObj) {
+			// remove key:
+			delete chemObj['node_image'];
+		}
+		if ('popup_image' in chemObj) {
+			// remove key:
+			delete chemObj['popup_image'];
+		}	
+	}
 }
 
 </script>

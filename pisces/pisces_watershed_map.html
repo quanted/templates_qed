@@ -1,8 +1,17 @@
 <style>
 
+    #main-content {
+        max-width: 90vw !important;
+    }
+
     div.main-column {
         padding-left: 0 !important;
         width: 95% !important;
+    }
+
+    #view_block {
+        display: block;
+        height: 60vh;
     }
 
     #map {
@@ -14,7 +23,9 @@
         display: inline-block;
         float: left;
         width: 65%;
-        height: 625px;
+        height: 100%;
+        {#height: 625px;#}
+        {#max-height: 625px;#}
         border-radius: 10px;
         border-color: black;
         border-bottom-width: 1px;
@@ -52,7 +63,9 @@
         border-width: 1px;
         width: 33%;
         margin: 1px 1px;
-        max-height: 625px;
+        height: 60vh;
+        {#height: 625px;#}
+        {#max-height: 625px;#}
         padding: 1.3529em 1em;
         border-radius: 10px;
     }
@@ -79,6 +92,17 @@
         height: 22px;
         margin-left: 0 !important;
         border-radius: 0 3px 3px 0 !important;
+    }
+
+    .fishTable {
+        height: 100%;
+    }
+
+    #fishTable_wrapper {
+        height: 82%;
+    }
+    .dataTables_scroll {
+        display: contents;
     }
 
     #fishTable thead * {
@@ -116,6 +140,7 @@
 
     div.fishDetails {
         display: inline-block;
+        float: left;
         font-size: 12px;
         padding: 5px 5px;
         margin-top: 10px;
@@ -201,7 +226,8 @@
     }
 
     div.dataTables_scrollBody {
-        max-height: 470px !important;
+        display: inline-block;
+        height: 100%;
     }
 
     {#    Loader    #}
@@ -255,7 +281,8 @@
     }
 
     #huc_table_title {
-        padding-bottom: 10px
+        margin-bottom: 0;
+        {#padding-bottom: 10px#}
     }
 
 </style>
@@ -291,7 +318,7 @@
         <div class="col-md-10">
             <div id="loader" style="display:none;"></div>
             <div id="loader_background" style="display:none"></div>
-            <div class="box multi news">
+            <div class="box multi news" id="view_block">
                 <div class="pane-content" id="mapDiv">
                     <p id="huc_table_title"><strong>Select a HUC 8 watershed</strong> on the map to view a list of fish
                         species associated
@@ -422,7 +449,9 @@
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC range for selected fish.</strong> ";
                 }
                 else {
-                    var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];
+                    {#var link = "https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + hucs[0];#}
+                    {#var link = "https://waterdata.usgs.gov/nwis/inventory/?site_no=" + hucs[0];#}
+                    var link = "https://water.usgs.gov/lookup/getwatershed?" + hucs[0]
                     document.getElementById('huc_table_title').innerHTML = "<strong>HUC 8 watershed: </strong>" + "<a href=" + link + " title='Get details of HUC.' target='_blank'>" + hucs[0] + "</a>";
                 }
                 var layerGroup = [];
@@ -690,11 +719,11 @@
                 if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
 
                 // tolerance
-                var tolerance = [];
-                if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");
-                if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");
-                if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");
-                if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");
+                {#var tolerance = [];#}
+                {#if (details["pollut_tol"] === "I") tolerance.push(" Intolerant");#}
+                {#if (details["pollut_tol"] === "T") tolerance.push(" Tolerant");#}
+                {#if (details["pollut_tol"] === "M") tolerance.push(" Mid-Tolerant");#}
+                {#if (details["pollut_tol"] === "U") tolerance.push(" Unspecified");#}
 
                 // use
                 var use = [];
@@ -702,22 +731,30 @@
                 if (details["nongame"] === "1") use.push(" Nongame");
                 if (details["subsis_fish"] === "1") use.push(" Subsistence");
 
+                var ubiquity = (details["ubiquity"] == null) ? "NA" : details["ubiquity"].toFixed(1);
+                var extent = (details["extent"] == null) ? "NA" : details["extent"].toFixed(1);
+                var tolerance = (details["tolerance"] == null) ? "NA" : details["tolerance"].toFixed(1);
+                var robustness = (details["robustness"] == null) ? "NA" : details["robustness"].toFixed(1);
+
+
                 // links
                 var google_link = "https://www.google.com/search?tbm=isch&q=" + sName.replace(" ", "+");
                 var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + sName.replace(" ", "_");
 
                 d.innerHTML = '<h4>' + capitalize_Words(cName) + '</h4>' +
                     '<h5>' + capitalize_Words(sName) + '</h5><p>' +
-                    '<table class="fishDetails"><col><col><col><col><tr><td>Tribe</td><td>' + details["group"] + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
-                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>System</td><td>' + system.toString() + '</td></tr>' +
-                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
-                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
-                    '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
-                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
-                    '<tr><td>Rarity</td><td>' + details["rarity"] + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
-                    '<tr><td>Gradient</td><td>' + gradient.toString() + '</td><td>Location Notes</td><td>' + details["locat_notes"] + '</td></tr>' +
-                    '<tr><td>Human Use</td><td>' + use.toString() + '</td><td>Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
+                    '<table class="fishDetails"><col><col><col><col><tr><td>Tribe</td><td>' + details["group"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +
+                    '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>Human Use</td><td>' + use.toString() + '</td></tr>' +
+                    '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
+                    '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                    '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                    '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Column</td><td>' + column.toString() + '</td></tr>' +
+                    '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                    '<tr><td>PFG Rarity</td><td>' + details["rarity"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                    '<tr><td>Ubiquity</td><td>' + ubiquity + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                    '<tr><td>Extent</td><td>' + extent + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                    '<tr><td>Tolerance</td><td>' + tolerance + '</td><td></td><td></td></tr>' +
+                    '<tr><td>Robustness</td><td>' + robustness + '</td><td></td><td></td></tr></table>' +
                     '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                     '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;

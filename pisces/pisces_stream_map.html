@@ -222,7 +222,7 @@
             border-radius: 4px;
             padding: 2px 4px 4px 4px;
             background-color: transparent;
-            width: 9%;
+            width: 12%;
             margin: 1px 1px;
             display: inline-block;
         }
@@ -742,6 +742,7 @@
         var selectedHuc;
         var calc;
         var removedFishList = [];
+        var addedFishList = [];
 
         $(document).ready(function () {
 
@@ -870,12 +871,14 @@
                 var tr = $(this).closest('tr');
                 var row = $('#fishTable').DataTable().row(tr).data();
                 if (this.children[0].checked) {
-                    $(this).parent().addClass('removed_fish');
-                    removedFishList.push(row["species_id"]);
-                }
-                else {
                     $(this).parent().removeClass('removed_fish');
                     removedFishList.splice(removedFishList.indexOf(row["species_id"]), 1);
+                    addedFishList.push(row["species_id"]);
+                }
+                else {
+                    $(this).parent().addClass('removed_fish');
+                    removedFishList.push(row["species_id"]);
+                    addedFishList.splice(addedFishList.indexOf(row["species_id"]), 1);
                 }
                 setTimeout(applyFilters, 10);
             });
@@ -1049,13 +1052,13 @@
             filters.map(function (index) {
                 // In the html input tag for each filter the name includes two numbers, or one for rarity, which indicate the index of the column in fishTable.
                 var filterName = filters[index].firstElementChild.name.split('_');
+                {##}
+                {#if (filterName[0] === "rarity") {#}
+                {#    notInTable = notInTable.concat(filterRarity(Number(filterName[1])));#}
+                {#else {#}
+                {#    notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));#}
+                notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
 
-                if (filterName[0] === "rarity") {
-                    notInTable = notInTable.concat(filterRarity(Number(filterName[1])));
-                }
-                else {
-                    notInTable = notInTable.concat(filterDataTable(Number(filterName[1]), Number(filterName[2]), filterName[0] + '_value'));
-                }
             });
             // Merges array of indexes from fish removed from assemblage by the filter and manual removal. Sorts numerically ascending.
             notInTable = notInTable.concat(removedFishList).sort(function (a, b) {
@@ -1070,6 +1073,13 @@
             notInTable.map(function (i) {
                 if (inTable.indexOf(i) !== -1) {
                     inTable.splice(inTable.indexOf(i), 1);
+                }
+            });
+
+            // Add fish from addedFishList
+            addedFishList.map(function (i){
+                if (inTable.indexOf(i) === -1){
+                    inTable.push(i);
                 }
             });
 
@@ -1089,12 +1099,18 @@
                 fishTable.rows({order: 'index'}).data().filter(function (value, index) {
                     var id = value["species_id"];
                     if (inTable.indexOf(id) >= 0) {
-                        if (removedFishList.indexOf(id) >= 0) {
+                        if (removedFishList.indexOf(id) >= 0 && addedFishList.indexOf(id) === -1) {
                             fishTable.row(index).nodes().to$().addClass('filteredInFishTable-removed');
                         }
                         else {
+                            var row = fishTable.row(index).node();
+                            $('input[type="checkbox"]', row).prop("checked", true);
                             fishTable.row(index).nodes().to$().addClass('filteredInFishTable');
                         }
+                    }
+                    else{
+                        var row = fishTable.row(index).node();
+                        $('input[type="checkbox"]', row).prop("checked", false);
                     }
                 });
             }
@@ -1127,7 +1143,8 @@
             var cValue = parseFloat(document.getElementsByClassName(compareValueName)[0].value);
             var notInTable = [];
             var filterTable = fishTable.column(minColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {
+                {#if (Number(value) < Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) < Number(cValue)) {
                     return true;
                 }
                 else {
@@ -1139,7 +1156,8 @@
                 }
             });
             var filterTable2 = fishTable.column(maxColumn, {order: 'index'}).data().filter(function (value, index) {
-                if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {
+                {#if (Number(value) > Number(cValue) || isNaN(cValue) || value === null) {#}
+                if (Number(value) > Number(cValue)) {
                     return true;
                 }
                 else {
@@ -1157,16 +1175,27 @@
         }
 
         function formatDetails(details) {
+            if (details['slope_l'] === null){
+                return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +
+                    'Rarity: ' + details["rarity"] + '<br>' + 'No envelope data available.</p>'
+            }
             return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +
                 'Rarity: ' + details["rarity"] + '<br>' +
-                'Stream Depth Range (cm): (' + details["depth_l"] + ' - ' + details["depth_u"] + ')<br>' +
-                'Stream Width Range (m): (' + details["width_l"] + ' - ' + details["width_u"] + ')<br>' +
                 'Stream Area Range (ha): (' + details["area_l"] + ' - ' + details["area_u"] + ')<br>' +
                 'Stream Slope Range (%): (' + details["slope_l"] + ' - ' + details["slope_u"] + ')<br>' +
-                'Stream TSS Range (mg/l): (' + details["tss_l"] + ' - ' + details["tss_u"] + ')<br>' +
-                'Stream pH Range: (' + details["ph_l"] + ' - ' + details["ph_u"] + ')<br>' +
-                'Stream Conductivity Range (uS/cm2): (' + details["cond_l"] + ' - ' + details["cond_u"] + ')<br>' +
-                'Stream Dissolved Oxygen Range (% sat): (' + details["do_l"] + ' - ' + details["do_u"] + ')<br></p>';
+                'Elevation Range (m): (' + details["elev_l"] + ' - ' + details["elev_u"] + ')<br>' +
+                'Index of Watershed Integrity Range: (' + details["iwi_l"] + ' - ' + details["iwi_u"] + ')<br>' +
+                'Benthic Invertebrate Index Range: (' + details["bmmi_l"] + ' - ' + details["bmmi_u"] + ')<br></p>';
+            {#return '<p style="line-height:15px !important; display: initial;">Mean Weight (g): ' + details["mean_weight"] + '<br>' +#}
+            {#    'Rarity: ' + details["rarity"] + '<br>' +#}
+            {#    'Stream Depth Range (cm): (' + details["depth_l"] + ' - ' + details["depth_u"] + ')<br>' +#}
+            {#    'Stream Width Range (m): (' + details["width_l"] + ' - ' + details["width_u"] + ')<br>' +#}
+            {#    'Stream Area Range (ha): (' + details["area_l"] + ' - ' + details["area_u"] + ')<br>' +#}
+            {#    'Stream Slope Range (%): (' + details["slope_l"] + ' - ' + details["slope_u"] + ')<br>' +#}
+            {#    'Stream TSS Range (mg/l): (' + details["tss_l"] + ' - ' + details["tss_u"] + ')<br>' +#}
+            {#    'Stream pH Range: (' + details["ph_l"] + ' - ' + details["ph_u"] + ')<br>' +#}
+            {#    'Stream Conductivity Range (uS/cm2): (' + details["cond_l"] + ' - ' + details["cond_u"] + ')<br>' +#}
+            {#    'Stream Dissolved Oxygen Range (% sat): (' + details["do_l"] + ' - ' + details["do_u"] + ')<br></p>';#}
         }
 
         function selectStreamFromCoord(lat, lon) {
@@ -1179,14 +1208,11 @@
 
         function onStreamMapClick(e) {
             startLoad();
-            $(".depth_value").val('');
-            $(".width_value").val('');
-            $(".area_value").val('');
-            $(".slope_value").val('');
-            $(".tss_value").val('');
-            $(".pH_value").val('');
-            $(".cond_value").val('');
-            $(".do_value").val('');
+            $(".area_value").val("");
+            $(".slope_value").val("");
+            $(".elevation_value").val("");
+            $(".iwi_value").val("");
+            $(".bmmi_value").val("");
             $('#latVal').html(Number(e.latlng.lat).toFixed(6));
             $('#lngVal').html(Number(e.latlng.lng).toFixed(6));
             setTimeout(getStreamData, 10);
@@ -1220,7 +1246,10 @@
                 data: ptIndexParams,
                 async: false,
                 success: function (data, status, jqXHR) {
-                    var streamData = JSON.parse(data);
+                    var streamData = data;
+                    if(!typeof(data) === "object") {
+                        streamData = JSON.parse(data);
+                    }
                     var huc8ID = streamData.output.ary_flowlines[0].wbd_huc12.substring(0, 8);
                     $('#comid').html(streamData.output.ary_flowlines[0].comid);
                     $('#huc8').html(huc8ID);
@@ -1249,10 +1278,12 @@
                 url: "/pisces/rest/api/v1/stream/properties?comid=" + comid + "&latitude=" + lat + "&longitude=" + lng,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
-                    $(".width_value").val(data["attributes"]["width"]);
-                    $(".area_value").val(data["attributes"]["area"]);
-                    $(".slope_value").val(data["attributes"]["slope"]);
-                    setTimeout(applyWidthFilter, 300);
+                    $(".area_value").val(Number(data["attributes"]["area"]).toFixed(3));
+                    $(".slope_value").val(Number(data["attributes"]["slope"]).toFixed(3));
+                    $(".elevation_value").val(Number(data["attributes"]["elevation"]).toFixed(3));
+                    $(".iwi_value").val(Number(data["attributes"]["iwi"]).toFixed(3));
+                    $(".bmmi_value").val(Number(data["attributes"]["bmmi"]).toFixed(3));
+                    setTimeout(activateFilters, 300);
                 },
                 error: function (jqXHR, status, errorThrown) {
                     console.log(errorThrown);
@@ -1260,23 +1291,29 @@
             });
         }
 
-        function applyWidthFilter(){
-            $('#width_filter').trigger("click");
+        function activateFilters(){
+            $('#slope_filter').trigger("click");
+            $('#area_filter').trigger("click");
+            $('#elevation_filter').trigger("click");
+            $('#iwi_filter').trigger("click");
+            $('#bmmi_filter').trigger("click");
         }
 
         function getFishData() {
             var huc8 = selectedHuc;
             $.ajax({
                 type: "GET",
-                url: "/pisces/rest/api/v1/fish/genera/hucs/" + huc8,
+                url: "/pisces/rest/api/v2/fish/genera/hucs/" + huc8,
                 crossDomain: true,
                 success: function (data, status, jqXHR) {
+                    removedFishList = [];
+                    addedFishList = [];
                     $('#fish_filters').closest('div').show();
                     $('#envelope_toggle').closest('div').show();
                     $('#huc_calc_toggle').closest('div').show();
-                    populateFishTable(data["species"]);
+                    populateFishTableV2(data["species"]);
                     var fishTableData = $('#fishTable').DataTable().rows().data();
-                    populateFilteredFishTable(fishTableData);
+                    populateFilteredFishTableV2(fishTableData);
                     populateCalcTable(fishTableData);
                 },
                 error: function (jqXHR, status, errorThrown) {
@@ -1285,725 +1322,6 @@
                     return null;
                 }
             });
-{#            getTESTFishData();#}
-        }
-
-        function getTESTFishData() {
-            var ecoData = {"region": "Coastal Plains", "gid": 9};
-            $('#ecoRegionId').html(ecoData.gid);
-            $('#ecoRegionName').html(ecoData.region);
-            $('#fish_filters').closest('div').show();
-            $('#envelope_toggle').closest('div').show();
-            $('#huc_calc_toggle').closest('div').show();
-            var testFishData = {
-                "huc": "04030101",
-                "species": [
-                    {
-                        "species_id": 14,
-                        "common_name": "alewife",
-                        "genus": "alosa",
-                        "species": "pseudoharengus",
-                        "mean_weight": 8.52,
-                        "thinning": 0.57,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 6,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 19,
-                        "common_name": "rock bass",
-                        "genus": "ambloplites",
-                        "species": "rupestris",
-                        "mean_weight": 83.9,
-                        "thinning": 0.65,
-                        "thin_adj": 0.0142,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 7,
-                        "cond_l": 48,
-                        "cond_u": 672,
-                        "ph_l": 7.07,
-                        "ph_u": 8.4,
-                        "width_l": 3.54,
-                        "width_u": 43.25,
-                        "slope_l": 0.172,
-                        "slope_u": 2.15,
-                        "area_l": 1123.1,
-                        "area_u": 86552.3,
-                        "depth_l": 18.51,
-                        "depth_u": 71.25,
-                        "do_l": 45.0836,
-                        "do_u": 97.3476,
-                        "tss_l": 0.2,
-                        "tss_u": 35.2
-                    },
-                    {
-                        "species_id": 24,
-                        "common_name": "black bullhead",
-                        "genus": "ameiurus",
-                        "species": "melas",
-                        "mean_weight": 31.8,
-                        "thinning": 0.62,
-                        "thin_adj": -0.0106,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 9,
-                        "cond_l": 44,
-                        "cond_u": 714,
-                        "ph_l": 6.62,
-                        "ph_u": 8.32,
-                        "width_l": 2.677,
-                        "width_u": 41.3,
-                        "slope_l": 0.2,
-                        "slope_u": 1.89,
-                        "area_l": 702.8,
-                        "area_u": 168338,
-                        "depth_l": 16.7475,
-                        "depth_u": 70.34,
-                        "do_l": 44.8378,
-                        "do_u": 95.4602,
-                        "tss_l": 0.0001,
-                        "tss_u": 29.4
-                    },
-                    {
-                        "species_id": 25,
-                        "common_name": "yellow bullhead",
-                        "genus": "ameiurus",
-                        "species": "natalis",
-                        "mean_weight": 39.2,
-                        "thinning": 0.62,
-                        "thin_adj": -0.0245,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 9,
-                        "cond_l": 44,
-                        "cond_u": 714,
-                        "ph_l": 6.62,
-                        "ph_u": 8.32,
-                        "width_l": 2.677,
-                        "width_u": 41.3,
-                        "slope_l": 0.2,
-                        "slope_u": 1.89,
-                        "area_l": 702.8,
-                        "area_u": 168338,
-                        "depth_l": 16.7475,
-                        "depth_u": 70.34,
-                        "do_l": 44.8378,
-                        "do_u": 95.4602,
-                        "tss_l": 0.0001,
-                        "tss_u": 29.4
-                    },
-                    {
-                        "species_id": 26,
-                        "common_name": "brown bullhead",
-                        "genus": "ameiurus",
-                        "species": "nebulosus",
-                        "mean_weight": 21.9,
-                        "thinning": 0.6,
-                        "thin_adj": -0.0181,
-                        "rarity": 6,
-                        "huc": "04030101",
-                        "genusID": 9,
-                        "cond_l": 44,
-                        "cond_u": 714,
-                        "ph_l": 6.62,
-                        "ph_u": 8.32,
-                        "width_l": 2.677,
-                        "width_u": 41.3,
-                        "slope_l": 0.2,
-                        "slope_u": 1.89,
-                        "area_l": 702.8,
-                        "area_u": 168338,
-                        "depth_l": 16.7475,
-                        "depth_u": 70.34,
-                        "do_l": 44.8378,
-                        "do_u": 95.4602,
-                        "tss_l": 0.0001,
-                        "tss_u": 29.4
-                    },
-                    {
-                        "species_id": 39,
-                        "common_name": "american eel",
-                        "genus": "anguilla",
-                        "species": "rostrata",
-                        "mean_weight": 153,
-                        "thinning": 0.68,
-                        "thin_adj": 0.035,
-                        "rarity": 6,
-                        "huc": "04030101",
-                        "genusID": 14,
-                        "cond_l": 51,
-                        "cond_u": 321,
-                        "ph_l": 6.65,
-                        "ph_u": 8.08,
-                        "width_l": 1.425,
-                        "width_u": 30.5455,
-                        "slope_l": 0.16,
-                        "slope_u": 2.17,
-                        "area_l": 115.2,
-                        "area_u": 208472,
-                        "depth_l": 9.9728,
-                        "depth_u": 67.25,
-                        "do_l": 42.3664,
-                        "do_u": 90.9341,
-                        "tss_l": 0.6,
-                        "tss_u": 30
-                    },
-                    {
-                        "species_id": 51,
-                        "common_name": "central stoneroller",
-                        "genus": "campostoma",
-                        "species": "anomalum",
-                        "mean_weight": 6.77,
-                        "thinning": 0.56,
-                        "thin_adj": 0.0613,
-                        "rarity": 2,
-                        "huc": "04030101",
-                        "genusID": 26,
-                        "cond_l": 39.9,
-                        "cond_u": 881,
-                        "ph_l": 7,
-                        "ph_u": 8.43,
-                        "width_l": 2.235,
-                        "width_u": 19.714,
-                        "slope_l": 0.1889,
-                        "slope_u": 2.3,
-                        "area_l": 346.4,
-                        "area_u": 31953,
-                        "depth_l": 12.99,
-                        "depth_u": 60.3,
-                        "do_l": 44.0511,
-                        "do_u": 100.201,
-                        "tss_l": 0.4,
-                        "tss_u": 34
-                    },
-                    {
-                        "species_id": 52,
-                        "common_name": "largescale stoneroller",
-                        "genus": "campostoma",
-                        "species": "oligolepis",
-                        "mean_weight": 5.58,
-                        "thinning": 0.55,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 26,
-                        "cond_l": 39.9,
-                        "cond_u": 881,
-                        "ph_l": 7,
-                        "ph_u": 8.43,
-                        "width_l": 2.235,
-                        "width_u": 19.714,
-                        "slope_l": 0.1889,
-                        "slope_u": 2.3,
-                        "area_l": 346.4,
-                        "area_u": 31953,
-                        "depth_l": 12.99,
-                        "depth_u": 60.3,
-                        "do_l": 44.0511,
-                        "do_u": 100.201,
-                        "tss_l": 0.4,
-                        "tss_u": 34
-                    },
-                    {
-                        "species_id": 56,
-                        "common_name": "goldfish",
-                        "genus": "carassius",
-                        "species": "auratus",
-                        "mean_weight": 19.4,
-                        "thinning": 0.6,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 27,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 64,
-                        "common_name": "longnose sucker",
-                        "genus": "catostomus",
-                        "species": "catostomus",
-                        "mean_weight": 81.9,
-                        "thinning": 0.65,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 29,
-                        "cond_l": 45,
-                        "cond_u": 635,
-                        "ph_l": 6.81,
-                        "ph_u": 8.31,
-                        "width_l": 2.2654,
-                        "width_u": 21.7225,
-                        "slope_l": 0.15,
-                        "slope_u": 2.1415,
-                        "area_l": 362.4,
-                        "area_u": 39243,
-                        "depth_l": 15.4,
-                        "depth_u": 65.06,
-                        "do_l": 45.0836,
-                        "do_u": 98.5172,
-                        "tss_l": 0.9,
-                        "tss_u": 35
-                    },
-                    {
-                        "species_id": 67,
-                        "common_name": "white sucker",
-                        "genus": "catostomus",
-                        "species": "commersonii",
-                        "mean_weight": 116,
-                        "thinning": 0.67,
-                        "thin_adj": 0.0647,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 29,
-                        "cond_l": 45,
-                        "cond_u": 635,
-                        "ph_l": 6.81,
-                        "ph_u": 8.31,
-                        "width_l": 2.2654,
-                        "width_u": 21.7225,
-                        "slope_l": 0.15,
-                        "slope_u": 2.1415,
-                        "area_l": 362.4,
-                        "area_u": 39243,
-                        "depth_l": 15.4,
-                        "depth_u": 65.06,
-                        "do_l": 45.0836,
-                        "do_u": 98.5172,
-                        "tss_l": 0.9,
-                        "tss_u": 35
-                    },
-                    {
-                        "species_id": 97,
-                        "common_name": "northern redbelly dace",
-                        "genus": "chrosomus",
-                        "species": "eos",
-                        "mean_weight": 0.593,
-                        "thinning": 0.5,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 35,
-                        "cond_l": 27.5,
-                        "cond_u": 497,
-                        "ph_l": 6.8,
-                        "ph_u": 8.3,
-                        "width_l": 0.9955,
-                        "width_u": 10.2333,
-                        "slope_l": 0.354,
-                        "slope_u": 3.5417,
-                        "area_l": 48.6,
-                        "area_u": 9067.5,
-                        "depth_l": 12.06,
-                        "depth_u": 50.95,
-                        "do_l": 49.5575,
-                        "do_u": 90.2983,
-                        "tss_l": 1,
-                        "tss_u": 31.4
-                    },
-                    {
-                        "species_id": 98,
-                        "common_name": "southern redbelly dace",
-                        "genus": "chrosomus",
-                        "species": "erythrogaster",
-                        "mean_weight": 1.09,
-                        "thinning": 0.5,
-                        "thin_adj": 0.0568,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 35,
-                        "cond_l": 27.5,
-                        "cond_u": 497,
-                        "ph_l": 6.8,
-                        "ph_u": 8.3,
-                        "width_l": 0.9955,
-                        "width_u": 10.2333,
-                        "slope_l": 0.354,
-                        "slope_u": 3.5417,
-                        "area_l": 48.6,
-                        "area_u": 9067.5,
-                        "depth_l": 12.06,
-                        "depth_u": 50.95,
-                        "do_l": 49.5575,
-                        "do_u": 90.2983,
-                        "tss_l": 1,
-                        "tss_u": 31.4
-                    },
-                    {
-                        "species_id": 99,
-                        "common_name": "finescale dace",
-                        "genus": "chrosomus",
-                        "species": "neogaeus",
-                        "mean_weight": 1.18,
-                        "thinning": 0.51,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 35,
-                        "cond_l": 27.5,
-                        "cond_u": 497,
-                        "ph_l": 6.8,
-                        "ph_u": 8.3,
-                        "width_l": 0.9955,
-                        "width_u": 10.2333,
-                        "slope_l": 0.354,
-                        "slope_u": 3.5417,
-                        "area_l": 48.6,
-                        "area_u": 9067.5,
-                        "depth_l": 12.06,
-                        "depth_u": 50.95,
-                        "do_l": 49.5575,
-                        "do_u": 90.2983,
-                        "tss_l": 1,
-                        "tss_u": 31.4
-                    },
-                    {
-                        "species_id": 109,
-                        "common_name": "redside dace",
-                        "genus": "clinostomus",
-                        "species": "elongatus",
-                        "mean_weight": 0.753,
-                        "thinning": 0.5,
-                        "thin_adj": 0.024,
-                        "rarity": 5,
-                        "huc": "04030101",
-                        "genusID": 39,
-                        "cond_l": 22.8,
-                        "cond_u": 496,
-                        "ph_l": 6.56,
-                        "ph_u": 8.18,
-                        "width_l": 1.25,
-                        "width_u": 14.25,
-                        "slope_l": 0.1889,
-                        "slope_u": 3.25,
-                        "area_l": 129.4,
-                        "area_u": 10614,
-                        "depth_l": 13.48,
-                        "depth_u": 61.52,
-                        "do_l": 49.0757,
-                        "do_u": 90.2983,
-                        "tss_l": 0.4,
-                        "tss_u": 31.4
-                    },
-                    {
-                        "species_id": 111,
-                        "common_name": "cisco",
-                        "genus": "coregonus",
-                        "species": "artedi",
-                        "mean_weight": 38.7,
-                        "thinning": 0.62,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 40,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 113,
-                        "common_name": "lake whitefish",
-                        "genus": "coregonus",
-                        "species": "clupeaformis",
-                        "mean_weight": 191,
-                        "thinning": 0.69,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 40,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 114,
-                        "common_name": "bloater",
-                        "genus": "coregonus",
-                        "species": "hoyi",
-                        "mean_weight": 83,
-                        "thinning": 0.65,
-                        "thin_adj": 0,
-                        "rarity": 8,
-                        "huc": "04030101",
-                        "genusID": 40,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 118,
-                        "common_name": "kiyi",
-                        "genus": "coregonus",
-                        "species": "kiyi",
-                        "mean_weight": 75.4,
-                        "thinning": 0.65,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 40,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 126,
-                        "common_name": "shortjaw cisco",
-                        "genus": "coregonus",
-                        "species": "zenithicus",
-                        "mean_weight": 19.4,
-                        "thinning": 0.6,
-                        "thin_adj": 0,
-                        "rarity": 6,
-                        "huc": "04030101",
-                        "genusID": 40,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 131,
-                        "common_name": "mottled sculpin",
-                        "genus": "cottus",
-                        "species": "bairdii",
-                        "mean_weight": 2.77,
-                        "thinning": 0.53,
-                        "thin_adj": 0.0858,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 41,
-                        "cond_l": 23.6,
-                        "cond_u": 534,
-                        "ph_l": 6.65,
-                        "ph_u": 8.35,
-                        "width_l": 2.025,
-                        "width_u": 18.51,
-                        "slope_l": 0.255,
-                        "slope_u": 3.45,
-                        "area_l": 208.1,
-                        "area_u": 25890,
-                        "depth_l": 10.09,
-                        "depth_u": 59.3727,
-                        "do_l": 47.5254,
-                        "do_u": 95.1819,
-                        "tss_l": 0.0001,
-                        "tss_u": 22.2
-                    },
-                    {
-                        "species_id": 137,
-                        "common_name": "slimy sculpin",
-                        "genus": "cottus",
-                        "species": "cognatus",
-                        "mean_weight": 2.75,
-                        "thinning": 0.53,
-                        "thin_adj": 0.065,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 41,
-                        "cond_l": 23.6,
-                        "cond_u": 534,
-                        "ph_l": 6.65,
-                        "ph_u": 8.35,
-                        "width_l": 2.025,
-                        "width_u": 18.51,
-                        "slope_l": 0.255,
-                        "slope_u": 3.45,
-                        "area_l": 208.1,
-                        "area_u": 25890,
-                        "depth_l": 10.09,
-                        "depth_u": 59.3727,
-                        "do_l": 47.5254,
-                        "do_u": 95.1819,
-                        "tss_l": 0.0001,
-                        "tss_u": 22.2
-                    },
-                    {
-                        "species_id": 164,
-                        "common_name": "lake chub",
-                        "genus": "couesius",
-                        "species": "plumbeus",
-                        "mean_weight": 5.58,
-                        "thinning": 0.55,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 42,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 174,
-                        "common_name": "brook stickleback",
-                        "genus": "culaea",
-                        "species": "inconstans",
-                        "mean_weight": 0.765,
-                        "thinning": 0.5,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 47,
-                        "cond_l": null,
-                        "cond_u": null,
-                        "ph_l": null,
-                        "ph_u": null,
-                        "width_l": null,
-                        "width_u": null,
-                        "slope_l": null,
-                        "slope_u": null,
-                        "area_l": null,
-                        "area_u": null,
-                        "depth_l": null,
-                        "depth_u": null,
-                        "do_l": null,
-                        "do_u": null,
-                        "tss_l": null,
-                        "tss_u": null
-                    },
-                    {
-                        "species_id": 196,
-                        "common_name": "spotfin shiner",
-                        "genus": "cyprinella",
-                        "species": "spiloptera",
-                        "mean_weight": 1.43,
-                        "thinning": 0.51,
-                        "thin_adj": 0,
-                        "rarity": 3,
-                        "huc": "04030101",
-                        "genusID": 50,
-                        "cond_l": 48,
-                        "cond_u": 672,
-                        "ph_l": 7.07,
-                        "ph_u": 8.36,
-                        "width_l": 4.435,
-                        "width_u": 57.4545,
-                        "slope_l": 0.31,
-                        "slope_u": 1.8,
-                        "area_l": 1685.8,
-                        "area_u": 250882,
-                        "depth_l": 19.41,
-                        "depth_u": 72.68,
-                        "do_l": 45.0836,
-                        "do_u": 96.9703,
-                        "tss_l": 0.8,
-                        "tss_u": 34
-                    }
-                ]
-            };
-            populateFishTable(testFishData["species"]);
-            var fishTableData = $('#fishTable').DataTable().rows().data();
-            populateFilteredFishTable(fishTableData);
-            populateCalcTable(fishTableData);
         }
 
         function populateFishTable(data) {
@@ -2020,7 +1338,8 @@
                         title: "Info"
                     },
                     {
-                        title: "Remove"
+                        title: "Add/Remove",
+                        name: "add_remove"
                     },
                     {
                         data: "common_name",
@@ -2031,7 +1350,6 @@
                         data: "species",
                         title: "Scientific Name",
                         name: "scientific_name"
-
                     },
                     {
                         data: "genus",
@@ -2148,6 +1466,9 @@
                         data: "thin_adj",
                         title: "&Delta;",
                         name: "delta"
+                    },
+                    {
+
                     }
                 ],
                 "columnDefs": [
@@ -2170,7 +1491,159 @@
                         'orderable': false,
                         'className': 'select-checkbox',
                         'render': function (data, type, full, meta) {
-                            return '<input type="checkbox">';
+                            return '<input type="checkbox" checked>';
+                        }
+                    }
+                ],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                searching: false,
+                paging: false,
+                bInfo: false,
+                "order": [[2, 'asc']]
+
+            };
+            $('#fishTable').closest('div').show();
+            $('#fishTable').DataTable(config);
+        }
+
+        function populateFishTableV2(data) {
+            $('#fishTable').DataTable().destroy();
+            $('#fishTable').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        "class": "details-control",
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": "",
+                        title: "Info"
+                    },
+                    {
+                        title: "Add/Remove",
+                        name: "add_remove"
+                    },
+                    {
+                        data: "common_name",
+                        title: "Common Name",
+                        name: "common_name"
+                    },
+                    {
+                        data: "species",
+                        title: "Scientific Name",
+                        name: "scientific_name"
+                    },
+                    {
+                        data: "genus",
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: "genusID",
+                        title: "Genus Id",
+                        name: "genus_id"
+                    },
+                    {
+                        data: "species_id",
+                        title: "Species Id",
+                        name: "species_id"
+
+                    },
+                    {
+                        data: "mean_weight",
+                        title: "Mean Weight",
+                        name: "mean_weight"
+                    },
+                    {
+                        data: "rarity",
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: "thinning",
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: "thin_adj",
+                        title: "&Delta;",
+                        name: "delta"
+                    },
+                    {
+                        data: "slope_l",
+                        title: "Slope Lower",
+                        name: "slope_l"
+                    },
+                    {
+                        data: "slope_u",
+                        title: "Slope Upper",
+                        name: "slope_u"
+                    },
+                    {
+                        data: "area_l",
+                        title: "Area Lower",
+                        name: "area_l"
+                    },
+                    {
+                        data: "area_u",
+                        title: "Area Upper",
+                        name: "area_u"
+                    },
+                    {
+                        data: "elev_l",
+                        title: "Elevation Lower",
+                        name: "elev_l"
+                    },
+                    {
+                        data: "elev_u",
+                        title: "Elevation Upper",
+                        name: "elev_u"
+                    },
+                    {
+                        data: "iwi_l",
+                        title: "IWI Lower",
+                        name: "iwi_l"
+                    },
+                    {
+                        data: "iwi_u",
+                        title: "IWI Upper",
+                        name: "iwi_u"
+                    },
+                    {
+                        data: "bmmi_l",
+                        title: "BMMI Lower",
+                        name: "bmmi_l"
+                    },
+                    {
+                        data: "bmmi_u",
+                        title: "BMMI Upper",
+                        name: "bmmi_u"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+                        "visible": false
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return row["genus"] + " " + data;
+                        },
+                        "targets": 3
+                    },
+                    {
+                        width: 50, targets: [0, 1]
+                    },
+                    {
+                        "targets": 1,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'select-checkbox',
+                        'render': function (data, type, full, meta) {
+                            return '<input type="checkbox" checked>';
                         }
                     }
                 ],
@@ -2347,6 +1820,134 @@
             $('#filteredFishTable').DataTable(config);
         }
 
+        function populateFilteredFishTableV2(data) {
+            $('#filteredFishTable').DataTable().destroy();
+            $('#filteredFishTable').empty();
+            var config = {
+                data: data,
+                "columns": [
+                    {
+                        data: "common_name",
+                        title: "Common Name",
+                        name: "common_name"
+                    },
+                    {
+                        data: "species",
+                        title: "Scientific Name",
+                        name: "scientific_name"
+                    },
+                    {
+                        data: "genus",
+                        title: "Genus",
+                        name: "genus"
+                    },
+                    {
+                        data: "genusID",
+                        title: "Genus Id",
+                        name: "genus_id"
+                    },
+                    {
+                        data: "species_id",
+                        title: "Species Id",
+                        name: "species_id"
+
+                    },
+                    {
+                        data: "mean_weight",
+                        title: "Mean Weight",
+                        name: "mean_weight"
+                    },
+                    {
+                        data: "rarity",
+                        title: "Rarity",
+                        name: "rarity"
+                    },
+                    {
+                        data: "thinning",
+                        title: "&beta;",
+                        name: "beta"
+                    },
+                    {
+                        data: "thin_adj",
+                        title: "&Delta;",
+                        name: "delta"
+                    },
+                    {
+                        data: "slope_l",
+                        title: "Slope Lower",
+                        name: "slope_l"
+                    },
+                    {
+                        data: "slope_u",
+                        title: "Slope Upper",
+                        name: "slope_u"
+                    },
+                    {
+                        data: "area_l",
+                        title: "Area Lower",
+                        name: "area_l"
+                    },
+                    {
+                        data: "area_u",
+                        title: "Area Upper",
+                        name: "area_u"
+                    },
+                    {
+                        data: "elev_l",
+                        title: "Elevation Lower",
+                        name: "elev_l"
+                    },
+                    {
+                        data: "elev_u",
+                        title: "Elevation Upper",
+                        name: "elev_u"
+                    },
+                    {
+                        data: "iwi_l",
+                        title: "IWI Lower",
+                        name: "iwi_l"
+                    },
+                    {
+                        data: "iwi_u",
+                        title: "IWI Upper",
+                        name: "iwi_u"
+                    },
+                    {
+                        data: "bmmi_l",
+                        title: "BMMI Lower",
+                        name: "bmmi_l"
+                    },
+                    {
+                        data: "bmmi_u",
+                        title: "BMMI Upper",
+                        name: "bmmi_u"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                        "visible": false
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return row["genus"] + " " + data;
+                        },
+                        "targets": 1
+                    },
+                    {
+                        "bSortable": false,
+                        "aTargets": [0, 1]
+                    }
+                ],
+                sorting: false,
+                searching: false,
+                paging: false,
+                bInfo: false
+            };
+            $('#filteredFishTable').closest('div').show();
+            $('#filteredFishTable').DataTable(config);
+        }
+
         function populateCalcTable(data) {
             var d2 = JSON.parse(JSON.stringify(data));
             $('#calc_table').DataTable().destroy();
@@ -2444,21 +2045,6 @@
             selectedHuc = hucID.substring(0, 8);
             return huc8;
         }
-
-        $(function () {
-            $("#rarity_range").slider({
-                range: true,
-                min: 1,
-                max: 10,
-                values: [1, 10],
-                slide: function (event, ui) {
-                    $("#rarity_value").val(ui.values[0] + " - " + ui.values[1]);
-                }
-            });
-            $("#rarity_value").val($("#rarity_range").slider("values", 0) +
-                " - " + $("#rarity_range").slider("values", 1));
-
-        });
 
         {# Accordion JS #}
 
@@ -2644,65 +2230,38 @@
             </div>
             <br class="row" id="streamData">
             <div id="fish_filters" style="display:none;">
-                {#                <button class="accordion">Fish Assemblage Filters</button>#}
                 <div class="filterTitle">Fish Assemblage Filters</div>
                 <div style="text-align:center;">
                     <div class="panel" id="assemblage_filters">
                         <div class="fish_filter">
-                            <input id="width_filter" type="button" name="width_10_11" value="Width" class="filterButton"
-                                   align="center" title="Filter fish by stream width."><br>
-                            <input type="text" id="filter_field" class="width_value" placeholder="(m)"
-                                   title="Enter a value in meters.">
-                        </div>
-                        <div class="fish_filter">
-                            <input id="depth_filter" type="button" name="depth_8_9" value="Depth" class="filterButton"
-                                   align="center" title="Filter fish by stream depth."><br>
-                            <input type="text" id="filter_field" class="depth_value" placeholder="(cm)"
-                                   title="Enter a value in centimeters.">
-                        </div>
-                        <div class="fish_filter">
-                            <input id="area_filter" type="button" name="area_12_13" value="Area" class="filterButton"
+                            <input id="area_filter" type="button" name="area_13_14" value="Area" class="filterButton"
                                    align="center" title="Filter fish by stream drainage area."><br>
                             <input type="text" id="filter_field" class="area_value" placeholder="(ha)"
                                    title="Enter a value in hectares.">
                         </div>
                         <div class="fish_filter">
-                            <input id="slope_filter" type="button" name="slope_16_17" value="Slope" class="filterButton"
+                            <input id="slope_filter" type="button" name="slope_11_12" value="Slope" class="filterButton"
                                    align="center" title="Filter fish by stream slope."><br>
                             <input type="text" id="filter_field" class="slope_value" placeholder="(%)"
                                    title="Enter a value as a percent grade.">
                         </div>
-                        <div class="fish_filter" style="margin-left:40px;">
-                            <input id="cond_filter" type="button" name="cond_20_21" value="Conductivity"
-                                   class="filterButton streamChem" align="center" title="Filter fish by stream conductivity."><br>
-                            <input type="text" id="filter_field" class="cond_value" placeholder="(uS/cm2)"
-                                   title="Enter a value in micro-Siemens per square centimeter.">
+                         <div class="fish_filter">
+                            <input id="elevation_filter" type="button" name="elevation_15_16" value="Mean Elevation" class="filterButton"
+                                   align="center" title="Filter fish by mean elevation."><br>
+                            <input type="text" id="filter_field" class="elevation_value" placeholder="(m)"
+                                   title="Enter a value in meters.">
                         </div>
                         <div class="fish_filter">
-                            <input id="do_filter" type="button" name="do_22_23" value="Dissolved Oxygen"
-                                   class="filterButton streamChem" align="center"
-                                   title="Filter fish by stream dissolved oxygen."><br>
-                            <input type="text" id="filter_field" class="do_value" placeholder="(% sat)"
-                                   title="Enter a value as percentage.">
+                            <input id="iwi_filter" type="button" name="iwi_17_18" value="Index of Watershed Integrity" class="filterButton"
+                                   align="center" title="Filter fish by index of watershed integrity."><br>
+                            <input type="text" id="filter_field" class="iwi_value" placeholder=""
+                                   title="Enter a value as an index of watershed integrity.">
                         </div>
                         <div class="fish_filter">
-                            <input id="ph_filter" type="button" name="ph_18_19" value="pH" class="filterButton streamChem"
-                                   align="center" title="Filter fish by stream pH."><br>
-                            <input type="text" id="filter_field" class="ph_value" placeholder="(SU)"
-                                   title="Enter a value in standard units.">
-                        </div>
-                        <div class="fish_filter">
-                            <input id="tss_filter" type="button" name="tss_14_15" value="Suspended Solids"
-                                   class="filterButton streamChem"
-                                   align="center" title="Filter fish by stream suspended solids."><br>
-                            <input type="text" id="filter_field" class="tss_value" placeholder="(mg/l)"
-                                   title="Enter a value in milligrams per liter.">
-                        </div>
-                        <div class="fish_filter" style="margin-left: 40px;">
-                            <input id="rarity_filter" type="button" name="rarity_24" value="Rarity" class="filterButton fishRarity"
-                                   align="center" title="Filter fish by rarity.">
-                            <input title="Rarity Range" type="text" id="rarity_value" readonly>
-                            <div id="rarity_range"></div>
+                            <input id="bmmi_filter" type="button" name="bmmi_19_20" value="Benthic Invertebrate Index" class="filterButton"
+                                   align="center" title="Filter fish by benthic invertebrate index."><br>
+                            <input type="text" id="filter_field" class="bmmi_value" placeholder=""
+                                   title="Enter a value as a value of benthic invertebrate index">
                         </div>
                     </div>
                 </div>

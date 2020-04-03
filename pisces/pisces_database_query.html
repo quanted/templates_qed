@@ -39,6 +39,9 @@
     select {
         border: none;
     }
+    #fishGroup {
+        height: inherit;
+    }
 
     #parameterTable {
         border-bottom: 0px solid #111;
@@ -65,10 +68,10 @@
 
     #queryParameters {
         display: none;
-        box-shadow: 0px 1px 3px 0px black;
-        border-radius: 10px;
+        {#box-shadow: 0px 1px 3px 0px black;#}
+        {#border-radius: 10px;#}
         padding: 10px;
-        margin: 10px -100px;
+        {#margin: 10px -100px;#}
     }
 
     #queryResults {
@@ -190,6 +193,9 @@
         margin-bottom: 25px;
         width: 100%;
     }
+    #taxonomyTable tbody tr td {
+        height: 200px;
+    }
 
     .detailTitle {
         font-style: italic;
@@ -230,6 +236,7 @@
 
     .noscroll select {
         overflow: hidden;
+        scrollbar-width: none;
     }
 
     .noshow {
@@ -251,6 +258,42 @@
     #resultsTable_paginate {
         font-size: 10px !important;
     }
+
+    #queryParameterTable {
+        border: none;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .queryTable {
+        width: 100%;
+        border-spacing: 0;
+    }
+
+    table.queryDetails {
+        line-height: 8px;
+        width: 99%;
+        border: none;
+        margin: 0 10px;
+        box-shadow: none;
+        font-size: 8px;
+    }
+    .tableHeader td {
+        font-weight: bold;
+        background: lightgray;
+        border-radius: 0;
+    }
+    table.queryTable * {
+        font-size: 11px;
+        border: none;
+        box-shadow: none;
+        line-height: 1.0;
+    }
+    table.queryTable col:nth-child(even) {
+        width: 15%;
+        min-width: 25px;
+    }
+
 
 </style>
 
@@ -286,12 +329,22 @@
                 $("#meanLengthSlider").slider("values", [1, 78]);
                 $("#maxAgeSlider").slider("values", [1, 25]);
 
+                $("#ubiquitySlider").slider("values", [0, 75]);
+                $("#extentSlider").slider("values", [0, 77]);
+                $("#toleranceSlider").slider("values", [0, 94]);
+                $("#robustnessSlider").slider("values", [0, 47]);
+
                 // reset slider displayed values
                 $("#maxLengthValue").val($("#maxLengthSlider").slider("values", 0) + " - " + $("#maxLengthSlider").slider("values", 1));
                 $("#rarityValue").val($("#raritySlider").slider("values", 0) + " - " + $("#raritySlider").slider("values", 1));
                 $('#meanWeightValue').val($("#meanWeightSlider").slider("values", 0) + " - " + $("#meanWeightSlider").slider("values", 1));
                 $('#meanLengthValue').val($("#meanLengthSlider").slider("values", 0) + " - " + $("#meanLengthSlider").slider("values", 1));
                 $('#maxAgeValue').val($("#maxAgeSlider").slider("values", 0) + " - " + $("#maxAgeSlider").slider("values", 1));
+
+                $("#ubiquityValue").val($("#ubiquitySlider").slider("values", 0) + " - " + $("#ubiquitySlider").slider("values", 1));
+                $('#extentValue').val($("#extentSlider").slider("values", 0) + " - " + $("#extentSlider").slider("values", 1));
+                $('#toleranceValue').val($("#toleranceSlider").slider("values", 0) + " - " + $("#toleranceSlider").slider("values", 1));
+                $('#robustnessValue').val($("#robustnessSlider").slider("values", 0) + " - " + $("#robustnessSlider").slider("values", 1));
                 return false;
             });
 
@@ -308,8 +361,9 @@
                 document.getElementById('fishDetailsTable').innerHTML = "";
                 document.getElementById('queryResults').style.display = "none";
                 setTimeout(generateQuery, 200);
-                var parameters = collectParameters();
-                populateParameterTable(parameters);
+                generateParameterTable();
+                {#var parameters = collectParameters();#}
+                {#populateParameterTable(parameters);#}
                 $('#queryParameters').show();
 {#                document.getElementById('queryResults').style.display = "flow-root";#}
                 return false;
@@ -389,20 +443,29 @@
             var benefit = $('#fishuse').val().map(function (i) {
                 return i + "=1&";
             }).toString().split(",").join("");
-            var tolerance = "tolerance=" + $('#tolerance').val().toString().trim().split(" ").join("_") + "&";
-{#            var tolerance = "tolerance=" + jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {#}
-{#                return i;#}
-{#            }).toString() + "&";#}
+
             var rarity = $('#rarityValue').val().split(' - ');
             rarity = "rarity=" + rarity[0] + "_" + rarity[1] + "&";
             var maxage = $('#maxAgeValue').val().split(' - ');
             maxage = "max_age=" + maxage[0] + "_" + maxage[1] + "&";
             var meanw = $('#meanWeightValue').val().split(' - ');
+            meanw[1] = (meanw[1] === "500") ? "7150" : meanw[1];
             meanw = "mean_weight=" + meanw[0] + "_" + meanw[1] + "&";
             var meanl = $('#meanLengthValue').val().split(' - ');
+            meanl[1] = (meanl[1] === "40") ? "78" : meanl[1];
             meanl = "mean_length=" + meanl[0] + "_" + meanl[1] + "&";
             var maxl = $('#maxLengthValue').val().split(' - ');
+            maxl[1] = (maxl[1] === "200") ? "610" : maxl[1];
             maxl = "max_length=" + maxl[0] + "_" + maxl[1] + "&";
+
+            var ubiquity = $('#ubiquityValue').val().split(' - ');
+            ubiquity = "ubiquity=" + ubiquity[0] + "_" + ubiquity[1] + "&";
+            var extent = $('#extentValue').val().split(' - ');
+            extent = "extent=" + extent[0] + "_" + extent[1] + "&";
+            var tolerance = $('#toleranceValue').val().split(' - ');
+            tolerance = "tolerance=" + tolerance[0] + "_" + tolerance[1] + "&";
+            var robustness = $('#robustnessValue').val().split(' - ');
+            robustness = "robustness=" + robustness[0] + "_" + robustness[1] + "&";
 
             var sys = $('#preferedSystem').val().map(function (i) {
                 return i + "=1&";
@@ -442,12 +505,6 @@
             if ($('#fishuse').val().length > 0) {
                 queryString = queryString + benefit;
             }
-            if ($('#tolerance').val().length > 0){
-                queryString = queryString + tolerance;
-            }
-{#            if (jQuery.makeArray($($('#tolerance')[0]["selectedOptions"])).length > 0) {#}
-{#                queryString = queryString + tolerance;#}
-{#            }#}
             if ($('#preferedSystem').val().length > 0) {
                 queryString = queryString + sys;
             }
@@ -470,7 +527,7 @@
                 queryString = queryString + topo;
             }
 
-            queryString = queryString + rarity + maxage + meanw + meanl + maxl;
+            queryString = queryString + rarity + maxage + meanw + meanl + maxl + ubiquity + extent + tolerance + robustness;
 
             if (queryString[queryString.length - 1] === '&') {
                 queryString = queryString.substring(0, queryString.length - 1);
@@ -493,7 +550,76 @@
                     document.getElementById('fishDetailsTable').innerHTML = "<p id='queryResultMes'>Query submission unsuccessful.</p>";
                 }
             });
-{#            populateFishTableTemp();#}
+        }
+
+        function generateParameterTable(){
+
+            var sciName = $('#sciName').val().trim();
+            var comName = $('#comName').val().trim();
+            var group= $('#fishGroup').val().toString().split(",").join(", ");
+            var native = "";
+            $('#native').val().map(function (i) {
+                if (i === "native_y") {
+                    native = "Native";
+                }
+                else if (i === "native_n") {
+                   native = "Introduced";
+                }
+            });
+
+            var fishUse = jQuery.makeArray($($('#fishuse')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+
+            var rarity = $('#rarityValue').val();
+            var maxAge = $('#maxAgeValue').val();
+            var meanWei = $('#meanWeightValue').val();
+            var meanLen = $('#meanLengthValue').val();
+            var maxLen = $('#maxLengthValue').val();
+
+            var tolerance = $('#toleranceValue').val();
+            var ubiquity = $('#ubiquityValue').val();
+            var extent = $('#extentValue').val();
+            var robustness = $('#robustnessValue').val();
+
+
+            var system = jQuery.makeArray($($('#preferedSystem')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var wPosition = jQuery.makeArray($($('#waterPosition')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var substrate = jQuery.makeArray($($('#substrate')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var habitat = jQuery.makeArray($($('#habitatType')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var clarity = jQuery.makeArray($($('#waterType')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var thermal = jQuery.makeArray($($('#thermal')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+            var topography = jQuery.makeArray($($('#topography')[0]["selectedOptions"]).map(function (i) {
+                return this.text;
+            })).toString().split(",").join(", ");
+
+            $("#queryParameterTable").html(
+                '<table class="queryTable"><col><col><col><col>' +
+                '<tr class="tableHeader"><td>Parameter</td><td>Value(s)</td><td>Parameter</td><td>Value(s)</td></tr>' +
+                '<tr class="tableValue"><td>Common Name</td><td>' + comName + '</td><td>Ubiquity</td><td>' + ubiquity.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Scientific Name</td><td> ' + sciName + ' </td><td>Extent</td><td>' + extent.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Tribe</td><td>' + group + '</td><td>Tolerance</td><td>' + tolerance.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Biogeography</td><td>' + native + '</td><td>Robustness</td><td>' + robustness.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Beneficial Use</td><td>' + fishUse + '</td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>PFG Rarity</td><td>' + rarity + '</td><td>Water Position</td><td>' + wPosition.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Max Age (yr)</td><td>' + maxAge + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Mean Weight (g)</td><td>' + meanWei + '</td><td>Habitat</td><td>' + habitat.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Mean Length (cm)</td><td>' + meanLen + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td>Max Length (cm)</td><td>' + maxLen + '</td><td>Thermal Regime</td><td>' + thermal.toString() + '</td></tr>' +
+                '<tr class="tableValue"><td></td><td></td><td>Topography</td><td>' + topography.toString() + '</td></tr>' +
+                '</table>');
         }
 
         function collectParameters() {
@@ -516,27 +642,17 @@
                 return this.text;
             })).toString().split(",").join(", ");
 
-            parameters["tolerance"] = $('#tolerance').val().toString().split(",").join(", ");
-{#            parameters["tolerance"] = jQuery.makeArray($($('#tolerance')[0]["selectedOptions"]).val()).map(function (i) {#}
-{#                if (i === "I") {#}
-{#                    return "Intolerant";#}
-{#                }#}
-{#                else if (i === "M") {#}
-{#                    return "Mid-Tolerant";#}
-{#                }#}
-{#                else if (i === "T") {#}
-{#                    return "Tolerant";#}
-{#                }#}
-{#                else if (i === "U") {#}
-{#                    return "Unspecified";#}
-{#                }#}
-{#            }).toString().split(",").join(", ");#}
-
             parameters["rarity"] = $('#rarityValue').val();
             parameters["maxage"] = $('#maxAgeValue').val();
             parameters["meanw"] = $('#meanWeightValue').val();
             parameters["meanl"] = $('#meanLengthValue').val();
             parameters["maxl"] = $('#maxLengthValue').val();
+
+            parameters["tolerance"] = $('#toleranceValue').val();
+            parameters["ubiquity"] = $('#ubiquityValue').val();
+            parameters["extent"] = $('#extentValue').val();
+            parameters["robustness"] = $('#robustnessValue').val();
+
 
             parameters["system"] = jQuery.makeArray($($('#preferedSystem')[0]["selectedOptions"]).map(function (i) {
                 return this.text;
@@ -590,11 +706,7 @@
                         data: "fishuse"
                     },
                     {
-                        title: "Tolerance",
-                        data: "tolerance"
-                    },
-                    {
-                        title: "Rarity",
+                        title: "PFG Rarity",
                         data: "rarity"
                     },
                     {
@@ -612,6 +724,22 @@
                     {
                         title: "Max Length (cm)",
                         data: "maxl"
+                    },
+                    {
+                        title: "Ubiquity",
+                        data: "ubiquity"
+                    },
+                    {
+                        title: "Extent",
+                        data: "extent"
+                    },
+                    {
+                        title: "Tolerance",
+                        data: "tolerance"
+                    },
+                    {
+                        title: "Robustness",
+                        data: "robustness"
                     },
                     {
                         title: "System",
@@ -717,11 +845,11 @@
             if (details["wdyd_brush"] === "1") substrate.push(" Woody Debris/Brush");
 
             // tolerance
-            var tolerance = [];
-            if (details["pollut_tol"] === "I"){tolerance.push(" Intolerant");}
-            else if (details["pollut_tol"] === "T") {tolerance.push(" Tolerant");}
-            else if (details["pollut_tol"] === "M") {tolerance.push(" Mid-Tolerant");}
-            else if (details["pollut_tol"] === "U") {tolerance.push(" Unspecified");}
+            {#var tolerance = [];#}
+            {#if (details["pollut_tol"] === "I"){tolerance.push(" Intolerant");}#}
+            {#else if (details["pollut_tol"] === "T") {tolerance.push(" Tolerant");}#}
+            {#else if (details["pollut_tol"] === "M") {tolerance.push(" Mid-Tolerant");}#}
+            {#else if (details["pollut_tol"] === "U") {tolerance.push(" Unspecified");}#}
 
             // use
             var use = [];
@@ -729,21 +857,28 @@
             if (details["nongame"] === "1") use.push(" Nongame");
             if (details["subsis_fish"] === "1") use.push(" Subsistence");
 
+            var ubiquity = (details["ubiquity"] == null) ? "NA" : details["ubiquity"].toFixed(3);
+            var extent = (details["extent"] == null) ? "NA" : details["extent"].toFixed(3);
+            var tolerance = (details["tolerance"] == null) ? "NA" : details["tolerance"].toFixed(3);
+            var robustness = (details["robustness"] == null) ? "NA" : details["robustness"].toFixed(3);
+
             // links
             var google_link = "https://www.google.com/search?tbm=isch&q=" + sName.replace(" ", "+");
             var wiki_link = "https://en.wikipedia.org/wiki/Special:Search/" + sName.replace(" ", "_");
 
             return '<h4 class="fishCName">' + capitalize_Words(cName) + '</h4>' + '<h5 class="fishSName">' + capitalize_Words(sName) + '</h5><p>' +
-                '<table class="fishDetails"><col><col><col><col><tr><td class="detailTitle">Tribe</td><td>' + details["group"] + '</td><td class="detailTitle">Biogeography</td><td id="alternating">' + native + '</td></tr>' +
-                '<tr><td class="detailTitle">Max Length (cm)</td><td id="alternating"> ' + details["max_length"].toFixed(1) + ' </td><td class="detailTitle">System</td><td>' + system.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td class="detailTitle">Lotic Habitat</td><td id="alternating">' + lotic.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Mean Length (cm)</td><td id="alternating">' + details["mean_length"].toFixed(1) + '</td><td class="detailTitle">Water Column</td><td>' + column.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Max Age (yr)</td><td>' + details["max_age"] + '</td><td class="detailTitle">Substrate</td><td id="alternating">' + substrate.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">A (W=A*L<sup>B</sup>)</td><td id="alternating">' + details["w_l_a"] + '</td><td class="detailTitle">Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td class="detailTitle">Thermal</td><td id="alternating">' + thermal.toString() + '</td></tr>' +
-                '<tr><td class="detailTitle">Rarity</td><td id="alternating">' + details["rarity"] + '</td><td class="detailTitle">Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
-                '<tr><td class="detailTitle">Gradient</td><td>' + gradient.toString() + '</td><td class="detailTitle">Location Notes</td><td id="alternating">' + details["locat_notes"] + '</td></tr>' +
-                '<tr><td class="detailTitle">Human Use</td><td id="alternating">' + use.toString() + '</td><td class="detailTitle">Tolerance to Disturbance</td><td>' + tolerance.toString() + '</td></tr></table>' +
+                '<table class="fishDetails"><col><col><col><col><tr><td>Tribe</td><td>' + details["group"] + '</td><td>Gradient</td><td>' + gradient.toString() + '</td></tr>' +
+                '<tr><td>Max Length (cm)</td><td> ' + details["max_length"].toFixed(1) + ' </td><td>Human Use</td><td>' + use.toString() + '</td></tr>' +
+                '<tr><td>Mean Weight (g)</td><td>' + details["mean_weight"].toFixed(1) + '</td><td>Biogeography</td><td>' + native + '</td></tr>' +
+                '<tr><td>Mean Length (cm)</td><td>' + details["mean_length"].toFixed(1) + '</td><td>System</td><td>' + system.toString() + '</td></tr>' +
+                '<tr><td>Max Age (yr)</td><td>' + details["max_age"] + '</td><td>Lotic Habitat</td><td>' + lotic.toString() + '</td></tr>' +
+                '<tr><td>A (W=A*L<sup>B</sup>)</td><td>' + details["w_l_a"] + '</td><td>Water Column</td><td>' + column.toString() +'</td></tr>' +
+                '<tr><td>B (W=A*L<sup>B</sup>)</td><td>' + details["w_l_b"] + '</td><td>Substrate</td><td>' + substrate.toString() + '</td></tr>' +
+                '<tr><td>PFG Rarity</td><td>' + details["rarity"] + '</td><td>Water Clarity</td><td>' + clarity.toString() + '</td></tr>' +
+                '<tr><td>Ubiquity</td><td>' + ubiquity + '</td><td>Thermal</td><td>' + thermal.toString() + '</td></tr>' +
+                '<tr><td>Extent</td><td>' + extent + '</td><td>Habitat Notes</td><td>' + details["habit_notes"] + '</td></tr>' +
+                '<tr><td>Tolerance</td><td>' + tolerance + '</td><td></td></tr>' +
+                '<tr><td>Robustness</td><td>' + robustness + '</td><td></td><td></td></tr></table>' +
                 '<div class="fish_links">Links for additional information on ' + capitalize_Words(cName) + ': <a href="' + google_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/google_logo.png" alt="Google Images" title="Link to Google Images"></a>' +
                 '<a href="' + wiki_link + '" target="_blank"><img class="link_image" src="/static_qed/pisces/images/wikipedia_logo.png" alt="Wikipedia page" title="Link to Wikipedia page"></a></div>'
                 ;
@@ -794,543 +929,6 @@
             $('#resultsTable').DataTable(config);
         }
 
-        function populateFishTableTemp() {
-            var testData = {
-                "species": [{
-                    "speciesid": 18,
-                    "genusid": 7,
-                    "genus": "ambloplites",
-                    "species": "constellatus",
-                    "commonname": "ozark bass",
-                    "family": "Centrarchidae",
-                    "group": "Black Bass",
-                    "native": "Y",
-                    "pfg_page": "489",
-                    "sportfishing": "1",
-                    "nongame": "0",
-                    "subsis_fish": "0",
-                    "pollut_tol": "U",
-                    "max_length": 19.0,
-                    "mean_length": 10.0,
-                    "mean_weight": 17.4,
-                    "thinning": 0.59,
-                    "thin_adj": 0.0,
-                    "max_age": 8,
-                    "w_l_a": 0.0154,
-                    "w_l_b": 3.05,
-                    "l_w_c": 0.0154,
-                    "l_w_d": 3.05,
-                    "regress": "0",
-                    "rarity": 3,
-                    "caves": "",
-                    "springs": "",
-                    "headwaters": "",
-                    "creeks": "1",
-                    "small_riv": "1",
-                    "med_riv": "1",
-                    "lge_riv": "",
-                    "lk_imp_pnd": "",
-                    "swp_msh_by": "",
-                    "coast_ocea": "",
-                    "riffles": "",
-                    "run_flopool": "",
-                    "pool_bckwtr": "1",
-                    "benthic": "",
-                    "surface": "",
-                    "nrshre_litt": "1",
-                    "opnwtr_pelag": "",
-                    "mud_slt_det": "",
-                    "sand": "",
-                    "gravel": "",
-                    "rck_rub_bol": "1",
-                    "vegetation": "",
-                    "wdyd_brush": "1",
-                    "clearwater": "1",
-                    "turbidwater": "",
-                    "warmwater": "1",
-                    "coolwater": "",
-                    "coldwater": "",
-                    "lowlands_lgr": "",
-                    "uplands_hgr": "",
-                    "locat_notes": "",
-                    "habit_notes": ""
-                },
-                    {
-                        "speciesid": 19,
-                        "genusid": 7,
-                        "genus": "ambloplites",
-                        "species": "rupestris",
-                        "commonname": "rock bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "489",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "M",
-                        "max_length": 42.5,
-                        "mean_length": 16.1,
-                        "mean_weight": 83.9,
-                        "thinning": 0.65,
-                        "thin_adj": 0.0142,
-                        "max_age": 9,
-                        "w_l_a": 0.0206,
-                        "w_l_b": 2.99,
-                        "l_w_c": 0.0206,
-                        "l_w_d": 2.99,
-                        "regress": "0",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "",
-                        "lk_imp_pnd": "1",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "1",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "",
-                        "rck_rub_bol": "1",
-                        "vegetation": "1",
-                        "wdyd_brush": "",
-                        "clearwater": "1",
-                        "turbidwater": "",
-                        "warmwater": "",
-                        "coolwater": "1",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 611,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "cataractae",
-                        "commonname": "shoal bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "497",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "U",
-                        "max_length": 65.0,
-                        "mean_length": 15.9,
-                        "mean_weight": 55.6,
-                        "thinning": 0.64,
-                        "thin_adj": 0.0,
-                        "max_age": 8,
-                        "w_l_a": 0.0114,
-                        "w_l_b": 3.07,
-                        "l_w_c": 0.01135,
-                        "l_w_d": 3.07,
-                        "regress": "1",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "1",
-                        "lk_imp_pnd": "",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "1",
-                        "run_flopool": "1",
-                        "pool_bckwtr": "",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "",
-                        "rck_rub_bol": "1",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "",
-                        "turbidwater": "",
-                        "warmwater": "1",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 612,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "coosae",
-                        "commonname": "redeye bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "496",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "U",
-                        "max_length": 47.5,
-                        "mean_length": 12.8,
-                        "mean_weight": 28.2,
-                        "thinning": 0.61,
-                        "thin_adj": 0.0,
-                        "max_age": 7,
-                        "w_l_a": 0.0114,
-                        "w_l_b": 3.07,
-                        "l_w_c": 0.01135,
-                        "l_w_d": 3.07,
-                        "regress": "1",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "",
-                        "lk_imp_pnd": "",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "1",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "",
-                        "rck_rub_bol": "1",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "",
-                        "turbidwater": "",
-                        "warmwater": "1",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 613,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "dolomieu",
-                        "commonname": "smallmouth bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "497",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "M",
-                        "max_length": 70.0,
-                        "mean_length": 21.2,
-                        "mean_weight": 122.0,
-                        "thinning": 0.67,
-                        "thin_adj": 0.006,
-                        "max_age": 9,
-                        "w_l_a": 0.0113,
-                        "w_l_b": 3.04,
-                        "l_w_c": 0.0113,
-                        "l_w_d": 3.04,
-                        "regress": "0",
-                        "rarity": 4,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "1",
-                        "lk_imp_pnd": "1",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "1",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "1",
-                        "rck_rub_bol": "1",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "1",
-                        "turbidwater": "",
-                        "warmwater": "",
-                        "coolwater": "1",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 615,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "notius",
-                        "commonname": "suwannee bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "494",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "U",
-                        "max_length": 35.0,
-                        "mean_length": 10.3,
-                        "mean_weight": 14.5,
-                        "thinning": 0.59,
-                        "thin_adj": 0.0,
-                        "max_age": 6,
-                        "w_l_a": 0.0114,
-                        "w_l_b": 3.07,
-                        "l_w_c": 0.01135,
-                        "l_w_d": 3.07,
-                        "regress": "1",
-                        "rarity": 4,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "",
-                        "lk_imp_pnd": "",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "1",
-                        "run_flopool": "1",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "",
-                        "rck_rub_bol": "1",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "",
-                        "turbidwater": "",
-                        "warmwater": "1",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 616,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "punctulatus",
-                        "commonname": "spotted bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "494",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "M",
-                        "max_length": 60.0,
-                        "mean_length": 17.9,
-                        "mean_weight": 66.4,
-                        "thinning": 0.64,
-                        "thin_adj": -0.0145,
-                        "max_age": 5,
-                        "w_l_a": 0.011,
-                        "w_l_b": 3.02,
-                        "l_w_c": 0.011,
-                        "l_w_d": 3.02,
-                        "regress": "0",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "",
-                        "lk_imp_pnd": "1",
-                        "swp_msh_by": "",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "1",
-                        "pool_bckwtr": "",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "",
-                        "sand": "",
-                        "gravel": "1",
-                        "rck_rub_bol": "",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "1",
-                        "turbidwater": "",
-                        "warmwater": "",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 618,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "salmoides",
-                        "commonname": "largemouth bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "493",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "M",
-                        "max_length": 95.0,
-                        "mean_length": 29.6,
-                        "mean_weight": 191.0,
-                        "thinning": 0.69,
-                        "thin_adj": -0.0051,
-                        "max_age": 10,
-                        "w_l_a": 0.0036,
-                        "w_l_b": 3.21,
-                        "l_w_c": 0.00362,
-                        "l_w_d": 3.21,
-                        "regress": "0",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "1",
-                        "lk_imp_pnd": "1",
-                        "swp_msh_by": "1",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "1",
-                        "sand": "1",
-                        "gravel": "",
-                        "rck_rub_bol": "",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "",
-                        "turbidwater": "",
-                        "warmwater": "",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    },
-                    {
-                        "speciesid": 620,
-                        "genusid": 119,
-                        "genus": "micropterus",
-                        "species": "salmoides salmoides",
-                        "commonname": "northern largemouth bass",
-                        "family": "Centrarchidae",
-                        "group": "Black Bass",
-                        "native": "Y",
-                        "pfg_page": "494",
-                        "sportfishing": "1",
-                        "nongame": "0",
-                        "subsis_fish": "0",
-                        "pollut_tol": "U",
-                        "max_length": 95.0,
-                        "mean_length": 29.6,
-                        "mean_weight": 191.0,
-                        "thinning": 0.69,
-                        "thin_adj": 0.0,
-                        "max_age": 10,
-                        "w_l_a": 0.0036,
-                        "w_l_b": 3.21,
-                        "l_w_c": 0.00362,
-                        "l_w_d": 3.21,
-                        "regress": "0",
-                        "rarity": 3,
-                        "caves": "",
-                        "springs": "",
-                        "headwaters": "",
-                        "creeks": "1",
-                        "small_riv": "1",
-                        "med_riv": "1",
-                        "lge_riv": "1",
-                        "lk_imp_pnd": "1",
-                        "swp_msh_by": "1",
-                        "coast_ocea": "",
-                        "riffles": "",
-                        "run_flopool": "",
-                        "pool_bckwtr": "1",
-                        "benthic": "",
-                        "surface": "",
-                        "nrshre_litt": "",
-                        "opnwtr_pelag": "",
-                        "mud_slt_det": "1",
-                        "sand": "1",
-                        "gravel": "",
-                        "rck_rub_bol": "",
-                        "vegetation": "",
-                        "wdyd_brush": "",
-                        "clearwater": "",
-                        "turbidwater": "",
-                        "warmwater": "",
-                        "coolwater": "",
-                        "coldwater": "",
-                        "lowlands_lgr": "",
-                        "uplands_hgr": "",
-                        "locat_notes": "",
-                        "habit_notes": ""
-                    }]
-            };
-            populateFishTable(testData['species']);
-        }
-
         function capitalize_Words(str) {
             return str.replace(/\w\S*/g, function (txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -1358,23 +956,19 @@
                     <div id="scicomFields" style="margin-bottom: 25px;">
                         <div style="display: block;text-align: center;margin: auto;">
                             <label for="sciName" style="margin-right:15px; display:unset;">Scientific Name</label>
-                            <input id="sciName" name="sciName" type="text"
-                                   title="Scientific Name" style="width:350px;padding-left: 5px; height: 28px;">
+                            <input id="sciName" name="sciName" type="text" title="Scientific Name" style="width:350px;padding-left: 5px; height: 28px;">
                             <input class="searchButton" id="sciNameSubmit" type="button" title="Search Scientific Name">
                         </div>
                         <div style="margin-bottom: 10px;"></div>
                         <div style="display: block;text-align: center;margin: auto;">
                             <label for="comName" style="margin-right:15px;display:unset;">Common Name</label>
-                            <input id="comName" name="comName" type="text"
-                                   title="Common Name" style="width:350px;padding-left: 5px; height: 28px;">
-                            {#                            <input class="searchButton" id="comNameSubmit" type="button" title="Search Common Name">#}
+                            <input id="comName" name="comName" type="text" title="Common Name" style="width:350px;padding-left: 5px; height: 28px;">
                         </div>
 
                     </div>
                     <ul class="accordion" id="accordionGroup">
                         <li>
-                            <a class="accordion-title" href="#pane-3" title="Advanced search parameters">Advanced
-                                Search</a>
+                            <a class="accordion-title" href="#pane-3" title="Advanced search parameters">Advanced Search</a>
                             <div class="accordion-pane" id="pane-3" style="display:inline-block;overflow:hidden">
                                 <h4 class="sectionTitle">Taxonomy</h4>
                                 <table id="taxonomyTable" style="width:100%">
@@ -1385,57 +979,34 @@
                                             <label for="fishGroup"></label>
                                             <select multiple id="fishGroup" title="Select one or multiple groups"
                                                     style="width: 100%;overflow: overlay;">
-{#                                                <option value="Anchovies">Anchovies</option>#}
                                                 <option value="Black Bass">Black Bass</option>
-{#                                                <option value="Bowfin">Bowfin</option>#}
-{#                                                <option value="Burbot">Burbot</option>#}
                                                 <option value="Carp">Carp</option>
                                                 <option value="Catfish">Catfish</option>
                                                 <option value="Cavefish">Cavefish</option>
-{#                                                <option value="Characins">Characins</option>#}
                                                 <option value="Cichlid">Cichlid</option>
-{#                                                <option value="Clupeids">Clupeids</option>#}
-{#                                                <option value="Cod">Cod</option>#}
                                                 <option value="Darter">Darter</option>
-{#                                                <option value="Drum">Drum</option>#}
-{#                                                <option value="Eel">Eel</option>#}
-{#                                                <option value="Flounders">Flounders</option>#}
                                                 <option value="Gar">Gar</option>
                                                 <option value="Goby">Goby</option>
-{#                                                <option value="Knifefish">Knifefish</option>#}
                                                 <option value="Lamprey">Lamprey</option>
                                                 <option value="Livebearer">Livebearer</option>
-{#                                                <option value="Loach">Loach</option>#}
                                                 <option value="Madtom">Madtom</option>
                                                 <option value="Minnow">Minnow</option>
-{#                                                <option value="Mooneye">Mooneye</option>#}
-{#                                                <option value="Mudminnows">Mudminnows</option>#}
-{#                                                <option value="Mullet">Mullet</option>#}
                                                 <option value="Misc">Misc</option>
-{#                                                <option value="Needlefish">Needlefish</option>#}
-{#                                                <option value="Paddlefish">Paddlefish</option>#}
                                                 <option value="Perch">Perch</option>
                                                 <option value="Pike">Pike</option>
-{#                                                <option value="Pipefish">Pipefish</option>#}
-{#                                                <option value="Pirate Perch">Pirate Perch</option>#}
                                                 <option value="Pupfish">Pupfish</option>
                                                 <option value="Pygmy Sunfish">Pygmy Sunfish</option>
                                                 <option value="Salmon and Trout">Salmon and Trout</option>
-{#                                                <option value="Salmonids">Salmonids</option>#}
                                                 <option value="Sculpin">Sculpin</option>
                                                 <option value="Shad and Herring">Shad and Herring</option>
                                                 <option value="Silverside">Silverside</option>
                                                 <option value="Smelt">Smelt</option>
-{#                                                <option value="Snakeheads">Snakeheads</option>#}
                                                 <option value="Splitfin">Splitfin</option>
                                                 <option value="Stickleback">Stickleback</option>
-{#                                                <option value="Stingrays">Stingrays</option>#}
                                                 <option value="Sturgeon">Sturgeon</option>
                                                 <option value="Sucker">Sucker</option>
                                                 <option value="Sunfish">Sunfish</option>
-{#                                                <option value="Surfperch">Surfperch</option>#}
                                                 <option value="Topminnow">Topminnow</option>
-{#                                                <option value="Trout-Perch">Trout-Perch</option>#}
                                                 <option value="White Bass">White Bass</option>
                                                 <option value="Whitefish">Whitefish</option>
                                             </select>
@@ -1469,21 +1040,7 @@
                                                 <option value="nongame">Non-Game</option>
                                             </select>
                                         </td>
-                                        <td class="noscroll" style="width:33%; text-align: center;"><strong>Tolerance to
-                                            Disturbance/Siltation</strong>
-                                            <select multiple id="tolerance"
-                                                    title="Select any options to apply to query"
-                                                    size="4"
-                                                    style="margin: 1px; width:100%; overflow: auto;">
-                                                <option value="I">Intolerant</option>
-                                                <option value="M">Mid-Tolerant</option>
-                                                <option value="T">Tolerant</option>
-                                                <option value="U">Unspecified</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:33%; text-align: center;" title="Select rarity range"><strong>Rarity</strong>
+                                        <td style="width:33%; text-align: center;" title="Select rarity range"><strong> PFG Rarity</strong>
                                             <input type="text" id="rarityValue" readonly
                                                    style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
@@ -1503,6 +1060,8 @@
                                             </script>
                                             <div id="raritySlider" style="margin: 0 20px;"></div>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td style="width:33%; text-align: center;" title="Select max age range"><strong>Max
                                             Age (yr)</strong>
                                             <input type="text" id="maxAgeValue" readonly
@@ -1524,8 +1083,6 @@
                                             </script>
                                             <div id="maxAgeSlider" style="margin: 0 20px;"></div>
                                         </td>
-                                    </tr>
-                                    <tr>
                                         <td style="width:33%; text-align: center;" title="Select mean weight range">
                                             <strong>Mean Weight (g)</strong>
                                             <input type="text" id="meanWeightValue" readonly
@@ -1535,8 +1092,8 @@
                                                     $("#meanWeightSlider").slider({
                                                         range: true,
                                                         min: 0,
-                                                        max: 7125,
-                                                        values: [0, 7125],
+                                                        max: 500,
+                                                        values: [0, 500],
                                                         slide: function (event, ui) {
                                                             $("#meanWeightValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1556,8 +1113,8 @@
                                                     $("#meanLengthSlider").slider({
                                                         range: true,
                                                         min: 1,
-                                                        max: 78,
-                                                        values: [1, 78],
+                                                        max: 40,
+                                                        values: [1, 40],
                                                         slide: function (event, ui) {
                                                             $("#meanLengthValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1569,17 +1126,15 @@
                                             <div id="meanLengthSlider" style="margin: 0 20px;"></div>
                                         </td>
                                         <td style="width:34%; text-align: center;" title="Select max length range">
-                                            <strong>Max Total Length
-                                                (cm)</strong>
-                                            <input type="text" id="maxLengthValue" readonly
-                                                   style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <strong>Max Total Length (cm)</strong>
+                                            <input type="text" id="maxLengthValue" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
                                             <script>
                                                 $(function () {
                                                     $("#maxLengthSlider").slider({
                                                         range: true,
                                                         min: 1,
-                                                        max: 610,
-                                                        values: [1, 610],
+                                                        max: 200,
+                                                        values: [1, 200],
                                                         slide: function (event, ui) {
                                                             $("#maxLengthValue").val(ui.values[0] + " - " + ui.values[1]);
                                                         }
@@ -1589,6 +1144,88 @@
                                                 });
                                             </script>
                                             <div id="maxLengthSlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:33%; text-align: center;" title="Select ubiquity range">
+                                            <strong>Ubiquity</strong>
+                                            <input type="text" id="ubiquityValue" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#ubiquitySlider").slider({
+                                                        range: true,
+                                                        min: 0,
+                                                        max: 75,
+                                                        values: [0, 75],
+                                                        slide: function (event, ui) {
+                                                            $("#ubiquityValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $('#ubiquityValue').val($("#ubiquitySlider").slider("values", 0) +
+                                                        " - " + $("#ubiquitySlider").slider("values", 1));
+                                                })
+                                            </script>
+                                            <div id="ubiquitySlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                        <td style="width:33%; text-align: center;" title="Select extent range">
+                                            <strong>Extent</strong>
+                                            <input type="text" id="extentValue" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#extentSlider").slider({
+                                                        range: true,
+                                                        min: 0,
+                                                        max: 77,
+                                                        values: [0, 77],
+                                                        slide: function (event, ui) {
+                                                            $("#extentValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $('#extentValue').val($("#extentSlider").slider("values", 0) +
+                                                        " - " + $("#extentSlider").slider("values", 1));
+                                                })
+                                            </script>
+                                            <div id="extentSlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                        <td style="width:34%; text-align: center;" title="Select tolerance range">
+                                            <strong>Tolerance</strong>
+                                            <input type="text" id="toleranceValue" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#toleranceSlider").slider({
+                                                        range: true,
+                                                        min: 0,
+                                                        max: 94,
+                                                        values: [0, 94],
+                                                        slide: function (event, ui) {
+                                                            $("#toleranceValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $('#toleranceValue').val($("#toleranceSlider").slider("values", 0) +
+                                                        " - " + $("#toleranceSlider").slider("values", 1));
+                                                })
+                                            </script>
+                                            <div id="toleranceSlider" style="margin: 0 20px;"></div>
+                                        </td>
+                                        <td style="width:34%; text-align: center;" title="Select robustness range">
+                                            <strong>Robustness</strong>
+                                            <input type="text" id="robustnessValue" readonly style="border:0; color:darkblue; font-weight:bold; font-size: 14px; text-align: center;">
+                                            <script>
+                                                $(function () {
+                                                    $("#robustnessSlider").slider({
+                                                        range: true,
+                                                        min: 0,
+                                                        max: 47,
+                                                        values: [0, 47],
+                                                        slide: function (event, ui) {
+                                                            $("#robustnessValue").val(ui.values[0] + " - " + ui.values[1]);
+                                                        }
+                                                    });
+                                                    $("#robustnessValue").val($("#robustnessSlider").slider("values", 0) +
+                                                        " - " + $("#robustnessSlider").slider("values", 1));
+                                                });
+                                            </script>
+                                            <div id="robustnessSlider" style="margin: 0 20px;"></div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -1615,10 +1252,10 @@
                                                 <option value="coast_ocea">Coastal/Ocean</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;"><strong>Water Position</strong>
-                                            <select multiple id="waterPosition" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Water Position</strong>
+                                            <select multiple id="waterPosition"
                                                     title="Select any options to apply to query"
-                                                    style="overflow: auto;width:100%;" size="6">
+                                                    style="width:100%;" size="6">
                                                 <option value="benthic">Benthic</option>
                                                 <option value="surface">Surface</option>
                                                 <option  value="opnwtr_pelag">Open
@@ -1629,10 +1266,10 @@
                                                 </option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;"><strong>Substrate</strong>
-                                            <select multiple id="substrate" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Substrate</strong>
+                                            <select multiple id="substrate"
                                                     title="Select any options to apply to query"
-                                                    style="width:100%;overflow: auto;"
+                                                    style="width:100%;"
                                                     size="6">
                                                 <option value="mud_slt_det">Mud/Silt</option>
                                                 <option value="sand">Sand</option>
@@ -1645,38 +1282,38 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width:25%; text-align: center;"><strong>Habitat Type</strong>
-                                            <select multiple id="habitatType" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Habitat Type</strong>
+                                            <select multiple id="habitatType"
                                                     title="Select any options to apply to query"
-                                                    style="overflow: auto;width:100%;" size="3">
+                                                    style="width:100%;" size="3">
                                                 <option value="riffles" title="Riffles">Riffles</option>
                                                 <option value="run_flopool">Runs</option>
                                                 <option value="pool_bckwtr">Pools/Backwater
                                                 </option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;"><strong>Water Clarity</strong>
-                                            <select multiple id="waterType" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Water Clarity</strong>
+                                            <select multiple id="waterType"
                                                     title="Select any options to apply to query"
-                                                    style="overflow: auto;width:100%;"
+                                                    style="width:100%;"
                                                     size="3">
                                                 <option value="clearwater">Clear</option>
                                                 <option value="turbidwater">Turbid</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
-                                            <select multiple id="thermal" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Thermal Regime</strong>
+                                            <select multiple id="thermal"
                                                     title="Select any options to apply to query"
-                                                    style="overflow: auto;width:100%;" size="3">
+                                                    style="width:100%;" size="3">
                                                 <option value="coldwater">Cold</option>
                                                 <option value="coolwater">Cool</option>
                                                 <option value="warmwater">Warm</option>
                                             </select>
                                         </td>
-                                        <td style="width:25%; text-align: center;"><strong>Topography</strong>
-                                            <select multiple id="topography" class="noscroll"
+                                        <td class="noscroll" style="width:25%; text-align: center;"><strong>Topography</strong>
+                                            <select multiple id="topography"
                                                     title="Select any options to apply to query"
-                                                    style="overflow: auto;width:100%;" size="3">
+                                                    style="width:100%;" size="3">
                                                 <option value="lowlands_lgr">Lowlands</option>
                                                 <option value="uplands_hgr">Uplands</option>
 
@@ -1691,7 +1328,7 @@
                                     <input id="resetQuery" name="resetQuery" type="reset" value="Reset Query"
                                            title="Reset all query parameter fields"/>
                                 </div>
-                                <p style="font-size:12px;">*Note: Use cntr + click to make multiple
+                                <p style="font-size:14px;">*Note: Use cntr + click to make multiple
                                     selections/deselections.</p>
                             </div>
                         </li>
@@ -1707,30 +1344,31 @@
                 </tr>
                 <div id="queryParameters">
                     <h4 style="text-align:center;">Submitted Query Parameters</h4>
-                    <table id="parameterTable" class="display" width="100%" title="Parameters used to generate query">
-                        <thead>
-                        <tr>
-                            <th>Common Name</th>
-                            <th>Scientific Name</th>
-                            <th>Tribe</th>
-                            <th>Biogeography</th>
-                            <th>Beneficial Use</th>
-                            <th>Tolerance</th>
-                            <th>Rarity</th>
-                            <th>Max Age (yr)</th>
-                            <th>Mean Weight (g)</th>
-                            <th>Mean Length (cm)</th>
-                            <th>Max Length (cm)</th>
-                            <th>System</th>
-                            <th>Water Position</th>
-                            <th>Substrate</th>
-                            <th>Habitat</th>
-                            <th>Water Clarity</th>
-                            <th>Thermal Regime</th>
-                            <th>Topography</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div id="queryParameterTable"></div>
+{#                    <table id="parameterTable" class="display" width="100%" title="Parameters used to generate query">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th>Common Name</th>#}
+{#                            <th>Scientific Name</th>#}
+{#                            <th>Tribe</th>#}
+{#                            <th>Biogeography</th>#}
+{#                            <th>Beneficial Use</th>#}
+{#                            <th>Tolerance</th>#}
+{#                            <th>Rarity</th>#}
+{#                            <th>Max Age (yr)</th>#}
+{#                            <th>Mean Weight (g)</th>#}
+{#                            <th>Mean Length (cm)</th>#}
+{#                            <th>Max Length (cm)</th>#}
+{#                            <th>System</th>#}
+{#                            <th>Water Position</th>#}
+{#                            <th>Substrate</th>#}
+{#                            <th>Habitat</th>#}
+{#                            <th>Water Clarity</th>#}
+{#                            <th>Thermal Regime</th>#}
+{#                            <th>Topography</th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                    </table>#}
                 </div>
                 <div id="queryResults">
                     <h4 style="text-align:center;">Database Query Results</h4>

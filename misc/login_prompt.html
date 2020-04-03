@@ -3,7 +3,7 @@
 <form method="post" name="auth">
     {% csrf_token %}
     <table class="input_table">
-        <caption><h3>Must login to continue to model input page</h3></caption>
+        <caption>{{text|safe}}</caption>
         <tr>
             <th>Username:</th><td><input type="text" name="username" id="username"></td>
         </tr>

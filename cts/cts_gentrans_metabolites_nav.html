@@ -4,6 +4,12 @@
 <script>
 $(document).ready(function() {
     $("#pchemprop_table").css('display', 'table');
+    // 508 compliance additions
+    // +++++++++++++++++++++++++++++++
+    $('canvas').each(function() {
+        console.log($(this));
+    });
+    // +++++++++++++++++++++++++++++++
 });
 </script>
 
@@ -20,7 +26,7 @@ $(document).ready(function() {
 
     <div id="spacetree-nav">
         <h3><span>Display up to:</span></h3>
-        <select id="gen-select">
+        <select id="gen-select" aria-label="select generation limit to display in tree">
             <option value="1" />1st gen </option>
             <option value="2" />2nd gen </option>
             <option value="3" />3rd gen </option>
@@ -44,7 +50,7 @@ $(document).ready(function() {
     <h3 class="collapsible out_1"><span></span>Calculate Physicochemical Properties</h3>
     <div id="pchemprop-wrapper">
         Calculate physicochemical properties for:
-        <select id="gen-select-pchem">
+        <select id="gen-select-pchem" aria-label="select number of generations for p-chem calculation">
         <option value=0 />selected metabolite </option>
         <option value=1 />up to 1st generation </option>
         <option value=2 />up to 2nd generation </option>
