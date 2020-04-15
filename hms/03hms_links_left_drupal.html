@@ -13,6 +13,8 @@
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation Comparison</a></li>
             {% elif MODEL == "workflow" and SUBMODEL == "precip_data_extraction" and valueValue == "workflow/precip_data_extraction/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation Data Extraction</a></li>
+            {% elif MODEL == "workflow" and SUBMODEL == "time_of_travel" and valueValue == "workflow/time_of_travel/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}" title="{{ valueKey|safe }}" class="menu-link active-trail active">Time of Travel</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "overview" and valueValue == "meteorology/overview/"%}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Overview</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "precipitation" and valueValue == "meteorology/precipitation/" %}
