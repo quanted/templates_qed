@@ -257,6 +257,8 @@
         </div>
     </div>
     <div id="algorithm_tab" style="display:none" class="single_tab">
-        
+        <p id="algorithm_info_p">
+            To calculate Streamflow for a particular catchment, data from 3 separate datasets is downloaded simultaneously. Data for precipitation, surface runoff, and subsurface flow is downloaded from the user-specified source in the GMT timezone localization. Data cannot be retrieved for the user's local timezone. <br><br> Depending on the size of the specified timespan and area of interest, many requests to external servers will need to be initiated in parallel. Occasionally, these servers will become overloaded by the volume of these requests and return error codes. The streamflow workflow will attempt to retry failed requests several times in a staggered manner. However, if they continue to fail, data for that particular segment will be replaced with a -9999 value. <br><br> The algorithm for calculating streamflow involves adding up the total flow (surface and subsurface) per area of the stream, then checking for boundary conditions and adding in existing flow from upstream. The workflow currently supports only the constant volume stream hydrology algorithm, but changing volume and kinematic wave algorithms are being developed.
+        </p>
     </div>
 </div>
