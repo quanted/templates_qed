@@ -431,9 +431,15 @@ function init(json){
 
                 tip.innerHTML = '<div align="left"><b>generation: </b>' + node.data.genKey + '<br></div>';
                 tip.innerHTML += '<div align="left"><b>smiles: </b>' + node.data.smiles + '<br></div>';
-                tip.innerHTML += '<div align="left"><b>production: </b>' + (100.0 * node.data.production).toFixed(2) + '%<br></div>';
-                tip.innerHTML += '<div align="left"><b>accumulation: </b>' + (100.0 * node.data.accumulation).toFixed(2) + '%<br></div>';
-                tip.innerHTML += '<div align="left"><b>global accumulation: </b>' + (100.0 * node.data.globalAccumulation).toFixed(2) + '%<br></div>';
+
+                let productionUnit = node.data.production == "N/A" ? '' : '%';
+                let accumulationUnit = node.data.accumulation == "N/A" ? '' : '%';
+                let globalAccumulationUnit = node.data.globalAccumulation == "N/A" ? '' : '%';
+
+                // NOTE: Assuming rounding is performed on backend:
+                tip.innerHTML += '<div align="left"><b>production: </b>' + node.data.production + productionUnit + '<br></div>';
+                tip.innerHTML += '<div align="left"><b>accumulation: </b>' + node.data.accumulation + accumulationUnit + '<br></div>';
+                tip.innerHTML += '<div align="left"><b>global accumulation: </b>' + node.data.globalAccumulation + globalAccumulationUnit + '<br></div>';
                 tip.innerHTML += '<div align="left"><b>likelihood: </b>' + node.data.likelihood + '<br></div>';
                 if ($(node_enlarged_image).length) {
                     tip.innerHTML += $(node_enlarged_image)[0].innerHTML;
@@ -949,9 +955,15 @@ function addLikelyBorderToProducts() {
     */
     var treeNode;  // tree node object
     var treeNodeHtmlObject;  // tree node's displayed HTML on the tree
+
+    console.log("adding likely border");
+
     for (var ind in st.graph.nodes) {
         treeNode = st.graph.nodes[ind];
-        if (treeNode.data.globalAccumulation <= 0.1) {
+        if (isNaN(treeNode.data.globalAccumulation)) {
+            continue;
+        }
+        else if (treeNode.data.globalAccumulation <= 0.1) {
             continue;
         }
         // Adds border to product with accumlation above 10%:
