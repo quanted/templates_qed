@@ -238,10 +238,12 @@ $(document).ready(function () {
 function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=null) {
 	// calls cts_gentrans_tree function getSpaceTree()
 	var nodeArray = [];
+	var smilesArray = [];
 	// Gets products from tree if in single mode:
 	if (run_type == 'single') {
 		productNodes = getSpaceTree().graph.nodes;
 	}
+
     for (var node in productNodes) {
     	if (!productNodes.hasOwnProperty(node)) { continue; }
     	var nodeItem;
@@ -253,15 +255,19 @@ function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=n
     	}
 
     	if (csvType == "likely") {
+
     		// Builds "likely" csv with nodes with globalAccumulation > 10%
     		var genNum = nodeItem.genKey
     		// Assumes genKeys with integer values are parents (e.g., 1, 2, etc.)
     		if (nodeItem.genKey == "molecule 1") {
     			nodeArray.push(nodeItem);
     		}
-    		// Adds products with GA > 0.1%:
-    		if (nodeItem.globalAccumulation > 0.001) {
+    		// Adds products with GA > 0.1% and is unique:
+    		let isLikley = nodeItem.globalAccumulation > 0.001;
+    		let isUnique = !smilesArray.includes(nodeItem.smiles);
+    		if (isLikley && isUnique) {
     			nodeArray.push(nodeItem);
+    			smilesArray.push(nodeItem.smiles);
     		}
     	}
     	else {
