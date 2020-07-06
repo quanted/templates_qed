@@ -19,6 +19,8 @@
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Overview</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "precipitation" and valueValue == "meteorology/precipitation/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Precipitation</a></li>
+            {% elif MODEL == "meteorology" and SUBMODEL == "radiation" and valueValue == "meteorology/radiation/" %}
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Radiation</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "temperature" and valueValue == "meteorology/temperature/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Temperature</a></li>
             {% elif MODEL == "meteorology" and SUBMODEL == "wind" and valueValue == "meteorology/wind/" %}
@@ -40,7 +42,7 @@
             {% elif MODEL == "hydrology" and SUBMODEL == "subsurfaceflow" and valueValue == "hydrology/subsurfaceflow/" %}
                 <li class="menu-item"><a href="/hms/{{ MODEL }}/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Subsurface Flow</a></li>
             {% elif MODEL == "documentation" and valueValue == "docs/" %}
-                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">HMS Documentation</a></li>
+                <li class="menu-item"><a href="/hms/{{ MODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">HMS Publications</a></li>
             {% else %}
                 <li class="menu-item{% if forloop.last %} menu-item-last{% endif %}"><a href="/hms/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
             {% endif %}
