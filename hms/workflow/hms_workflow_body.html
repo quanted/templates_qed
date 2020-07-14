@@ -24,15 +24,15 @@
     </ul>
     <div id="workflow_info_tab" style="display:none" class="single_tab">
         <p id="workflow_info_p">
-            This workflow simulates the amount of water added to a stream system during precipitation events.
-            The user chooses a stream system either by HUC ID or COMID then chooses a start and end date. A runoff
-            algorithm is chosen to calculate the amount of precipitation that is converted to surface runoff. The NLDAS,
-            GLDAS or Curve number runoff method can be simulated. A precipitation source needs to be chosen from NLDAS,
-            GLDAS, DAYMET, NCEI, PRISM, or WGEN a stochastic weather generator to initialize the simulation. The final
-            input needed is a flow routing algorithm calculated by the constant volume, changing volume, or the
-            Kinematic wave technique.
-            The results give the amount of precipitation, surface runoff, and the percent of subsurface flow as well as
-            streamflow in an time series of hourly totals for each COMID chosen.
+            This workflow simulates the amount of water added to a stream system during precipitation events. The user
+            selects a stream network either by NHDPlus HUC ID or COMID then chooses a start and end date. A runoff
+            algorithm is selected from NLDAS, GLDAS or Curve Number (CN) to calculate the amount of surface and
+            subsurface runoff for each stream in the network. A precipitation source needs to be chosen from
+            NLDAS, GLDAS, DAYMET, or PRISM if CN is selected as the runoff algorithm. The final input
+            needed is a flow routing algorithm.  The only choice available is the constant volume algorithm.
+            Other algorithms such as changing volume and Kinematic wave algorithms will be implemented later.
+            The outputs include GMT based daily time-series of precipitation, surface runoff, subsurface flow,
+            and streamflow for each COMID in the network.
             <img id="workflow_stream_img" src="/static_qed/hms/images/stream.jpg" alt="Some random placeholder stream">
         </p>
     </div>
@@ -144,10 +144,10 @@
                     <option selected value="nldas">NLDAS</option>
                     <option value="gldas">GLDAS</option>
                     <option value="daymet">Daymet</option>
-                    <option value="ncei">NCEI</option>
+{#                    <option value="ncei">NCEI</option>#}
                     <option value="prism">PRISM</option>
-                    <option value="wgen">WGEN</option>
-                    <option value="nwm">NWM</option>
+{#                    <option value="wgen">WGEN</option>#}
+{#                    <option value="nwm">NWM</option>#}
                 </select>
                 <br>
                 <br>
@@ -162,9 +162,9 @@
                 <label for="stream_algorithm_select">Stream Hydrology Algorithm:</label>
                 <select id="stream_algorithm_select" title="Please select a stream algorithm for your workflow model.">
                     <option selected value="constantvolume">Constant Volume</option>
-                    <option value="changingvolume">Changing Volume</option>
-                    <option value="kinematicwave">Kinematic Wave</option>
-                    <option value="nwm">National Water Model</option>
+                    <option value="changingvolume" disabled>Changing Volume</option>
+                    <option value="kinematicwave" disabled>Kinematic Wave</option>
+{#                    <option value="nwm">National Water Model</option>#}
                 </select>
                 <br>
                 <br>
@@ -257,6 +257,26 @@
         </div>
     </div>
     <div id="algorithm_tab" style="display:none" class="single_tab">
-        
+        <p id="algorithm_info_p">
+            To calculate Streamflow for a particular catchment, data from 3 separate datasets is downloaded
+            simultaneously. Data for precipitation, surface runoff, and subsurface flow is downloaded from the
+            user-specified source in the GMT timezone localization. Data cannot be retrieved for the user's local
+            timezone. <br><br>
+            Depending on the size of the specified timespan and area of interest, many requests to external servers
+            will need to be initiated in parallel. Occasionally, these servers will become overloaded by the volume
+            of these requests and return error codes. The streamflow workflow will attempt to retry failed requests
+            several times in a staggered manner. However, if they continue to fail, data for that particular segment
+            will be replaced with a -9999 value. <br><br>
+            The algorithm for calculating streamflow involves adding up the total flow (surface and subsurface) per
+            area of the stream, then checking for boundary conditions and adding in existing flow from upstream.
+            The workflow currently supports only the constant volume stream hydrology algorithm, but changing volume
+            and kinematic wave algorithms are being developed. <br><br>
+            Constant volume routing (
+            <a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NERL&dirEntryId=342907" target="_blank">
+                https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NERL&dirEntryId=342907
+            </a>) is a simple method using only the continuity equation where flow going out of the segment is equal
+            to the flow going into the segment.  Volume, velocity, and depth remain constant with changing flows in
+            this scheme.
+        </p>
     </div>
 </div>
