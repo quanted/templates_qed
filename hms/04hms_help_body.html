@@ -1,0 +1,24 @@
+<div class="node node-webform clearfix view-mode-full ">
+    <p>
+        Placeholder for help description
+    </p>
+    <br />
+    <p>
+        If you wish to make a comment or suggestion please use the contact us form here:
+        <span class="help-comment">
+            <a href="/hms/contact/">Submit a comment</a>
+        </span>
+    </p>
+    <br />
+    <div class="help-faq">
+        <h3>Frequently Asked Questions</h3>
+        <div id="faq-accordion">
+            {% for k,v in FAQ.items %}
+                <h3 class="faq-header">{{ k }}</h3>
+                <div class="faq-body">
+                    <p>{{ v | safe }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
