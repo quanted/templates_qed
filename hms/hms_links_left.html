@@ -2,9 +2,9 @@
 <div class="region-sidebar-first region-sidebar">
   <div id="block-og-menu-og-single-menu-block" class="block block-og-menu">
     <h2 class="element-invisible">HMS {{ MODEL }}</h2>
-    <ul class="menu">
+    <ul class="menu" id="links-left">
         <li class="menu-item-home">
-            <a href="/hms/" class="menu-link" title="HMS Home Page"><h3>HMS Home</h3></a>
+            <a href="/hms/" class="menu-link home-link" title="HMS Home Page"><h3>HMS Home</h3></a>
         </li>
       {% for key, value in LINK_DICT.items %}
         <h3 class="headerbar">{{ key|safe }}</h3>
