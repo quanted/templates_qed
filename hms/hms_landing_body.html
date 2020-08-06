@@ -1,14 +1,29 @@
+<div class="box multi service-status">
+    <h4 class="pane-title" title="Status of HMS external data sources">Data Status</h4>
+    <div class="status_list_block">
+    {% for source in SOURCE_LIST %}
+        <div class="status_block">
+            <div class="source_title">{{ source|upper }}</div>
+            <div class="status_element">
+                <div id="{{ source }}_pulse" class="pending_pulse"></div>
+                <div id="{{ source }}_status" class="status_dot pending"></div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
 <div class="box multi related-info" style="float:right;margin-left:5%;">
-	<h4 class="pane-title">Key Links</h4>
-	<div class="pane-content">
-	<ul>
-		<li><a href="https://www.epa.gov/ceam" target="_blank">Center for Exposure Assessment Modeling</a></li>
-		<li><a href="https://www.epa.gov/waterdata/hawqs-hydrologic-and-water-quality-system" target="_blank">Hydrologic and Water Quality System</a></li>
-		<li><a href="https://www.epa.gov/waterdata/water-quality-portal-data-discovery-tool" target="_blank">Water Quality Portal Data</a></li>
-        <li><a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus" target="_blank">National Hydrography Dataset Plus</a></li>
-		<li><a href="https://www.epa.gov/research" target="_blank">EPA Research</a></li>
-	</ul>
-	</div>
+    <h4 class="pane-title">Key Links</h4>
+    <div class="pane-content">
+        <ul>
+            <li><a href="https://www.epa.gov/ceam" target="_blank">Center for Exposure Assessment Modeling</a></li>
+            <li><a href="https://www.epa.gov/waterdata/hawqs-hydrologic-and-water-quality-system" target="_blank">Hydrologic and Water Quality System</a></li>
+            <li><a href="https://www.epa.gov/waterdata/water-quality-portal-data-discovery-tool" target="_blank">Water Quality Portal Data</a></li>
+            <li><a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus" target="_blank">National Hydrography Dataset Plus</a></li>
+            <li><a href="https://www.epa.gov/research" target="_blank">EPA Research</a></li>
+        </ul>
+    </div>
 </div>
 
 <p>
@@ -47,7 +62,6 @@
     <li>Humidity</li>
     <li>Precipitation</li>
     <li>Radiation</li>
-{#    <li>Solar Calculator</li>#}
     <li>Temperature</li>
     <li>Wind</li>
 </ul>
@@ -59,15 +73,3 @@
     <li>Soil Moisture</li>
     <li>Subsurface Flow</li>
 </ul>
-{#<h4>Hydrodynamics</h4>#}
-{#<p>The following hydrodynamics component(s) are currently available in HMS:</p>#}
-{#<ul>#}
-{#    <li>Constant Volume Channel Routing</li>#}
-{#<li>Changing Volume</li>#}
-{#<li>Kinematic Wave</li>#}
-{#</ul>#}
-{#<h4>Docu</h4>#}
-{#<ul>#}
-{#    <li>API Documentation</li>#}
-{#    <li>HMS Publications</li>#}
-{#</ul>#}
