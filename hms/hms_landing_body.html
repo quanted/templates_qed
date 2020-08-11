@@ -6,7 +6,9 @@
             <div class="source_title">{{ source|upper }}</div>
             <div class="status_element">
                 <div id="{{ source }}_pulse" class="pending_pulse"></div>
-                <div id="{{ source }}_status" class="status_dot pending" title="Checking status of external data source."></div>
+                <div id="{{ source }}_status" class="status_dot pending" title="Checking status of external data source.">
+                        <div id="{{ source }}_tick"></div>
+                </div>
             </div>
         </div>
     {% endfor %}
