@@ -19,6 +19,7 @@ var run_type;
 var speciation_inputs;
 var nodejs_host, nodejs_port;
 var service;  // p-chem, speciation, transformation products
+var calc;
 
 var metabolizer_post;
 
@@ -41,6 +42,7 @@ $(document).ready(function() {
     nodejs_host = "{{nodejs_host}}";
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
+    calc = "{{calc}}";
 
     // metabolizer_post = '{{metabolizer_post}}';
     metabolizer_post = Object({{metabolizer_post}});
@@ -597,7 +599,12 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         sessionStorage.setItem('total_calls', total_calls);
 
         pchem_data['service'] = 'getTransProducts';
-        pchem_data['calc'] = 'metabolizer';
+        if ('calc' in checkedCalcsAndProps) {
+            pchem_data['calc'] = checkedCalcsAndProps['calc'];
+        }
+        else {
+            pchem_data['calc'] = 'metabolizer';
+        }
         pchem_data['workflow'] = 'gentrans';
         pchem_data['gen_limit'] = genMax;
 
