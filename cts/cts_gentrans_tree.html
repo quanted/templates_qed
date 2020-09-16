@@ -8,6 +8,9 @@
 <script>
 var labelType, useGradients, nativeTextSupport, animate;
 
+
+// TODO: Move the below reaction link to library code to its own module.
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 var hydrolysisReactionMap = {
     // Hydrolysis Library Pathways:
     'Halogenated Aliphatics: Nucleophilic Substitution': 'Scheme_1',
@@ -45,8 +48,13 @@ var reductionReactionMap = {
     'Quinone Reduction': 'Scheme7',
     'Isoxazole Cleavage': 'Scheme8'
 };
+// var photolysisReactionMap = {
+//     '1-Naphthoxy Photorearrangement (C2)': '',
+//     '1-Naphthoxy Photorearrangement (C4)'
+// }
 var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
 var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4.htm#";
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 // ########## Globals!!! #########################
@@ -162,7 +170,7 @@ $('#btn-pchem-getdata').click(function () {
         calls_tracker = total_calls;
         node = currentNode;
         // getPchemData(currentNode, checkedCalcsAndProps, kowPH); // pchemprops only for selected metabolite..
-        startPchemPropDataCollection(node.data.smiles, checkedCalcsAndProps, kowPH, node, currentNode);
+        startPchemPropDataCollection("", node.data.smiles, checkedCalcsAndProps, kowPH, node, currentNode);
         return;
     }
 
@@ -193,7 +201,7 @@ $('#btn-pchem-getdata').click(function () {
         }
     }
 
-    startPchemPropDataCollection(smiles, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
+    startPchemPropDataCollection("", smiles, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
 
 });
 

@@ -47,7 +47,6 @@ $(document).ready(function() {
     // metabolizer_post = '{{metabolizer_post}}';
     metabolizer_post = Object({{metabolizer_post}});
 
-
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
 
     connectToSocket();
@@ -70,7 +69,7 @@ $(document).ready(function() {
         $('#pdfExport, #htmlExport').hide();
         $('#export_menu').hide();
 
-        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
+        startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kowPH, null, null, batch_chems);
 
     }
     else if (structure === null || structure.length == 0) {
@@ -79,7 +78,7 @@ $(document).ready(function() {
     else {
         calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
         total_calls = calls_tracker;
-        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
+        startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kowPH, null, null);
     }
 
     // Get Data button (pchem workflow) for gathering pchem props:
@@ -92,7 +91,7 @@ $(document).ready(function() {
         connectToSocket();
         calls_tracker = calculateTotalCalls([1], checkedCalcsAndProps);
         total_calls = calls_tracker;
-        startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, null, null);
+        startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kowPH, null, null);
     });
 
     // TODO: Cancel button, which removes pending tasks from celery queues:
@@ -521,7 +520,7 @@ function connectToSocket() {
 }
 
 
-function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
+function startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kowPH, node, currentNode, nodes) {
     
     if (checkedCalcsAndProps == null) { return; }
 
@@ -599,12 +598,7 @@ function startPchemPropDataCollection(structure, checkedCalcsAndProps, kowPH, no
         sessionStorage.setItem('total_calls', total_calls);
 
         pchem_data['service'] = 'getTransProducts';
-        if ('calc' in checkedCalcsAndProps) {
-            pchem_data['calc'] = checkedCalcsAndProps['calc'];
-        }
-        else {
-            pchem_data['calc'] = 'metabolizer';
-        }
+        pchem_data['calc'] = calc;
         pchem_data['workflow'] = 'gentrans';
         pchem_data['gen_limit'] = genMax;
 
