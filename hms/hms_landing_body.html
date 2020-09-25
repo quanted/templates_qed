@@ -1,23 +1,23 @@
-<div class="box multi service-status">
-    <h4 class="pane-title" title="Status of HMS external data sources">Data Status</h4>
-    <div class="status_list_block">
-    {% for source in SOURCE_LIST %}
-        <div class="status_block">
-            <div class="source_title">{{ source|upper }}</div>
-            <div class="status_element">
-                <div id="{{ source }}_pulse" class="pending_pulse"></div>
-                <div id="{{ source }}_status" class="status_dot pending" title="Checking status of external data source.">
-                        <div id="{{ source }}_tick"></div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    <div class="update_time_block">
-        <div class="update_time" id="status_timestamp_label"></div>
-        <div class="update_timestamp" id="status_timestamp"></div>
-        </div>
-    </div>
-</div>
+{#<div class="box multi service-status">#}
+{#    <h4 class="pane-title" title="Status of HMS external data sources">Data Status</h4>#}
+{#    <div class="status_list_block">#}
+{#    {% for source in SOURCE_LIST %}#}
+{#        <div class="status_block">#}
+{#            <div class="source_title">{{ source|upper }}</div>#}
+{#            <div class="status_element">#}
+{#                <div id="{{ source }}_pulse" class="pending_pulse"></div>#}
+{#                <div id="{{ source }}_status" class="status_dot pending" title="Checking status of external data source.">#}
+{#                        <div id="{{ source }}_tick"></div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#    <div class="update_time_block">#}
+{#        <div class="update_time" id="status_timestamp_label"></div>#}
+{#        <div class="update_timestamp" id="status_timestamp"></div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
 
 <div class="box multi related-info" style="float:right;margin-left:5%;">
     <h4 class="pane-title">Key Links</h4>
@@ -34,7 +34,7 @@
 
 <p>
     Hydrologic Micro Services, HMS, is a hydrologic and water quality modeling system comprised of data provisioning and modeling components and workflows to facilitate environmental modeling.
-    The components are available as <a href="/hms/api_doc/">web services</a>, <a href="https://github.com/quanted/hms" target="_blank">desktop libraries</a>, and through a <a href="/hms/">web-based graphical user interface</a>.
+    The components are available as <a href="/hms/api_doc/">web services</a>, <a href="https://github.com/quanted/hms" target="_blank">desktop libraries</a>, and through a web-based graphical user interface.
     The target users for HMS are hydrological and water quality modelers and analysts.
     HMS users can use the system components and workflows directly or build their own workflows outside the HMS web site by linking the components. Each component is available as a web service as well as a library for integration into workflows.
     HMS is an integrated modeling system to facilitate easier integration of new academic research on physical, chemical and biological processes into environmental models.

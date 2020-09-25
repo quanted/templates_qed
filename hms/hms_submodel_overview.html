@@ -1,5 +1,19 @@
+<div class="toc">
+    <p class="toc_p">
+        Detailed information for the {{ MODEL|lower }} {{ SUBMODEL|lower }} component can be found on this page.
+        <br><br>
+        On this page:
+    </p>
+    <ul class="toc_ul">
+        <li class="toc_li"><a href="#description">Description</a></li>
+        <li class="toc_li"><a href="#input_parameters">Input parameters</a></li>
+        <li class="toc_li"><a href="#output_parameters">Output parameters</a></li>
+        <li class="toc_li"><a href="#web_services">Web services details</a></li>
+        <li class="toc_li"><a href="#samples">Code samples</a></li>
+    </ul>
+</div>
 <div id="overview_block">
-    <h3 class="overview_subtab">Description</h3>
+    <h3 class="overview_subtab" id="description">Description</h3>
     <div class="overview_subblock overview_description">
         <p>{{ DESCRIPTION | safe }}</p>
         <div style="display: none;">
@@ -12,7 +26,7 @@
          </ol>
         </div>
     </div>
-    <h3 class="overview_subtab">Input Parameters</h3>
+    <h3 class="overview_subtab" id="input_parameters">Input Parameters</h3>
     <div class="overview_subblock overview_inputs">
         Attributes of the HMS {{ SUBMODEL }} input object
         <table>
@@ -36,7 +50,7 @@
             </table>
         {% endif %}
     </div>
-    <h3 class="overview_subtab">Output Parameters</h3>
+    <h3 class="overview_subtab" id="output_parameters">Output Parameters</h3>
     <div class="overview_subblock overview_output">
         Attributes of the HMS {{ SUBMODEL }} output object
         <table>
@@ -48,7 +62,7 @@
             </tbody>
         </table>
     </div>
-    <h3 class="overview_subtab">Web Service Details</h3>
+    <h3 class="overview_subtab" id="web_services">Web Service Details</h3>
     <div class="overview_subblock overview_details">
         <h4>Swagger UI</h4>
         <div style="font-size: smaller;"><a href="{{ BASEURL }}/hms/api_doc/#/WS{{ SUBMODEL|title }}/post_api_{{ MODEL }}_{{ SUBMODEL }}">{{ BASEURL }}/hms/api_doc/#/WS{{ SUBMODEL|title }}/post_api_{{ MODEL }}_{{ SUBMODEL }}</a></div>
@@ -72,7 +86,7 @@
                 </ol>
         {% endfor %}
     </div>
-    <h3 class="overview_subtab">Code Samples</h3>
+    <h3 class="overview_subtab" id="samples">Code Samples</h3>
     <div class="overview_subblock overview_scenarios">
         <div style="display:none;">
             {% for scen, v in SCENARIOS.items %}
