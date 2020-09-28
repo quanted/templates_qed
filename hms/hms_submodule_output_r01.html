@@ -16,6 +16,11 @@
                     <div id="loader"></div>
                 </div>
             </div>
+            <span id="task_id" style="display:none;">{{ TASK_ID }}</span>
+            <span id="page_url" style="display:none;">{{ URL }}</span>
+            {% if ADVANCED %}
+                {{ OUTPUT }}
+            {% else %}
             <div id="output_data_block">
                 <div id="output_title"></div>
                 <div id="output_metadata_block">
@@ -33,7 +38,6 @@
                         </div>
                     </div>
                     <div id="output_data"></div>
-                    <span id="task_id" style="display:none;">{{ TASK_ID }}</span>
                 </div>
                 <div class="workflow_output" style="display:none;">
                     <div id="output_center_top">
@@ -78,6 +82,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <span id="model_name" style="display:none;">{{ MODEL }}</span>
             <span id="submodule_name" style="display:none;">{{ SUBMODEL }}</span>
         </div>
