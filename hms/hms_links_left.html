@@ -51,8 +51,8 @@
                 <li class="menu-item"><a href="/hms/{{ SUBMODEL }}/" title="{{ valueKey|safe }}" class="menu-link active-trail active">Help</a></li>
             {% elif "overview" in valueValue %}
                 <li class="menu-item"><a href="/hms/{{ valueValue }}" title="{{ valueKey|safe }}" class="menu-link"><h3>{{valueKey|safe }}</h3></a></li>
-            {% elif "api_doc" in valueValue %}
-                <li class="menu-item"><a href="/hms/{{ valueValue }}" title="{{ valueKey|safe }}" class="menu-link"><h3>{{valueKey|safe }}</h3></a></li>
+            {% elif valueKey == "Documentation" and valueValue == "header" %}
+                <li class="menu-item menu-link"><h3>{{valueKey|safe }}</h3></li>
             {% else %}
                 <li class="menu-item{% if forloop.last %} menu-item-last{% endif %}"><a href="/hms/{{ valueValue }}" id="{{ valueValue }}" class="menu-link{% if MODEL == valueValue %} active-trail active{% endif %}" title="{{ valueKey|safe }}">{{ valueKey|safe }}</a>
             {% endif %}
