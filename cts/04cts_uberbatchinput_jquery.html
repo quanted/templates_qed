@@ -126,10 +126,22 @@ $(document).ready(function() {
         }
 	}
 
+	function cleanInputFile(batch_chems) {
+		// Removes any blank chems, etc.
+		for (chemInd in batch_chems) {
+			if (batch_chems[chemInd] == "") {
+				batch_chems.splice(chemInd, 1);
+			}
+		}
+		return batch_chems;
+	}
+
 	function displayBatchFileChemicals(file_content) {
 
 
 		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
+
+		batch_chems = cleanInputFile(batch_chems);
 
 		// var uploaded_chems = $('#batch_list li');
 		$('#batch_list').empty();  // clear any chems already in list
