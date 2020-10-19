@@ -126,7 +126,6 @@ $(document).ready(function() {
         }
 	}
 
-
 	function displayBatchFileChemicals(file_content) {
 
 
@@ -170,6 +169,8 @@ $(document).ready(function() {
 		    chemInd += 1;
 		    // chem_calls += 1;  // increment chem info request counter
 
+		    nodes.push({"chemical": batch_chems[chem]});  // ensuring chemicals maintain order
+
 		}
 
 		$('#batchfilewrap').show();
@@ -199,7 +200,8 @@ $(document).ready(function() {
 
 		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
 
-		nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
+		// nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
+		insertData(chemResponseObject.data);
 
 		var chemical_display;
 		if (chemResponseObject.status) {
@@ -211,19 +213,24 @@ $(document).ready(function() {
 			chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
 		}
 
-		// $('#batch_list').append('<li>' + chemical_display + '</li>');
-		// $('#' + chemical_display).html('<li>' + chemical_display + '</li>'); // remove spinner next to chemical
-
 		// Expecting an 'id' key in 'request_post' to use for mapping responses to chemical list:
 		var batchLength = $('#batch_list > li').length;
-		for (var i = 1; i <= batchLength; i++) {
-			var chemicalClass = 'chem' + i;
+		var inc = 1;
+		for (var chem in batch_chems) {
+			var chemicalClass = 'chem' + inc;
 			if (chemResponseObject.request_post.id == chemicalClass) {
 				$('#' + chemicalClass).text(chemical_display);
+				nodes[inc - 1] = chemResponseObject.data;  // inserts data in correct order
 			}
+			inc += 1;
 		}
 
 	});
+
+	function insertData() {
+		// inserts chem data in nodes
+
+	}
 
 
 	function getCookie(name) {
@@ -243,36 +250,6 @@ $(document).ready(function() {
 
 	var csrftoken = getCookie('csrftoken');
 
-
-	// function getMolecularInfoForBatchChemicals(chem, callback) {
-		
-	// 	$.ajax({
-	// 	    url: '/cts/rest/molecule',
-	// 	    // url: '/rest/cts/molecule',
-	// 	    type: 'POST',
-	// 	    data: {'chemical': chem},
-	// 	    dataType: 'json',
-	// 	    timeout: 10000,
-	// 	    beforeSend: function(xhr, settings) {
-	// 	      xhr.setRequestHeader("X-CSRFToken", csrftoken);
-	// 	    },
-	// 	    success: function(data) {
-	// 			console.log(data);
-
-	// 			if (data.status) {
-	// 				nodes.push(data.data);  // if valid, add to list of chems for processing
-	// 			}
-
-	// 			callback(data);
-
-	// 	    },
-	// 	    error: function(jqXHR, textStatus, errorThrown) {
-	// 			console.log(textStatus);
-	// 			// what to do here?
-	// 	    }
-	// 	});
-
-	// }
 
 });
 
