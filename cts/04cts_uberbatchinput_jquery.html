@@ -200,9 +200,6 @@ $(document).ready(function() {
 
 		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
 
-		// nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
-		insertData(chemResponseObject.data);
-
 		var chemical_display;
 		if (chemResponseObject.status) {
 			// valid chemical, normal stuff...
@@ -226,12 +223,6 @@ $(document).ready(function() {
 		}
 
 	});
-
-	function insertData() {
-		// inserts chem data in nodes
-
-	}
-
 
 	function getCookie(name) {
 	  var cookieValue = null;
