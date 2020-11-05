@@ -136,10 +136,31 @@ $(document).ready(function() {
 		return batch_chems;
 	}
 
+	function hasDuplicates(batch_chems) {
+		/*
+		Checks for duplicate chemicals in list.
+		Returns list of duplicate chemicals if they exist.
+		*/
+		// let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index);
+		// let uniqueDuplicates = [...new Set(findDuplicates(batch_chems))];
+		var uniqueDuplicates = [...new Set(batch_chems.filter((item, index) => batch_chems.indexOf(item) != index))];
+		if (uniqueDuplicates.length > 0) {
+			// Alert user to remove duplicates from batch input file.
+			alert("Please remove duplicate chemicals from batch input file: " + uniqueDuplicates);
+			return true
+		}
+		return false;
+	}
+
 	function displayBatchFileChemicals(file_content) {
 
+		batch_chems = file_content.replace(/\r?\n|\r/g, ",").split(",");  // chemicals in array
 
-		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
+		if (hasDuplicates(batch_chems)) {
+			return;  // NOTE: Sends alert to user in the function.
+		}
+
+		batch_chems = cleanInputFile(batch_chems);
 
 		batch_chems = cleanInputFile(batch_chems);
 

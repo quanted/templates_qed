@@ -222,7 +222,7 @@ function connectToSocket() {
 
     // incoming data pushed to client from redis:
     socket.on('message', function(data) {
-        
+
         data = JSON.parse(data);
 
 
@@ -502,7 +502,7 @@ function connectToSocket() {
             updateProgressBar(calls_tracker, total_calls);
         }
 
-        if (!('node' in data) || data['node'] == null) {
+        if (!('node' in data) || data['node'] == null || data['node'] == false) {
             return;
         }
 
