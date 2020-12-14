@@ -613,6 +613,7 @@ function parseRouteName(routes) {
     for (item in split_route_array) {
         new_route_string += split_route_array[item] + "\n";
     }
+    new_route_string.replace("$", "");  // removes any "$" in route name
     return new_route_string;
 }
 
