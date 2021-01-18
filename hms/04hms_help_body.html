@@ -11,9 +11,9 @@
     <br />
     <div class="help-faq">
         <h3>Frequently Asked Questions</h3>
-        <div id="faq-accordion">
+        <div id="faq-details">
             {% for k,v in FAQ.items %}
-                <h3 class="faq-header">{{ k }}</h3>
+                <h4 class="faq-header">{{ k }}</h4>
                 <div class="faq-body">
                     <p>{{ v | safe }}</p>
                 </div>

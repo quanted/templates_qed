@@ -73,7 +73,7 @@ $(document).ready(function() {
 
         blockInterface(true);
 
-		startPchemPropDataCollection("", checkedCalcsAndProps, kowPH, null, null, nodes);
+		startPchemPropDataCollection("", "", checkedCalcsAndProps, kowPH, null, null, nodes);
 
 	});
 
@@ -126,11 +126,43 @@ $(document).ready(function() {
         }
 	}
 
+	function cleanInputFile(batch_chems) {
+		// Removes any blank chems, etc.
+		for (chemInd in batch_chems) {
+			if (batch_chems[chemInd] == "") {
+				batch_chems.splice(chemInd, 1);
+			}
+		}
+		return batch_chems;
+	}
+
+	function hasDuplicates(batch_chems) {
+		/*
+		Checks for duplicate chemicals in list.
+		Returns list of duplicate chemicals if they exist.
+		*/
+		// let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index);
+		// let uniqueDuplicates = [...new Set(findDuplicates(batch_chems))];
+		var uniqueDuplicates = [...new Set(batch_chems.filter((item, index) => batch_chems.indexOf(item) != index))];
+		if (uniqueDuplicates.length > 0) {
+			// Alert user to remove duplicates from batch input file.
+			alert("Please remove duplicate chemicals from batch input file: " + uniqueDuplicates);
+			return true
+		}
+		return false;
+	}
 
 	function displayBatchFileChemicals(file_content) {
 
+		batch_chems = file_content.replace(/\r?\n|\r/g, ",").split(",");  // chemicals in array
 
-		batch_chems = file_content.replace(/\n/g, ",").split(",");  // chemicals in array
+		if (hasDuplicates(batch_chems)) {
+			return;  // NOTE: Sends alert to user in the function.
+		}
+
+		batch_chems = cleanInputFile(batch_chems);
+
+		batch_chems = cleanInputFile(batch_chems);
 
 		// var uploaded_chems = $('#batch_list li');
 		$('#batch_list').empty();  // clear any chems already in list
@@ -170,6 +202,8 @@ $(document).ready(function() {
 		    chemInd += 1;
 		    // chem_calls += 1;  // increment chem info request counter
 
+		    nodes.push({"chemical": batch_chems[chem]});  // ensuring chemicals maintain order
+
 		}
 
 		$('#batchfilewrap').show();
@@ -199,8 +233,6 @@ $(document).ready(function() {
 
 		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
 
-		nodes.push(chemResponseObject.data);  // add to list of chemicals (todo: change 'nodes' name)
-
 		var chemical_display;
 		if (chemResponseObject.status) {
 			// valid chemical, normal stuff...
@@ -211,20 +243,19 @@ $(document).ready(function() {
 			chemical_display = '<p class="redFont">' + chemResponseObject.chemical + " -- invalid chemical" + '</p>';  // ?????
 		}
 
-		// $('#batch_list').append('<li>' + chemical_display + '</li>');
-		// $('#' + chemical_display).html('<li>' + chemical_display + '</li>'); // remove spinner next to chemical
-
 		// Expecting an 'id' key in 'request_post' to use for mapping responses to chemical list:
 		var batchLength = $('#batch_list > li').length;
-		for (var i = 1; i <= batchLength; i++) {
-			var chemicalClass = 'chem' + i;
+		var inc = 1;
+		for (var chem in batch_chems) {
+			var chemicalClass = 'chem' + inc;
 			if (chemResponseObject.request_post.id == chemicalClass) {
 				$('#' + chemicalClass).text(chemical_display);
+				nodes[inc - 1] = chemResponseObject.data;  // inserts data in correct order
 			}
+			inc += 1;
 		}
 
 	});
-
 
 	function getCookie(name) {
 	  var cookieValue = null;
@@ -243,36 +274,6 @@ $(document).ready(function() {
 
 	var csrftoken = getCookie('csrftoken');
 
-
-	// function getMolecularInfoForBatchChemicals(chem, callback) {
-		
-	// 	$.ajax({
-	// 	    url: '/cts/rest/molecule',
-	// 	    // url: '/rest/cts/molecule',
-	// 	    type: 'POST',
-	// 	    data: {'chemical': chem},
-	// 	    dataType: 'json',
-	// 	    timeout: 10000,
-	// 	    beforeSend: function(xhr, settings) {
-	// 	      xhr.setRequestHeader("X-CSRFToken", csrftoken);
-	// 	    },
-	// 	    success: function(data) {
-	// 			console.log(data);
-
-	// 			if (data.status) {
-	// 				nodes.push(data.data);  // if valid, add to list of chems for processing
-	// 			}
-
-	// 			callback(data);
-
-	// 	    },
-	// 	    error: function(jqXHR, textStatus, errorThrown) {
-	// 			console.log(textStatus);
-	// 			// what to do here?
-	// 	    }
-	// 	});
-
-	// }
 
 });
 
