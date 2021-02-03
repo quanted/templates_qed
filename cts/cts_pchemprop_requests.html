@@ -454,11 +454,11 @@ function connectToSocket() {
                 nodeHeight = 114
                 nodeWidth = 100
                 init(data['data']);  // paint tree to canvas
-
                 // display total number of products:
                 var total_products_html = "<h3><span>Total Products:" + data['total_products'] + "</span></h3>";
                 $('#total-products').html(total_products_html);
-
+                var unique_products_html = "<h3><span>Unique Products:" + data['unique_products'] + "</span></h3>";
+                $('#unique-products').html(unique_products_html);
             }
             var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
             if (is_cheminfo) {
