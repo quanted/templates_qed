@@ -262,13 +262,15 @@ function buildMetabolitesArray(csvType="tree", run_type="single", productNodes=n
     		if (nodeItem.genKey == "molecule 1") {
     			nodeArray.push(nodeItem);
     		}
-    		// Adds products with GA > 0.1% and is unique:
-    		let isLikley = nodeItem.globalAccumulation > 0.001;
-    		let isUnique = !smilesArray.includes(nodeItem.smiles);
-    		if (isLikley && isUnique) {
-    			nodeArray.push(nodeItem);
-    			smilesArray.push(nodeItem.smiles);
-    		}
+    		else {
+	    		// Adds products with GA > 0.1% and is unique:
+	    		let isLikley = nodeItem.globalAccumulation > 0.001 || nodeItem.globalAccumulation === "N/A";
+	    		let isUnique = !smilesArray.includes(nodeItem.smiles);
+	    		if (isLikley && isUnique) {
+	    			nodeArray.push(nodeItem);
+	    			smilesArray.push(nodeItem.smiles);
+	    		}
+	    	}
     	}
     	else {
     		// Builds full node tree for all other CSV types:
