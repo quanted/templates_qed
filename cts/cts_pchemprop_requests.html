@@ -225,6 +225,9 @@ function connectToSocket() {
 
         data = JSON.parse(data);
 
+        console.log("Incoming pchemprop request data: ")
+        console.log(data);
+
 
         if ('error' in data) {
             blockui_message = '<div id="pchem_wait"><h3 class="popup_header">' + data['error'] + '. Returning to inputs section.</h3><br><br><input onclick="redirectToInputsPage()" type="button" value="OK" id="btn-pchem-cancel"><br></div>';
@@ -637,6 +640,11 @@ function startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kow
         pchem_data['calc'] = "testws";
         pchem_data['service'] = "pchemprops";
     }
+
+
+    console.log("Pchem request: ")
+    console.log(pchem_data)
+
 
     // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];
