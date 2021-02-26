@@ -1,12 +1,17 @@
+
+{{run_data|json_script:"run_data"}}
+
 <script type="text/javascript">
 
 $(document).ready(function () {
 
-	var run_data = {{run_data}};
+	var run_data = JSON.parse(document.getElementById('run_data').textContent);
+	var workflow = getWorkflow(); // get current workflow name
+
 	var json_data = {};
 
 	function parseOutputForCSV(csvType=null) {
-		var workflow = getWorkflow(); // get current workflow name
+		// var workflow = getWorkflow(); // get current workflow name
 
 		json_data['workflow'] = workflow;
 
@@ -169,12 +174,12 @@ $(document).ready(function () {
 
 	$('#pdfExport').click(function () {
 		parseOutput('pdf');
-		$('form.post_form').attr({'action': 'pdf', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': '/cts/' + workflow + '/pdf/', 'method': 'POST'}).submit();
 	});
 
 	$('#htmlExport').click(function () {
 		parseOutput('html');
-		$('form.post_form').attr({'action': 'html', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': '/cts/' + workflow + '/html/', 'method': 'POST'}).submit();
 	});
 
 	$('#csvExport').click(function (evt) {
@@ -196,7 +201,7 @@ $(document).ready(function () {
 				.find('input')
 				.val(jsonData);
 
-		$('form.post_form').attr({'action': 'csv', 'method': 'POST'}).submit();
+		$('form.post_form').attr({'action': '/cts/' + workflow + '/csv/', 'method': 'POST'}).submit();
 		// $('form.post_form').submit();
 
 	});
