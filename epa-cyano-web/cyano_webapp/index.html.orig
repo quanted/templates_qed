@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <title>EPA CyAN Web App</title>
-  <base href="/cyano">
+  <base href="/cyanweb/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="{% static 'epa-cyano-web/favicon.ico' %}">
@@ -71,6 +71,7 @@
       }
     }
   </style>
+  <!-- this is created for --prod, without styles.js at the bottom of this file -->
 <link rel="stylesheet" href="{% static 'epa-cyano-web/styles.css' %}"></head>
 <body>
   <app-root>
@@ -86,14 +87,15 @@
   </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 
-<!-- <script src="runtime.js" type="module"></script>
-<script src="polyfills.js" type="module"></script>
-<script src="scripts.js" defer></script>
-<script src="main.js" type="module"></script> -->
+<script src="{% static 'epa-cyano-web/runtime-es2015.js' %}" type="text/javascript"></script>
+<script src="{% static 'epa-cyano-web/runtime-es5.js' %}" nomodule defer></script>
+<script src="{% static 'epa-cyano-web/polyfills-es5.js' %}" nomodule defer></script>
+<script src="{% static 'epa-cyano-web/polyfills-es2015.js' %}" type="text/javascript"></script>
+<script src="{% static 'epa-cyano-web/scripts.js' %}" defer></script>
+<script src="{% static 'epa-cyano-web/main-es2015.js' %}" type="text/javascript"></script>
+<script src="{% static 'epa-cyano-web/main-es5.js' %}" nomodule defer></script>
+<!-- <script src="{% static 'styles-es2015.js' %}" type="text/javascript"></script> -->
+<!-- <script src="{% static 'styles-es5.js' %}" nomodule defer></script> -->
 
-<script src="{% static 'epa-cyano-web/runtime.js' %}" type="text/javascript"></script>
-<script src="{% static 'epa-cyano-web/polyfills.js' %}" type="text/javascript"></script>
-<!-- <script src="{% static 'epa-cyano-web/scripts.js' %}" defer></script> -->
-<script src="{% static 'epa-cyano-web/main.js' %}" type="text/javascript"></script>
 </body>
 </html>
