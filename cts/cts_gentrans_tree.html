@@ -990,7 +990,7 @@ function addLikelyBorderToProducts() {
         if (isNaN(treeNode.data.globalAccumulation)) {
             continue;
         }
-        else if (treeNode.data.globalAccumulation <= 0.1) {
+        else if (treeNode.data.globalAccumulation <= 10.0) {
             continue;
         }
         // Adds border to product with accumlation above 10%:
