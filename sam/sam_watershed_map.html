@@ -208,7 +208,8 @@
                         </select>
                         <span class="huc_controls"> Watershed summary:
                         <select name="fieldselect" id="fieldselect" onChange=refreshOutput(fieldselect,summaryselect)>
-                            <option value="acute_human">Human health DWLOC (acute)</option>
+                            <option value="Contribution">Chemical mass contribution</option>
+                            <!-- <option value="acute_human">Human health DWLOC (acute)</option>
                             <option value="acute_fw_fish">Freshwater Fish (acute)</option>
                             <option value="chronic_fw_fish">Freshwater Fish (chronic)</option>
                             <option value="acute_fw_inv">Freshwater Invertebrate (acute)</option>
@@ -217,11 +218,12 @@
                             <option value="chronic_em_fish">Estuarine/Marine Fish (chronic)</option>
                             <option value="acute_em_inv">Estuarine/Marine Invertebrate (acute)</option>
                             <option value="chronic_em_inv">Estuarine/Marine Invertebrate (chronic)</option>
-                            <option value="acute_nonvasc_plant">Aquatic nonvascular plant (acute)</option>
+                            <option value="acute_nonvasc_plant">Aquatic nonvascular plant (acute)</option> -->
                         </select>
                         <select name="summaryselect" id="summaryselect" onChange=refreshOutput(fieldselect,summaryselect)>
-                            <option value="max">Maximum</option>
-                            <option value="mean">Mean</option>
+                            <option value="percentile">Percentile</option>
+                            <!-- <option value="max">Maximum</option>
+                            <option value="mean">Mean</option> -->
                         </select>
                         </span>
                     </div>
