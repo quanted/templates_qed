@@ -128,12 +128,15 @@ $(document).ready(function() {
 
 	function cleanInputFile(batch_chems) {
 		// Removes any blank chems, etc.
+		filteredChems = [];
 		for (chemInd in batch_chems) {
-			if (batch_chems[chemInd] == "") {
-				batch_chems.splice(chemInd, 1);
+			let chem = batch_chems[chemInd];
+			if (chem == "") {
+				continue;
 			}
+			filteredChems.push(chem);
 		}
-		return batch_chems;
+		return filteredChems;
 	}
 
 	function hasDuplicates(batch_chems) {
@@ -141,8 +144,6 @@ $(document).ready(function() {
 		Checks for duplicate chemicals in list.
 		Returns list of duplicate chemicals if they exist.
 		*/
-		// let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index);
-		// let uniqueDuplicates = [...new Set(findDuplicates(batch_chems))];
 		var uniqueDuplicates = [...new Set(batch_chems.filter((item, index) => batch_chems.indexOf(item) != index))];
 		if (uniqueDuplicates.length > 0) {
 			// Alert user to remove duplicates from batch input file.
@@ -156,20 +157,16 @@ $(document).ready(function() {
 
 		batch_chems = file_content.replace(/\r?\n|\r/g, ",").split(",");  // chemicals in array
 
+		batch_chems = cleanInputFile(batch_chems);
+
 		if (hasDuplicates(batch_chems)) {
 			return;  // NOTE: Sends alert to user in the function.
 		}
 
-		batch_chems = cleanInputFile(batch_chems);
-
-		batch_chems = cleanInputFile(batch_chems);
-
-		// var uploaded_chems = $('#batch_list li');
 		$('#batch_list').empty();  // clear any chems already in list
 		nodes = [];  // clear out list of molecule objects (todo: rename 'nodes')
 
 		// only allow ten max for now:
-		// if (batch_chems.length > 10 || uploaded_chems.length + batch_chems.length > 10) {
 		if (batch_chems.length > 10) {
 			alert("Only a maximum of 10 chemicals can be uploaded in batch mode at this time.");
 			return;
@@ -187,8 +184,6 @@ $(document).ready(function() {
 								spinner_html + batch_chems[chem] + '</li>';
 
 			$('#batch_list').append(list_html);
-
-			console.log("Making request for " + batch_chems[chem]);
 
 		    var mol_info_request = JSON.stringify({
 		        'chemical': batch_chems[chem],
@@ -230,8 +225,6 @@ $(document).ready(function() {
 	socketConn.on('message', function(chemInfoResponse) {
 
 		var chemResponseObject = JSON.parse(chemInfoResponse);
-
-		console.log("Incoming response for chem info: " + chemResponseObject.data.chemical);
 
 		var chemical_display;
 		if (chemResponseObject.status) {

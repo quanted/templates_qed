@@ -1,3 +1,8 @@
+{{speciation_inputs|json_script:"speciation_inputs"}}
+{{nodes|json_script:"nodes"}}
+{{metabolizer_post|json_script:"metabolizer_post"}}
+{{checkedCalcsAndProps|json_script:"checkedCalcsAndProps"}}
+
 <script type="text/javascript">
 
 var kowPH; // pH for logD
@@ -26,8 +31,8 @@ var metabolizer_post;
 
 $(document).ready(function() {
     // Some global and local variable delcarations:
-    checkedCalcsAndProps = {{checkedCalcsAndProps}};
-    speciation_inputs = {{speciation_inputs}};
+    checkedCalcsAndProps = JSON.parse(document.getElementById('checkedCalcsAndProps').textContent);
+    speciation_inputs = JSON.parse(document.getElementById('speciation_inputs').textContent);
     structure = "{{structure}}";
     kowPH = "{{kow_ph}}";
     smiles = "{{structure}}";
@@ -36,16 +41,14 @@ $(document).ready(function() {
     formula = "{{formula}}";
     time = "{{time}}";
     workflow = "{{workflow}}";
-    // nodes = "{{nodes}}";  // defaults to ""
-    batch_chems = {{nodes}};
+    batch_chems = JSON.parse(document.getElementById('nodes').textContent);
     run_type = "{{run_type}}";
     nodejs_host = "{{nodejs_host}}";
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
     calc = "{{calc}}";
 
-    // metabolizer_post = '{{metabolizer_post}}';
-    metabolizer_post = Object({{metabolizer_post}});
+    metabolizer_post = JSON.parse(document.getElementById('metabolizer_post').textContent);
 
     $('#id_kow_ph').val(kowPH);  // set ph on pchem table to user val
 
@@ -151,6 +154,9 @@ function redirectToInputsPage() {
     }
     else if (run_type == "batch") {
         inputType = "batch";
+    }
+    else {
+        inputType = "";
     }
 
     // Redirects after canceled request:
@@ -454,11 +460,11 @@ function connectToSocket() {
                 nodeHeight = 114
                 nodeWidth = 100
                 init(data['data']);  // paint tree to canvas
-
                 // display total number of products:
                 var total_products_html = "<h3><span>Total Products:" + data['total_products'] + "</span></h3>";
                 $('#total-products').html(total_products_html);
-
+                var unique_products_html = "<h3><span>Unique Products:" + data['unique_products'] + "</span></h3>";
+                $('#unique-products').html(unique_products_html);
             }
             var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
             if (is_cheminfo) {
