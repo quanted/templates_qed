@@ -5,55 +5,13 @@
 <script language="javascript" type="text/javascript" src="/static_qed/cts/js/Jit/jit.js"></script>
 <!-- ### END JIT REFERENCES ### -->
 <script type="text/javascript" src="/static_qed/cts/js/jquery-ui.js"></script>
+
 <script>
 var labelType, useGradients, nativeTextSupport, animate;
 
-
-// TODO: Move the below reaction link to library code to its own module.
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-var hydrolysisReactionMap = {
-    // Hydrolysis Library Pathways:
-    'Halogenated Aliphatics: Nucleophilic Substitution': 'Scheme_1',
-    'Halogenated Aliphatics: Elimination': 'Scheme_2',
-    'Epoxide Hydrolysis': 'Scheme_3',
-    'Organophosphorus Ester Hydrolysis 1': 'Scheme_4',
-    'Organophosphorus Ester Hydrolysis 2': 'Scheme_5',
-    'Carboxylic Acid Ester Hydrolysis': 'Scheme_6',
-    'Lactone Hydrolysis': 'Scheme_7',
-    'Carbonate Hydrolysis': 'Scheme_8',
-    'Anhydride Hydrolysis': 'Scheme_9',
-    'Cyclic Anhydride Hydrolysis': 'Scheme_20',
-    'Amide Hydrolysis': 'Scheme_10',
-    'Lactam Hydrolysis': 'Scheme_11',
-    'Carbamate Hydrolysis': 'Scheme_12',
-    'Thiocarbamate Hydrolysis': 'Scheme_13',
-    'Urea Hydrolysis': 'Scheme_14',
-    'Cyclic Urea Hydrolysis': 'Scheme_22',
-    'Sulfonylurea Hydrolysis': 'Scheme_15',
-    'Imide Hydrolysis': 'Scheme_19',
-    'Nitrile Hydrolysis': 'Scheme_17',
-    'N-S Cleavage': 'Scheme_18',
-    'Cyclic Carbonate Hydrolysis': 'Scheme_21',
-    'Acid Halide Hydrolysis': 'Scheme_23',
-    'Dehydration of Geminal Diols': 'Scheme_24',
-};
-var reductionReactionMap = {
-    // Reduction Library Pathways:
-    'Hydrogenolysis': 'Scheme1',
-    'Vicinal Dehalogenation': 'Scheme2',
-    'Nitroaromatic Reduction': 'Scheme3',
-    'Aromatic Azo Reduction': 'Scheme4',
-    'Sulfoxide Reduction': 'Scheme5',
-    'N-Nitrosoamine Reduction': 'Scheme6',
-    'Quinone Reduction': 'Scheme7',
-    'Isoxazole Cleavage': 'Scheme8'
-};
-// var photolysisReactionMap = {
-//     '1-Naphthoxy Photorearrangement (C2)': '',
-//     '1-Naphthoxy Photorearrangement (C4)'
-// }
 var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
 var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4.htm#";
+var unrankedPhotolysisLink = "/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0_051920.htm#"
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -603,20 +561,30 @@ function init(json){
 }
 
 function findReactionLinkSection(routes) {
+
     var route = routes.split(',').pop();
-    for (var reactionName in hydrolysisReactionMap) {
-        var sectionName = hydrolysisReactionMap[reactionName];
+    // Checks hydrolysis reactions:
+    for (let reactionName in hydrolysisReactionMap) {
+        let sectionName = hydrolysisReactionMap[reactionName];
         if(route.toLowerCase() == reactionName.toLowerCase()) {
             return hydrolysisLink + sectionName;
         }
     }
-    for (var reactionName in reductionReactionMap) {
-        var sectionName = reductionReactionMap[reactionName];
+    // Checks reduction reactions:
+    for (let reactionName in reductionReactionMap) {
+        let sectionName = reductionReactionMap[reactionName];
         if(route.toLowerCase() == reactionName.toLowerCase()) {
             return reductionLink + sectionName;
         }
     }
-    // return false;
+    // Checks (unranked) photolysis reactions:
+    // TODO: Distinguish between ranked and unranked photolysis.
+    for (let reactionName in photolysisReactionMap) {
+        let sectionName = photolysisReactionMap[reactionName];
+        if(route.toLowerCase() == reactionName.toLowerCase()) {
+            return unrankedPhotolysisLink + sectionName;
+        }
+    }
     return '/cts/about/reactionlibs';  // returns main RL page there isn't a pathway match
 }
 
