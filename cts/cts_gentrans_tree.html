@@ -9,9 +9,10 @@
 <script>
 var labelType, useGradients, nativeTextSupport, animate;
 
-var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-7-copy.htm#";
-var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-4.htm#";
-var unrankedPhotolysisLink = "/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0_051920.htm#"
+var hydrolysisLink = "/static_qed/cts/docs/Hydrolysis Lib HTML/HydrolysisRxnLib_ver1-8.htm#";
+var reductionLink = "/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-5.htm#";
+var unrankedPhotolysisLink = "/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0_032721.htm#"
+var rankedPhotolysisLink = "/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-3_042121.htm#"
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -577,11 +578,11 @@ function findReactionLinkSection(routes) {
             return reductionLink + sectionName;
         }
     }
-    // Checks (unranked) photolysis reactions:
-    // TODO: Distinguish between ranked and unranked photolysis.
+    // Checks photolysis reactions:
     for (let reactionName in photolysisReactionMap) {
         let sectionName = photolysisReactionMap[reactionName];
         if(route.toLowerCase() == reactionName.toLowerCase()) {
+            // return rankedPhotolysisLink + sectionName;
             return unrankedPhotolysisLink + sectionName;
         }
     }
