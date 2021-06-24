@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 var kowPH; // pH for logD
-var smiles, name, mass, formula, time;
+var smiles, name, mass, formula, time, orig_smiles;
 
 var ctsWorkflows = ['chemspec', 'pchemprop', 'gentrans'];
 var ctsInputTypes = ['single', 'batch'];
@@ -36,6 +36,7 @@ $(document).ready(function() {
     structure = "{{structure}}";
     kowPH = "{{kow_ph}}";
     smiles = "{{structure}}";
+    orig_smiles = "{{orig_smiles}}";
     name = "{{name}}";
     mass = "{{mass}}";
     formula = "{{formula}}";

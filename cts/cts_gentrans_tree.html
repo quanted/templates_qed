@@ -697,15 +697,21 @@ function getMolecularInfo(node) {
 function molecular_info_request_websocket(node) {
     // trying to use ws protocol instead of ajax,
     // perhaps this will prevent occasional timeouts.
-    mol_info_request = JSON.stringify({
+
+    mol_info_request = {
         'chemical': node.data.smiles,
         'is_node': true,
         'service': "getChemInfo",
         'genKey': node['data']['genKey'],
         'workflow': 'gentrans'
-    });
+    };
+
+    if (node.id === 1) {
+        mol_info_request['chemical'] = orig_smiles;  // uses orig_smiles from cts_pchemprop_requests
+    }
+
     // Send data to cts_nodejs server:
-    socket.emit('get_data', mol_info_request);
+    socket.emit('get_data', JSON.stringify(mol_info_request));
 }
 
 function molecular_info_request(node) {
