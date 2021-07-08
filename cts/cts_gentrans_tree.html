@@ -975,4 +975,21 @@ function addLikelyBorderToProducts() {
     }
 }
 
+function calculateUniqueProducts() {
+    /*
+    Determines number of unique products from nodes list.
+    */
+    let uniqueProducts = [];
+    for (var ind in st.graph.nodes) {
+        let treeNode = st.graph.nodes[ind];
+        if (treeNode.id === 1) {
+            continue;  // skips parent
+        }
+        if (uniqueProducts.indexOf(treeNode.data.smiles) < 0) {
+            uniqueProducts.push(treeNode.data.smiles);
+        }
+    }
+    return uniqueProducts.length;
+}
+
 </script>
