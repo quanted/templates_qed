@@ -464,7 +464,8 @@ function connectToSocket() {
                 // display total number of products:
                 var total_products_html = "<h3><span>Total Products:" + data['total_products'] + "</span></h3>";
                 $('#total-products').html(total_products_html);
-                var unique_products_html = "<h3><span>Unique Products:" + data['unique_products'] + "</span></h3>";
+                let uniqueProducts = calculateUniqueProducts();  // gets num of unique products from tree nodes
+                var unique_products_html = "<h3><span>Unique Products:" + uniqueProducts + "</span></h3>";
                 $('#unique-products').html(unique_products_html);
             }
             var is_cheminfo = data.request_post && data.request_post.service == 'getChemInfo';
