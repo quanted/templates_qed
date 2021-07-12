@@ -567,23 +567,22 @@ function findReactionLinkSection(routes) {
     // Checks hydrolysis reactions:
     for (let reactionName in hydrolysisReactionMap) {
         let sectionName = hydrolysisReactionMap[reactionName];
-        if(route.toLowerCase() == reactionName.toLowerCase()) {
+        if(route.toLowerCase().includes(reactionName.toLowerCase())) {
             return hydrolysisLink + sectionName;
         }
     }
     // Checks reduction reactions:
     for (let reactionName in reductionReactionMap) {
         let sectionName = reductionReactionMap[reactionName];
-        if(route.toLowerCase() == reactionName.toLowerCase()) {
+        if(route.toLowerCase().includes(reactionName.toLowerCase())) {
             return reductionLink + sectionName;
         }
     }
     // Checks photolysis reactions:
     for (let reactionName in rankedPhotolysisReactionMap) {
         let sectionName = rankedPhotolysisReactionMap[reactionName];
-        if(route.toLowerCase() == reactionName.toLowerCase()) {
+        if(route.toLowerCase().includes(reactionName.toLowerCase())) {
             return rankedPhotolysisLink + sectionName;
-            // return unrankedPhotolysisLink + sectionName;
         }
     }
     return '/cts/about/reactionlibs';  // returns main RL page there isn't a pathway match
