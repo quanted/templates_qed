@@ -981,7 +981,7 @@ function calculateUniqueProducts() {
     let uniqueProducts = [];
     for (var ind in st.graph.nodes) {
         let treeNode = st.graph.nodes[ind];
-        if (treeNode.id === 1) {
+        if (treeNode.id == 1) {
             continue;  // skips parent
         }
         if (uniqueProducts.indexOf(treeNode.data.smiles) < 0) {
