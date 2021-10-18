@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 var kowPH; // pH for logD
-var smiles, name, mass, formula, time, orig_smiles;
+var smiles, name, mass, formula, time, orig_smiles, includeRates;
 
 var ctsWorkflows = ['chemspec', 'pchemprop', 'gentrans'];
 var ctsInputTypes = ['single', 'batch'];
@@ -48,6 +48,9 @@ $(document).ready(function() {
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
     calc = "{{calc}}";
+    includeRates = "{{include_rates}}" == 'on' ? true : false;
+
+    console.log("Include Rates: ", includeRates)
 
     metabolizer_post = JSON.parse(document.getElementById('metabolizer_post').textContent);
 
