@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 var kowPH; // pH for logD
-var smiles, name, mass, formula, time, orig_smiles;
+var smiles, name, mass, formula, time, orig_smiles, includeRates;
 
 var ctsWorkflows = ['chemspec', 'pchemprop', 'gentrans'];
 var ctsInputTypes = ['single', 'batch'];
@@ -48,6 +48,9 @@ $(document).ready(function() {
     nodejs_port = {{nodejs_port}};
     service = "{{service}}";
     calc = "{{calc}}";
+    includeRates = "{{include_rates}}" == 'on' ? true : false;
+
+    console.log("Include Rates: ", includeRates)
 
     metabolizer_post = JSON.parse(document.getElementById('metabolizer_post').textContent);
 
@@ -231,6 +234,9 @@ function connectToSocket() {
     socket.on('message', function(data) {
 
         data = JSON.parse(data);
+
+        console.log("Incoming pchemprop request data: ")
+        console.log(data);
 
 
         if ('error' in data) {
@@ -645,6 +651,11 @@ function startPchemPropDataCollection(calc, structure, checkedCalcsAndProps, kow
         pchem_data['calc'] = "testws";
         pchem_data['service'] = "pchemprops";
     }
+
+
+    console.log("Pchem request: ")
+    console.log(pchem_data)
+
 
     // var pchem_data_json = JSON.stringify(pchem_data);
     var cache = [];

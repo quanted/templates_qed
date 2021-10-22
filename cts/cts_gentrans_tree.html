@@ -28,6 +28,17 @@ var nodeWidth = 100; //default node width (image)
 var block_ui = false; // blocking UI load window boolean
 // var arrow_html = '<div id="arrow_wrap"><img class="reactpath_arrow" src="/static_qed/cts/images/arrow-right.jpg"/></div>';
 var arrow_html = '<div id="arrow_wrap"><img class="reactpath_arrow" src="/static_qed/cts/images/arrow2.png"/></div>';
+var pchemSelectErrorMessage = "Must select at least one calculator and available property first";
+var pchemNoCarbonMessage = "CTS does not process inorganic products";
+var epiQsarRoutes = [
+    'halogenated aliphatics: elimination',
+    'epoxide hydrolysis',
+    'organophosphorus ester hydrolysis 1 (base-catalyzed)',
+    'organophosphorus ester hydrolysis 2 (neutral or acid-catalyzed)',
+    'carboxylic acid ester hydrolysis',
+    'anhydride hydrolysis',
+    'carbamate hydrolysis'
+];
 // ################################################
 
 (function() {
@@ -119,8 +130,12 @@ $('#btn-pchem-getdata').click(function () {
 
         // Don't make p-chem request to backend, no calcs or props were selected:
         if (total_calls < 1) {
-            var test = $('.pchemSelectError');
-            $('.pchemSelectError').show();
+            // var test = $('.pchemSelectError');
+            $('.pchemSelectError').text(pchemSelectErrorMessage).show();
+            return;   
+        }
+        else if (currentNode.data['has_carbon'] === false) {
+            $('.pchemSelectError').text(pchemNoCarbonMessage).show();
             return;   
         }
         $('.pchemSelectError').hide();
@@ -141,24 +156,33 @@ $('#btn-pchem-getdata').click(function () {
 
     // Don't make p-chem request to backend, no calcs or props were selected:
     if (total_calls < 1) {
-        $('.pchemSelectError').show();
+        $('.pchemSelectError').text(pchemSelectErrorMessage).show();
         return;   
     }
     $('.pchemSelectError').hide();
-
-    console.log("starting with " + total_calls + " calls");
-    calls_tracker = total_calls;
 
     var st_nodes = st.graph.nodes;  // actual nodes from spacetree
     var nodes = [];
 
     for (node in st_nodes) {
         // only get data up to selected generation limit:
+        if (st_nodes[node].data['has_carbon'] === false) {
+            console.log("Skipping " + st_nodes[node].data.smiles + " because it is inorganic.");
+            $('.pchemSelectError').text("Skipping inorganic products p-chem calculations").show();
+            parsedNodeList[st_nodes[node].data.generation] = parsedNodeList[st_nodes[node].data.generation] - 1;
+            continue; 
+        }
         if (st_nodes[node]._depth < parsedNodeList.length) {
             st_nodes[node].data['id'] = st_nodes[node].id;  // add node id to node data
             nodes.push(st_nodes[node].data);
         }
     }
+
+    total_calls = 0;
+    total_calls = calculateTotalCalls(parsedNodeList, checkedCalcsAndProps);  // recalculate total calls
+
+    console.log("starting with " + total_calls + " calls");
+    calls_tracker = total_calls;
 
     startPchemPropDataCollection("", smiles, checkedCalcsAndProps, kowPH, node, currentNode, nodes);
 
@@ -419,6 +443,9 @@ function init(json){
             enable: true,
             onRightClick: function(node, eventInfo, e) {
                 if (node) {
+
+                    $('.pchemSelectError').text("").hide();
+
                     getMolecularInfo(node);
                     currentNode = node;  // set global node tracking var
 
@@ -540,6 +567,8 @@ function init(json){
 
     // 508 compliance fix - adds label to canvas:
     var treeCanvas = $('canvas#infovis-canvas').attr({'aria-label': 'reaction pathway tree', 'tabindex': '0'});
+
+    initiateHalflifeRequests();
 
 }
 
@@ -971,6 +1000,89 @@ function calculateUniqueProducts() {
         }
     }
     return uniqueProducts.length;
+}
+
+function initiateHalflifeRequests() {
+    /*
+    Starts gathering the various reaction pathways that have
+    a half-life value available from EPI Suite.
+    */
+    if (includeRates != true) {
+        console.log("Include rates not selected. Skipping half-life requests.")
+        return;
+    }
+
+    for (let ind in st.graph.nodes) {
+        let treeNode = st.graph.nodes[ind];
+
+        let route = treeNode.data.routes;
+
+        console.log("Tree node: ", treeNode)
+        console.log("Route: ", route.toLowerCase());
+
+        if (epiQsarRoutes.includes(route.toLowerCase())) {
+            console.log("QSAR route matches. Making request to epi qsar.")
+            makeQsarRequest(treeNode);
+        }
+
+    }
+
+}
+
+function makeQsarRequest(node) {
+
+    let requestObj = {
+        'chemical': node.data.smiles,
+        'prop': 'qsar',
+        'calc': 'epi',
+        'route': node.data.routes
+    };
+
+    $.ajax({
+        url: '/cts/rest/epi/run',
+        type: 'POST',
+        data: requestObj,
+        dataType: 'json',
+        success: function(data) {
+            return handleQsarResponse(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Error in qsar request: ", textStatus, jqXHR, errorThrown);
+          return;
+        }
+    });
+}
+
+function handleQsarResponse(response) {
+    /*
+    Processes EPI QSAR response.
+
+    Example response from /hydrolysis/epoxide:
+    {
+        "data": [
+            {
+                "chemical": null,
+                "prop": "Ka Half-Life at pH 7",
+                "calc": "epi",
+                "method": null,
+                "data": "37.499"
+            }
+        ]
+    }
+    */
+
+    var response = jsonRepack(response);
+    console.log("QSAR request returned: ", response)
+
+    if (response.status == false) {
+        console.log("Status is false: ", textStatus);
+        return;
+    }
+
+    // TODO: Add the results to the reactions pathway arrow sections
+
+    return response['data']['data'];;
+
 }
 
 </script>
