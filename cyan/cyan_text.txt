@@ -1,7 +1,0 @@
-﻿The Cyanobacteria Assessment Network (CyAN) is a multi-agency project among the National Aeronautics and Space Administration (NASA),
- National Oceanic and Atmospheric Administration (NOAA), U.S. Geological Survey (USGS), and EPA to develop an early warning indicator
- system using historical and current satellite data to detect algal blooms in U.S. freshwater systems. This research supports federal,
- state, and local partners in their monitoring efforts to assess water quality to protect aquatic and human health.
-<br>
-<br>
-<center><img src = "/static_qed/cyan/images/cyan_primary_gi.png" alt="CyAN" height="450" width="425"></center>
