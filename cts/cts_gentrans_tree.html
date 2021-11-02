@@ -1017,25 +1017,29 @@ function initiateHalflifeRequests() {
 
         let route = treeNode.data.routes;
 
+        console.log("Index: ", ind)
         console.log("Tree node: ", treeNode)
         console.log("Route: ", route.toLowerCase());
 
         if (epiQsarRoutes.includes(route.toLowerCase())) {
             console.log("QSAR route matches. Making request to epi qsar.")
-            makeQsarRequest(treeNode);
+            // makeQsarRequest(treeNode);
+            let smiles = st.graph.nodes[ind - 1].data.smiles;
+            makeQsarRequest(smiles, route);
         }
 
     }
 
 }
 
-function makeQsarRequest(node) {
+// function makeQsarRequest(node) {
+function makeQsarRequest(smiles, route)
 
     let requestObj = {
-        'chemical': node.data.smiles,
+        'chemical': smiles,
         'prop': 'qsar',
         'calc': 'epi',
-        'route': node.data.routes
+        'route': route
     };
 
     $.ajax({
@@ -1044,7 +1048,9 @@ function makeQsarRequest(node) {
         data: requestObj,
         dataType: 'json',
         success: function(data) {
-            return handleQsarResponse(data);
+            let results = handleQsarResponse(data)
+            console.log("Results: ", results)
+            return results;
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log("Error in qsar request: ", textStatus, jqXHR, errorThrown);
