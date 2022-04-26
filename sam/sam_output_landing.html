@@ -281,8 +281,8 @@
                         // Set processStatus to 'Completed' with a clickable link to sam/watershed page
                         var watershed_url = "/pram/sam/watershed/" + guid;
                         $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Completed</a></div>");
-                        var json_url = "/pram/rest/pram/sam/data/" + guid;
-                        $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">View Watershed Results</a><br><a href=" + json_url + ">JSON Results</a></div>");
+                        var download_url = "/pram/rest/pram/sam/data/" + guid;
+                        $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">View Watershed Results</a><br><a href=" + download_url + " download>Download Results</a></div>");
                     }
                     else if (data['task_status'] === "FAILURE") {
                         // No process found for the provided guid
