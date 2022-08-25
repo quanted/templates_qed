@@ -265,7 +265,7 @@
             cache: false,
             success: function (data, status, jqXHR) {
                 if ('task_status' in data) {
-
+			console.log("task_status found in data");
                     if (data['task_status'] === "PENDING") {
                         pendingCount += 1;
                         if(pendingCount >= 10){
@@ -278,6 +278,7 @@
                         setTimeout(checkProcessStatus, timeout)
                     }
                     else if (data['task_status'] === "SUCCESS") {
+			    console.log("status is SUCCESS");
                         // Set processStatus to 'Completed' with a clickable link to sam/watershed page
                         var watershed_url = "/pram/sam/watershed/" + guid;
                         $('#processStatus').html("<div id='completedProcess'><a href=" + watershed_url + ">Completed</a></div>");
@@ -303,6 +304,7 @@
             },
             error: function (jqXHR, status) {
                 // $('#processStatus').html("<div id='errorStatus'>" + status + "</div");
+		    console.log("ajax error");
                 setTimeout(checkProcessStatus, timeout);
             },
             complete: function (jqXHR, status) {
